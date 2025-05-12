@@ -1,0 +1,26 @@
+{
+  "name": "@alphacifer/tsconfig",
+  "version": "0.0.1",
+  "description": "All tsconfig for Alpha's projects.",
+  "main": "tsconfig.base.json",
+  "exports": {
+    "./base": "./tsconfig.base.json",
+    "./cmj": "./tsconfig.cmj.json",
+    "./esm": "./tsconfig.es.json",
+    "./nest": "./tsconfig.nest.json",
+    "./next-app": "./tsconfig.next-app.json",
+    "./react-app": "./tsconfig.react-app.json",
+    "./react": "./tsconfig.react.json"
+  },
+  "keywords": [
+    "alpha",
+    "dx",
+    "tsconfig"
+  ],
+  "author": "Alpha",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zgid123/alpha-dx.git"
+  },
+  "license": "MIT"
+}

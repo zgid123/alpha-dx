@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.cmj.json",
+  "compilerOptions": {
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "paths": {
+      "~/*": [
+        "./*"
+      ]
+    },
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false
+  }
+}
