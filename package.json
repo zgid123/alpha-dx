@@ -1,0 +1,19 @@
+{
+  "name": "alpha-dx",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "husky",
+    "preinstall": "npx only-allow pnpm",
+    "clear": "pnpm -r exec rimraf node_modules dist .turbo lib && pnpm rimraf node_modules .turbo",
+    "update-packages": "pnpm update -i -r --latest"
+  },
+  "packageManager": "pnpm@10.2.1",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.0.0",
+    "prettier": "^3.5.3",
+    "rimraf": "^6.0.1"
+  }
+}
