@@ -25,7 +25,7 @@ All tsconfig for Alpha's projects.
 
 ```json
 {
-  "extends": "@config/tsconfig/cmj",
+  "extends": "@alphacifer/tsconfig/cmj",
   "compilerOptions": {
     "outDir": "lib"
   },
@@ -38,7 +38,7 @@ All tsconfig for Alpha's projects.
 
 ```json
 {
-  "extends": "@config/tsconfig/esm",
+  "extends": "@alphacifer/tsconfig/esm",
   "compilerOptions": {
     "declaration": true,
     "outDir": "lib"
@@ -52,7 +52,11 @@ All tsconfig for Alpha's projects.
 
 ```json
 {
-  "extends": "@config/tsconfig/hono",
+  "extends": "@alphacifer/tsconfig/hono",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "outDir": "dist"
+  },
   "include": ["src"]
 }
 ```
@@ -61,7 +65,7 @@ All tsconfig for Alpha's projects.
 
 ```json
 {
-  "extends": "@config/tsconfig/nest",
+  "extends": "@alphacifer/tsconfig/nest",
   "compilerOptions": {
     "baseUrl": "src",
     "outDir": "dist"
@@ -74,7 +78,7 @@ All tsconfig for Alpha's projects.
 
 ```json
 {
-  "extends": "@config/tsconfig/next-app",
+  "extends": "@alphacifer/tsconfig/next-app",
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
@@ -89,7 +93,7 @@ All tsconfig for Alpha's projects.
 
 ```json
 {
-  "extends": "@config/tsconfig/react-app",
+  "extends": "@alphacifer/tsconfig/react-app",
   "compilerOptions": {
     "baseUrl": "src"
   },
@@ -106,7 +110,7 @@ All tsconfig for Alpha's projects.
 
 ```json
 {
-  "extends": "@config/tsconfig/react",
+  "extends": "@alphacifer/tsconfig/react",
   "compilerOptions": {
     "declaration": true,
     "outDir": "lib"
