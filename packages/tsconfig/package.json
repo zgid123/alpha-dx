@@ -1,12 +1,13 @@
 {
   "name": "@alphacifer/tsconfig",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "All tsconfig for Alpha's projects.",
   "main": "tsconfig.base.json",
   "exports": {
     "./base": "./tsconfig.base.json",
     "./cmj": "./tsconfig.cmj.json",
     "./esm": "./tsconfig.es.json",
+    "./hono": "./tsconfig.hono.json",
     "./nest": "./tsconfig.nest.json",
     "./next-app": "./tsconfig.next-app.json",
     "./react-app": "./tsconfig.react-app.json",
