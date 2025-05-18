@@ -1,6 +1,6 @@
 {
   "name": "@alphacifer/tsconfig",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "All tsconfig for Alpha's projects.",
   "main": "tsconfig.base.json",
   "exports": {
@@ -11,7 +11,8 @@
     "./nest": "./tsconfig.nest.json",
     "./next-app": "./tsconfig.next-app.json",
     "./react-app": "./tsconfig.react-app.json",
-    "./react": "./tsconfig.react.json"
+    "./react": "./tsconfig.react.json",
+    "./tauri-plugin": "./tsconfig.tauri-plugin.json"
   },
   "keywords": [
     "alpha",

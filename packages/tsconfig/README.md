@@ -10,6 +10,7 @@ All tsconfig for Alpha's projects.
 - `next-app.json`: for all NextJS projects in monorepo
 - `react-app.json`: for all React projects in monorepo
 - `react.json`: for all packages support React in monorepo
+- `tauri-plugin.json`: for all tauri plugin packages in monorepo
 
 # Usage
 
@@ -117,5 +118,15 @@ All tsconfig for Alpha's projects.
   },
   "include": ["src"],
   "exclude": ["lib", "node_modules"]
+}
+```
+
+- tauri-plugin
+
+```json
+{
+  "extends": "@alphacifer/tsconfig/tauri-plugin",
+  "include": ["guest-js/*.ts"],
+  "exclude": ["dist-js", "node_modules"]
 }
 ```
