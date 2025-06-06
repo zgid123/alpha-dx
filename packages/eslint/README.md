@@ -14,7 +14,7 @@ Set `"type": "module"` for root `package.json`
 ## Installation
 
 ```sh
-pnpm add -D eslint @alphacifer/eslint
+pnpm add -D eslint @alphacifer/eslint typescript-eslint
 ```
 
 ## Apply configuration

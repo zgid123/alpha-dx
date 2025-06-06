@@ -1,6 +1,7 @@
 {
   "name": "@alphacifer/eslint",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "type": "module",
   "description": "All eslint for Alpha's projects.",
   "exports": {
     "./base": "./lib/base.js",
