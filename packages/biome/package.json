@@ -1,0 +1,25 @@
+{
+  "name": "@alphacifer/biome",
+  "version": "0.0.1",
+  "description": "All biome for Alpha's projects.",
+  "exports": {
+    "./config": "./biome.json"
+  },
+  "keywords": [
+    "alpha",
+    "dx",
+    "biome"
+  ],
+  "files": [
+    "biome.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Alpha",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zgid123/alpha-dx.git"
+  },
+  "license": "MIT"
+}
