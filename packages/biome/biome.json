@@ -40,7 +40,37 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "style": {
+        "useNamingConvention": {
+          "level": "error",
+          "options": {
+            "strictCase": false,
+            "conventions": [
+              {
+                "selector": {
+                  "kind": "interface"
+                },
+                "match": "I(.+)[A-Za-z]|I(.+)"
+              },
+              {
+                "selector": {
+                  "kind": "typeAlias"
+                },
+                "match": "T(.+)[A-Za-z]|T(.+)"
+              },
+              {
+                "selector": {
+                  "kind": "class"
+                },
+                "formats": [
+                  "PascalCase"
+                ]
+              }
+            ]
+          }
+        }
+      }
     }
   },
   "vcs": {
