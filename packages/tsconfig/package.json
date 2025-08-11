@@ -1,6 +1,6 @@
 {
   "name": "@alphacifer/tsconfig",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "All tsconfig for Alpha's projects.",
   "main": "tsconfig.base.json",
   "exports": {
@@ -12,6 +12,7 @@
     "./next-app": "./tsconfig.next-app.json",
     "./react-app": "./tsconfig.react-app.json",
     "./react": "./tsconfig.react.json",
+    "./tanstack-start-app": "./tsconfig.tanstack-start-app.json",
     "./tauri-plugin": "./tsconfig.tauri-plugin.json"
   },
   "keywords": [
