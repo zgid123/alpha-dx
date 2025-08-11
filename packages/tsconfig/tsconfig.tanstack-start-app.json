@@ -1,7 +1,6 @@
 {
   "extends": "./tsconfig.react.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "~/*": [
         "./src/*"
@@ -10,6 +9,6 @@
     "types": [
       "vite/client"
     ],
-    "verbatimModuleSyntax": false
+    "verbatimModuleSyntax": true
   }
 }

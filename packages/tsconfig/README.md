@@ -10,6 +10,7 @@ All tsconfig for Alpha's projects.
 - `next-app.json`: for all NextJS projects in monorepo
 - `react-app.json`: for all React projects in monorepo
 - `react.json`: for all packages support React in monorepo
+- `tsconfig.tanstack-start-app.json`: for all React projects use TanStack Start in monorepo
 - `tauri-plugin.json`: for all tauri plugin packages in monorepo
 
 # Usage
@@ -118,6 +119,18 @@ All tsconfig for Alpha's projects.
   },
   "include": ["src"],
   "exclude": ["lib", "node_modules"]
+}
+```
+
+- tanstack-start-app
+
+```json
+{
+  "extends": "@alphacifer/tsconfig/tanstack-start-app",
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
 }
 ```
 
