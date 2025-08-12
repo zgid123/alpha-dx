@@ -1,0 +1,67 @@
+{
+  "name": "@alphacifer/core-utils",
+  "version": "0.0.2",
+  "description": "Core Utils for Alpha's projects.",
+  "main": "./lib/index.mjs",
+  "types": "./lib/index.d.mts",
+  "exports": {
+    ".": "./lib/index.mjs",
+    "./arrayUtils": "./lib/arrayUtils.mjs",
+    "./dateUtils": "./lib/dateUtils.mjs",
+    "./objectUtils": "./lib/objectUtils.mjs",
+    "./remeda": "./lib/remeda.mjs",
+    "./stringUtils": "./lib/stringUtils.mjs",
+    "./uniqid": "./lib/uniqid.mjs"
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./lib/index.mts"
+      ],
+      "arrayUtils": [
+        "./lib/arrayUtils.mts"
+      ],
+      "dateUtils": [
+        "./lib/dateUtils.mts"
+      ],
+      "objectUtils": [
+        "./lib/objectUtils.mts"
+      ],
+      "remeda": [
+        "./lib/remeda.mts"
+      ],
+      "stringUtils": [
+        "./lib/stringUtils.mts"
+      ],
+      "uniqid": [
+        "./lib/uniqid.mts"
+      ]
+    }
+  },
+  "keywords": [
+    "alpha",
+    "dx",
+    "core-utils"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Alpha",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zgid123/alpha-dx.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "prepublish": "pnpm build",
+    "build": "tsdown"
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "remeda": "^2.30.0",
+    "uniqid": "^5.4.0"
+  },
+  "devDependencies": {
+    "@types/uniqid": "^5.3.4"
+  }
+}
