@@ -1,6 +1,6 @@
 {
   "name": "@alphacifer/tsconfig",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "All tsconfig for Alpha's projects.",
   "main": "tsconfig.base.json",
   "exports": {
