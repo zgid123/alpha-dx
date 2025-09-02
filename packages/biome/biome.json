@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.1.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
   "assist": {
     "actions": {
       "source": {
@@ -18,14 +18,26 @@
             ]
           }
         },
-        "useSortedAttributes": "on",
+        "useSortedAttributes": {
+          "level": "on",
+          "options": {
+            "sortOrder": "natural"
+          }
+        },
         "useSortedProperties": "on"
       }
     },
     "enabled": true
   },
   "files": {
-    "ignoreUnknown": false
+    "ignoreUnknown": false,
+    "includes": [
+      "**",
+      "!**/*.d.ts",
+      "!**/routeTree.gen.ts",
+      "!**/node_modules/**/*.ts",
+      "!**/node_modules/**/*.tsx"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -34,6 +46,7 @@
   },
   "javascript": {
     "formatter": {
+      "jsxQuoteStyle": "single",
       "quoteStyle": "single"
     }
   },
