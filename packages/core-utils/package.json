@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "date-fns": "^4.1.0",
-    "remeda": "^2.30.0",
+    "remeda": "^2.31.1",
     "uniqid": "^5.4.0"
   },
   "devDependencies": {
