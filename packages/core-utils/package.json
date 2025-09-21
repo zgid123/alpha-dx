@@ -1,6 +1,6 @@
 {
   "name": "@alphacifer/core-utils",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Core Utils for Alpha's projects.",
   "main": "./lib/index.mjs",
   "types": "./lib/index.d.mts",
@@ -11,7 +11,8 @@
     "./objectUtils": "./lib/objectUtils.mjs",
     "./remeda": "./lib/remeda.mjs",
     "./stringUtils": "./lib/stringUtils.mjs",
-    "./uniqid": "./lib/uniqid.mjs"
+    "./uniqid": "./lib/uniqid.mjs",
+    "./urlUtils": "./lib/urlUtils.mjs"
   },
   "typesVersions": {
     "*": {
@@ -35,6 +36,9 @@
       ],
       "uniqid": [
         "./lib/uniqid.mts"
+      ],
+      "urlUtils": [
+        "./lib/urlUtils.mts"
       ]
     }
   },
@@ -58,7 +62,7 @@
   },
   "dependencies": {
     "date-fns": "^4.1.0",
-    "remeda": "^2.31.1",
+    "remeda": "^2.32.0",
     "uniqid": "^5.4.0"
   },
   "devDependencies": {

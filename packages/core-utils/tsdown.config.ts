@@ -13,5 +13,6 @@ export default defineConfig({
     'src/remeda.ts',
     'src/stringUtils.ts',
     'src/uniqid.ts',
+    'src/urlUtils.ts',
   ],
 });
