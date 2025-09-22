@@ -4,7 +4,7 @@ export default defineConfig({
   dts: true,
   clean: true,
   outDir: 'lib',
-  format: 'esm',
+  format: ['esm', 'cjs'],
   entry: [
     'src/arrayUtils.ts',
     'src/dateUtils.ts',
