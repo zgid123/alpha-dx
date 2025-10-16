@@ -1,0 +1,50 @@
+{
+  "name": "@alphacifer/hono",
+  "version": "0.0.1",
+  "description": "Hono Utils for Alpha's projects.",
+  "exports": {
+    "./core": {
+      "import": {
+        "types": "./lib/core/index.d.mts",
+        "default": "./lib/core/index.mjs"
+      },
+      "require": {
+        "types": "./lib/core/index.d.ts",
+        "default": "./lib/core/index.js"
+      }
+    },
+    "./testing": {
+      "import": {
+        "types": "./lib/testing/index.d.mts",
+        "default": "./lib/testing/index.mjs"
+      },
+      "require": {
+        "types": "./lib/testing/index.d.ts",
+        "default": "./lib/testing/index.js"
+      }
+    }
+  },
+  "keywords": [
+    "alpha",
+    "dx",
+    "hono"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Alpha",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zgid123/alpha-dx.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "prepublish": "pnpm build",
+    "build": "tsdown"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.7.4",
+    "hono": "^4.9.12",
+    "zod": "^4.1.12"
+  }
+}

@@ -1,0 +1,52 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { Hono } from 'hono';
+import type { ExtractSchema, MergeSchemaPath, Schema } from 'hono/types';
+
+interface IResponse<T> extends Response {
+  jsonData: {
+    data: T;
+    message: string;
+  };
+}
+
+export class HonoTest<
+  T extends Hono<any, Schema> = Hono<any, Schema>,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  TPath = keyof MergeSchemaPath<ExtractSchema<T>, '/'>,
+> {
+  #app: T;
+
+  private constructor(app: T) {
+    this.#app = app;
+  }
+
+  static create<T extends Hono<any, Schema> = Hono<any, Schema>>(
+    app: T,
+  ): HonoTest<T> {
+    return new HonoTest(app);
+  }
+
+  public post<TData = any>(path: TPath, data: any): Promise<IResponse<TData>> {
+    return this.#request<TData>('POST', path as string, data);
+  }
+
+  async #request<TData>(
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    path: string,
+    data: TData,
+  ): Promise<IResponse<TData>> {
+    const result = await this.#app.request(path, {
+      method,
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return {
+      ...result,
+      jsonData: await result.json(),
+    };
+  }
+}

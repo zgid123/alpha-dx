@@ -10,7 +10,8 @@ yarn-error.log
 #
 # build
 #
-packages/core-utils/lib
+lib
+!packages/eslint/lib
 #
 # vitest
 #
