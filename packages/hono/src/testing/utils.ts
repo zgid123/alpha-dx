@@ -1,7 +1,7 @@
 interface IBaseData {
-  id: bigint;
   createdAt: Date;
   updatedAt: Date;
+  id: bigint | string;
 }
 
 interface ISerializedData {

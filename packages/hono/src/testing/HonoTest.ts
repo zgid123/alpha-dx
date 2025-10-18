@@ -27,18 +27,35 @@ export class HonoTest<
     return new HonoTest(app);
   }
 
-  public post<TData = any>(path: TPath, data: any): Promise<IResponse<TData>> {
+  public post<TData = any>(path: TPath, data?: any): Promise<IResponse<TData>> {
     return this.#request<TData>('POST', path as string, data);
+  }
+
+  public get<TData = any>(path: TPath, data?: any): Promise<IResponse<TData>> {
+    const pathString = `${path}?${new URLSearchParams(data).toString()}`;
+
+    return this.#request<TData>('GET', pathString);
+  }
+
+  public put<TData = any>(path: TPath, data?: any): Promise<IResponse<TData>> {
+    return this.#request<TData>('PUT', path as string, data);
+  }
+
+  public delete<TData = any>(
+    path: TPath,
+    data?: any,
+  ): Promise<IResponse<TData>> {
+    return this.#request<TData>('DELETE', path as string, data);
   }
 
   async #request<TData>(
     method: 'GET' | 'POST' | 'PUT' | 'DELETE',
     path: string,
-    data: TData,
+    data?: TData,
   ): Promise<IResponse<TData>> {
     const result = await this.#app.request(path, {
       method,
-      body: JSON.stringify(data),
+      body: data ? JSON.stringify(data) : undefined,
       headers: {
         'Content-Type': 'application/json',
       },
