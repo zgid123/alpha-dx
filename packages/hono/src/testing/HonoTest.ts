@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Hono } from 'hono';
 import type { ExtractSchema, MergeSchemaPath, Schema } from 'hono/types';
@@ -11,9 +12,10 @@ interface IResponse<T> extends Response {
 
 export class HonoTest<
   T extends Hono<any, Schema> = Hono<any, Schema>,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
-  TPath = keyof MergeSchemaPath<ExtractSchema<T>, '/'>,
+  TExtract = keyof MergeSchemaPath<ExtractSchema<T>, '/'>,
+  // @ts-expect-error
+  TPath = TExtract | Omit<string, TExtract>,
 > {
   #app: T;
 
