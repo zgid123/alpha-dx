@@ -11,6 +11,7 @@ export default defineConfig({
     'src/index.ts',
     'src/objectUtils.ts',
     'src/remeda.ts',
+    'src/slugify.ts',
     'src/stringUtils.ts',
     'src/uniqid.ts',
     'src/urlUtils.ts',
