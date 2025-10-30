@@ -11,6 +11,7 @@ export default tsEslint.config(
     languageOptions: {
       globals: {
         ...globals.vitest,
+        HeadersInit: true,
       },
     },
   },

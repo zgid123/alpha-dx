@@ -10,6 +10,10 @@ interface IResponse<T> extends Response {
   };
 }
 
+interface IOptions {
+  headers?: HeadersInit;
+}
+
 export class HonoTest<
   T extends Hono<any, Schema> = Hono<any, Schema>,
   // @ts-expect-error
@@ -29,38 +33,56 @@ export class HonoTest<
     return new HonoTest(app);
   }
 
-  public post<TData = any>(path: TPath, data?: any): Promise<IResponse<TData>> {
-    return this.#request<TData>('POST', path as string, data);
+  public post<TData = any>(
+    path: TPath,
+    data?: any,
+    options?: IOptions,
+  ): Promise<IResponse<TData>> {
+    return this.#request<TData>('POST', path as string, data, options);
   }
 
-  public get<TData = any>(path: TPath, data?: any): Promise<IResponse<TData>> {
+  public get<TData = any>(
+    path: TPath,
+    data?: any,
+    options?: IOptions,
+  ): Promise<IResponse<TData>> {
     const pathString = `${path}?${new URLSearchParams(data).toString()}`;
 
-    return this.#request<TData>('GET', pathString);
+    return this.#request<TData>('GET', pathString, undefined, options);
   }
 
-  public put<TData = any>(path: TPath, data?: any): Promise<IResponse<TData>> {
-    return this.#request<TData>('PUT', path as string, data);
+  public put<TData = any>(
+    path: TPath,
+    data?: any,
+    options?: IOptions,
+  ): Promise<IResponse<TData>> {
+    return this.#request<TData>('PUT', path as string, data, options);
   }
 
   public delete<TData = any>(
     path: TPath,
     data?: any,
+    options?: IOptions,
   ): Promise<IResponse<TData>> {
-    return this.#request<TData>('DELETE', path as string, data);
+    return this.#request<TData>('DELETE', path as string, data, options);
   }
 
   async #request<TData>(
     method: 'GET' | 'POST' | 'PUT' | 'DELETE',
     path: string,
     data?: TData,
+    options: IOptions = {},
   ): Promise<IResponse<TData>> {
+    const { headers } = options;
+
     const result = await this.#app.request(path, {
       method,
       body: data ? JSON.stringify(data) : undefined,
       headers: {
         'Content-Type': 'application/json',
+        ...headers,
       },
+      ...options,
     });
 
     return {
