@@ -1,0 +1,48 @@
+{
+  "name": "@alphacifer/react",
+  "version": "0.0.1",
+  "description": "React Utils for Alpha's projects.",
+  "exports": {
+    "./query": "./lib/query/index.mjs",
+    "./zustand": "./lib/zustand/index.mjs"
+  },
+  "typesVersions": {
+    "*": {
+      "query": [
+        "./lib/query/index.d.mts"
+      ],
+      "zustand": [
+        "./lib/zustand/index.d.mts"
+      ]
+    }
+  },
+  "keywords": [
+    "alpha",
+    "dx",
+    "react"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Alpha",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zgid123/alpha-dx.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "prepublish": "pnpm build",
+    "build": "tsdown"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.90.6",
+    "@tanstack/react-query-devtools": "^5.90.2",
+    "immer": "^10.2.0",
+    "react": "^19.2.0",
+    "remeda": "^2.32.0",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.2"
+  }
+}
