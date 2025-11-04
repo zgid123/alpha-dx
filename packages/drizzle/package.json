@@ -1,0 +1,83 @@
+{
+  "name": "@alphacifer/drizzle",
+  "version": "0.0.1",
+  "description": "Drizzle Setup Utils for Alpha's projects.",
+  "exports": {
+    "./config": {
+      "import": {
+        "types": "./lib/config.d.mts",
+        "default": "./lib/config.mjs"
+      },
+      "require": {
+        "types": "./lib/config.d.ts",
+        "default": "./lib/config.js"
+      }
+    },
+    "./core": {
+      "import": {
+        "types": "./lib/core.d.mts",
+        "default": "./lib/core.mjs"
+      },
+      "require": {
+        "types": "./lib/core.d.ts",
+        "default": "./lib/core.js"
+      }
+    },
+    "./factory": {
+      "import": {
+        "types": "./lib/factory.d.mts",
+        "default": "./lib/factory.mjs"
+      },
+      "require": {
+        "types": "./lib/factory.d.ts",
+        "default": "./lib/factory.js"
+      }
+    },
+    "./pg": {
+      "import": {
+        "types": "./lib/pg.d.mts",
+        "default": "./lib/pg.mjs"
+      },
+      "require": {
+        "types": "./lib/pg.d.ts",
+        "default": "./lib/pg.js"
+      }
+    },
+    "./testing": {
+      "import": {
+        "types": "./lib/testing.d.mts",
+        "default": "./lib/testing.mjs"
+      },
+      "require": {
+        "types": "./lib/testing.d.ts",
+        "default": "./lib/testing.js"
+      }
+    }
+  },
+  "keywords": [
+    "alpha",
+    "dx",
+    "drizzle"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Alpha",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zgid123/alpha-dx.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "prepublish": "pnpm build",
+    "build": "tsdown"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.44.6",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.15.5",
+    "drizzle-kit": "^0.31.5"
+  }
+}
