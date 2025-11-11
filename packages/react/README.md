@@ -1,0 +1,91 @@
+All React Utils for Alpha's projects.
+
+# Usage
+
+## Query
+
+```ts
+import { useQuery, useCommand, type TQueryKey } from '@alphacifer/react/query';
+import type { JSX.Element } from 'react';
+
+import { getListUsers, updateUser } from './api';
+
+const QK_FETCH_USERS: TQueryKey = 'qk_fetchUsers';
+
+export function MyComponent(): JSX.Element {
+  const { data } = useQuery(
+    getListUsers,
+    [QK_FETCH_USERS, []],
+    {},
+    {
+      defaultValue: [],
+    }
+  );
+
+  const { mutate } = useCommand(updateUser);
+
+  return <div />;
+}
+```
+
+## Zustand
+
+```ts
+import {
+  createStore,
+  type TCreateStoreReturn,
+} from '@alphacifer/react/zustand';
+
+const engines = ['Biome', 'Prettier'] as const;
+
+type TWorker = (typeof engines)[number];
+
+interface ISettingsProps {
+  indentWidth: number;
+  wrapLongLines: boolean;
+}
+
+interface IJsonFormatterDataProps {
+  raw: string;
+  worker: TWorker;
+  settings: ISettingsProps;
+}
+
+interface IJsonFormatterStateProps extends IJsonFormatterDataProps {
+  setRaw: (raw: string) => void;
+  setWorker: (worker: TWorker) => void;
+  setSettings: (settings: Partial<ISettingsProps>) => void;
+}
+
+export const jsonFormatterStore: TCreateStoreReturn<IJsonFormatterStateProps> =
+  createStore<IJsonFormatterStateProps>(
+    (set) => {
+      return {
+        raw: '',
+        worker: 'Biome',
+        settings: {
+          indentWidth: 2,
+          wrapLongLines: false,
+        },
+        setRaw(data) {
+          return set((state) => {
+            state.raw = data;
+          });
+        },
+        setSettings(data) {
+          return set((state) => {
+            Object.assign(state.settings, data);
+          });
+        },
+        setWorker(data) {
+          return set((state) => {
+            state.worker = data;
+          });
+        },
+      };
+    },
+    {
+      name: 'json-formatter-app',
+    },
+  );
+```

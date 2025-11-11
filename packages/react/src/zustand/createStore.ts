@@ -11,13 +11,13 @@ import { createSelectors } from './createSelectors';
 
 import type { TWithImmer, TWithDevtools } from './interface';
 
-type TData<T> = StateCreator<
+export type TData<T> = StateCreator<
   T,
   [['zustand/devtools', never], ['zustand/immer', never]],
-  [['zustand/devtools', never], ['zustand/immer', never]]
+  []
 >;
 
-type TCreateStoreReturn<T> = UseBoundStore<
+export type TCreateStoreReturn<T> = UseBoundStore<
   TWithImmer<TWithDevtools<TWithImmer<TWithDevtools<StoreApi<T>>>>>
 > & {
   use: {
