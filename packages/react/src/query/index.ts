@@ -5,6 +5,8 @@ export {
   useQueryClient,
   QueryClientProvider,
   type RefetchOptions,
+  type UseQueryResult,
+  type InitialDataFunction,
   type RefetchQueryFilters,
   type QueryObserverResult,
 } from '@tanstack/react-query';

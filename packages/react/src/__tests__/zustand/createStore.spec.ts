@@ -1,4 +1,7 @@
-import { createStore, type TCreateStoreReturn } from '../createStore';
+import {
+  createStore,
+  type TCreateStoreReturn,
+} from '../../zustand/createStore';
 
 type TWorker = 'Biome' | 'Prettier';
 
