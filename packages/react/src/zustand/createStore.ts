@@ -1,15 +1,14 @@
-import { immer } from 'zustand/middleware/immer';
-import { devtools, type DevtoolsOptions } from 'zustand/middleware';
 import {
   create,
-  type StoreApi,
   type StateCreator,
+  type StoreApi,
   type UseBoundStore,
 } from 'zustand';
+import { type DevtoolsOptions, devtools } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
 
 import { createSelectors } from './createSelectors';
-
-import type { TWithImmer, TWithDevtools } from './interface';
+import type { TWithDevtools, TWithImmer } from './interface';
 
 export type TData<T> = StateCreator<
   T,
@@ -21,7 +20,7 @@ export type TCreateStoreReturn<T> = UseBoundStore<
   TWithImmer<TWithDevtools<TWithImmer<TWithDevtools<StoreApi<T>>>>>
 > & {
   use: {
-    [key in keyof Required<T>]: () => T[key];
+    [Key in keyof Required<T>]: () => T[Key];
   };
 };
 

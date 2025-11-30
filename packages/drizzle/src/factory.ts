@@ -1,5 +1,5 @@
-import { Pool } from 'pg';
 import { drizzle, type NodePgDatabase } from 'drizzle-orm/node-postgres';
+import { Pool } from 'pg';
 
 export interface ICreateParams<TSchema extends Record<string, unknown>> {
   client?: Pool;

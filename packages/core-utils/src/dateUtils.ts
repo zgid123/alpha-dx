@@ -1,4 +1,4 @@
-import { toDate, format as fnsFormat } from 'date-fns';
+import { format as fnsFormat, toDate } from 'date-fns';
 
 export * from 'date-fns';
 

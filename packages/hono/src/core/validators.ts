@@ -1,7 +1,6 @@
 import { zValidator as zv } from '@hono/zod-validator';
-
-import type { ZodType } from 'zod';
 import type { Env, ValidationTargets } from 'hono';
+import type { ZodType } from 'zod';
 
 import { HonoCommonError } from './HonoError';
 

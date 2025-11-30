@@ -1,19 +1,18 @@
-import { useRef } from 'react';
-import { isNullish, isDate, isPlainObject } from 'remeda';
 import {
-  useQueryClient,
-  useQuery as useTanstackQuery,
+  type InitialDataFunction,
   type QueryClient,
   type UseQueryResult,
-  type InitialDataFunction,
+  useQueryClient,
+  useQuery as useTanstackQuery,
 } from '@tanstack/react-query';
+import { useRef } from 'react';
+import { isDate, isNullish, isPlainObject } from 'remeda';
 
-import { useSetData, type TSetDataFunc } from './hooks';
-
+import { type TSetDataFunc, useSetData } from './hooks';
 import type {
-  TOptions,
-  TAsyncFunc,
   IErrorProps,
+  TAsyncFunc,
+  TOptions,
   TQueryKeyParams,
 } from './interface';
 
@@ -141,7 +140,7 @@ export function useQuery<
             !isNullish(param) &&
             isPlainObject(param)
           ) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: ignore
             (param as any).signal = signal;
           }
         });

@@ -1,15 +1,15 @@
-export { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 export {
-  QueryClient,
-  MutationCache,
-  useQueryClient,
-  QueryClientProvider,
-  type RefetchOptions,
-  type UseQueryResult,
   type InitialDataFunction,
-  type RefetchQueryFilters,
+  MutationCache,
+  QueryClient,
+  QueryClientProvider,
   type QueryObserverResult,
+  type RefetchOptions,
+  type RefetchQueryFilters,
+  type UseQueryResult,
+  useQueryClient,
 } from '@tanstack/react-query';
+export { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 export * from './hooks';
 export * from './interface';

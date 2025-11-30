@@ -1,5 +1,5 @@
 {
   "**/*.{ts,tsx,js,jsx}": [
-    "prettier --write"
+    "biome check --write --no-errors-on-unmatched --colors=force --diagnostic-level=error"
   ]
 }

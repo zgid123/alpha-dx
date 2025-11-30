@@ -1,5 +1,4 @@
 import { HTTPException } from 'hono/http-exception';
-
 import type { ContentfulStatusCode } from 'hono/utils/http-status';
 
 export interface IError {

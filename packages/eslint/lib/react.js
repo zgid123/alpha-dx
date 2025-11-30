@@ -1,12 +1,12 @@
-import js from '@eslint/js';
-import globals from 'globals';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { FlatCompat } from '@eslint/eslintrc';
-import reactPlugin from 'eslint-plugin-react';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { fixupPluginRules } from '@eslint/compat';
-import storybookPlugin from 'eslint-plugin-storybook';
+import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
+import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import storybookPlugin from 'eslint-plugin-storybook';
+import globals from 'globals';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useNamingConvention: test only */
 import { assign, deepCamelizeKeys, deepSnakeizeKeys } from '../objectUtils';
 
 describe('objectUtils', () => {

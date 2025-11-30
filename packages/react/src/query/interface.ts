@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-empty-object-type */
-/* eslint-disable @typescript-eslint/no-wrapper-object-types */
-/* eslint-disable @typescript-eslint/no-unsafe-function-type */
+/** biome-ignore-all lint/complexity/noBannedTypes: generic usage */
+/** biome-ignore-all lint/suspicious/noExplicitAny: generic usage */
 import type {
   UseQueryOptions,
   UseSuspenseQueryOptions,
@@ -15,17 +13,17 @@ type TPrimitive =
   | Function
   | number
   | boolean
-  | Symbol
+  | symbol
   | undefined
   | null;
 
 type TDeepOmitHelper<T, K extends keyof T> = {
-  [P in K]: T[P] extends infer TP
-    ? TP extends TPrimitive
-      ? TP
-      : TP extends any[]
-        ? TDeepOmitArray<TP, K>
-        : TDeepOmit<TP, K>
+  [P in K]: T[P] extends infer TProperty
+    ? TProperty extends TPrimitive
+      ? TProperty
+      : TProperty extends any[]
+        ? TDeepOmitArray<TProperty, K>
+        : TDeepOmit<TProperty, K>
     : never;
 };
 

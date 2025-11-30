@@ -1,7 +1,7 @@
 import { debounce, throttle } from '..';
 
 describe('#debounce', () => {
-  let mockFn = vi.fn();
+  const mockFn = vi.fn();
 
   beforeAll(() => {
     vi.useFakeTimers();
@@ -52,7 +52,7 @@ describe('#debounce', () => {
 });
 
 describe('#throttle', () => {
-  let mockFn = vi.fn();
+  const mockFn = vi.fn();
 
   beforeAll(() => {
     vi.useFakeTimers();
