@@ -31,18 +31,19 @@ export function combine(
   return compactedValue.join(joinWith);
 }
 
-export type TCamelCase<S> = S extends `${infer Head}_${infer Tail}${infer Rest}`
-  ? `${Head}${Uppercase<Tail>}${TCamelCase<Rest>}`
-  : S;
+export type TCamelizeCase<S extends string> =
+  S extends `${infer Head}_${infer Tail}${infer Rest}`
+    ? `${Uncapitalize<Head>}${Uppercase<Tail>}${TCamelizeCase<Rest>}`
+    : Uncapitalize<S>;
 
-export function camelize<T extends string>(str: T): TCamelCase<T> {
+export function camelize<T extends string>(str: T): TCamelizeCase<T> {
   return (str || '').replace(/^([A-Z])|[\s-_/]+(\w)/g, (_match, p1, p2) => {
     if (p2) {
       return p2.toUpperCase();
     }
 
     return p1.toLowerCase();
-  }) as TCamelCase<T>;
+  }) as TCamelizeCase<T>;
 }
 
 export function snakize(str: string): string {

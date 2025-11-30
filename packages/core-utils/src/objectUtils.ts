@@ -1,6 +1,6 @@
 import { isDate, isObjectType } from 'remeda';
 
-import { camelize, snakize, type TCamelCase } from './stringUtils';
+import { camelize, snakize, type TCamelizeCase } from './stringUtils';
 
 function deepLookup<T>(data: T, formatFunc: (str: string) => string): T {
   if (Array.isArray(data)) {
@@ -33,12 +33,18 @@ function deepLookup<T>(data: T, formatFunc: (str: string) => string): T {
   ) as T;
 }
 
-type TCamelKeysProps<T> = {
-  [K in keyof T as TCamelCase<K>]: T[K];
-};
+type TDeepCamelizeKeys<T> = T extends readonly (infer U)[]
+  ? readonly TDeepCamelizeKeys<U>[]
+  : T extends object
+    ? {
+        [K in keyof T as K extends string
+          ? TCamelizeCase<K>
+          : K]: TDeepCamelizeKeys<T[K]>;
+      }
+    : T;
 
-export function deepCamelizeKeys<T>(data: T): TCamelKeysProps<T> {
-  return deepLookup(data, camelize) as TCamelKeysProps<T>;
+export function deepCamelizeKeys<T>(data: T): TDeepCamelizeKeys<T> {
+  return deepLookup(data, camelize) as TDeepCamelizeKeys<T>;
 }
 
 export function deepSnakeizeKeys<T>(data: T): T {
