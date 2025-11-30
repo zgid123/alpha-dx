@@ -1,10 +1,10 @@
 import type { Draft } from 'immer';
 import type {
   Mutate,
-  StoreApi,
   StateCreator,
-  UseBoundStore,
+  StoreApi,
   StoreMutatorIdentifier,
+  UseBoundStore,
 } from 'zustand';
 
 type TWrite<T, U> = Omit<T, keyof U> & U;
@@ -100,9 +100,7 @@ type TStoreDevtools<S> = S extends {
           | {
               type: unknown;
             },
-      >(
-        ...a: [...a: TTakeTwo<Sa>, action?: A]
-      ): Sr;
+      >(...a: [...a: TTakeTwo<Sa>, action?: A]): Sr;
     }
   : never;
 

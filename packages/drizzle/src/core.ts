@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import { migrate } from 'drizzle-orm/node-postgres/migrator';
-
-import type { Pool } from 'pg';
 import type {
   DBQueryConfig,
-  TableRelationalConfig,
   ExtractTablesWithRelations,
+  TableRelationalConfig,
 } from 'drizzle-orm';
+import { migrate } from 'drizzle-orm/node-postgres/migrator';
+import type { Pool } from 'pg';
 
 import type { IDrizzle } from './factory';
 

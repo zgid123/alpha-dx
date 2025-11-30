@@ -12,17 +12,14 @@
   },
   "packageManager": "pnpm@10.2.1",
   "devDependencies": {
-    "@alphacifer/eslint": "workspace:^",
+    "@alphacifer/biome": "workspace:^",
     "@alphacifer/tsconfig": "workspace:^",
-    "@vitest/coverage-istanbul": "^4.0.8",
-    "eslint": "^9.39.1",
-    "globals": "^16.5.0",
+    "@biomejs/biome": "^2.3.8",
+    "@vitest/coverage-istanbul": "^4.0.14",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.6",
-    "prettier": "^3.6.2",
-    "rimraf": "^6.1.0",
-    "tsdown": "^0.16.2",
-    "typescript-eslint": "^8.46.4",
-    "vitest": "^4.0.8"
+    "lint-staged": "^16.2.7",
+    "rimraf": "^6.1.2",
+    "tsdown": "0.17.0-beta.4",
+    "vitest": "^4.0.14"
   }
 }

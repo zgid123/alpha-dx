@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { isDate, isObjectType } from 'remeda';
 
 import { camelize, snakize, type TCamelCase } from './stringUtils';
@@ -14,9 +13,9 @@ function deepLookup<T>(data: T, formatFunc: (str: string) => string): T {
     return data;
   }
 
-  return Object.entries(data as Record<string, any>).reduce(
+  return Object.entries(data as Record<string, unknown>).reduce(
     (result, [k, v]) => {
-      let value;
+      let value: unknown;
 
       if (isDate(v) || !isObjectType(v)) {
         value = v;
@@ -46,9 +45,9 @@ export function deepSnakeizeKeys<T>(data: T): T {
   return deepLookup(data, snakize);
 }
 
-export function assign<T extends Record<any, any>>(
+export function assign<T extends Record<string, unknown>>(
   source: T,
-  target: Partial<T & Record<any, any>>,
+  target: Partial<T & Record<string, unknown>>,
 ): T {
   return Object.assign(source, target);
 }

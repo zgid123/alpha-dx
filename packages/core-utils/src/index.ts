@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export type TCallback = (...args: any[]) => any;
+export type TCallback = (...args: unknown[]) => unknown;
 
 interface IIntervalOptions {
   delay?: number;

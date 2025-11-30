@@ -1,8 +1,8 @@
 import {
-  useMutation,
   type MutationFunction,
-  type UseMutationResult,
   type UseMutationOptions,
+  type UseMutationResult,
+  useMutation,
 } from '@tanstack/react-query';
 
 import type { IErrorProps } from './interface';

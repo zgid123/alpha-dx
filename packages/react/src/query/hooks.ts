@@ -1,10 +1,10 @@
+import {
+  type QueryClient,
+  type QueryKey,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { produce } from 'immer';
 import { useCallback } from 'react';
-import {
-  useQueryClient,
-  type QueryKey,
-  type QueryClient,
-} from '@tanstack/react-query';
 
 interface IUseSetDataParams {
   queryKey: QueryKey;
