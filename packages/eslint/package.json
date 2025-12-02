@@ -4,10 +4,10 @@
   "type": "module",
   "description": "All eslint for Alpha's projects.",
   "exports": {
-    "./base": "./lib/base.js",
-    "./next": "./lib/next.js",
-    "./react-app": "./lib/react-app.js",
-    "./react": "./lib/react.js"
+    "./base": "./base.js",
+    "./next": "./next.js",
+    "./react-app": "./react-app.js",
+    "./react": "./react.js"
   },
   "keywords": [
     "alpha",
