@@ -33,7 +33,7 @@ function deepLookup<T>(data: T, formatFunc: (str: string) => string): T {
   ) as T;
 }
 
-type TDeepCamelizeKeys<T> = T extends readonly (infer U)[]
+export type TDeepCamelizeKeys<T> = T extends readonly (infer U)[]
   ? readonly TDeepCamelizeKeys<U>[]
   : T extends object
     ? {
