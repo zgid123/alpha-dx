@@ -16,3 +16,7 @@ lib
 # vitest
 #
 coverage
+#
+# turborepo
+#
+.turbo
