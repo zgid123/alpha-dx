@@ -1,6 +1,6 @@
 {
   "name": "@alphacifer/react",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "React Utils for Alpha's projects.",
   "exports": {
     "./query": "./lib/query/index.mjs",
