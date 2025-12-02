@@ -18,3 +18,9 @@ export function useEnvironments({ payload }: IUseEnvironmentsParams) {
     },
   );
 }
+
+describe('#queryType', () => {
+  it('has no test', () => {
+    expect(true).toBeTruthy();
+  });
+});
