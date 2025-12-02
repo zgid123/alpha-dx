@@ -1,0 +1,23 @@
+name: Prepare Node.JS and PNPM
+
+description: Prepare Node.JS and PNPM
+
+runs:
+  using: composite
+  steps:
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 23.11.0
+
+    - name: Install latest version of npm
+      shell: bash
+      run: |
+        npm i -g npm@latest
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      id: pnpm-install
+      with:
+        version: 10.2.1
+        run_install: false

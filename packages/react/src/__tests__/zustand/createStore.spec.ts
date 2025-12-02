@@ -53,3 +53,9 @@ export const jsonFormatterStore: TCreateStoreReturn<IJsonFormatterStateProps> =
       name: 'json-formatter-app',
     },
   );
+
+describe('#zustandType', () => {
+  it('has no test', () => {
+    expect(true).toBeTruthy();
+  });
+});

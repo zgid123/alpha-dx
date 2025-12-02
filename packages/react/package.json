@@ -1,6 +1,6 @@
 {
   "name": "@alphacifer/react",
-  "version": "0.0.4",
+  "version": "0.0.3",
   "description": "React Utils for Alpha's projects.",
   "exports": {
     "./query": "./lib/query/index.mjs",
@@ -22,7 +22,8 @@
     "react"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "author": "Alpha",
   "repository": {
