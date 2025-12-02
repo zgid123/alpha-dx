@@ -1,5 +1,0 @@
----
-"@alphacifer/react": minor
----
-
-release
