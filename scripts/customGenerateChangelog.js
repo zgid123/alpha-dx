@@ -1,6 +1,4 @@
-const {
-  default: createGithubChangelog,
-} = require('@changesets/changelog-github');
+import createGithubChangelog from '@changesets/changelog-github';
 
 module.exports = async function changelog({ changesets, releases, options }) {
   const originalChangelog = await createGithubChangelog({
