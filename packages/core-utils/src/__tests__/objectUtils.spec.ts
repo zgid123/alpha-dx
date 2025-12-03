@@ -1,5 +1,10 @@
 /** biome-ignore-all lint/style/useNamingConvention: test only */
-import { assign, deepCamelizeKeys, deepSnakeizeKeys } from '../objectUtils';
+import {
+  assign,
+  deepCamelizeKeys,
+  deepPascalizeKeys,
+  deepSnakeizeKeys,
+} from '../objectUtils';
 
 describe('objectUtils', () => {
   describe('#deepCamelizeKeys', () => {
@@ -40,6 +45,7 @@ describe('objectUtils', () => {
               test_case_2: [
                 {
                   test_case: 'test',
+                  'test case 2': 'test',
                 },
               ],
             },
@@ -50,6 +56,7 @@ describe('objectUtils', () => {
             testCase2: [
               {
                 testCase: 'test',
+                testCase2: 'test',
               },
             ],
           },
@@ -156,6 +163,88 @@ describe('objectUtils', () => {
         ).toEqual({
           test_case: {
             test_case: new Date(),
+          },
+        });
+      });
+    });
+  });
+
+  describe('#deepPascalizeKeys', () => {
+    suite('when object has 1 level', () => {
+      it('converts snake_case to PascalCase', () => {
+        expect(
+          deepPascalizeKeys({
+            test_case: 'test',
+          }),
+        ).toEqual({
+          TestCase: 'test',
+        });
+      });
+    });
+
+    suite('when object has 2 levels nested', () => {
+      it('converts snake_case to PascalCase', () => {
+        expect(
+          deepPascalizeKeys({
+            test_case: {
+              test_case: 'test',
+            },
+          }),
+        ).toEqual({
+          TestCase: {
+            TestCase: 'test',
+          },
+        });
+      });
+    });
+
+    suite('when object has 2 levels nested and array of objects', () => {
+      it('converts snake_case to PascalCase', () => {
+        expect(
+          deepPascalizeKeys({
+            test_case: {
+              test_case: ['test'],
+              test_case_2: [
+                {
+                  test_case: 'test',
+                  'test case 2': 'test',
+                },
+              ],
+            },
+          }),
+        ).toEqual({
+          TestCase: {
+            TestCase: ['test'],
+            TestCase2: [
+              {
+                TestCase: 'test',
+                TestCase2: 'test',
+              },
+            ],
+          },
+        });
+      });
+    });
+
+    suite('when object has date', () => {
+      beforeEach(() => {
+        vi.useFakeTimers();
+      });
+
+      afterEach(() => {
+        vi.useRealTimers();
+      });
+
+      it('converts snake_case to PascalCase', () => {
+        expect(
+          deepPascalizeKeys({
+            test_case: {
+              test_case: new Date(),
+            },
+          }),
+        ).toEqual({
+          TestCase: {
+            TestCase: new Date(),
           },
         });
       });
