@@ -1,6 +1,12 @@
 import { isDate, isObjectType } from 'remeda';
 
-import { camelize, snakize, type TCamelizeCase } from './stringUtils';
+import {
+  camelize,
+  pascalize,
+  snakize,
+  type TCamelizeCase,
+  type TPascalizeCase,
+} from './stringUtils';
 
 function deepLookup<T>(data: T, formatFunc: (str: string) => string): T {
   if (Array.isArray(data)) {
@@ -33,15 +39,16 @@ function deepLookup<T>(data: T, formatFunc: (str: string) => string): T {
   ) as T;
 }
 
-export type TDeepCamelizeKeys<T> = T extends readonly (infer U)[]
-  ? readonly TDeepCamelizeKeys<U>[]
-  : T extends object
-    ? {
-        [K in keyof T as K extends string
-          ? TCamelizeCase<K>
-          : K]: TDeepCamelizeKeys<T[K]>;
-      }
-    : T;
+export type TDeepCamelizeKeys<T> =
+  T extends Array<infer U>
+    ? TDeepCamelizeKeys<U>[]
+    : T extends object
+      ? {
+          [K in keyof T as K extends string
+            ? TCamelizeCase<K>
+            : K]: TDeepCamelizeKeys<T[K]>;
+        }
+      : T;
 
 export function deepCamelizeKeys<T>(data: T): TDeepCamelizeKeys<T> {
   return deepLookup(data, camelize) as TDeepCamelizeKeys<T>;
@@ -49,6 +56,21 @@ export function deepCamelizeKeys<T>(data: T): TDeepCamelizeKeys<T> {
 
 export function deepSnakeizeKeys<T>(data: T): T {
   return deepLookup(data, snakize);
+}
+
+export type TDeepPascalizeKeys<T> =
+  T extends Array<infer U>
+    ? TDeepPascalizeKeys<U>[]
+    : T extends object
+      ? {
+          [K in keyof T as K extends string
+            ? TPascalizeCase<K>
+            : K]: TDeepPascalizeKeys<T[K]>;
+        }
+      : T;
+
+export function deepPascalizeKeys<T>(data: T): TDeepPascalizeKeys<T> {
+  return deepLookup(data, pascalize) as TDeepPascalizeKeys<T>;
 }
 
 export function assign<T extends Record<string, unknown>>(

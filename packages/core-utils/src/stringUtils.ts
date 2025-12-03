@@ -34,7 +34,9 @@ export function combine(
 export type TCamelizeCase<S extends string> =
   S extends `${infer Head}_${infer Tail}${infer Rest}`
     ? `${Uncapitalize<Head>}${Uppercase<Tail>}${TCamelizeCase<Rest>}`
-    : Uncapitalize<S>;
+    : S extends `${infer Head} ${infer Tail}${infer Rest}`
+      ? `${Uncapitalize<Head>}${Uppercase<Tail>}${TCamelizeCase<Rest>}`
+      : Uncapitalize<S>;
 
 export function camelize<T extends string>(str: T): TCamelizeCase<T> {
   return (str || '').replace(/^([A-Z])|[\s-_/]+(\w)/g, (_match, p1, p2) => {
@@ -50,6 +52,26 @@ export function snakize(str: string): string {
   return str?.replace(/[A-Z]/g, (match, p1) => {
     return (p1 ? '_' : '') + match.toLowerCase();
   });
+}
+
+export type TPascalizeCase<S extends string> = S extends ''
+  ? ''
+  : S extends `${infer Head}_${infer Rest}`
+    ? `${Capitalize<Lowercase<Head>>}${TPascalizeCase<Rest>}`
+    : S extends `${infer Head} ${infer Rest}`
+      ? `${Capitalize<Lowercase<Head>>}${TPascalizeCase<Rest>}`
+      : Capitalize<Lowercase<S>>;
+
+export function pascalize<T extends string>(str: T): TPascalizeCase<T> {
+  return capitalize(
+    (str || '').replace(/^([A-Z])|[\s-_/]+(\w)/g, (_match, p1, p2) => {
+      if (p2) {
+        return p2.toUpperCase();
+      }
+
+      return p1.toLowerCase();
+    }),
+  ) as TPascalizeCase<T>;
 }
 
 interface IHumanizeOptionsProps {

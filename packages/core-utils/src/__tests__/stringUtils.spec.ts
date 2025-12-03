@@ -1,4 +1,10 @@
-import { camelize, combine, humanize, snakize } from '../stringUtils';
+import {
+  camelize,
+  combine,
+  humanize,
+  pascalize,
+  snakize,
+} from '../stringUtils';
 
 describe('stringUtils', () => {
   describe('#combine', () => {
@@ -81,6 +87,32 @@ describe('stringUtils', () => {
     suite('when string starts with lower', () => {
       it('converts snake_case to camelCase', () => {
         expect(camelize('snake_case')).toBe('snakeCase');
+      });
+    });
+
+    suite('when string has space', () => {
+      it('converts to camelCase', () => {
+        expect(camelize('snake case')).toBe('snakeCase');
+      });
+    });
+  });
+
+  describe('#pascalize', () => {
+    suite('when string starts with upper', () => {
+      it('converts snake_case to PascalCase', () => {
+        expect(pascalize('Snake_case')).toBe('SnakeCase');
+      });
+    });
+
+    suite('when string starts with lower', () => {
+      it('converts snake_case to PascalCase', () => {
+        expect(pascalize('snake_case')).toBe('SnakeCase');
+      });
+    });
+
+    suite('when string has space', () => {
+      it('converts to PascalCase', () => {
+        expect(pascalize('snake case')).toBe('SnakeCase');
       });
     });
   });
