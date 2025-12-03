@@ -3,7 +3,7 @@ name: Release packages
 on:
   push:
     paths:
-      - '.changeset/**'
+      - '.changeset/*.md'
       - 'packages/**'
     branches:
       - main
