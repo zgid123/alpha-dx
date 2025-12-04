@@ -39,8 +39,8 @@ importers:
         specifier: ^6.1.2
         version: 6.1.2
       tsdown:
-        specifier: 0.17.0-beta.6
-        version: 0.17.0-beta.6(synckit@0.11.11)(typescript@5.8.3)
+        specifier: 0.17.0
+        version: 0.17.0(synckit@0.11.11)(typescript@5.8.3)
       turbo:
         specifier: ^2.6.2
         version: 2.6.2
@@ -72,8 +72,8 @@ importers:
   packages/drizzle:
     dependencies:
       drizzle-orm:
-        specifier: ^0.44.6
-        version: 0.44.7(@types/pg@8.15.6)(pg@8.16.3)
+        specifier: ^0.45.0
+        version: 0.45.0(@types/pg@8.15.6)(pg@8.16.3)
       pg:
         specifier: ^8.16.3
         version: 8.16.3
@@ -82,8 +82,8 @@ importers:
         specifier: ^8.15.5
         version: 8.15.6
       drizzle-kit:
-        specifier: ^0.31.7
-        version: 0.31.7
+        specifier: ^0.31.8
+        version: 0.31.8
 
   packages/eslint:
     dependencies:
@@ -1632,12 +1632,12 @@ packages:
     resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
     engines: {node: '>=10'}
 
-  drizzle-kit@0.31.7:
-    resolution: {integrity: sha512-hOzRGSdyKIU4FcTSFYGKdXEjFsncVwHZ43gY3WU5Bz9j5Iadp6Rh6hxLSQ1IWXpKLBKt/d5y1cpSPcV+FcoQ1A==}
+  drizzle-kit@0.31.8:
+    resolution: {integrity: sha512-O9EC/miwdnRDY10qRxM8P3Pg8hXe3LyU4ZipReKOgTwn4OqANmftj8XJz1UPUAS6NMHf0E2htjsbQujUTkncCg==}
     hasBin: true
 
-  drizzle-orm@0.44.7:
-    resolution: {integrity: sha512-quIpnYznjU9lHshEOAYLoZ9s3jweleHlZIAWR/jX9gAWNg/JhQ1wj0KGRf7/Zm+obRrYd9GjPVJg790QY9N5AQ==}
+  drizzle-orm@0.45.0:
+    resolution: {integrity: sha512-lyd9VRk3SXKRjV/gQckQzmJgkoYMvVG3A2JAV0vh3L+Lwk+v9+rK5Gj0H22y+ZBmxsrRBgJ5/RbQCN7DWd1dtQ==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=4'
@@ -3135,8 +3135,8 @@ packages:
   tsconfig-paths@3.15.0:
     resolution: {integrity: sha512-2Ac2RgzDe/cn48GvOe3M+o82pEFewD3UPbyoUHHdKasHwJKjds4fLXWf/Ux5kATBKN20oaFGu+jbElp1pos0mg==}
 
-  tsdown@0.17.0-beta.6:
-    resolution: {integrity: sha512-Hbuwzo4hg5759mnzzxZdCNT3hbqTwmXegCoB+60U57usOjVyqGx7rzngnKX/8u1VxXsmFipmBLHt+T4AaSMUbw==}
+  tsdown@0.17.0:
+    resolution: {integrity: sha512-NPZRrlC51X9Bb55ZTDwrWges8Dm1niCvNA5AYw7aix6pfnDnB4WR0neG5RPq75xIodg3hqlQUzzyrX7n4dmnJg==}
     engines: {node: '>=20.19.0'}
     hasBin: true
     peerDependencies:
@@ -4836,7 +4836,7 @@ snapshots:
 
   dotenv@8.6.0: {}
 
-  drizzle-kit@0.31.7:
+  drizzle-kit@0.31.8:
     dependencies:
       '@drizzle-team/brocli': 0.10.2
       '@esbuild-kit/esm-loader': 2.6.5
@@ -4845,7 +4845,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.44.7(@types/pg@8.15.6)(pg@8.16.3):
+  drizzle-orm@0.45.0(@types/pg@8.15.6)(pg@8.16.3):
     optionalDependencies:
       '@types/pg': 8.15.6
       pg: 8.16.3
@@ -6529,7 +6529,7 @@ snapshots:
       minimist: 1.2.8
       strip-bom: 3.0.0
 
-  tsdown@0.17.0-beta.6(synckit@0.11.11)(typescript@5.8.3):
+  tsdown@0.17.0(synckit@0.11.11)(typescript@5.8.3):
     dependencies:
       ansis: 4.2.0
       cac: 6.7.14
