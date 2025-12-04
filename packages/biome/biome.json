@@ -45,6 +45,9 @@
     "indentWidth": 2
   },
   "javascript": {
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    },
     "formatter": {
       "jsxQuoteStyle": "single",
       "quoteStyle": "single"
