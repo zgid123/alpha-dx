@@ -1,4 +1,5 @@
-export type TCallback = (...args: unknown[]) => unknown;
+// biome-ignore lint/suspicious/noExplicitAny: generic usage
+export type TCallback = (...args: any[]) => any;
 
 interface IIntervalOptions {
   delay?: number;
