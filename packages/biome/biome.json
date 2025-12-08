@@ -57,6 +57,9 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "complexity": {
+        "noThisInStatic": "off"
+      },
       "style": {
         "useNamingConvention": {
           "level": "error",
