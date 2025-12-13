@@ -9,6 +9,7 @@ All tsconfig for Alpha's projects.
 - `nest.json`: for all NestJS projects in monorepo
 - `next-app.json`: for all NextJS projects in monorepo
 - `react-app.json`: for all React projects in monorepo
+- `react-node.json`: for all React projects in monorepo using Vite
 - `react.json`: for all packages support React in monorepo
 - `tsconfig.tanstack-start-app.json`: for all React projects use TanStack Start in monorepo
 - `tauri-plugin.json`: for all tauri plugin packages in monorepo
@@ -104,6 +105,17 @@ All tsconfig for Alpha's projects.
     {
       "path": "./tsconfig.node.json"
     }
+  ]
+}
+```
+
+- react-node
+
+```json
+{
+  "extends": "@alphacifer/tsconfig/react-node",
+  "include": [
+    "vite.config.ts"
   ]
 }
 ```
