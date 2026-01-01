@@ -1,5 +1,11 @@
 # @alphacifer/biome
 
+## 0.0.8
+
+### Patch Changes
+
+- [#68](https://github.com/zgid123/alpha-dx/pull/68) [`cf86bcc`](https://github.com/zgid123/alpha-dx/commit/cf86bcc69a910bd080e03fba5079a0f0f9f69b4a) Thanks [@zgid123](https://github.com/zgid123)! - release
+
 ## 0.0.7
 
 ### Patch Changes

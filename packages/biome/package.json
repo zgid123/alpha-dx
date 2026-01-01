@@ -1,6 +1,6 @@
 {
   "name": "@alphacifer/biome",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "All biome for Alpha's projects.",
   "exports": {
     "./config": "./biome.config.json"
