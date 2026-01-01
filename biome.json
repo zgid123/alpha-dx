@@ -1,42 +1,16 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
   "extends": [
     "@alphacifer/biome/config"
   ],
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true,
-      "style": {
-        "useNamingConvention": {
-          "level": "error",
-          "options": {
-            "strictCase": false,
-            "conventions": [
-              {
-                "selector": {
-                  "kind": "interface"
-                },
-                "match": "I(.+)[A-Za-z]|I(.+)"
-              },
-              {
-                "selector": {
-                  "kind": "typeAlias"
-                },
-                "match": "T[A-Za-z]+"
-              },
-              {
-                "selector": {
-                  "kind": "class"
-                },
-                "formats": [
-                  "PascalCase"
-                ]
-              }
-            ]
-          }
-        }
-      }
-    }
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      "!**/*.d.ts",
+      "!coverage",
+      "!**/routeTree.gen.ts",
+      "!**/node_modules/**/*.ts",
+      "!**/node_modules/**/*.tsx"
+    ]
   }
 }
