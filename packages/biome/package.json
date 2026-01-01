@@ -11,7 +11,7 @@
     "biome"
   ],
   "files": [
-    "biome.json"
+    "biome.config.json"
   ],
   "publishConfig": {
     "access": "public",
