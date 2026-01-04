@@ -117,7 +117,7 @@
   },
   "dependencies": {
     "date-fns": "^4.1.0",
-    "remeda": "^2.33.0",
+    "remeda": "^2.33.1",
     "slugify": "^1.6.6",
     "uniqid": "^5.4.0"
   },
