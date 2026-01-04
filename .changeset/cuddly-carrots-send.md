@@ -1,0 +1,5 @@
+---
+"@alphacifer/tsconfig": patch
+---
+
+release
