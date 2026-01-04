@@ -6,6 +6,7 @@
   "exports": {
     "./base": "./tsconfig.base.json",
     "./cmj": "./tsconfig.cmj.json",
+    "./elysia": "./tsconfig.elysia.json",
     "./esm": "./tsconfig.es.json",
     "./hono": "./tsconfig.hono.json",
     "./nest": "./tsconfig.nest.json",
