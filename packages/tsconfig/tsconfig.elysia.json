@@ -7,6 +7,11 @@
     "jsx": "react-jsx",
     "moduleDetection": "force",
     "noUncheckedSideEffectImports": true,
+    "paths": {
+      "~/*": [
+        "./*"
+      ]
+    },
     "sourceMap": true,
     "verbatimModuleSyntax": true
   }
