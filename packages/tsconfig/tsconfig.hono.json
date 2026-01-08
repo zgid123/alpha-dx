@@ -1,24 +1,18 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "esModuleInterop": true,
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
     "outDir": "dist",
     "paths": {
       "~/*": [
         "./*"
       ]
     },
-    "skipLibCheck": true,
-    "strict": true,
-    "target": "ESNext",
     "types": [
       "node"
     ],
+    "useDefineForClassFields": true,
     "verbatimModuleSyntax": true
   },
   "exclude": [
