@@ -33,7 +33,6 @@
     "ignoreUnknown": false,
     "includes": [
       "**",
-      "!**/*.d.ts",
       "!**/routeTree.gen.ts",
       "!**/node_modules/**/*.ts",
       "!**/node_modules/**/*.tsx"
