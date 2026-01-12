@@ -2,10 +2,7 @@
   "extends": "@alphacifer/tsconfig/esm",
   "compilerOptions": {
     "declaration": true,
-    "outDir": "lib",
-    "types": [
-      "vitest/globals"
-    ]
+    "outDir": "lib"
   },
   "include": [
     "src"
