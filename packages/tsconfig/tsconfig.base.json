@@ -17,6 +17,9 @@
     "sourceMap": false,
     "strict": true,
     "target": "esnext",
+    "types": [
+      "vitest/globals"
+    ],
     "useDefineForClassFields": true
   },
   "exclude": [
