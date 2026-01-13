@@ -1,5 +1,11 @@
 # @alphacifer/tsconfig
 
+## 0.0.13
+
+### Patch Changes
+
+- [#87](https://github.com/zgid123/alpha-dx/pull/87) [`7ce4950`](https://github.com/zgid123/alpha-dx/commit/7ce4950808c8d1931ac059a406e19beb3f8e4888) Thanks [@zgid123](https://github.com/zgid123)! - release
+
 ## 0.0.12
 
 ### Patch Changes
