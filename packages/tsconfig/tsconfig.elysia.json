@@ -3,7 +3,6 @@
   "compilerOptions": {
     "declaration": true,
     "declarationMap": true,
-    "exactOptionalPropertyTypes": true,
     "jsx": "react-jsx",
     "moduleDetection": "force",
     "noUncheckedSideEffectImports": true,
