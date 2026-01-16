@@ -1,5 +1,0 @@
----
-"@alphacifer/drizzle": patch
----
-
-release
