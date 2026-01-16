@@ -2,6 +2,9 @@
   "name": "@alphacifer/drizzle",
   "version": "0.0.2",
   "description": "Drizzle Setup Utils for Alpha's projects.",
+  "bin": {
+    "drizzle-cli": "./lib/cli.mjs"
+  },
   "exports": {
     "./config": {
       "import": {
@@ -9,8 +12,8 @@
         "default": "./lib/config.mjs"
       },
       "require": {
-        "types": "./lib/config.d.ts",
-        "default": "./lib/config.js"
+        "types": "./lib/config.d.cts",
+        "default": "./lib/config.cjs"
       }
     },
     "./core": {
@@ -19,8 +22,8 @@
         "default": "./lib/core.mjs"
       },
       "require": {
-        "types": "./lib/core.d.ts",
-        "default": "./lib/core.js"
+        "types": "./lib/core.d.cts",
+        "default": "./lib/core.cjs"
       }
     },
     "./factory": {
@@ -29,8 +32,8 @@
         "default": "./lib/factory.mjs"
       },
       "require": {
-        "types": "./lib/factory.d.ts",
-        "default": "./lib/factory.js"
+        "types": "./lib/factory.d.cts",
+        "default": "./lib/factory.cjs"
       }
     },
     "./pg": {
@@ -39,8 +42,8 @@
         "default": "./lib/pg.mjs"
       },
       "require": {
-        "types": "./lib/pg.d.ts",
-        "default": "./lib/pg.js"
+        "types": "./lib/pg.d.cts",
+        "default": "./lib/pg.cjs"
       }
     },
     "./testing": {
@@ -49,8 +52,8 @@
         "default": "./lib/testing.mjs"
       },
       "require": {
-        "types": "./lib/testing.d.ts",
-        "default": "./lib/testing.js"
+        "types": "./lib/testing.d.cts",
+        "default": "./lib/testing.cjs"
       }
     }
   },
@@ -74,7 +77,11 @@
     "build": "tsdown"
   },
   "dependencies": {
+    "@alphacifer/core-utils": "workspace:^",
+    "commander": "^14.0.2",
     "drizzle-orm": "^0.45.1",
+    "esbuild": "^0.27.2",
+    "esbuild-register": "^3.6.0",
     "pg": "^8.16.3"
   },
   "devDependencies": {
