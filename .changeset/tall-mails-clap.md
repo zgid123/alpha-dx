@@ -1,5 +1,0 @@
----
-"@alphacifer/hono": patch
----
-
-release
