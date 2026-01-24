@@ -44,8 +44,10 @@
     "build": "tsdown"
   },
   "dependencies": {
+    "@hono/standard-validator": "^0.2.2",
     "@hono/zod-validator": "^0.7.6",
-    "hono": "^4.11.3",
-    "zod": "^4.3.5"
+    "arktype": "^2.1.29",
+    "hono": "^4.11.5",
+    "zod": "^4.3.6"
   }
 }
