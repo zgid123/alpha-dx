@@ -52,11 +52,20 @@ interface IInvalidParamsParams {
 }
 
 export class HonoCommonError extends HonoError {
+  public static internalServer(): HonoError {
+    return new HonoCommonError({
+      status: 500,
+      code: 10_000,
+      name: 'INTERNAL_SERVER_ERROR',
+      message: 'Something went wrong!',
+    });
+  }
+
   public static invalidParams({ detail }: IInvalidParamsParams): HonoError {
     return new HonoCommonError({
       detail,
       status: 400,
-      code: 10_000,
+      code: 10_001,
       name: 'INVALID_PARAMS',
       message: 'Invalid params',
     });
