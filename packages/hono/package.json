@@ -49,5 +49,8 @@
     "arktype": "^2.1.29",
     "hono": "^4.11.5",
     "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@hono/node-server": "^1.19.9"
   }
 }
