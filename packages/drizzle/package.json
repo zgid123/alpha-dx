@@ -1,6 +1,6 @@
 {
   "name": "@alphacifer/drizzle",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Drizzle Setup Utils for Alpha's projects.",
   "bin": {
     "drizzle-cli": "./lib/cli.mjs"
