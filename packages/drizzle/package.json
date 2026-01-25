@@ -36,6 +36,16 @@
         "default": "./lib/factory.cjs"
       }
     },
+    "./parser": {
+      "import": {
+        "types": "./lib/parser.d.mts",
+        "default": "./lib/parser.mjs"
+      },
+      "require": {
+        "types": "./lib/parser.d.cts",
+        "default": "./lib/parser.cjs"
+      }
+    },
     "./pg": {
       "import": {
         "types": "./lib/pg.d.mts",

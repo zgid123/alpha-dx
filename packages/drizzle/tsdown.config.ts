@@ -11,6 +11,7 @@ export default defineConfig([
       'src/config.ts',
       'src/core.ts',
       'src/factory.ts',
+      'src/parser.ts',
       'src/pg.ts',
       'src/testing.ts',
     ],
