@@ -88,14 +88,14 @@
   },
   "dependencies": {
     "@alphacifer/core-utils": "workspace:^",
-    "commander": "^14.0.2",
-    "drizzle-orm": "^0.45.1",
-    "esbuild": "^0.27.2",
+    "commander": "^14.0.3",
+    "drizzle-orm": "^0.45.2",
+    "esbuild": "^0.28.0",
     "esbuild-register": "^3.6.0",
-    "pg": "^8.16.3"
+    "pg": "^8.20.0"
   },
   "devDependencies": {
-    "@types/pg": "^8.16.0",
-    "drizzle-kit": "^0.31.8"
+    "@types/pg": "^8.20.0",
+    "drizzle-kit": "^0.31.10"
   }
 }
