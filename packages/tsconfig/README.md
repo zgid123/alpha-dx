@@ -37,6 +37,25 @@ All tsconfig for Alpha's projects.
 }
 ```
 
+- elysia
+
+```json
+{
+  "extends": "@alphacifer/tsconfig/elysia",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "outDir": "dist"
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "lib",
+    "node_modules"
+  ]
+}
+```
+
 - es
 
 ```json
@@ -83,10 +102,7 @@ All tsconfig for Alpha's projects.
 {
   "extends": "@alphacifer/tsconfig/next-app",
   "compilerOptions": {
-    "baseUrl": "./src",
-    "paths": {
-      "~/*": ["./*"]
-    }
+    "baseUrl": "./src"
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"]
 }
