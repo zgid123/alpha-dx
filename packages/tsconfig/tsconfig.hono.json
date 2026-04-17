@@ -6,10 +6,10 @@
     "outDir": "dist",
     "paths": {
       "~/*": [
-        "./*"
+        "${configDir}/src/*"
       ],
       "#/*": [
-        "./*"
+        "${configDir}/src/*"
       ]
     },
     "verbatimModuleSyntax": true

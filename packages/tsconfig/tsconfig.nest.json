@@ -5,10 +5,10 @@
     "moduleResolution": "Node16",
     "paths": {
       "~/*": [
-        "./*"
+        "${configDir}/src/*"
       ],
       "#/*": [
-        "./*"
+        "${configDir}/src/*"
       ]
     },
     "strictNullChecks": false,

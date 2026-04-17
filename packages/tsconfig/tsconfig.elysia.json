@@ -8,10 +8,10 @@
     "noUncheckedSideEffectImports": true,
     "paths": {
       "~/*": [
-        "./*"
+        "${configDir}/src/*"
       ],
       "#/*": [
-        "./*"
+        "${configDir}/src/*"
       ]
     },
     "sourceMap": true,

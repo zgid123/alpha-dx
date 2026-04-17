@@ -3,10 +3,10 @@
   "compilerOptions": {
     "paths": {
       "~/*": [
-        "./*"
+        "${configDir}/src/*"
       ],
       "#/*": [
-        "./*"
+        "${configDir}/src/*"
       ]
     }
   }
