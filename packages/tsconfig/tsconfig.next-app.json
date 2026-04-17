@@ -7,10 +7,10 @@
     "moduleResolution": "bundler",
     "paths": {
       "~/*": [
-        "./*"
+        "${configDir}/src/*"
       ],
       "#/*": [
-        "./*"
+        "${configDir}/src/*"
       ]
     },
     "plugins": [
