@@ -47,10 +47,10 @@
     "@hono/standard-validator": "^0.2.2",
     "@hono/zod-validator": "^0.7.6",
     "arktype": "^2.2.0",
-    "hono": "^4.12.14",
+    "hono": "^4.12.15",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@hono/node-server": "^1.19.14"
+    "@hono/node-server": "^2.0.0"
   }
 }
