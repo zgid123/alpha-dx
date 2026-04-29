@@ -36,8 +36,8 @@
     "build": "tsdown"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.99.0",
-    "@tanstack/react-query-devtools": "^5.99.0",
+    "@tanstack/react-query": "^5.100.6",
+    "@tanstack/react-query-devtools": "^5.100.6",
     "immer": "^11.1.4",
     "react": "^19.2.5",
     "remeda": "^2.33.7",

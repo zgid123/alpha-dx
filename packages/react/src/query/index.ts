@@ -1,9 +1,13 @@
 export {
+  hydrate,
   type InitialDataFunction,
+  infiniteQueryOptions,
   MutationCache,
   QueryClient,
   QueryClientProvider,
   type QueryObserverResult,
+  type QueryOptions,
+  queryOptions,
   type RefetchOptions,
   type RefetchQueryFilters,
   type UseQueryResult,
