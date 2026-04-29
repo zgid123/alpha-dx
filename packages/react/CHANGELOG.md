@@ -1,5 +1,11 @@
 # @alphacifer/react
 
+## 0.1.3
+
+### Patch Changes
+
+- [#118](https://github.com/zgid123/alpha-dx/pull/118) [`765412a`](https://github.com/zgid123/alpha-dx/commit/765412aa35f4653e96d39a38465e80020b4e639e) Thanks [@zgid123](https://github.com/zgid123)! - release
+
 ## 0.1.2
 
 ### Patch Changes

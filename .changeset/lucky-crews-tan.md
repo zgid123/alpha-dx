@@ -1,5 +1,0 @@
----
-"@alphacifer/react": patch
----
-
-release
