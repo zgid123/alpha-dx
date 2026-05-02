@@ -1,5 +1,0 @@
----
-"@alphacifer/biome": patch
----
-
-release
