@@ -55,6 +55,11 @@
   "css": {
     "parser": {
       "tailwindDirectives": true
+    },
+    "formatter": {
+      "quoteStyle": "single",
+      "indentStyle": "space",
+      "indentWidth": 2
     }
   },
   "json": {
