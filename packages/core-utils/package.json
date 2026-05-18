@@ -116,12 +116,12 @@
     "build": "tsdown"
   },
   "dependencies": {
-    "date-fns": "^4.1.0",
-    "remeda": "^2.34.0",
-    "slugify": "^1.6.9",
-    "uniqid": "^5.4.0"
+    "date-fns": "4.1.0",
+    "remeda": "2.34.0",
+    "slugify": "1.6.9",
+    "uniqid": "5.4.0"
   },
   "devDependencies": {
-    "@types/uniqid": "^5.3.4"
+    "@types/uniqid": "5.3.4"
   }
 }
