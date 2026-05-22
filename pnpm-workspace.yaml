@@ -1,3 +1,6 @@
 packages:
   - '@types/**'
   - 'packages/**'
+allowBuilds:
+  esbuild: false
+  unrs-resolver: false

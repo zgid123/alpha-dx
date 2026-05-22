@@ -2,7 +2,7 @@ import { serve } from '@hono/node-server';
 import { type } from 'arktype';
 import { Hono, type ValidationTargets } from 'hono';
 
-import { arkValidator } from '../../core';
+import { arkValidator } from '../../arktype-validator';
 
 const userSchema = type({
   createdAt: 'Date',

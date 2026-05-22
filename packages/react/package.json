@@ -35,15 +35,32 @@
     "prepublish": "pnpm build",
     "build": "tsdown"
   },
+  "peerDependencies": {
+    "@tanstack/react-query": ">=5.100.6",
+    "@tanstack/react-query-devtools": ">=5.100.6",
+    "react": ">=19.2.5",
+    "zustand": ">=5.0.12"
+  },
+  "peerDependenciesMeta": {
+    "@tanstack/react-query": {
+      "optional": true
+    },
+    "@tanstack/react-query-devtools": {
+      "optional": true
+    },
+    "zustand": {
+      "optional": true
+    }
+  },
   "dependencies": {
-    "@tanstack/react-query": "5.100.6",
-    "@tanstack/react-query-devtools": "5.100.6",
     "immer": "11.1.4",
-    "react": "19.2.5",
-    "remeda": "2.34.0",
-    "zustand": "5.0.12"
+    "remeda": "2.34.0"
   },
   "devDependencies": {
-    "@types/react": "19.2.14"
+    "@tanstack/react-query": "5.100.6",
+    "@tanstack/react-query-devtools": "5.100.6",
+    "@types/react": "19.2.14",
+    "react": "19.2.5",
+    "zustand": "5.0.12"
   }
 }

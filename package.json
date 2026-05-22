@@ -13,7 +13,13 @@
     "release": "pnpm build && changeset version && changeset publish",
     "set-release": "changeset"
   },
-  "packageManager": "pnpm@10.2.1",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.1.2",
+      "onFail": "download"
+    }
+  },
   "devDependencies": {
     "@alphacifer/biome": "workspace:^",
     "@alphacifer/tsconfig": "workspace:^",

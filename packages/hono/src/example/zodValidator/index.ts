@@ -2,7 +2,7 @@ import { serve } from '@hono/node-server';
 import { Hono, type ValidationTargets } from 'hono';
 import { z } from 'zod';
 
-import { zValidator } from '../../core';
+import { zValidator } from '../../zod-validator';
 
 const baseSchema = z.object({
   id: z.bigint(),

@@ -3,14 +3,24 @@
   "version": "0.0.6",
   "description": "Hono Utils for Alpha's projects.",
   "exports": {
+    "./arktype-validator": {
+      "import": {
+        "types": "./lib/arktype-validator/index.d.mts",
+        "default": "./lib/arktype-validator/index.mjs"
+      },
+      "require": {
+        "types": "./lib/arktype-validator/index.d.cts",
+        "default": "./lib/arktype-validator/index.cjs"
+      }
+    },
     "./core": {
       "import": {
         "types": "./lib/core/index.d.mts",
         "default": "./lib/core/index.mjs"
       },
       "require": {
-        "types": "./lib/core/index.d.ts",
-        "default": "./lib/core/index.js"
+        "types": "./lib/core/index.d.cts",
+        "default": "./lib/core/index.cjs"
       }
     },
     "./testing": {
@@ -19,8 +29,18 @@
         "default": "./lib/testing/index.mjs"
       },
       "require": {
-        "types": "./lib/testing/index.d.ts",
-        "default": "./lib/testing/index.js"
+        "types": "./lib/testing/index.d.cts",
+        "default": "./lib/testing/index.cjs"
+      }
+    },
+    "./zod-validator": {
+      "import": {
+        "types": "./lib/zod-validator/index.d.mts",
+        "default": "./lib/zod-validator/index.mjs"
+      },
+      "require": {
+        "types": "./lib/zod-validator/index.d.cts",
+        "default": "./lib/zod-validator/index.cjs"
       }
     }
   },
@@ -43,14 +63,33 @@
     "prepublish": "pnpm build",
     "build": "tsdown"
   },
-  "dependencies": {
+  "peerDependencies": {
+    "@hono/standard-validator": ">=0.2.2",
+    "@hono/zod-validator": ">=0.7.6",
+    "arktype": ">=2.2.0",
+    "hono": ">=4.12.15",
+    "zod": ">=4.3.6"
+  },
+  "peerDependenciesMeta": {
+    "@hono/standard-validator": {
+      "optional": true
+    },
+    "@hono/zod-validator": {
+      "optional": true
+    },
+    "arktype": {
+      "optional": true
+    },
+    "zod": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@hono/node-server": "2.0.0",
     "@hono/standard-validator": "0.2.2",
     "@hono/zod-validator": "0.7.6",
     "arktype": "2.2.0",
     "hono": "4.12.15",
     "zod": "4.3.6"
-  },
-  "devDependencies": {
-    "@hono/node-server": "2.0.0"
   }
 }
