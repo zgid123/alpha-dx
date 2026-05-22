@@ -5,5 +5,17 @@ export default defineConfig({
   clean: true,
   outDir: 'lib',
   format: ['esm', 'cjs'],
-  entry: ['src/core/index.ts', 'src/testing/index.ts'],
+  external: [
+    '@hono/standard-validator',
+    '@hono/zod-validator',
+    'arktype',
+    'hono',
+    'zod',
+  ],
+  entry: [
+    'src/arktype-validator/index.ts',
+    'src/core/index.ts',
+    'src/testing/index.ts',
+    'src/zod-validator/index.ts',
+  ],
 });

@@ -1,12 +1,21 @@
 import { defineConfig } from 'tsdown/config';
 
+const external = [
+  'drizzle-kit',
+  'drizzle-orm',
+  'drizzle-orm/node-postgres',
+  'drizzle-orm/node-postgres/migrator',
+  'drizzle-orm/pg-core',
+  'pg',
+];
+
 export default defineConfig([
   {
     dts: true,
     clean: true,
     outDir: 'lib',
     format: ['esm', 'cjs'],
-    external: ['drizzle-kit'],
+    external,
     entry: [
       'src/config.ts',
       'src/core.ts',
@@ -21,7 +30,7 @@ export default defineConfig([
     clean: true,
     outDir: 'lib',
     format: 'esm',
-    external: ['drizzle-kit'],
+    external,
     entry: {
       cli: 'src/cli/index.ts',
     },
