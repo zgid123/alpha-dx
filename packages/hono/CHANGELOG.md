@@ -1,5 +1,13 @@
 # @alphacifer/hono
 
+## 0.0.8
+
+### Patch Changes
+
+- [#130](https://github.com/zgid123/alpha-dx/pull/130) [`98d3b55`](https://github.com/zgid123/alpha-dx/commit/98d3b55666633cea92b39a5b20c9d93d5cb0232c) Thanks [@zgid123](https://github.com/zgid123)! - release
+
+- [#128](https://github.com/zgid123/alpha-dx/pull/128) [`9287421`](https://github.com/zgid123/alpha-dx/commit/9287421aff8729b6ce9078d73300245f798e433e) Thanks [@zgid123](https://github.com/zgid123)! - release
+
 ## 0.0.7
 
 ### Patch Changes
