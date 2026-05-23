@@ -19,5 +19,4 @@ runs:
       uses: pnpm/action-setup@v4
       id: pnpm-install
       with:
-        version: 10.2.1
         run_install: false
