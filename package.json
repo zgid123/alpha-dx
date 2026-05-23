@@ -10,7 +10,7 @@
     "test": "vitest run --coverage",
     "update-packages": "pnpm update -i -r --latest",
     "build": "turbo run build",
-    "release": "pnpm build && changeset version && changeset publish",
+    "release": "pnpm build && changeset version && pnpm publish -r",
     "set-release": "changeset"
   },
   "devEngines": {
