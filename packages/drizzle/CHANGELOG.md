@@ -1,5 +1,11 @@
 # @alphacifer/drizzle
 
+## 0.0.6
+
+### Patch Changes
+
+- [#133](https://github.com/zgid123/alpha-dx/pull/133) [`41f02a6`](https://github.com/zgid123/alpha-dx/commit/41f02a65031aa8fc98a7da2a12def40c910e5775) Thanks [@zgid123](https://github.com/zgid123)! - release
+
 ## 0.0.5
 
 ### Patch Changes
