@@ -2,8 +2,9 @@
   "name": "@alphacifer/core-utils",
   "version": "0.0.9",
   "description": "Core Utils for Alpha's projects.",
-  "main": "./lib/index.mjs",
-  "types": "./lib/index.d.mts",
+  "main": "./lib/index.cjs",
+  "module": "./lib/index.mjs",
+  "types": "./lib/index.d.cts",
   "exports": {
     ".": {
       "import": {
@@ -11,8 +12,8 @@
         "default": "./lib/index.mjs"
       },
       "require": {
-        "types": "./lib/index.d.ts",
-        "default": "./lib/index.js"
+        "types": "./lib/index.d.cts",
+        "default": "./lib/index.cjs"
       }
     },
     "./arrayUtils": {
@@ -21,8 +22,8 @@
         "default": "./lib/arrayUtils.mjs"
       },
       "require": {
-        "types": "./lib/arrayUtils.d.ts",
-        "default": "./lib/arrayUtils.js"
+        "types": "./lib/arrayUtils.d.cts",
+        "default": "./lib/arrayUtils.cjs"
       }
     },
     "./dateUtils": {
@@ -31,8 +32,8 @@
         "default": "./lib/dateUtils.mjs"
       },
       "require": {
-        "types": "./lib/dateUtils.d.ts",
-        "default": "./lib/dateUtils.js"
+        "types": "./lib/dateUtils.d.cts",
+        "default": "./lib/dateUtils.cjs"
       }
     },
     "./objectUtils": {
@@ -41,8 +42,8 @@
         "default": "./lib/objectUtils.mjs"
       },
       "require": {
-        "types": "./lib/objectUtils.d.ts",
-        "default": "./lib/objectUtils.js"
+        "types": "./lib/objectUtils.d.cts",
+        "default": "./lib/objectUtils.cjs"
       }
     },
     "./remeda": {
@@ -51,8 +52,8 @@
         "default": "./lib/remeda.mjs"
       },
       "require": {
-        "types": "./lib/remeda.d.ts",
-        "default": "./lib/remeda.js"
+        "types": "./lib/remeda.d.cts",
+        "default": "./lib/remeda.cjs"
       }
     },
     "./slugify": {
@@ -61,8 +62,8 @@
         "default": "./lib/slugify.mjs"
       },
       "require": {
-        "types": "./lib/slugify.d.ts",
-        "default": "./lib/slugify.js"
+        "types": "./lib/slugify.d.cts",
+        "default": "./lib/slugify.cjs"
       }
     },
     "./stringUtils": {
@@ -71,8 +72,8 @@
         "default": "./lib/stringUtils.mjs"
       },
       "require": {
-        "types": "./lib/stringUtils.d.ts",
-        "default": "./lib/stringUtils.js"
+        "types": "./lib/stringUtils.d.cts",
+        "default": "./lib/stringUtils.cjs"
       }
     },
     "./uniqid": {
@@ -81,8 +82,8 @@
         "default": "./lib/uniqid.mjs"
       },
       "require": {
-        "types": "./lib/uniqid.d.ts",
-        "default": "./lib/uniqid.js"
+        "types": "./lib/uniqid.d.cts",
+        "default": "./lib/uniqid.cjs"
       }
     },
     "./urlUtils": {
@@ -91,8 +92,8 @@
         "default": "./lib/urlUtils.mjs"
       },
       "require": {
-        "types": "./lib/urlUtils.d.ts",
-        "default": "./lib/urlUtils.js"
+        "types": "./lib/urlUtils.d.cts",
+        "default": "./lib/urlUtils.cjs"
       }
     }
   },

@@ -1,0 +1,54 @@
+{
+  "name": "@alphacifer/authkit",
+  "version": "0.0.1",
+  "description": "Auth Kit for Alpha's projects.",
+  "exports": {
+    "./hash": {
+      "import": {
+        "types": "./lib/hash/index.d.mts",
+        "default": "./lib/hash/index.mjs"
+      },
+      "require": {
+        "types": "./lib/hash/index.d.cts",
+        "default": "./lib/hash/index.cjs"
+      }
+    },
+    "./jwt": {
+      "import": {
+        "types": "./lib/jwt.d.mts",
+        "default": "./lib/jwt.mjs"
+      },
+      "require": {
+        "types": "./lib/jwt.d.cts",
+        "default": "./lib/jwt.cjs"
+      }
+    }
+  },
+  "keywords": [
+    "alpha",
+    "dx",
+    "authkit"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "author": "Alpha",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zgid123/alpha-dx.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "prepublish": "pnpm build",
+    "build": "tsdown"
+  },
+  "dependencies": {
+    "jsonwebtoken": "9.0.3",
+    "nanoid": "5.1.11"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "9.0.10",
+    "@types/node": "25.9.0"
+  }
+}
