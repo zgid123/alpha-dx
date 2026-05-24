@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "testing": {
+      "source": "zgid123/skills",
+      "sourceType": "github",
+      "skillPath": "skills/testing/SKILL.md",
+      "computedHash": "37d07a193bfce8f05c54350c3f519132ab36cad38337db176e00950e44cdca32"
+    },
+    "typescript": {
+      "source": "zgid123/skills",
+      "sourceType": "github",
+      "skillPath": "skills/typescript/SKILL.md",
+      "computedHash": "7b6e3812b011f9b7f02885120c9c7eab0fd055b163943a9122530c5ee2fcb7a5"
+    }
+  }
+}
