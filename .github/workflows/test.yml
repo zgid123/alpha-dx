@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - packages/authkit
       - packages/core-utils
       - packages/react
 
