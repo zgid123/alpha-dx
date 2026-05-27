@@ -1,0 +1,5 @@
+---
+"@alphacifer/authkit": patch
+---
+
+release
