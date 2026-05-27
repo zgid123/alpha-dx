@@ -5,9 +5,9 @@ on:
     branches:
       - main
     paths:
-      - packages/authkit
-      - packages/core-utils
-      - packages/react
+      - 'packages/authkit/**'
+      - 'packages/core-utils/**'
+      - 'packages/react/**'
 
 jobs:
   test:
