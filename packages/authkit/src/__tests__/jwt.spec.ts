@@ -1,4 +1,19 @@
+import { generateKeyPairSync } from 'node:crypto';
+
 import { extractJWT, genToken } from '../jwt';
+
+const { publicKey: es256PublicKey, privateKey: es256PrivateKey } =
+  generateKeyPairSync('ec', {
+    namedCurve: 'prime256v1',
+    publicKeyEncoding: {
+      type: 'spki',
+      format: 'pem',
+    },
+    privateKeyEncoding: {
+      type: 'pkcs8',
+      format: 'pem',
+    },
+  });
 
 describe('#genToken', () => {
   const secretKey = 'test-secret';
@@ -91,6 +106,18 @@ describe('#genToken', () => {
       vi.useRealTimers();
     });
   });
+
+  suite('when algorithm is ES256', () => {
+    it('generates a valid jwt token using ECDSA', () => {
+      const token = genToken({
+        payload,
+        algorithm: 'ES256',
+        secretKey: es256PrivateKey,
+      });
+
+      expect(token).toBeTypeOf('string');
+    });
+  });
 });
 
 describe('#extractJWT', () => {
@@ -171,6 +198,24 @@ describe('#extractJWT', () => {
         token,
         secretKey,
         algorithms: ['HS512'],
+      });
+
+      expect(result).toBeDefined();
+    });
+  });
+
+  suite('when algorithm is ES256', () => {
+    it('validates it correctly using ECDSA', () => {
+      const token = genToken({
+        payload,
+        algorithm: 'ES256',
+        secretKey: es256PrivateKey,
+      });
+
+      const result = extractJWT({
+        token,
+        algorithms: ['ES256'],
+        secretKey: es256PublicKey,
       });
 
       expect(result).toBeDefined();

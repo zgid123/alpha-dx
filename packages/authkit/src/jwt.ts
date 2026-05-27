@@ -6,8 +6,8 @@ interface IExtractJWTParams {
   issuer?: string;
   subject?: string;
   secretKey?: string;
-  algorithms?: ('HS256' | 'HS512')[];
   audience?: VerifyOptions['audience'];
+  algorithms?: ('HS256' | 'HS512' | 'ES256')[];
 }
 
 export function extractJWT<T = unknown>({
@@ -31,10 +31,10 @@ interface IGenTokenParams {
   issuer?: string;
   subject?: string;
   secretKey?: string;
-  algorithm?: 'HS256' | 'HS512';
   audience?: VerifyOptions['audience'];
   expiresIn?: SignOptions['expiresIn'];
   notBefore?: SignOptions['notBefore'];
+  algorithm?: 'HS256' | 'HS512' | 'ES256';
   payload: Record<string, string | string[]>;
 }
 
