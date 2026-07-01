@@ -1,0 +1,43 @@
+{
+  "name": "@alphacifer/axios",
+  "version": "0.0.1",
+  "description": "Axios Wrapper for Alpha's projects.",
+  "main": "./lib/index.cjs",
+  "module": "./lib/index.mjs",
+  "types": "./lib/index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.mts",
+        "default": "./lib/index.mjs"
+      },
+      "require": {
+        "types": "./lib/index.d.cts",
+        "default": "./lib/index.cjs"
+      }
+    }
+  },
+  "keywords": [
+    "alpha",
+    "dx",
+    "axios"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "author": "Alpha",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zgid123/alpha-dx.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "prepublish": "pnpm build",
+    "build": "tsdown"
+  },
+  "dependencies": {
+    "@alphacifer/core-utils": "workspace:^",
+    "axios": "1.18.1"
+  }
+}

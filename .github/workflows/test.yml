@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - 'packages/axios/**'
       - 'packages/authkit/**'
       - 'packages/core-utils/**'
       - 'packages/react/**'
@@ -24,6 +25,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Build core-utils
+        run: pnpm --filter @alphacifer/core-utils build
 
       - name: Run tests
         run: pnpm test
