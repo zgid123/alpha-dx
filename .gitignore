@@ -20,3 +20,7 @@ coverage
 # turborepo
 #
 .turbo
+#
+# pnpm
+#
+.pnpm-store
