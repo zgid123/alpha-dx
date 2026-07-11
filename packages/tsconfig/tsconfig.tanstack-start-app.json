@@ -2,9 +2,6 @@
   "extends": "./tsconfig.react.json",
   "compilerOptions": {
     "paths": {
-      "~/*": [
-        "${configDir}/src/*"
-      ],
       "#/*": [
         "${configDir}/src/*"
       ]

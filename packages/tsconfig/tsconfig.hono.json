@@ -5,9 +5,6 @@
     "jsxImportSource": "hono/jsx",
     "outDir": "dist",
     "paths": {
-      "~/*": [
-        "${configDir}/src/*"
-      ],
       "#/*": [
         "${configDir}/src/*"
       ]
