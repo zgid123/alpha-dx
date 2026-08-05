@@ -1,5 +1,11 @@
 # @alphacifer/core-utils
 
+## 0.0.10
+
+### Patch Changes
+
+- [#147](https://github.com/zgid123/alpha-dx/pull/147) [`48be12a`](https://github.com/zgid123/alpha-dx/commit/48be12a17820928c43e0ff301d30e054ddcee5c7) Thanks [@zgid123](https://github.com/zgid123)! - release
+
 ## 0.0.9
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@alphacifer/core-utils",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Core Utils for Alpha's projects.",
   "main": "./lib/index.cjs",
   "module": "./lib/index.mjs",
