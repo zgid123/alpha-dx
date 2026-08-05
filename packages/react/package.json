@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "immer": "11.1.4",
-    "remeda": "2.34.0"
+    "remeda": "2.39.0"
   },
   "devDependencies": {
     "@tanstack/react-query": "5.100.6",
