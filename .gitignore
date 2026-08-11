@@ -11,6 +11,7 @@ yarn-error.log
 # build
 #
 lib
+dist
 !packages/eslint/lib
 #
 # vitest
