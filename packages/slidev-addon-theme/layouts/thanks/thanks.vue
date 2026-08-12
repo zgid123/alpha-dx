@@ -6,7 +6,7 @@ defineOptions({
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'slidev-layout thanks relative',
+  'alpha-thanks slidev-layout thanks',
 );
 </script>
 

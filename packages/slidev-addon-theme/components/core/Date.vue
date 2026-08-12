@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { formatDate } from '@alphacifer/core-utils/dateUtils';
+import { computed } from 'vue';
 
 import { useMergedUnoAttrs } from '../../utils/useMergedUnoAttrs';
 
@@ -14,11 +15,13 @@ const props = defineProps({
   },
 });
 
-const formattedDate = formatDate(props.date, {
-  format: 'dd/MM/yyyy',
+const formattedDate = computed(() => {
+  return formatDate(props.date ?? new Date(), {
+    format: 'dd/MM/yyyy',
+  });
 });
 
-const { className, forwardedAttrs } = useMergedUnoAttrs('slidev-addon-date');
+const { className, forwardedAttrs } = useMergedUnoAttrs('alpha-date');
 </script>
 
 <template>

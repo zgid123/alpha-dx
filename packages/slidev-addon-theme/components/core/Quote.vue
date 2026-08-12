@@ -24,11 +24,9 @@ const props = defineProps({
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'slidev-addon-quote flex flex-col',
+  'alpha-quote flex flex-col',
 );
-const titleClasses = computed(() => {
-  return mergeUno('text-center', props.titleClass);
-});
+const titleClasses = computed(() => mergeUno('text-center', props.titleClass));
 </script>
 
 <template>

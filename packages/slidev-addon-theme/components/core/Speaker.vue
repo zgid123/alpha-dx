@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { PropType } from 'vue';
+
 import { useMergedUnoAttrs } from '../../utils/useMergedUnoAttrs';
 
 defineOptions({
@@ -12,7 +14,7 @@ const props = defineProps({
     default: 'Alpha',
   },
   team: {
-    type: Array,
+    type: Array as PropType<string[]>,
     required: false,
     default: () => [],
   },
@@ -23,7 +25,7 @@ const props = defineProps({
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(() => [
-  'slidev-addon-speaker flex absolute bottom-[15px] right-[30px] flex-col',
+  'alpha-speaker flex absolute bottom-[15px] right-[30px] flex-col',
   props.team.length ? 'text-left gap-2' : undefined,
 ]);
 </script>

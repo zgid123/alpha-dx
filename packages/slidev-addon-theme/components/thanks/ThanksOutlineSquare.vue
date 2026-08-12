@@ -6,7 +6,7 @@ defineOptions({
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'slidev-addon-thanks-outline-square absolute rounded-2xl border-2 border-color-cyan-500',
+  'alpha-thanks-outline-square absolute rounded-2xl border-2 border-color-cyan-500',
 );
 </script>
 
