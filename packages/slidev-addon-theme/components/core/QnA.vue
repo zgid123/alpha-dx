@@ -5,15 +5,16 @@ defineOptions({
   inheritAttrs: false,
 });
 
-defineProps({
-  startDelay: {
-    type: Number,
-    default: 11_500,
-  },
+interface IQnAProps {
+  readonly startDelay?: number;
+}
+
+withDefaults(defineProps<IQnAProps>(), {
+  startDelay: 11_500,
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'slidev-addon-qna flex items-center gap-8 text-8xl font-bold color-[#2b90b6]',
+  'alpha-qna flex items-center gap-8 text-8xl font-bold color-[#2b90b6]',
 );
 </script>
 
@@ -21,9 +22,12 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
   <div
     v-bind="forwardedAttrs()"
     :class="className()"
+    aria-label="Questions and answers"
+    role="img"
   >
     <span
       v-motion
+      aria-hidden="true"
       :initial="{
         opacity: 0,
         x: -500,
@@ -44,6 +48,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     </span>
     <span
       v-motion
+      aria-hidden="true"
       :initial="{
         opacity: 1,
         y: -1_000
@@ -65,6 +70,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     </span>
     <span
       v-motion
+      aria-hidden="true"
       :initial="{ opacity: 0, x: 500, rotate: 360 }"
       :enter="{
         opacity: 1,

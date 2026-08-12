@@ -13,7 +13,7 @@ defineProps({
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'slidev-layout default toc-layout',
+  'alpha-table-of-contents slidev-layout default toc-layout',
 );
 </script>
 

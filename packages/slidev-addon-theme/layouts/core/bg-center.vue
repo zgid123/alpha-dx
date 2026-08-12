@@ -19,7 +19,7 @@ const style = computed(() => {
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'slidev-layout bg-center h-full grid place-content-center',
+  'alpha-bg-center slidev-layout bg-center h-full grid place-content-center',
 );
 </script>
 

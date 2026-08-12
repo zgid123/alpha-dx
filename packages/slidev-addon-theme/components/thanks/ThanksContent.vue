@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import type { MotionVariants, Variant } from '@vueuse/motion';
 
-import { useMergedUnoAttrs } from '../../utils/useMergedUnoAttrs';
-
-defineOptions({
-  inheritAttrs: false,
-});
-
 const { animation } = defineProps({
   animation: {
     type: Boolean,
@@ -60,18 +54,10 @@ const getMotionProps = ({
     initial,
   };
 };
-
-const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'slidev-addon-thanks-content relative h-full w-full',
-);
 </script>
 
 <template>
-  <div
-    v-bind="forwardedAttrs()"
-    :class="className()"
-  >
-    <ThanksSquare
+  <ThanksSquare
     v-motion
     v-bind="getMotionProps({
       enter: {
@@ -85,9 +71,9 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
         y: -100,
       },
     })"
-    class="absolute w-[150px] h-[150px] rotate-45 top-[50%] left-[40%] z-10"
-    />
-    <ThanksSquare
+    class="alpha-thanks-content absolute w-[150px] h-[150px] rotate-45 top-[50%] left-[40%] z-10"
+  />
+  <ThanksSquare
     v-motion
     v-bind="getMotionProps({
       initial: {
@@ -105,9 +91,9 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
         }
       },
     })"
-    class="w-[100px] h-[100px] top-[20%] rotate-45 left-[48%] translate-x-[-50%] translate-y-[-50%] opacity-[0.4]"
-    />
-    <ThanksSquare
+    class="alpha-thanks-content w-[100px] h-[100px] top-[20%] rotate-45 left-[48%] translate-x-[-50%] translate-y-[-50%] opacity-[0.4]"
+  />
+  <ThanksSquare
     v-motion
     v-bind="getMotionProps({
       initial: {
@@ -125,9 +111,9 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
         }
       },
     })"
-    class="w-[100px] h-[100px] top-[45%] rotate-45 left-[22%] translate-x-[-50%] translate-y-[-50%] opacity-[0.4]"
-    />
-    <ThanksSquare
+    class="alpha-thanks-content w-[100px] h-[100px] top-[45%] rotate-45 left-[22%] translate-x-[-50%] translate-y-[-50%] opacity-[0.4]"
+  />
+  <ThanksSquare
     v-motion
     v-bind="getMotionProps({
       initial: {
@@ -145,9 +131,9 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
         }
       },
     })"
-    class="w-[100px] h-[100px] bottom-0 rotate-45 left-[48%] translate-x-[-50%] translate-y-[-50%] opacity-[0.4]"
-    />
-    <ThanksOutlineSquare
+    class="alpha-thanks-content w-[100px] h-[100px] bottom-0 rotate-45 left-[48%] translate-x-[-50%] translate-y-[-50%] opacity-[0.4]"
+  />
+  <ThanksOutlineSquare
     v-motion
     v-bind="getMotionProps({
       initial: {
@@ -165,9 +151,9 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
         },
       },
     })"
-    class="w-[120px] h-[120px] rotate-45 top-[25%] left-[31%]"
-    />
-    <ThanksOutlineSquare
+    class="alpha-thanks-content w-[120px] h-[120px] rotate-45 top-[25%] left-[31%]"
+  />
+  <ThanksOutlineSquare
     v-motion
     v-bind="getMotionProps({
       initial: {
@@ -185,9 +171,9 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
         },
       },
     })"
-    class="w-[70px] h-[70px] rotate-45 top-[52%] left-[30%]"
-    />
-    <ThanksOutlineSquare
+    class="alpha-thanks-content w-[70px] h-[70px] rotate-45 top-[52%] left-[30%]"
+  />
+  <ThanksOutlineSquare
     v-motion
     v-bind="getMotionProps({
       initial: {
@@ -205,31 +191,30 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
         },
       },
     })"
-    class="w-[100px] h-[100px] rotate-45 top-[42%] left-[43%]"
-    />
+    class="alpha-thanks-content w-[100px] h-[100px] rotate-45 top-[42%] left-[43%]"
+  />
 
-    <div
-      v-motion
-      v-bind="getMotionProps({
-        initial: {
-          x: -80,
-          opacity: 0,
-        },
-        enter: {
-          x: -130,
-          y: -46,
-          opacity: 1,
-          transition: {
-            delay: 2_800,
-            duration: 1_000,
-          }
-        },
-      })"
-      class="color-[#2b90b6] text-3xl absolute top-[50%] left-[69%] translate-x-[-50%] translate-y-[-50%]"
-    >
-      Thank You
-      <br />
-      for your attention!
-    </div>
+  <div
+    v-motion
+    v-bind="getMotionProps({
+      initial: {
+        x: -80,
+        opacity: 0,
+      },
+      enter: {
+        x: -130,
+        y: -46,
+        opacity: 1,
+        transition: {
+          delay: 2_800,
+          duration: 1_000,
+        }
+      },
+    })"
+    class="alpha-thanks-content color-[#2b90b6] text-3xl absolute top-[50%] left-[69%] translate-x-[-50%] translate-y-[-50%]"
+  >
+    Thank You
+    <br />
+    for your attention!
   </div>
 </template>

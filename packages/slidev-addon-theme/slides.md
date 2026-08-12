@@ -11,7 +11,7 @@ transition: slide-left
 Creates a large heading with a soft reflected copy below it.
 
 <div class="mt-10 rounded-xl bg-slate-900/70 p-10 text-center">
-  <ReflectedTitle title="Alpha Slidev Addon" />
+  <ReflectedTitle title="Alpha's Slidev Addon" />
 </div>
 
 <div class="mt-8 text-sm">
@@ -19,7 +19,7 @@ Creates a large heading with a soft reflected copy below it.
 </div>
 
 ```vue
-<ReflectedTitle title="Alpha Slidev Addon" />
+<ReflectedTitle title="Alpha's Slidev Addon" />
 ```
 
 ---
@@ -125,7 +125,7 @@ clicks: 1
 
   <div class="mt-8 rounded-xl bg-emerald-500/10 p-6 text-sm">
     <code>center?: boolean</code> — start centered.<br>
-    <code>idle?: boolean</code> — disable the transition.
+    <code>idle?: boolean</code> — place the heading at the standard title position.
   </div>
 </div>
 

@@ -5,21 +5,20 @@ defineOptions({
   inheritAttrs: false,
 });
 
-defineProps({
-  title: {
-    type: String,
-    required: true,
-  },
-});
+interface IReflectedTitleProps {
+  readonly title: string;
+}
+
+defineProps<IReflectedTitleProps>();
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(`
-  slidev-addon-reflected-title
+  alpha-reflected-title
   relative
   text-5xl
   font-bold
   tracking-tight
   !text-[#a5f3fc]
-  after:content-[var(--title)]
+  after:content-[attr(data-title)]
   after:block
   after:mt-2
   after:absolute
@@ -40,10 +39,8 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(`
 <template>
   <h1
     v-bind="forwardedAttrs()"
-    :style="{
-      '--title': `'${title}'`,
-    }"
     :class="className()"
+    :data-title="title"
   >
     {{ title }}
   </h1>
