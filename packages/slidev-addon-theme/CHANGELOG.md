@@ -1,5 +1,11 @@
 # @alphacifer/slidev-addon-theme
 
+## 0.0.4
+
+### Patch Changes
+
+- [#157](https://github.com/zgid123/alpha-dx/pull/157) [`30d2206`](https://github.com/zgid123/alpha-dx/commit/30d220629f05ba527f685f9bb104b7ac7ce308aa) Thanks [@zgid123](https://github.com/zgid123)! - fix width of arc toc section
+
 ## 0.0.3
 
 ### Patch Changes
