@@ -4,6 +4,7 @@ title: Alpha Slidev Addon Preview
 addons:
   - ./slidev-addon-theme
 transition: slide-left
+hideInToc: true
 ---
 
 # ReflectedTitle
@@ -25,11 +26,75 @@ Creates a large heading with a soft reflected copy below it.
 ---
 layout: table-of-contents
 maxDepth: 1
+hideInToc: true
 ---
 
-# table-of-contents
+# Table Of Contents
 
 Lists every level-one heading in the deck. Set `maxDepth` to include deeper headings.
+
+---
+layout: arc-toc
+maxDepth: 1
+maxItems: 1
+hideInToc: true
+---
+
+# Arc TOC — 1 Section
+
+---
+layout: arc-toc
+maxDepth: 1
+maxItems: 2
+hideInToc: true
+---
+
+# Arc TOC — 2 Sections
+
+---
+layout: arc-toc
+maxDepth: 1
+maxItems: 3
+hideInToc: true
+---
+
+# Arc TOC — 3 Sections
+
+---
+layout: arc-toc
+maxDepth: 1
+maxItems: 4
+hideInToc: true
+---
+
+# Arc TOC — 4 Sections
+
+---
+layout: arc-toc
+maxDepth: 1
+maxItems: 5
+hideInToc: true
+---
+
+# Arc TOC — 5 Sections
+
+---
+layout: arc-toc
+maxDepth: 1
+maxItems: 6
+hideInToc: true
+---
+
+# Arc TOC — 6 Sections
+
+---
+layout: arc-toc
+maxDepth: 1
+maxItems: 7
+hideInToc: true
+---
+
+# Arc TOC — 7 Sections
 
 ---
 

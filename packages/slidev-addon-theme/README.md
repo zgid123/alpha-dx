@@ -18,7 +18,7 @@ addons:
 ## Core
 
 - Components: `Date`, `QnA`, `Quote`, `ReflectedTitle`, `Speaker`
-- Layouts: `bg-center`, `table-of-contents`
+- Layouts: `arc-toc`, `bg-center`, `table-of-contents`
 
 ## Shifting heading
 
@@ -39,6 +39,9 @@ pnpm --filter @alphacifer/slidev-addon-theme dev
 
 The preview deck is defined in `slides.md` and loads this package locally as a
 Slidev addon.
+
+The preview deck includes rendered arc TOC examples for every supported item
+count from one through seven.
 
 Build the preview without opening a browser:
 
