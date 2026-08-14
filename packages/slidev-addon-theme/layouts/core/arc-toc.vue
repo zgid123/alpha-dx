@@ -480,6 +480,10 @@ onBeforeUnmount(() => {
   text-decoration: none !important;
 }
 
+.toc-content :deep(.slidev-toc-list-level-1 > .slidev-toc-item > a) {
+  white-space: nowrap;
+}
+
 .toc-content :deep(.slidev-toc-item > a::before) {
   display: none;
 }
