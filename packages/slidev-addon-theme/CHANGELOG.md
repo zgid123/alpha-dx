@@ -1,5 +1,11 @@
 # @alphacifer/slidev-addon-theme
 
+## 0.0.3
+
+### Patch Changes
+
+- [#154](https://github.com/zgid123/alpha-dx/pull/154) [`a55ea9a`](https://github.com/zgid123/alpha-dx/commit/a55ea9a2bf2ddebd7e7aaf0c55081e42b031826e) Thanks [@zgid123](https://github.com/zgid123)! - add arc toc
+
 ## 0.0.2
 
 ### Patch Changes
