@@ -6,8 +6,8 @@ defineOptions({
 });
 
 interface ITransitionHeadingProps {
-  readonly center?: boolean;
   readonly idle?: boolean;
+  readonly center?: boolean;
 }
 
 const props = withDefaults(defineProps<ITransitionHeadingProps>(), {
@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<ITransitionHeadingProps>(), {
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(() => [
-  'alpha-transition-heading transition-all duration-700 ease-in-out absolute whitespace-nowrap',
+  'alpha-transition-heading transition-all duration-700 ease-in-out absolute w-[calc(100%-7rem)] whitespace-normal',
   {
     'top-[50%] left-[50%] translate-[-50%,-50%]': props.center,
     'top-[2.5rem] left-[3.5rem] translate-[0,0]': props.idle || !props.center,
