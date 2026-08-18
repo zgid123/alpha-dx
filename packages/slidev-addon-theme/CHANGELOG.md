@@ -1,5 +1,11 @@
 # @alphacifer/slidev-addon-theme
 
+## 0.0.5
+
+### Patch Changes
+
+- [#159](https://github.com/zgid123/alpha-dx/pull/159) [`7e8ca92`](https://github.com/zgid123/alpha-dx/commit/7e8ca922e83fb66592916bcfb24e102b350617d4) Thanks [@zgid123](https://github.com/zgid123)! - set width for transition heading
+
 ## 0.0.4
 
 ### Patch Changes
