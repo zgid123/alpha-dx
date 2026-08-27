@@ -430,11 +430,11 @@ importers:
         specifier: 5.0.12
         version: 5.0.12(@types/react@19.2.14)(immer@11.1.4)(react@19.2.5)
 
-  packages/slidev-addon-theme:
+  packages/slidev/addon-theme:
     dependencies:
       '@alphacifer/core-utils':
         specifier: workspace:^
-        version: link:../core-utils
+        version: link:../../core-utils
       '@vueuse/motion':
         specifier: 3.0.3
         version: 3.0.3(magicast@0.5.4)(vue@3.5.40(typescript@6.0.3))
@@ -4291,6 +4291,7 @@ packages:
   eslint@9.28.0:
     resolution: {integrity: sha512-ocgh41VhRlf9+fVpe7QKzwLj9c92fDiqOj8Y3Sd4/ZmVA4Btx4PlUYPq4pp9JDyupkf1upbEXecxL2mwNV7jPQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -9042,8 +9043,8 @@ snapshots:
       '@typescript-eslint/visitor-keys': 8.59.1
       debug: 4.4.3
       minimatch: 10.2.5
-      semver: 7.7.4
-      tinyglobby: 0.2.16
+      semver: 7.8.5
+      tinyglobby: 0.2.17
       ts-api-utils: 2.5.0(typescript@6.0.3)
       typescript: 6.0.3
     transitivePeerDependencies:
