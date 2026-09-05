@@ -8,6 +8,10 @@
     "includes": [
       "!**/*.d.ts",
       "!coverage",
+      "!**/dist",
+      "!**/lib",
+      "!**/.turbo",
+      "!**/.pnpm-store",
       "!**/routeTree.gen.ts",
       "!**/node_modules/**/*.ts",
       "!**/node_modules/**/*.tsx"

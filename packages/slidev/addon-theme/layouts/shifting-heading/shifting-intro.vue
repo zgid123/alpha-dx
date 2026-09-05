@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { useSlideContext } from '@slidev/client';
-import { ref, shallowRef, useSlots, watch, watchEffect } from 'vue';
+import {
+  computed,
+  onMounted,
+  provide,
+  ref,
+  shallowRef,
+  useSlots,
+  watch,
+  watchEffect,
+} from 'vue';
 
 import { collectShiftingIntroNodes } from '../../utils/shiftingHeading/collectShiftingIntroNodes';
 import { useMergedUnoAttrs } from '../../utils/useMergedUnoAttrs';
@@ -13,13 +22,33 @@ const context = useSlideContext();
 const slots = useSlots();
 const { $clicks } = context;
 
-const delayClass = ref('delay-600');
+let isInitialLoad = true;
+const isShifting = ref(false);
+
+onMounted(() => {
+  // Allow Slidev router to sync URL clicks on page reload before treating changes as user navigation
+  setTimeout(() => {
+    isInitialLoad = false;
+  }, 100);
+});
+
+provide('SLIDEV_LAYOUT_SHIFTING_INTRO', {
+  clicks: $clicks,
+  active: computed(() => $clicks.value > 0),
+  isShifting: computed(() => isShifting.value),
+});
 
 watch($clicks, (newVal, oldVal) => {
-  if (newVal > oldVal) {
-    delayClass.value = 'delay-600';
+  if (isInitialLoad) {
+    isShifting.value = false;
+
+    return;
+  }
+
+  if (oldVal === 0 && newVal > 0) {
+    isShifting.value = true;
   } else {
-    delayClass.value = 'delay-0';
+    isShifting.value = false;
   }
 });
 
@@ -58,10 +87,9 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
       class="hidden"
     />
     <div
-      class="transition-all duration-1000"
       :class="[
         $clicks > 0 ? 'opacity-100' : 'opacity-0',
-        delayClass,
+        isShifting ? 'transition-all duration-1000 delay-600' : 'transition-none delay-0',
       ]"
     >
       <template v-for="(content) in nodes.contents" :key="content.key">

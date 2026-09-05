@@ -2,7 +2,7 @@
 theme: seriph
 title: Alpha Slidev Addon Preview
 addons:
-  - ./slidev-addon-theme
+  - ./addon-theme
 transition: slide-left
 hideInToc: true
 ---
@@ -334,6 +334,523 @@ const mergeThemeClasses = createUnoClassMerger({
     utility.startsWith('slide-accent-') ? ['slide-accent'] : undefined,
 })
 ```
+
+---
+
+# HexTriad
+
+3-part interlocking hexagon diagram for comparing key pillars, concepts, or steps.
+
+<div class="mt-4 flex items-center justify-center rounded-xl bg-slate-900/40 p-4">
+  <HexTriad>
+    <HexTriadCallout>
+      <HexTriadBadge>01</HexTriadBadge>
+      <HexTriadHeading>Performance</HexTriadHeading>
+      <HexTriadContent>Fast builds, instant feedback, and zero-overhead runtime.</HexTriadContent>
+    </HexTriadCallout>
+    <HexTriadCallout>
+      <HexTriadBadge>02</HexTriadBadge>
+      <HexTriadHeading>Reliability</HexTriadHeading>
+      <HexTriadContent>Strict type safety paired with deterministic test suites.</HexTriadContent>
+    </HexTriadCallout>
+    <HexTriadCallout>
+      <HexTriadBadge>03</HexTriadBadge>
+      <HexTriadHeading>Scalability</HexTriadHeading>
+      <HexTriadContent>Seamless growth across packages, tools, and workflows.</HexTriadContent>
+    </HexTriadCallout>
+  </HexTriad>
+</div>
+
+<div class="mt-4 text-sm">
+  <code>items?: IHexTriadItem[]</code> · <code>title?: string</code> · <code>subtitle?: string</code>
+</div>
+
+```vue
+<HexTriad>
+  <HexTriadCallout>
+    <HexTriadBadge>01</HexTriadBadge>
+    <HexTriadHeading>Performance</HexTriadHeading>
+    <HexTriadContent>Fast builds, instant feedback, and zero-overhead runtime.</HexTriadContent>
+  </HexTriadCallout>
+  <HexTriadCallout>
+    <HexTriadBadge>02</HexTriadBadge>
+    <HexTriadHeading>Reliability</HexTriadHeading>
+    <HexTriadContent>Strict type safety paired with deterministic test suites.</HexTriadContent>
+  </HexTriadCallout>
+  <HexTriadCallout>
+    <HexTriadBadge>03</HexTriadBadge>
+    <HexTriadHeading>Scalability</HexTriadHeading>
+    <HexTriadContent>Seamless growth across packages, tools, and workflows.</HexTriadContent>
+  </HexTriadCallout>
+</HexTriad>
+```
+
+---
+
+# HorizCard
+
+Card component with step ribbon badge, chamfered corner with organic accent blob, and optional icon.
+
+<div class="mt-8 flex items-center justify-center gap-8">
+  <HorizCard
+    step="01"
+    title="Lorem Ipsum"
+    description="Lorem ipsum dolor sit amet, nibh est. A magna maecenas, quam magna nec quis, lorem nunc. Suspendisse viverra sodales mauris, cras pharetra proin egestas."
+    icon="default"
+  />
+  <HorizCard
+    step="02"
+    title="Clean Layout"
+    description="When an icon is omitted, the card body automatically adapts to provide a balanced, spacious text layout."
+    color="#2563eb"
+  />
+</div>
+
+---
+
+# VertCard
+
+Vertical card component with step ribbon badge, top-right diagonal stripes, organic bottom-left accent blob, and optional icon.
+
+<div class="mt-4 flex items-center justify-center gap-8 scale-85">
+  <VertCard
+    step="01"
+    icon="default"
+    variant="outside"
+  >
+    <VertCardTitle>Outside Badge</VertCardTitle>
+    <VertCardContent>
+      Default 'outside' variant showing the ribbon step badge anchored to the outer left border.
+    </VertCardContent>
+  </VertCard>
+  <VertCard
+    variant="none"
+    color="#e76832"
+    text-color="var(--alpha-academic-primary)"
+    :dots="false"
+  >
+    <VertCardTitle>Sự cố có thể lan rộng</VertCardTitle>
+    <VertCardContent>
+      Một lỗ hổng trong CSDL có thể dẫn đến việc dữ liệu của hàng loạt người dùng bị rò rỉ hoặc truy cập trái phép cùng lúc.
+    </VertCardContent>
+  </VertCard>
+  <VertCard
+    step="03"
+    color="#2563eb"
+  >
+    <VertCardTitle>Clean Layout</VertCardTitle>
+    <VertCardContent>
+      When an icon is omitted, the vertical card body automatically adapts to provide a balanced, spacious text layout.
+    </VertCardContent>
+  </VertCard>
+</div>
+
+---
+
+# QuadHub
+
+4-part circular hub infographic with concentric quadrant blocks, optional icons, and symmetrical callouts.
+
+<div class="mt-4 flex items-center justify-center">
+  <QuadHub>
+    <QuadHubCallout>
+      <QuadHubHeading>Add Text Here</QuadHubHeading>
+      <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
+    </QuadHubCallout>
+    <QuadHubCallout>
+      <QuadHubHeading>Add Text Here</QuadHubHeading>
+      <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
+    </QuadHubCallout>
+    <QuadHubCallout>
+      <QuadHubHeading>Add Text Here</QuadHubHeading>
+      <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
+    </QuadHubCallout>
+    <QuadHubCallout>
+      <QuadHubHeading>Add Text Here</QuadHubHeading>
+      <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
+    </QuadHubCallout>
+  </QuadHub>
+</div>
+
+<div class="mt-2 text-sm">
+  <code>title?: string</code> · <code>subtitle?: string</code> · <code>height?: number | string</code> · <code>animation?: boolean</code>
+</div>
+
+```vue
+<QuadHub title="4 Parts" subtitle="Infographics">
+  <QuadHubCallout>
+    <QuadHubHeading>Add Text Here</QuadHubHeading>
+    <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
+  </QuadHubCallout>
+  <QuadHubCallout>
+    <QuadHubHeading>Add Text Here</QuadHubHeading>
+    <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
+  </QuadHubCallout>
+  <QuadHubCallout>
+    <QuadHubHeading>Add Text Here</QuadHubHeading>
+    <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
+  </QuadHubCallout>
+  <QuadHubCallout>
+    <QuadHubHeading>Add Text Here</QuadHubHeading>
+    <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
+  </QuadHubCallout>
+</QuadHub>
+```
+
+---
+
+# QuadHub — Optional Icons & Custom Slots
+
+Icons inside each quadrant square are optional. Pass `:icon="false"` to `<QuadHubCallout>` to omit them.
+
+<div class="mt-4 flex items-center justify-center">
+  <QuadHub
+    title="Clean"
+    subtitle="Without Icons"
+  >
+    <QuadHubCallout :icon="false">
+      <QuadHubHeading>Strategy</QuadHubHeading>
+      <QuadHubContent>Clear roadmap and measurable quarterly milestones.</QuadHubContent>
+    </QuadHubCallout>
+    <QuadHubCallout :icon="false">
+      <QuadHubHeading>Execution</QuadHubHeading>
+      <QuadHubContent>Fast feedback loops and automated deployment pipelines.</QuadHubContent>
+    </QuadHubCallout>
+    <QuadHubCallout :icon="false">
+      <QuadHubHeading>Security</QuadHubHeading>
+      <QuadHubContent>End-to-end encryption and continuous posture checks.</QuadHubContent>
+    </QuadHubCallout>
+    <QuadHubCallout :icon="false">
+      <QuadHubHeading>Scale</QuadHubHeading>
+      <QuadHubContent>Distributed edge caching with zero-downtime rollouts.</QuadHubContent>
+    </QuadHubCallout>
+  </QuadHub>
+</div>
+
+```vue
+<QuadHub
+  title="Clean"
+  subtitle="Without Icons"
+>
+  <QuadHubCallout :icon="false">
+    <QuadHubHeading>Strategy</QuadHubHeading>
+    <QuadHubContent>Clear roadmap and measurable quarterly milestones.</QuadHubContent>
+  </QuadHubCallout>
+  <QuadHubCallout :icon="false">
+    <QuadHubHeading>Execution</QuadHubHeading>
+    <QuadHubContent>Fast feedback loops and automated deployment pipelines.</QuadHubContent>
+  </QuadHubCallout>
+  <QuadHubCallout :icon="false">
+    <QuadHubHeading>Security</QuadHubHeading>
+    <QuadHubContent>End-to-end encryption and continuous posture checks.</QuadHubContent>
+  </QuadHubCallout>
+  <QuadHubCallout :icon="false">
+    <QuadHubHeading>Scale</QuadHubHeading>
+    <QuadHubContent>Distributed edge caching with zero-downtime rollouts.</QuadHubContent>
+  </QuadHubCallout>
+</QuadHub>
+```
+
+---
+
+# QuadHub — Composition & Icons
+
+Configure custom colors and UnoCSS icons directly on `<QuadHubCallout color="..." icon="...">`.
+
+<div class="mt-4 flex items-center justify-center">
+  <QuadHub title="4 mối đe dọa DBMS">
+    <QuadHubCallout color="#f29e4b" icon="i-lucide-terminal-square">
+      <QuadHubHeading>SQL Injection · C/I</QuadHubHeading>
+      <QuadHubContent>Input độc hại thay đổi câu SQL, dẫn đến đọc hoặc sửa dữ liệu trái phép.</QuadHubContent>
+    </QuadHubCallout>
+    <QuadHubCallout color="#a4cb81" icon="i-lucide-user-round-search">
+      <QuadHubHeading>Insider Threat · C</QuadHubHeading>
+      <QuadHubContent>Người nội bộ lạm dụng quyền hợp lệ để xem dữ liệu ngoài nhu cầu công việc.</QuadHubContent>
+    </QuadHubCallout>
+    <QuadHubCallout color="#62b6a8" icon="i-lucide-key-round">
+      <QuadHubHeading>Privilege Abuse · C/I</QuadHubHeading>
+      <QuadHubContent>Quyền được cấp rộng hơn nhiệm vụ, làm tăng thiệt hại khi xảy ra sai sót hoặc chiếm đoạt.</QuadHubContent>
+    </QuadHubCallout>
+    <QuadHubCallout color="#e9717a" icon="i-lucide-file-lock-2">
+      <QuadHubHeading>Ransomware · I/A</QuadHubHeading>
+      <QuadHubContent>Dữ liệu bị mã hóa hoặc phá hoại, khiến dịch vụ không thể tiếp tục hoạt động.</QuadHubContent>
+    </QuadHubCallout>
+  </QuadHub>
+</div>
+
+```vue
+<QuadHub title="4 mối đe dọa DBMS">
+  <QuadHubCallout color="#f29e4b" icon="i-lucide-terminal-square">
+    <QuadHubHeading>SQL Injection · C/I</QuadHubHeading>
+    <QuadHubContent>Input độc hại thay đổi câu SQL, dẫn đến đọc hoặc sửa dữ liệu trái phép.</QuadHubContent>
+  </QuadHubCallout>
+  <QuadHubCallout color="#a4cb81" icon="i-lucide-user-round-search">
+    <QuadHubHeading>Insider Threat · C</QuadHubHeading>
+    <QuadHubContent>Người nội bộ lạm dụng quyền hợp lệ để xem dữ liệu ngoài nhu cầu công việc.</QuadHubContent>
+  </QuadHubCallout>
+  <QuadHubCallout color="#62b6a8" icon="i-lucide-key-round">
+    <QuadHubHeading>Privilege Abuse · C/I</QuadHubHeading>
+    <QuadHubContent>Quyền được cấp rộng hơn nhiệm vụ, làm tăng thiệt hại khi xảy ra sai sót hoặc chiếm đoạt.</QuadHubContent>
+  </QuadHubCallout>
+  <QuadHubCallout color="#e9717a" icon="i-lucide-file-lock-2">
+    <QuadHubHeading>Ransomware · I/A</QuadHubHeading>
+    <QuadHubContent>Dữ liệu bị mã hóa hoặc phá hoại, khiến dịch vụ không thể tiếp tục hoạt động.</QuadHubContent>
+  </QuadHubCallout>
+</QuadHub>
+```
+
+---
+
+# ChevronCard
+
+Horizontal process step card with an indented chevron badge on the left and rounded body on the right.
+
+<div class="mt-8 flex flex-col items-center justify-center gap-4">
+  <ChevronCard step="01">
+    <ChevronCardHeading>Placeholder Text</ChevronCardHeading>
+    <ChevronCardContent>
+      This is a sample text. You simply add your own text and description here. This text is fully editable.
+    </ChevronCardContent>
+  </ChevronCard>
+</div>
+
+```vue
+<ChevronCard step="01" color="#f59e0b">
+  <ChevronCardHeading>Placeholder Text</ChevronCardHeading>
+  <ChevronCardContent>
+    This is a sample text. You simply add your own text and description here. This text is fully editable.
+  </ChevronCardContent>
+</ChevronCard>
+```
+
+---
+
+# ChevronCard — Process Flow
+
+Stack multiple cards to build sequential process steps with custom colors and slots.
+
+<div class="mt-4 grid grid-cols-2 gap-4">
+  <ChevronCard step="01" color="#f59e0b">
+    <ChevronCardHeading>Discovery & Research</ChevronCardHeading>
+    <ChevronCardContent>
+      Analyze requirements, user journeys, and core architectural assumptions.
+    </ChevronCardContent>
+  </ChevronCard>
+  <ChevronCard step="02" color="#10b981">
+    <ChevronCardHeading>Design & Prototype</ChevronCardHeading>
+    <ChevronCardContent>
+      Build high-fidelity wireframes, interactive UI widgets, and API contracts.
+    </ChevronCardContent>
+  </ChevronCard>
+  <ChevronCard step="03" color="#06b6d4">
+    <ChevronCardHeading>Build & Verification</ChevronCardHeading>
+    <ChevronCardContent>
+      Implement type-safe components with automated testing and lint enforcement.
+    </ChevronCardContent>
+  </ChevronCard>
+  <ChevronCard step="04" color="#f43f5e">
+    <ChevronCardHeading>Deploy & Scale</ChevronCardHeading>
+    <ChevronCardContent>
+      Roll out continuous delivery pipelines with distributed edge monitoring.
+    </ChevronCardContent>
+  </ChevronCard>
+</div>
+
+---
+
+# ArrowTriad
+
+Three-way curved arrow infographic with concentric dashed guide lines and three content blocks.
+
+<ArrowTriad>
+  <ArrowTriadCallout>
+    <ArrowTriadHeading>Title Text Here</ArrowTriadHeading>
+    <ArrowTriadContent>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+    </ArrowTriadContent>
+  </ArrowTriadCallout>
+  <ArrowTriadCallout>
+    <ArrowTriadHeading>Title Text Here</ArrowTriadHeading>
+    <ArrowTriadContent>
+      Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo cupidatat non proident, sunt
+    </ArrowTriadContent>
+  </ArrowTriadCallout>
+  <ArrowTriadCallout>
+    <ArrowTriadHeading>Title Text Here</ArrowTriadHeading>
+    <ArrowTriadContent>
+      Magna aliqua ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    </ArrowTriadContent>
+  </ArrowTriadCallout>
+</ArrowTriad>
+
+---
+
+# ArcArrowProcessArrow (Single Arrow)
+
+Standalone chevron arrow component matching the design reference.
+
+<div class="w-full flex items-center justify-center py-12">
+  <ArcArrowProcessArrow :width="380" :height="215" color="#6fa3b5" gradient-end="#8cb8c8" />
+</div>
+
+---
+
+# ArcArrowProcess (4 Arrows)
+
+U-shaped curved process flow with interlocking chevron arrows and outline callout icons.
+
+<ArcArrowProcess :count="4">
+  <ArcArrowProcessCallout>
+    <ArcArrowProcessHeading>Heading Here</ArcArrowProcessHeading>
+    <ArcArrowProcessContent>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+    </ArcArrowProcessContent>
+  </ArcArrowProcessCallout>
+  <ArcArrowProcessCallout>
+    <ArcArrowProcessHeading>Heading Here</ArcArrowProcessHeading>
+    <ArcArrowProcessContent>
+      Sed do eiusmod tempor incididunt ut labore et lorem ipsum dolor sit amet, consectetur adipiscing elit,.
+    </ArcArrowProcessContent>
+  </ArcArrowProcessCallout>
+  <ArcArrowProcessCallout>
+    <ArcArrowProcessHeading>Heading Here</ArcArrowProcessHeading>
+    <ArcArrowProcessContent>
+      Tempor incididunt ut laborelorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod et .
+    </ArcArrowProcessContent>
+  </ArcArrowProcessCallout>
+  <ArcArrowProcessCallout>
+    <ArcArrowProcessHeading>Heading Here</ArcArrowProcessHeading>
+    <ArcArrowProcessContent>
+      Eiusmod tempor incididunt ut labore lorem ipsum dolor sit amet, cons ect etur adipiscing elit, sed .
+    </ArcArrowProcessContent>
+  </ArcArrowProcessCallout>
+</ArcArrowProcess>
+
+---
+
+# ArcArrowProcess (3 Arrows)
+
+Symmetrical 3-stage U-curve flow with descending, trough, and ascending interlocking chevron arrows.
+
+<ArcArrowProcess :count="3">
+  <ArcArrowProcessCallout>
+    <ArcArrowProcessHeading>Discovery & Plan</ArcArrowProcessHeading>
+    <ArcArrowProcessContent>
+      Analyze domain architecture and specify component contracts with full type safety.
+    </ArcArrowProcessContent>
+  </ArcArrowProcessCallout>
+  <ArcArrowProcessCallout>
+    <ArcArrowProcessHeading>Implementation</ArcArrowProcessHeading>
+    <ArcArrowProcessContent>
+      Construct parametric SVG geometry with exact notch and arrowhead interlocking.
+    </ArcArrowProcessContent>
+  </ArcArrowProcessCallout>
+  <ArcArrowProcessCallout>
+    <ArcArrowProcessHeading>Verification & Ship</ArcArrowProcessHeading>
+    <ArcArrowProcessContent>
+      Execute comprehensive Vitest suites, Biome enforcement, and Slidev production build.
+    </ArcArrowProcessContent>
+  </ArcArrowProcessCallout>
+</ArcArrowProcess>
+
+---
+
+# ArcArrowProcess (2 Arrows)
+
+Dynamic arrow count automatically matches the 2 provided text blocks.
+
+<ArcArrowProcess>
+  <ArcArrowProcessCallout>
+    <ArcArrowProcessHeading>Discovery & Strategy</ArcArrowProcessHeading>
+    <ArcArrowProcessContent>
+      Analyze system architecture, formulate requirements, and define execution blueprint.
+    </ArcArrowProcessContent>
+  </ArcArrowProcessCallout>
+  <ArcArrowProcessCallout>
+    <ArcArrowProcessHeading>Implementation & Delivery</ArcArrowProcessHeading>
+    <ArcArrowProcessContent>
+      Execute precision implementations with strict test verification and ship to production.
+    </ArcArrowProcessContent>
+  </ArcArrowProcessCallout>
+</ArcArrowProcess>
+
+---
+
+# ArcCompare
+
+Opposing curved comparison diagram with edge project hubs, numbered arc nodes, and central versus divider.
+
+<ArcCompare />
+
+---
+
+# ArcCompare (Compound Structure)
+
+Customizable opposing comparison using `ArcCompareLeft`, `ArcCompareRight`, `ArcCompareTitle`, and `ArcCompareContents`.
+
+<ArcCompare>
+  <ArcCompareLeft color="#ea580c">
+    <ArcCompareTitle>Traditional<br />Monolith</ArcCompareTitle>
+    <ArcCompareContents>
+      <ArcCompareCallout>
+        <ArcCompareBadge>01</ArcCompareBadge>
+        <ArcCompareHeading>Coupled State</ArcCompareHeading>
+        <ArcCompareContent>
+          Shared database schemas create cross-team deployment bottlenecks.
+        </ArcCompareContent>
+      </ArcCompareCallout>
+      <ArcCompareCallout>
+        <ArcCompareBadge>02</ArcCompareBadge>
+        <ArcCompareHeading>Vertical Scale</ArcCompareHeading>
+        <ArcCompareContent>
+          Requires upgrading single instances with exponential cost increases.
+        </ArcCompareContent>
+      </ArcCompareCallout>
+      <ArcCompareCallout>
+        <ArcCompareBadge>03</ArcCompareBadge>
+        <ArcCompareHeading>Single Failure</ArcCompareHeading>
+        <ArcCompareContent>
+          Unchecked memory leaks or crashes can bring down the entire system.
+        </ArcCompareContent>
+      </ArcCompareCallout>
+    </ArcCompareContents>
+  </ArcCompareLeft>
+
+  <ArcCompareRight color="#0284c7">
+    <ArcCompareTitle>Distributed<br />Microservices</ArcCompareTitle>
+    <ArcCompareContents>
+      <ArcCompareCallout>
+        <ArcCompareBadge>01</ArcCompareBadge>
+        <ArcCompareHeading>Bounded Context</ArcCompareHeading>
+        <ArcCompareContent>
+          Autonomous services communicate over defined asynchronous events.
+        </ArcCompareContent>
+      </ArcCompareCallout>
+      <ArcCompareCallout>
+        <ArcCompareBadge>02</ArcCompareBadge>
+        <ArcCompareHeading>Elastic Scale</ArcCompareHeading>
+        <ArcCompareContent>
+          Horizontal autoscaling responds dynamically to spike traffic demand.
+        </ArcCompareContent>
+      </ArcCompareCallout>
+      <ArcCompareCallout>
+        <ArcCompareBadge>03</ArcCompareBadge>
+        <ArcCompareHeading>Isolated Faults</ArcCompareHeading>
+        <ArcCompareContent>
+          Failures remain localized without cascading across service domains.
+        </ArcCompareContent>
+      </ArcCompareCallout>
+    </ArcCompareContents>
+  </ArcCompareRight>
+</ArcCompare>
+
+---
+
+# ArcCompare (4 Points)
+
+Parametric 4-criteria layout using `:count="4"`.
+
+<ArcCompare :count="4" />
 
 ---
 layout: thanks

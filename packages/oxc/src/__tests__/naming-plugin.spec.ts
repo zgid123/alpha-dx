@@ -1,4 +1,4 @@
-import namingPlugin from '../naming-plugin.ts';
+import namingPlugin from '../naming-plugin';
 
 interface IReportResult {
   messageId: string;
@@ -58,58 +58,47 @@ function lintTypeAliasName(name: string): IReportResult[] {
 }
 
 describe('naming plugin', () => {
-  it.each([
-    'IUser',
-    'IURLParser',
-    'I1',
-  ])('accepts the interface name %s', (name) => {
-    expect(lintInterfaceName(name)).toHaveLength(0);
-  });
+  it.each(['IUser', 'IURLParser', 'I1'])(
+    'accepts the interface name %s',
+    (name) => {
+      expect(lintInterfaceName(name)).toHaveLength(0);
+    },
+  );
 
-  it.each([
-    'User',
-    'Interface',
-    'Iuser',
-    'IURL',
-    'I_User',
-  ])('rejects the interface name %s', (name) => {
-    expect(lintInterfaceName(name)).toHaveLength(1);
-  });
+  it.each(['User', 'Interface', 'Iuser', 'IURL', 'I_User'])(
+    'rejects the interface name %s',
+    (name) => {
+      expect(lintInterfaceName(name)).toHaveLength(1);
+    },
+  );
 
-  it.each([
-    'TUser',
-    'TURLParser',
-    'T1',
-  ])('accepts the type alias name %s', (name) => {
-    expect(lintTypeAliasName(name)).toHaveLength(0);
-  });
+  it.each(['TUser', 'TURLParser', 'T1'])(
+    'accepts the type alias name %s',
+    (name) => {
+      expect(lintTypeAliasName(name)).toHaveLength(0);
+    },
+  );
 
-  it.each([
-    'User',
-    'Thing',
-    'Tuser',
-    'TURL',
-    'T_User',
-  ])('rejects the type alias name %s', (name) => {
-    expect(lintTypeAliasName(name)).toHaveLength(1);
-  });
+  it.each(['User', 'Thing', 'Tuser', 'TURL', 'T_User'])(
+    'rejects the type alias name %s',
+    (name) => {
+      expect(lintTypeAliasName(name)).toHaveLength(1);
+    },
+  );
 
-  it.each([
-    'User',
-    'URLParser',
-    'UserURL',
-    'A',
-  ])('accepts the class name %s', (name) => {
-    expect(lintClassName(name)).toHaveLength(0);
-  });
+  it.each(['User', 'URLParser', 'UserURL', 'A'])(
+    'accepts the class name %s',
+    (name) => {
+      expect(lintClassName(name)).toHaveLength(0);
+    },
+  );
 
-  it.each([
-    'user',
-    'XML',
-    'user_service',
-  ])('rejects the class name %s', (name) => {
-    expect(lintClassName(name)).toHaveLength(1);
-  });
+  it.each(['user', 'XML', 'user_service'])(
+    'rejects the class name %s',
+    (name) => {
+      expect(lintClassName(name)).toHaveLength(1);
+    },
+  );
 
   it('allows anonymous class expressions', () => {
     expect(lintClassName(null)).toHaveLength(0);

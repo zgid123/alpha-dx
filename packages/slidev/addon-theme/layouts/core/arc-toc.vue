@@ -38,10 +38,14 @@ const props = defineProps({
     type: [Number, String],
     default: 1,
   },
+  indexed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-arc-toc slidev-layout default arc-toc-layout',
+  'alpha-arc-toc slidev-layout default arc-toc-layout h-full',
 );
 
 const markerColors = [
@@ -59,7 +63,16 @@ interface ITocConnector {
   readonly path: string;
 }
 
-const { $slidev } = useSlideContext();
+const { $slidev, $renderContext } = useSlideContext();
+
+const isPresenter = computed(() => {
+  return $renderContext.value === 'presenter';
+});
+
+const visibleTocItems = computed(() => {
+  return $slidev.nav.tocTree.slice(0, tocItemCount.value);
+});
+
 const rootElement = ref<HTMLElement>();
 const arcPath = ref('');
 const connectors = ref<readonly ITocConnector[]>([]);
@@ -108,12 +121,14 @@ function updateConnectors(): void {
     return;
   }
 
-  const markers = Array.from(root.querySelectorAll<HTMLElement>('.toc-marker'));
+  const markers = Array.from(
+    root.querySelectorAll<HTMLElement>('.alpha-arc-toc__marker'),
+  );
   const articles = Array.from(
     root.querySelectorAll<HTMLElement>(
-      '.toc-content .slidev-toc-list-level-1 > .slidev-toc-item > a',
+      '.alpha-arc-toc__content .alpha-arc-toc__item > a',
     ),
-  ).slice(0, tocItemCount.value);
+  );
   const count = Math.min(markers.length, articles.length);
 
   articles.forEach((article) => {
@@ -130,7 +145,7 @@ function updateConnectors(): void {
 
   articles.forEach((article, index) => {
     const position = markerPositions.value[index];
-    const item = article.closest<HTMLElement>('.slidev-toc-item');
+    const item = article.closest<HTMLElement>('.alpha-arc-toc__item');
 
     if (item && position) {
       item.style.transform = `translateX(${calculateTocArticleOffsetPx(position)}px)`;
@@ -140,7 +155,7 @@ function updateConnectors(): void {
   const rootRect = root.getBoundingClientRect();
   const scaleX = rootRect.width / root.clientWidth;
   const scaleY = rootRect.height / root.clientHeight;
-  const tocContent = root.querySelector<HTMLElement>('.toc-content');
+  const tocContent = root.querySelector<HTMLElement>('.alpha-arc-toc__content');
 
   arcPath.value = createTocArcPath(
     calculateFullTocArcPoints({
@@ -226,7 +241,7 @@ onMounted(async () => {
 
   connectorResizeObserver = new ResizeObserver(scheduleConnectorUpdate);
   connectorResizeObserver.observe(root);
-  const tocContent = root.querySelector('.toc-content');
+  const tocContent = root.querySelector('.alpha-arc-toc__content');
   if (tocContent) {
     connectorMutationObserver = new MutationObserver(scheduleConnectorUpdate);
     connectorMutationObserver.observe(tocContent, {
@@ -259,29 +274,29 @@ onBeforeUnmount(() => {
     v-bind="forwardedAttrs()"
     :class="className()"
   >
-    <header class="toc-heading">
+    <header class="alpha-arc-toc__heading">
       <slot>
         <h1>Table of Contents</h1>
       </slot>
     </header>
     <svg
-      class="toc-curve"
+      class="alpha-arc-toc__curve"
       :viewBox="`0 0 ${rootElement?.clientWidth ?? 0} ${rootElement?.clientHeight ?? 0}`"
       preserveAspectRatio="none"
       aria-hidden="true"
     >
       <path :d="arcPath" />
     </svg>
-    <div class="toc-markers" aria-hidden="true">
+    <div class="alpha-arc-toc__markers" aria-hidden="true">
       <span
         v-for="(markerStyle, index) in markerStyles"
         :key="index"
-        class="toc-marker"
+        class="alpha-arc-toc__marker"
         :style="markerStyle"
       ></span>
     </div>
     <svg
-      class="toc-connectors"
+      class="alpha-arc-toc__connectors"
       :viewBox="`0 0 ${rootElement?.clientWidth ?? 0} ${rootElement?.clientHeight ?? 0}`"
       preserveAspectRatio="none"
       aria-hidden="true"
@@ -293,12 +308,31 @@ onBeforeUnmount(() => {
         :stroke="connector.color"
       />
     </svg>
-    <Toc
-      class="toc-content"
-      :data-item-count="tocItemCount"
-      :max-depth="props.maxDepth"
+    <nav
+      class="alpha-arc-toc__content"
       :style="tocContentStyle"
-    />
+    >
+      <ol class="alpha-arc-toc__list">
+        <li
+          v-for="(item, index) in visibleTocItems"
+          :key="item.path"
+          class="alpha-arc-toc__item"
+          :class="{ 'alpha-arc-toc__item--active': item.active }"
+          :style="{ '--toc-color': markerColors[index % markerColors.length] }"
+        >
+          <RouterLink
+            :to="isPresenter ? `/presenter${item.path}` : item.path"
+            @click="($event.target as HTMLElement)?.blur()"
+          >
+            <span
+              v-if="props.indexed"
+              class="alpha-arc-toc__item-index"
+            >{{ index + 1 }}. </span>
+            <span class="alpha-arc-toc__item-text">{{ item.title }}</span>
+          </RouterLink>
+        </li>
+      </ol>
+    </nav>
   </div>
 </template>
 
@@ -311,14 +345,17 @@ onBeforeUnmount(() => {
   --toc-pink: #f53270;
   --toc-purple: #8b5cf6;
   --toc-red: #ef4444;
+}
 
+.alpha-arc-toc.slidev-layout {
   position: relative;
   overflow: hidden;
+  height: 100%;
   padding: 0;
   font-family: ui-sans-serif, system-ui, sans-serif;
 }
 
-.toc-heading {
+.alpha-arc-toc__heading {
   position: absolute;
   top: 50%;
   left: 10%;
@@ -327,7 +364,7 @@ onBeforeUnmount(() => {
   transform: translateY(-50%);
 }
 
-.toc-heading :deep(h1) {
+.alpha-arc-toc__heading :deep(h1) {
   max-width: 8ch;
   margin: 0;
   font-family: inherit;
@@ -340,11 +377,11 @@ onBeforeUnmount(() => {
 
 /* Slide markdown often contains explanatory copy after its heading. This
    layout intentionally presents only the heading and the TOC labels. */
-.toc-heading :deep(:not(h1)) {
+.alpha-arc-toc__heading :deep(:not(h1)) {
   display: none;
 }
 
-.toc-curve {
+.alpha-arc-toc__curve {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -353,14 +390,14 @@ onBeforeUnmount(() => {
   pointer-events: none;
 }
 
-.toc-curve path {
+.alpha-arc-toc__curve path {
   fill: none;
   stroke: #d7d7d5;
   stroke-width: 2;
   vector-effect: non-scaling-stroke;
 }
 
-.toc-marker {
+.alpha-arc-toc__marker {
   position: absolute;
   z-index: 2;
   width: 1rem;
@@ -372,7 +409,7 @@ onBeforeUnmount(() => {
   transform: translate(-50%, -50%);
 }
 
-.toc-connectors {
+.alpha-arc-toc__connectors {
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -382,7 +419,7 @@ onBeforeUnmount(() => {
   pointer-events: none;
 }
 
-.toc-connectors path {
+.alpha-arc-toc__connectors path {
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -390,15 +427,15 @@ onBeforeUnmount(() => {
   vector-effect: non-scaling-stroke;
 }
 
-.toc-content {
+.alpha-arc-toc__content {
   position: absolute;
   top: 9%;
+  right: 3%;
   left: 41.2%;
   z-index: 2;
-  width: 55%;
 }
 
-.toc-content :deep(.slidev-toc-list) {
+.alpha-arc-toc__list {
   display: flex;
   flex-direction: column;
   gap: var(--toc-list-gap);
@@ -407,67 +444,22 @@ onBeforeUnmount(() => {
   list-style: none;
 }
 
-.toc-content :deep(.slidev-toc-list-level-1 > .slidev-toc-item:nth-child(n + 8)) {
-  display: none;
-}
-
-.toc-content[data-item-count='1']
-  :deep(.slidev-toc-list-level-1 > .slidev-toc-item:nth-child(n + 2)),
-.toc-content[data-item-count='2']
-  :deep(.slidev-toc-list-level-1 > .slidev-toc-item:nth-child(n + 3)),
-.toc-content[data-item-count='3']
-  :deep(.slidev-toc-list-level-1 > .slidev-toc-item:nth-child(n + 4)),
-.toc-content[data-item-count='4']
-  :deep(.slidev-toc-list-level-1 > .slidev-toc-item:nth-child(n + 5)),
-.toc-content[data-item-count='5']
-  :deep(.slidev-toc-list-level-1 > .slidev-toc-item:nth-child(n + 6)),
-.toc-content[data-item-count='6']
-  :deep(.slidev-toc-list-level-1 > .slidev-toc-item:nth-child(n + 7)) {
-  display: none;
-}
-
-.toc-content :deep(.slidev-toc-item) {
-  --toc-color: var(--toc-orange);
-
+.alpha-arc-toc__item {
   position: relative;
   margin: 0;
   padding: 0;
 }
 
-.toc-content :deep(.slidev-toc-item:nth-child(7n + 2)) {
-  --toc-color: var(--toc-teal);
-}
-
-.toc-content :deep(.slidev-toc-item:nth-child(7n + 3)) {
-  --toc-color: var(--toc-blue);
-}
-
-.toc-content :deep(.slidev-toc-item:nth-child(7n + 4)) {
-  --toc-color: var(--toc-green);
-}
-
-.toc-content :deep(.slidev-toc-item:nth-child(7n + 5)) {
-  --toc-color: var(--toc-pink);
-}
-
-.toc-content :deep(.slidev-toc-item:nth-child(7n + 6)) {
-  --toc-color: var(--toc-purple);
-}
-
-.toc-content :deep(.slidev-toc-item:nth-child(7n + 7)) {
-  --toc-color: var(--toc-red);
-}
-
-.toc-content :deep(.slidev-toc-item > a) {
+.alpha-arc-toc__item > a {
   position: relative;
   display: flex;
   min-width: 260px;
   min-height: 2.3rem;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 260px;
   padding: 0.5rem 1.25rem;
-  border: 0 !important;
+  border: 0;
   border-radius: 999px;
   background: var(--toc-color);
   box-shadow: 0.45rem 0.65rem 0.85rem rgb(15 23 42 / 18%);
@@ -476,47 +468,18 @@ onBeforeUnmount(() => {
   font-size: 0.9rem;
   font-weight: 700;
   line-height: 1.15;
-  text-align: center;
-  text-decoration: none !important;
-}
-
-.toc-content :deep(.slidev-toc-list-level-1 > .slidev-toc-item > a) {
+  text-align: left;
+  text-decoration: none;
   white-space: nowrap;
 }
 
-.toc-content :deep(.slidev-toc-item > a::before) {
-  display: none;
+.alpha-arc-toc__item-index {
+  margin-right: 0.35rem;
 }
 
-.toc-content :deep(.slidev-toc-item-active > a),
-.toc-content :deep(.slidev-toc-item > a:hover) {
+.alpha-arc-toc__item--active > a,
+.alpha-arc-toc__item > a:hover {
   filter: brightness(1.06);
   transform: translateX(0.35rem);
 }
-
-.toc-content :deep(.slidev-toc-list-level-2) {
-  gap: 0.35rem;
-  padding: 0.55rem 0 0 2rem;
-}
-
-.toc-content :deep(.slidev-toc-list-level-2 .slidev-toc-item::before) {
-  display: none;
-}
-
-.toc-content :deep(.slidev-toc-list-level-2 .slidev-toc-item > a) {
-  min-height: auto;
-  justify-content: flex-start;
-  padding: 0.15rem 0;
-  background: transparent;
-  box-shadow: none;
-  color: #525252;
-  font-size: 0.85rem;
-  font-weight: 500;
-  text-align: left;
-}
-
-.toc-content :deep(.slidev-toc-list-level-2 .slidev-toc-item > a::before) {
-  display: none;
-}
-
 </style>
