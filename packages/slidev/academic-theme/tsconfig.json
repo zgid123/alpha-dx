@@ -1,0 +1,6 @@
+{
+  "extends": "@alphacifer/tsconfig/esm",
+  "exclude": [
+    "node_modules"
+  ]
+}
