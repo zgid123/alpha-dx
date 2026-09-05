@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "slidev slides.md --open",
+    "dev:academic": "slidev academic-slides.md --open",
     "preview:build": "slidev build slides.md"
   },
   "keywords": [
@@ -25,7 +26,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zgid123/alpha-dx.git",
-    "directory": "packages/slidev-addon-theme"
+    "directory": "packages/slidev/addon-theme"
   },
   "license": "MIT",
   "peerDependencies": {
