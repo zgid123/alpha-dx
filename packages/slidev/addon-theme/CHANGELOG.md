@@ -1,5 +1,11 @@
 # @alphacifer/slidev-addon-theme
 
+## 0.0.6
+
+### Patch Changes
+
+- [#162](https://github.com/zgid123/alpha-dx/pull/162) [`518564b`](https://github.com/zgid123/alpha-dx/commit/518564be5e241d42a2000078ce3584252cc80152) Thanks [@zgid123](https://github.com/zgid123)! - add components for slidev
+
 ## 0.0.5
 
 ### Patch Changes
