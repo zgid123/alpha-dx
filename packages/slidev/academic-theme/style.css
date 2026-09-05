@@ -1,0 +1,116 @@
+:root {
+  /* --alpha-academic-primary: #0369a1; */
+  --alpha-academic-primary: #0f172a;
+  --alpha-academic-bg: #f8fafc;
+  --alpha-academic-accent: #0ea5e9;
+  --alpha-academic-accent-foreground: #0284c7;
+}
+
+.dark,
+html.dark {
+  --alpha-academic-accent: #10b981;
+  --alpha-academic-accent-foreground: #34d399;
+  --slidev-code-background: #f5f5f5;
+  --slidev-code-foreground: #1b1b1b;
+  --slidev-code-tab-divider: #e5e5e5;
+  --slidev-code-tab-text-color: #67676c;
+  --slidev-code-tab-active-text-color: #3c3c43;
+}
+
+/* Force Shiki syntax tokens to always use light-mode colors */
+html.dark .shiki {
+  --twoslash-popup-bg: var(--shiki-light-bg, inherit);
+  color: var(--shiki-light, inherit);
+}
+
+html.dark pre.shiki span {
+  color: var(--shiki-light, inherit);
+}
+
+.slidev-page {
+  background-color: var(--alpha-academic-bg);
+}
+
+.alpha-bg-center {
+  /* Neutralise the dark gradient overlay injected by handleBackground(bg, true).
+     screen(black, X) = X, so the background image renders at its original brightness. */
+  background-blend-mode: screen;
+}
+
+.slidev-layout {
+  height: 100%;
+  padding: 2.5rem 3rem;
+  color: var(--alpha-academic-primary);
+}
+
+.slidev-layout mark {
+  font-weight: bold;
+  color: var(--alpha-academic-accent-foreground);
+  background-color: transparent;
+}
+
+.slidev-layout p {
+  font-size: 1.25rem;
+}
+
+.alpha-academic-cover {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.alpha-academic-cover__content {
+  width: 100%;
+}
+
+.slidev-layout h1 {
+  margin-bottom: 0.5rem;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--alpha-academic-primary);
+}
+
+.alpha-academic-cover.slidev-layout h1 {
+  margin: 0;
+  font-size: 3.75rem;
+  font-weight: bold;
+  color: var(--alpha-academic-accent);
+}
+
+.alpha-speaker {
+  font-size: 20px;
+}
+
+.alpha-academic-pagy {
+  position: absolute;
+  right: 3rem;
+  bottom: 2.5rem;
+  z-index: 50;
+  display: flex;
+  gap: 0.4rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+  color: var(--alpha-academic-primary);
+}
+
+.slidev-page:has(.alpha-academic-cover) .alpha-academic-pagy,
+.slidev-page:has(.alpha-arc-toc) .alpha-academic-pagy,
+.slidev-page:has(.alpha-bg-center) .alpha-academic-pagy {
+  display: none;
+}
+
+.alpha-arc-toc.slidev-layout .alpha-arc-toc__heading,
+.alpha-arc-toc.slidev-layout .alpha-arc-toc__heading h1 {
+  font-size: 2.5rem;
+}
+
+.slidev-page .alpha-arc-toc.slidev-layout .alpha-arc-toc__item > a {
+  font-size: 1.25rem;
+}
+
+.alpha-bg-center .alpha-bg-center__index {
+  color: var(--alpha-academic-accent-foreground);
+}
