@@ -1,6 +1,6 @@
 {
   "name": "@alphacifer/slidev-addon-theme",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "All Slidev addons for Alpha presentations",
   "type": "module",
   "scripts": {
