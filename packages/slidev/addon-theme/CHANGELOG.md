@@ -1,5 +1,11 @@
 # @alphacifer/slidev-addon-theme
 
+## 0.0.7
+
+### Patch Changes
+
+- [#165](https://github.com/zgid123/alpha-dx/pull/165) [`20c0529`](https://github.com/zgid123/alpha-dx/commit/20c05291b6ecb13e215d5e7de746291634588184) Thanks [@zgid123](https://github.com/zgid123)! - add ComparisonTable
+
 ## 0.0.6
 
 ### Patch Changes
