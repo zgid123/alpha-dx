@@ -148,6 +148,42 @@ addons:
 </ArcCompare>
 ```
 
+## Comparison table
+
+- Components: `ComparisonTable`, `ComparisonTableCols`, `ComparisonTableCol`, `ComparisonTableRows`, `ComparisonTableRow`, `ComparisonTableCell`
+
+```vue
+<!-- Self-contained mockup default (5 columns x 6 rows) -->
+<ComparisonTable />
+
+<!-- Custom compound comparison structure -->
+<ComparisonTable>
+  <ComparisonTableCols>
+    <ComparisonTableCol color="#ff0000">
+      Column 1
+    </ComparisonTableCol>
+    <ComparisonTableCol color="#00ff00">
+      Column 2
+    </ComparisonTableCol>
+    <ComparisonTableCol color="#0000ff">
+      Column 3
+    </ComparisonTableCol>
+  </ComparisonTableCols>
+  <ComparisonTableRows>
+    <ComparisonTableRow title="Row 1">
+      <ComparisonTableCell>Row 1, Cell 1</ComparisonTableCell>
+      <ComparisonTableCell>Row 1, Cell 2</ComparisonTableCell>
+      <ComparisonTableCell>Row 1, Cell 3</ComparisonTableCell>
+    </ComparisonTableRow>
+    <ComparisonTableRow title="Row 2">
+      <ComparisonTableCell>Row 2, Cell 1</ComparisonTableCell>
+      <ComparisonTableCell>Row 2, Cell 2</ComparisonTableCell>
+      <ComparisonTableCell>Row 2, Cell 3</ComparisonTableCell>
+    </ComparisonTableRow>
+  </ComparisonTableRows>
+</ComparisonTable>
+```
+
 ## Preview
 
 ```bash
