@@ -1,0 +1,7 @@
+{
+  "extends": "@alphacifer/tsconfig/base",
+  "include": [
+    ".vitepress/**/*",
+    "**/*"
+  ]
+}

@@ -25,3 +25,9 @@ coverage
 # pnpm
 #
 .pnpm-store
+#
+# vitepress
+#
+docs/.vitepress/*
+!docs/.vitepress/theme
+!docs/.vitepress/config.ts
