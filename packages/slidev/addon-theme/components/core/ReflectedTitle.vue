@@ -15,9 +15,10 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(`
   alpha-reflected-title
   relative
   text-5xl
+  text-center
   font-bold
   tracking-tight
-  !text-[#a5f3fc]
+  text-[#a5f3fc]
   after:content-[attr(data-title)]
   after:block
   after:mt-2

@@ -12,6 +12,8 @@
       "!**/lib",
       "!**/.turbo",
       "!**/.pnpm-store",
+      "!**/.vitepress/.temp",
+      "!**/.vitepress/cache",
       "!**/routeTree.gen.ts",
       "!**/node_modules/**/*.ts",
       "!**/node_modules/**/*.tsx"

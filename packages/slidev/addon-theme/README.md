@@ -2,6 +2,9 @@
 
 Shared Slidev components and layouts for Alpha presentations.
 
+For the pre-refactor inventory of all components, props, slots, layouts, and
+migration-sensitive behavior, see [Component baseline](./COMPONENTS_BASELINE.md).
+
 For Alpha's light-only academic styling, combine this addon with
 `@alphacifer/slidev-theme-academic`.
 

@@ -241,4 +241,14 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     transform: translateY(0);
   }
 }
+
+.alpha-comparison-table :deep(tr) {
+  background-color: transparent;
+  border: none;
+}
+
+.alpha-comparison-table :deep(th),
+.alpha-comparison-table :deep(td) {
+  border: none;
+}
 </style>
