@@ -28,43 +28,43 @@ html.dark pre.shiki span {
 }
 
 /* Force Addon theme components to keep high-contrast light colors in Academic Theme */
-.dark .slidev-page .alpha-arc-compare-content,
+.dark .slidev-page .alpha-arc-comparison-content,
 .dark .slidev-page .alpha-horiz-card-content,
 .dark .slidev-page .alpha-vert-card-content,
-html.dark .slidev-page .alpha-arc-compare-content,
+html.dark .slidev-page .alpha-arc-comparison-content,
 html.dark .slidev-page .alpha-horiz-card-content,
 html.dark .slidev-page .alpha-vert-card-content {
   color: var(--alpha-academic-primary);
 }
 
-.dark .slidev-page .alpha-arc-compare__divider,
-html.dark .slidev-page .alpha-arc-compare__divider {
+.dark .slidev-page .alpha-arc-comparison__divider,
+html.dark .slidev-page .alpha-arc-comparison__divider {
   stroke: #cbd5e1;
 }
 
-.dark .slidev-page .alpha-arc-compare__hub path,
-html.dark .slidev-page .alpha-arc-compare__hub path {
+.dark .slidev-page .alpha-arc-comparison__hub path,
+html.dark .slidev-page .alpha-arc-comparison__hub path {
   fill: #f1f3f6;
 }
 
-.dark .slidev-page .alpha-arc-compare__arc path,
-html.dark .slidev-page .alpha-arc-compare__arc path {
+.dark .slidev-page .alpha-arc-comparison__arc path,
+html.dark .slidev-page .alpha-arc-comparison__arc path {
   stroke: #cbd5e1;
 }
 
-.dark .slidev-page .alpha-arc-compare__arc circle,
-html.dark .slidev-page .alpha-arc-compare__arc circle {
+.dark .slidev-page .alpha-arc-comparison__arc circle,
+html.dark .slidev-page .alpha-arc-comparison__arc circle {
   fill: #94a3b8;
 }
 
-.dark .slidev-page .alpha-arc-compare__vs circle,
-html.dark .slidev-page .alpha-arc-compare__vs circle {
+.dark .slidev-page .alpha-arc-comparison__vs circle,
+html.dark .slidev-page .alpha-arc-comparison__vs circle {
   fill: #ffffff;
   stroke: #cbd5e1;
 }
 
-.dark .slidev-page .alpha-arc-compare__vs text,
-html.dark .slidev-page .alpha-arc-compare__vs text {
+.dark .slidev-page .alpha-arc-comparison__vs text,
+html.dark .slidev-page .alpha-arc-comparison__vs text {
   fill: var(--alpha-academic-primary);
 }
 
