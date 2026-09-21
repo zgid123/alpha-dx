@@ -1,5 +1,11 @@
 # @alphacifer/drizzle
 
+## 0.0.8
+
+### Patch Changes
+
+- [#170](https://github.com/zgid123/alpha-dx/pull/170) [`19f9532`](https://github.com/zgid123/alpha-dx/commit/19f95328cc84e1477b255d7cf6ca6f873a647235) Thanks [@zgid123](https://github.com/zgid123)! - support multiple rootFolder config
+
 ## 0.0.7
 
 ### Patch Changes
