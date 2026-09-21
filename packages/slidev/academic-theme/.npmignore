@@ -1,5 +1,5 @@
 .turbo
+__tests__
 biome.json
 slides.md
-src
 tsconfig.json
