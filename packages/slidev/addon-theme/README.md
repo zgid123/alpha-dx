@@ -86,105 +86,105 @@ addons:
 </HorizCard>
 ```
 
-## Arc compare
+## Arc comparison
 
-- Components: `ArcCompare`, `ArcCompareLeft`, `ArcCompareRight`, `ArcCompareTitle`, `ArcCompareContents`, `ArcCompareCallout`, `ArcCompareBadge`, `ArcCompareHeading`, `ArcCompareContent`
+- Components: `ArcComparison`, `ArcComparisonLeft`, `ArcComparisonRight`, `ArcComparisonTitle`, `ArcComparisonContents`, `ArcComparisonCallout`, `ArcComparisonBadge`, `ArcComparisonHeading`, `ArcComparisonContent`
 
 ```vue
 <!-- Self-contained mockup default (3 points) -->
 
 <!-- 4 points mode -->
-<ArcCompare>
-  <ArcCompareLeft color="#ea580c">
-    <ArcCompareTitle>Traditional<br />Monolith</ArcCompareTitle>
-    <ArcCompareContents>
-      <ArcCompareCallout>
-        <ArcCompareBadge>01</ArcCompareBadge>
-        <ArcCompareHeading>Coupled State</ArcCompareHeading>
-        <ArcCompareContent>
+<ArcComparison>
+  <ArcComparisonLeft color="#ea580c">
+    <ArcComparisonTitle>Traditional<br />Monolith</ArcComparisonTitle>
+    <ArcComparisonContents>
+      <ArcComparisonCallout>
+        <ArcComparisonBadge>01</ArcComparisonBadge>
+        <ArcComparisonHeading>Coupled State</ArcComparisonHeading>
+        <ArcComparisonContent>
           Shared database schemas create cross-team deployment bottlenecks.
-        </ArcCompareContent>
-      </ArcCompareCallout>
-      <ArcCompareCallout>
-        <ArcCompareBadge>02</ArcCompareBadge>
-        <ArcCompareHeading>Vertical Scale</ArcCompareHeading>
-        <ArcCompareContent>
+        </ArcComparisonContent>
+      </ArcComparisonCallout>
+      <ArcComparisonCallout>
+        <ArcComparisonBadge>02</ArcComparisonBadge>
+        <ArcComparisonHeading>Vertical Scale</ArcComparisonHeading>
+        <ArcComparisonContent>
           Requires upgrading single instances with exponential cost increases.
-        </ArcCompareContent>
-      </ArcCompareCallout>
-      <ArcCompareCallout>
-        <ArcCompareBadge>03</ArcCompareBadge>
-        <ArcCompareHeading>Single Failure</ArcCompareHeading>
-        <ArcCompareContent>
+        </ArcComparisonContent>
+      </ArcComparisonCallout>
+      <ArcComparisonCallout>
+        <ArcComparisonBadge>03</ArcComparisonBadge>
+        <ArcComparisonHeading>Single Failure</ArcComparisonHeading>
+        <ArcComparisonContent>
           Unchecked memory leaks or crashes can bring down the entire system.
-        </ArcCompareContent>
-      </ArcCompareCallout>
-    </ArcCompareContents>
-  </ArcCompareLeft>
+        </ArcComparisonContent>
+      </ArcComparisonCallout>
+    </ArcComparisonContents>
+  </ArcComparisonLeft>
 
-  <ArcCompareRight color="#0284c7">
-    <ArcCompareTitle>Distributed<br />Microservices</ArcCompareTitle>
-    <ArcCompareContents>
-      <ArcCompareCallout>
-        <ArcCompareBadge>01</ArcCompareBadge>
-        <ArcCompareHeading>Bounded Context</ArcCompareHeading>
-        <ArcCompareContent>
+  <ArcComparisonRight color="#0284c7">
+    <ArcComparisonTitle>Distributed<br />Microservices</ArcComparisonTitle>
+    <ArcComparisonContents>
+      <ArcComparisonCallout>
+        <ArcComparisonBadge>01</ArcComparisonBadge>
+        <ArcComparisonHeading>Bounded Context</ArcComparisonHeading>
+        <ArcComparisonContent>
           Autonomous services communicate over defined asynchronous events.
-        </ArcCompareContent>
-      </ArcCompareCallout>
-      <ArcCompareCallout>
-        <ArcCompareBadge>02</ArcCompareBadge>
-        <ArcCompareHeading>Elastic Scale</ArcCompareHeading>
-        <ArcCompareContent>
+        </ArcComparisonContent>
+      </ArcComparisonCallout>
+      <ArcComparisonCallout>
+        <ArcComparisonBadge>02</ArcComparisonBadge>
+        <ArcComparisonHeading>Elastic Scale</ArcComparisonHeading>
+        <ArcComparisonContent>
           Horizontal autoscaling responds dynamically to spike traffic demand.
-        </ArcCompareContent>
-      </ArcCompareCallout>
-      <ArcCompareCallout>
-        <ArcCompareBadge>03</ArcCompareBadge>
-        <ArcCompareHeading>Isolated Faults</ArcCompareHeading>
-        <ArcCompareContent>
+        </ArcComparisonContent>
+      </ArcComparisonCallout>
+      <ArcComparisonCallout>
+        <ArcComparisonBadge>03</ArcComparisonBadge>
+        <ArcComparisonHeading>Isolated Faults</ArcComparisonHeading>
+        <ArcComparisonContent>
           Failures remain localized without cascading across service domains.
-        </ArcCompareContent>
-      </ArcCompareCallout>
-    </ArcCompareContents>
-  </ArcCompareRight>
-</ArcCompare>
+        </ArcComparisonContent>
+      </ArcComparisonCallout>
+    </ArcComparisonContents>
+  </ArcComparisonRight>
+</ArcComparison>
 ```
 
-## Comparison table
+## Table comparison
 
-- Components: `ComparisonTable`, `ComparisonTableCols`, `ComparisonTableCol`, `ComparisonTableRows`, `ComparisonTableRow`, `ComparisonTableCell`
+- Components: `TableComparison`, `TableComparisonCols`, `TableComparisonCol`, `TableComparisonRows`, `TableComparisonRow`, `TableComparisonCell`
 
 ```vue
 <!-- Self-contained mockup default (5 columns x 6 rows) -->
-<ComparisonTable />
+<TableComparison />
 
 <!-- Custom compound comparison structure -->
-<ComparisonTable>
-  <ComparisonTableCols>
-    <ComparisonTableCol color="#ff0000">
+<TableComparison>
+  <TableComparisonCols>
+    <TableComparisonCol color="#ff0000">
       Column 1
-    </ComparisonTableCol>
-    <ComparisonTableCol color="#00ff00">
+    </TableComparisonCol>
+    <TableComparisonCol color="#00ff00">
       Column 2
-    </ComparisonTableCol>
-    <ComparisonTableCol color="#0000ff">
+    </TableComparisonCol>
+    <TableComparisonCol color="#0000ff">
       Column 3
-    </ComparisonTableCol>
-  </ComparisonTableCols>
-  <ComparisonTableRows>
-    <ComparisonTableRow title="Row 1">
-      <ComparisonTableCell>Row 1, Cell 1</ComparisonTableCell>
-      <ComparisonTableCell>Row 1, Cell 2</ComparisonTableCell>
-      <ComparisonTableCell>Row 1, Cell 3</ComparisonTableCell>
-    </ComparisonTableRow>
-    <ComparisonTableRow title="Row 2">
-      <ComparisonTableCell>Row 2, Cell 1</ComparisonTableCell>
-      <ComparisonTableCell>Row 2, Cell 2</ComparisonTableCell>
-      <ComparisonTableCell>Row 2, Cell 3</ComparisonTableCell>
-    </ComparisonTableRow>
-  </ComparisonTableRows>
-</ComparisonTable>
+    </TableComparisonCol>
+  </TableComparisonCols>
+  <TableComparisonRows>
+    <TableComparisonRow title="Row 1">
+      <TableComparisonCell>Row 1, Cell 1</TableComparisonCell>
+      <TableComparisonCell>Row 1, Cell 2</TableComparisonCell>
+      <TableComparisonCell>Row 1, Cell 3</TableComparisonCell>
+    </TableComparisonRow>
+    <TableComparisonRow title="Row 2">
+      <TableComparisonCell>Row 2, Cell 1</TableComparisonCell>
+      <TableComparisonCell>Row 2, Cell 2</TableComparisonCell>
+      <TableComparisonCell>Row 2, Cell 3</TableComparisonCell>
+    </TableComparisonRow>
+  </TableComparisonRows>
+</TableComparison>
 ```
 
 ## Preview

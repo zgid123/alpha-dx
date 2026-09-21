@@ -16,9 +16,9 @@ import VertCardDemo from './components/card/VertCardDemo.vue';
 import RouterLinkShim from './components/common/RouterLinkShim.vue';
 import SlidevMockup from './components/common/SlidevMockup.vue';
 import TocPreview from './components/common/TocPreview.vue';
-// Compare
-import ArcCompareDemo from './components/compare/ArcCompareDemo.vue';
-import ComparisonTableDemo from './components/compare/ComparisonTableDemo.vue';
+// Comparisons
+import ArcComparisonDemo from './components/comparisons/ArcComparisonDemo.vue';
+import TableComparisonDemo from './components/comparisons/TableComparisonDemo.vue';
 // Core
 import DateDemo from './components/core/DateDemo.vue';
 import QnADemo from './components/core/QnADemo.vue';
@@ -27,7 +27,7 @@ import ReflectedTitleDemo from './components/core/ReflectedTitleDemo.vue';
 import SpeakerDemo from './components/core/SpeakerDemo.vue';
 import ThanksDemo from './components/core/ThanksDemo.vue';
 import TransitionHeadingDemo from './components/core/TransitionHeadingDemo.vue';
-import QuadHubDemo from './components/facets/tetrad/QuadHubDemo.vue';
+import RectOrbitTetradDemo from './components/facets/tetrad/RectOrbitTetradDemo.vue';
 // Facets
 import ArrowTriadDemo from './components/facets/triad/ArrowTriadDemo.vue';
 import HexTriadDemo from './components/facets/triad/HexTriadDemo.vue';
@@ -76,14 +76,14 @@ export default {
     // Facet Demos
     app.component('ArrowTriadDemo', ArrowTriadDemo);
     app.component('HexTriadDemo', HexTriadDemo);
-    app.component('QuadHubDemo', QuadHubDemo);
+    app.component('RectOrbitTetradDemo', RectOrbitTetradDemo);
 
     // Process Demos
     app.component('ArcArrowProcessDemo', ArcArrowProcessDemo);
 
-    // Compare Demos
-    app.component('ArcCompareDemo', ArcCompareDemo);
-    app.component('ComparisonTableDemo', ComparisonTableDemo);
+    // Comparison Demos
+    app.component('ArcComparisonDemo', ArcComparisonDemo);
+    app.component('TableComparisonDemo', TableComparisonDemo);
 
     // Card Demos
     app.component('HorizCardDemo', HorizCardDemo);

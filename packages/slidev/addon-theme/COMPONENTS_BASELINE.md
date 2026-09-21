@@ -961,3 +961,202 @@ has more segments.
 4. Run the preview decks for the themes used by consumers and build the consuming
    presentations before upgrading them. Do not infer rendering equivalence from
    unchanged prop names alone.
+
+## Migration notes
+
+### QuadHub → RectOrbitTetrad
+
+All `QuadHub*` components are renamed to `RectOrbitTetrad*`. The API (props, slots,
+behavior) is unchanged; this is a name-only migration. Search-and-replace in slide
+markup, imports, and CSS selectors.
+
+| Before (baseline) | After |
+| --- | --- |
+| `QuadHub` | `RectOrbitTetrad` |
+| `QuadHubCallout` | `RectOrbitTetradCallout` |
+| `QuadHubCenter` | `RectOrbitTetradCenter` |
+| `QuadHubContent` | `RectOrbitTetradContent` |
+| `QuadHubHeading` | `RectOrbitTetradHeading` |
+| `QuadHubIcon` | `RectOrbitTetradIcon` |
+
+Supporting modules and types follow the same rename:
+
+| Before (baseline) | After |
+| --- | --- |
+| `utils/quadHub/` | `utils/rectOrbitTetrad/` |
+| `resolveQuadHubItems` | `resolveRectOrbitTetradItems` |
+| `createQuadHubGeometry` | `createRectOrbitTetradGeometry` |
+| `IQuadHubItem` | `IRectOrbitTetradItem` |
+| `IQuadHubRegistration` | `IRectOrbitTetradRegistration` |
+| `IResolvedQuadHubItem` | `IResolvedRectOrbitTetradItem` |
+| `QUAD_HUB_ROOT_KEY` | `RECT_ORBIT_TETRAD_ROOT_KEY` |
+| `TQuadHubIcon` | `TRectOrbitTetradIcon` |
+
+CSS class prefix: `.alpha-quad-hub` → `.alpha-rect-orbit-tetrad`.
+
+#### Before
+
+```vue
+<QuadHub title="Plan" :animation="false">
+  <QuadHubCallout icon="user">
+    <QuadHubHeading>Discovery</QuadHubHeading>
+    <QuadHubContent>Explore ideas.</QuadHubContent>
+  </QuadHubCallout>
+</QuadHub>
+```
+
+#### After
+
+```vue
+<RectOrbitTetrad title="Plan" :animation="false">
+  <RectOrbitTetradCallout icon="user">
+    <RectOrbitTetradHeading>Discovery</RectOrbitTetradHeading>
+    <RectOrbitTetradContent>Explore ideas.</RectOrbitTetradContent>
+  </RectOrbitTetradCallout>
+</RectOrbitTetrad>
+```
+
+### ArcCompare → ArcComparison
+
+All `ArcCompare*` components are renamed to `ArcComparison*`. The component category folder is also renamed from `compare/` to `comparisons/`. The API (props, slots, behavior) is unchanged; this is a name-only migration. Search-and-replace in slide markup, imports, and CSS selectors.
+
+| Before (baseline) | After |
+| --- | --- |
+| `ArcCompare` | `ArcComparison` |
+| `ArcCompareBadge` | `ArcComparisonBadge` |
+| `ArcCompareCallout` | `ArcComparisonCallout` |
+| `ArcCompareContent` | `ArcComparisonContent` |
+| `ArcCompareContents` | `ArcComparisonContents` |
+| `ArcCompareHeading` | `ArcComparisonHeading` |
+| `ArcCompareLeft` | `ArcComparisonLeft` |
+| `ArcCompareRight` | `ArcComparisonRight` |
+| `ArcCompareTitle` | `ArcComparisonTitle` |
+
+Supporting directory and utility exports follow the same rename:
+
+| Before (baseline) | After |
+| --- | --- |
+| `components/compare/arc-compare/` | `components/comparisons/arc-comparison/` |
+| `utils/arcCompare/` | `utils/arcComparison/` |
+| `createArcCompareGeometry` | `createArcComparisonGeometry` |
+| `resolveArcCompareItems` | `resolveArcComparisonItems` |
+| `resolveArcCompareSideItems` | `resolveArcComparisonSideItems` |
+| `IArcCompareItem` | `IArcComparisonItem` |
+| `IResolvedArcCompareItem` | `IResolvedArcComparisonItem` |
+| `IArcCompareGeometry` | `IArcComparisonGeometry` |
+| `IArcCompareSideGeometry` | `IArcComparisonSideGeometry` |
+| `IArcComparePoint` | `IArcComparisonPoint` |
+| `ARC_COMPARE_ROOT_KEY` | `ARC_COMPARISON_ROOT_KEY` |
+| `ARC_COMPARE_SIDE_KEY` | `ARC_COMPARISON_SIDE_KEY` |
+
+CSS class prefix: `.alpha-arc-compare` → `.alpha-arc-comparison`.
+
+#### Before
+
+```vue
+<ArcCompare :count="3">
+  <ArcCompareLeft color="#ea580c">
+    <ArcCompareTitle>Traditional<br />Monolith</ArcCompareTitle>
+    <ArcCompareContents>
+      <ArcCompareCallout>
+        <ArcCompareBadge>01</ArcCompareBadge>
+        <ArcCompareHeading>Coupled State</ArcCompareHeading>
+        <ArcCompareContent>Bottleneck</ArcCompareContent>
+      </ArcCompareCallout>
+    </ArcCompareContents>
+  </ArcCompareLeft>
+  <ArcCompareRight color="#0284c7">
+    <ArcCompareTitle>Microservices</ArcCompareTitle>
+    <ArcCompareContents>
+      <ArcCompareCallout>
+        <ArcCompareBadge>01</ArcCompareBadge>
+        <ArcCompareHeading>Decoupled</ArcCompareHeading>
+        <ArcCompareContent>Autonomous</ArcCompareContent>
+      </ArcCompareCallout>
+    </ArcCompareContents>
+  </ArcCompareRight>
+</ArcCompare>
+```
+
+#### After
+
+```vue
+<ArcComparison :count="3">
+  <ArcComparisonLeft color="#ea580c">
+    <ArcComparisonTitle>Traditional<br />Monolith</ArcComparisonTitle>
+    <ArcComparisonContents>
+      <ArcComparisonCallout>
+        <ArcComparisonBadge>01</ArcComparisonBadge>
+        <ArcComparisonHeading>Coupled State</ArcComparisonHeading>
+        <ArcComparisonContent>Bottleneck</ArcComparisonContent>
+      </ArcComparisonCallout>
+    </ArcComparisonContents>
+  </ArcComparisonLeft>
+  <ArcComparisonRight color="#0284c7">
+    <ArcComparisonTitle>Microservices</ArcComparisonTitle>
+    <ArcComparisonContents>
+      <ArcComparisonCallout>
+        <ArcComparisonBadge>01</ArcComparisonBadge>
+        <ArcComparisonHeading>Decoupled</ArcComparisonHeading>
+        <ArcComparisonContent>Autonomous</ArcComparisonContent>
+      </ArcComparisonCallout>
+    </ArcComparisonContents>
+  </ArcComparisonRight>
+</ArcComparison>
+```
+
+### ComparisonTable → TableComparison
+
+`ComparisonTable*` components are renamed to `TableComparison*` to standardize naming across the comparisons group (`<Descriptor>Comparison`). The component category folder is also renamed from `compare/` to `comparisons/`. The API (props, slots, behavior) is unchanged; this is a name-only migration. Search-and-replace in slide markup, imports, and CSS selectors.
+
+| Before (baseline) | After |
+| --- | --- |
+| `ComparisonTable` | `TableComparison` |
+| `ComparisonTableCell` | `TableComparisonCell` |
+| `ComparisonTableCol` | `TableComparisonCol` |
+| `ComparisonTableCols` | `TableComparisonCols` |
+| `ComparisonTableRow` | `TableComparisonRow` |
+| `ComparisonTableRows` | `TableComparisonRows` |
+
+Supporting directory and utility exports follow the same rename:
+
+| Before (baseline) | After |
+| --- | --- |
+| `components/compare/comparison-table/` | `components/comparisons/table-comparison/` |
+| `utils/comparisonTable/` | `utils/tableComparison/` |
+| `COMPARISON_TABLE_KEY` | `TABLE_COMPARISON_KEY` |
+| `COMPARISON_TABLE_COLS_KEY` | `TABLE_COMPARISON_COLS_KEY` |
+| `IComparisonTableContext` | `ITableComparisonContext` |
+| `IComparisonTableColsContext` | `ITableComparisonColsContext` |
+
+CSS class prefix: `.alpha-comparison-table` → `.alpha-table-comparison`.
+
+#### Before
+
+```vue
+<ComparisonTable>
+  <ComparisonTableCols>
+    <ComparisonTableCol color="#3b82f6">TypeScript</ComparisonTableCol>
+  </ComparisonTableCols>
+  <ComparisonTableRows>
+    <ComparisonTableRow title="Type Safety">
+      <ComparisonTableCell>Strict tsconfig</ComparisonTableCell>
+    </ComparisonTableRow>
+  </ComparisonTableRows>
+</ComparisonTable>
+```
+
+#### After
+
+```vue
+<TableComparison>
+  <TableComparisonCols>
+    <TableComparisonCol color="#3b82f6">TypeScript</TableComparisonCol>
+  </TableComparisonCols>
+  <TableComparisonRows>
+    <ComparisonTableRow title="Type Safety">
+      <TableComparisonCell>Strict tsconfig</TableComparisonCell>
+    </ComparisonTableRow>
+  </TableComparisonRows>
+</TableComparison>
+```
