@@ -114,6 +114,12 @@ export default defineConfig({
           ),
         },
         {
+          find: /^@slidev\/client(?:\/.*)?$/,
+          replacement: fileURLToPath(
+            new URL('./theme/slidev-client-shim.ts', import.meta.url),
+          ),
+        },
+        {
           find: /^@alphacifer\/core-utils\/(.*)$/,
           replacement: fileURLToPath(
             new URL('../../packages/core-utils/src/$1', import.meta.url),
@@ -136,12 +142,16 @@ export default defineConfig({
       },
       {
         text: 'Slidev',
-        link: '/slidev/addon/components/speaker',
+        link: '/slidev/',
         activeMatch: '/slidev/',
       },
     ],
     sidebar: {
       '/slidev/': [
+        {
+          text: 'Overview',
+          link: '/slidev/',
+        },
         {
           text: 'Addon',
           collapsed: false,
@@ -152,71 +162,132 @@ export default defineConfig({
             },
             {
               text: 'Components',
-              collapsed: false,
+              collapsed: true,
               items: [
                 {
-                  text: 'Speaker',
-                  link: '/slidev/addon/components/speaker',
+                  text: 'Core',
+                  items: [
+                    {
+                      text: 'Speaker',
+                      link: '/slidev/addon/components/core/speaker',
+                    },
+                    {
+                      text: 'Date',
+                      link: '/slidev/addon/components/core/date',
+                    },
+                    {
+                      text: 'Quote',
+                      link: '/slidev/addon/components/core/quote',
+                    },
+                    {
+                      text: 'Reflected Title',
+                      link: '/slidev/addon/components/core/reflected-title',
+                    },
+                    {
+                      text: 'Q & A',
+                      link: '/slidev/addon/components/core/qna',
+                    },
+                    {
+                      text: 'Transition Heading',
+                      link: '/slidev/addon/components/core/transition-heading',
+                    },
+                    {
+                      text: 'Thanks',
+                      link: '/slidev/addon/components/core/thanks',
+                    },
+                  ],
                 },
                 {
-                  text: 'Date',
-                  link: '/slidev/addon/components/date',
+                  text: 'Facets',
+                  items: [
+                    {
+                      text: 'Triad',
+                      items: [
+                        {
+                          text: 'Arrow Triad',
+                          link: '/slidev/addon/components/facets/triad/arrow-triad',
+                        },
+                        {
+                          text: 'Hex Triad',
+                          link: '/slidev/addon/components/facets/triad/hex-triad',
+                        },
+                      ],
+                    },
+                    {
+                      text: 'Tetrad',
+                      items: [
+                        {
+                          text: 'Quad Hub',
+                          link: '/slidev/addon/components/facets/tetrad/quad-hub',
+                        },
+                      ],
+                    },
+                  ],
                 },
                 {
-                  text: 'Quote',
-                  link: '/slidev/addon/components/quote',
+                  text: 'Process',
+                  items: [
+                    {
+                      text: 'Arc Arrow Process',
+                      link: '/slidev/addon/components/process/arc-arrow-process',
+                    },
+                  ],
                 },
                 {
-                  text: 'Reflected Title',
-                  link: '/slidev/addon/components/reflected-title',
+                  text: 'Compare',
+                  items: [
+                    {
+                      text: 'Arc Compare',
+                      link: '/slidev/addon/components/compare/arc-compare',
+                    },
+                    {
+                      text: 'Comparison Table',
+                      link: '/slidev/addon/components/compare/comparison-table',
+                    },
+                  ],
                 },
                 {
-                  text: 'Q & A',
-                  link: '/slidev/addon/components/qna',
+                  text: 'Cards',
+                  items: [
+                    {
+                      text: 'Horizontal Card',
+                      link: '/slidev/addon/components/card/horiz-card',
+                    },
+                    {
+                      text: 'Vertical Card',
+                      link: '/slidev/addon/components/card/vert-card',
+                    },
+                    {
+                      text: 'Chevron Card',
+                      link: '/slidev/addon/components/card/chevron-card',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              text: 'Layouts',
+              collapsed: true,
+              items: [
+                {
+                  text: 'Arc TOC',
+                  link: '/slidev/addon/layouts/arc-toc',
                 },
                 {
-                  text: 'Horizontal Card',
-                  link: '/slidev/addon/components/horiz-card',
+                  text: 'Background Center',
+                  link: '/slidev/addon/layouts/bg-center',
                 },
                 {
-                  text: 'Vertical Card',
-                  link: '/slidev/addon/components/vert-card',
+                  text: 'Shifting Intro',
+                  link: '/slidev/addon/layouts/shifting-intro',
                 },
                 {
-                  text: 'Chevron Card',
-                  link: '/slidev/addon/components/chevron-card',
-                },
-                {
-                  text: 'Hex Triad',
-                  link: '/slidev/addon/components/hex-triad',
-                },
-                {
-                  text: 'Arrow Triad',
-                  link: '/slidev/addon/components/arrow-triad',
-                },
-                {
-                  text: 'Quad Hub',
-                  link: '/slidev/addon/components/quad-hub',
-                },
-                {
-                  text: 'Arc Compare',
-                  link: '/slidev/addon/components/arc-compare',
-                },
-                {
-                  text: 'Arc Arrow Process',
-                  link: '/slidev/addon/components/arc-arrow-process',
-                },
-                {
-                  text: 'Comparison Table',
-                  link: '/slidev/addon/components/comparison-table',
-                },
-                {
-                  text: 'Transition Heading',
-                  link: '/slidev/addon/components/transition-heading',
+                  text: 'Table of Contents',
+                  link: '/slidev/addon/layouts/table-of-contents',
                 },
                 {
                   text: 'Thanks',
-                  link: '/slidev/addon/components/thanks',
+                  link: '/slidev/addon/layouts/thanks',
                 },
               ],
             },
@@ -232,71 +303,148 @@ export default defineConfig({
             },
             {
               text: 'Components',
-              collapsed: false,
+              collapsed: true,
               items: [
                 {
-                  text: 'Speaker',
-                  link: '/slidev/academic-theme/components/speaker',
+                  text: 'Core',
+                  items: [
+                    {
+                      text: 'Speaker',
+                      link: '/slidev/academic-theme/components/core/speaker',
+                    },
+                    {
+                      text: 'Date',
+                      link: '/slidev/academic-theme/components/core/date',
+                    },
+                    {
+                      text: 'Quote',
+                      link: '/slidev/academic-theme/components/core/quote',
+                    },
+                    {
+                      text: 'Reflected Title',
+                      link: '/slidev/academic-theme/components/core/reflected-title',
+                    },
+                    {
+                      text: 'Q & A',
+                      link: '/slidev/academic-theme/components/core/qna',
+                    },
+                    {
+                      text: 'Transition Heading',
+                      link: '/slidev/academic-theme/components/core/transition-heading',
+                    },
+                    {
+                      text: 'Thanks',
+                      link: '/slidev/academic-theme/components/core/thanks',
+                    },
+                  ],
                 },
                 {
-                  text: 'Date',
-                  link: '/slidev/academic-theme/components/date',
+                  text: 'Facets',
+                  items: [
+                    {
+                      text: 'Triad',
+                      items: [
+                        {
+                          text: 'Arrow Triad',
+                          link: '/slidev/academic-theme/components/facets/triad/arrow-triad',
+                        },
+                        {
+                          text: 'Hex Triad',
+                          link: '/slidev/academic-theme/components/facets/triad/hex-triad',
+                        },
+                      ],
+                    },
+                    {
+                      text: 'Tetrad',
+                      items: [
+                        {
+                          text: 'Quad Hub',
+                          link: '/slidev/academic-theme/components/facets/tetrad/quad-hub',
+                        },
+                      ],
+                    },
+                  ],
                 },
                 {
-                  text: 'Quote',
-                  link: '/slidev/academic-theme/components/quote',
+                  text: 'Process',
+                  items: [
+                    {
+                      text: 'Arc Arrow Process',
+                      link: '/slidev/academic-theme/components/process/arc-arrow-process',
+                    },
+                  ],
                 },
                 {
-                  text: 'Reflected Title',
-                  link: '/slidev/academic-theme/components/reflected-title',
+                  text: 'Compare',
+                  items: [
+                    {
+                      text: 'Arc Compare',
+                      link: '/slidev/academic-theme/components/compare/arc-compare',
+                    },
+                    {
+                      text: 'Comparison Table',
+                      link: '/slidev/academic-theme/components/compare/comparison-table',
+                    },
+                  ],
                 },
                 {
-                  text: 'Q & A',
-                  link: '/slidev/academic-theme/components/qna',
+                  text: 'Cards',
+                  items: [
+                    {
+                      text: 'Horizontal Card',
+                      link: '/slidev/academic-theme/components/card/horiz-card',
+                    },
+                    {
+                      text: 'Vertical Card',
+                      link: '/slidev/academic-theme/components/card/vert-card',
+                    },
+                    {
+                      text: 'Chevron Card',
+                      link: '/slidev/academic-theme/components/card/chevron-card',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              text: 'Layouts',
+              collapsed: true,
+              items: [
+                {
+                  text: 'Cover',
+                  link: '/slidev/academic-theme/layouts/cover',
                 },
                 {
-                  text: 'Horizontal Card',
-                  link: '/slidev/academic-theme/components/horiz-card',
+                  text: 'Default',
+                  link: '/slidev/academic-theme/layouts/default',
                 },
                 {
-                  text: 'Vertical Card',
-                  link: '/slidev/academic-theme/components/vert-card',
+                  text: 'Section',
+                  link: '/slidev/academic-theme/layouts/section',
                 },
                 {
-                  text: 'Chevron Card',
-                  link: '/slidev/academic-theme/components/chevron-card',
+                  text: 'End',
+                  link: '/slidev/academic-theme/layouts/end',
                 },
                 {
-                  text: 'Hex Triad',
-                  link: '/slidev/academic-theme/components/hex-triad',
+                  text: 'Arc TOC',
+                  link: '/slidev/academic-theme/layouts/arc-toc',
                 },
                 {
-                  text: 'Arrow Triad',
-                  link: '/slidev/academic-theme/components/arrow-triad',
+                  text: 'Background Center',
+                  link: '/slidev/academic-theme/layouts/bg-center',
                 },
                 {
-                  text: 'Quad Hub',
-                  link: '/slidev/academic-theme/components/quad-hub',
+                  text: 'Shifting Intro',
+                  link: '/slidev/academic-theme/layouts/shifting-intro',
                 },
                 {
-                  text: 'Arc Compare',
-                  link: '/slidev/academic-theme/components/arc-compare',
-                },
-                {
-                  text: 'Arc Arrow Process',
-                  link: '/slidev/academic-theme/components/arc-arrow-process',
-                },
-                {
-                  text: 'Comparison Table',
-                  link: '/slidev/academic-theme/components/comparison-table',
-                },
-                {
-                  text: 'Transition Heading',
-                  link: '/slidev/academic-theme/components/transition-heading',
+                  text: 'Table of Contents',
+                  link: '/slidev/academic-theme/layouts/table-of-contents',
                 },
                 {
                   text: 'Thanks',
-                  link: '/slidev/academic-theme/components/thanks',
+                  link: '/slidev/academic-theme/layouts/thanks',
                 },
               ],
             },

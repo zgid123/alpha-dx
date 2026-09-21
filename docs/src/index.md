@@ -37,6 +37,6 @@ features:
     linkText: Explore Drizzle utilities
   - title: Slidev Presentations
     details: Create technical presentations with shared Slidev components, layouts, Seriph theme, and Academic theme.
-    link: /slidev/addon/components/speaker
+    link: /slidev/
     linkText: Explore Slidev tools
 ---

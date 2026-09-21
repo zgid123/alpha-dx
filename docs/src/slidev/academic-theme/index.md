@@ -62,36 +62,58 @@ The theme provides CSS custom properties that can be adjusted in your deck-level
 
 ## Featured Components
 
-### Core Components
+### Core
 
-- [**Speaker**](./components/speaker.md): Anchors author or team attribution and a formatted presentation date to the bottom of a slide, styled with academic typography (`font-size: 20px`, `tabular-nums`).
-- [**Date**](./components/date.md): Formats presentation dates using `formatDate` from `@alphacifer/core-utils/dateUtils`.
-- [**Quote**](./components/quote.md): Styled blockquotes with optional author attribution.
-- [**Reflected Title**](./components/reflected-title.md): Title with an inverted pseudo-element reflection.
-- [**Q & A**](./components/qna.md): Animated "Q & A" title sequence.
+- [**Speaker**](./components/core/speaker.md): Anchors author or team attribution and a formatted presentation date to the bottom of a slide, styled with academic typography (`font-size: 20px`, `tabular-nums`).
+- [**Date**](./components/core/date.md): Formats presentation dates using `formatDate` from `@alphacifer/core-utils/dateUtils`.
+- [**Quote**](./components/core/quote.md): Styled blockquotes with optional author attribution.
+- [**Reflected Title**](./components/core/reflected-title.md): Title with an inverted pseudo-element reflection.
+- [**Q & A**](./components/core/qna.md): Animated "Q & A" title sequence.
+- [**Transition Heading**](./components/core/transition-heading.md): Shifting heading coordinating opening and revealed states (`TransitionHeading`).
+- [**Thanks**](./components/core/thanks.md): Closing artwork composition for defenses and lectures (`ThanksContent`).
 
-### Cards & Structure
+### Facets
 
-- [**Horizontal Card**](./components/horiz-card.md): Step-based horizontal cards with accent corner blobs and badges (`HorizCard`).
-- [**Vertical Card**](./components/vert-card.md): Vertical cards with corner accents and flexible badge variants (`VertCard`).
-- [**Chevron Card**](./components/chevron-card.md): Horizontal process step cards with left chevron badge (`ChevronCard`).
-- [**Comparison Table**](./components/comparison-table.md): Multi-column matrix comparison table for ablation and benchmark studies (`ComparisonTable`).
+#### Triad
 
-### Diagrams & Process Flows
+- [**Arrow Triad**](./components/facets/triad/arrow-triad.md): Three-way curved arrow infographic (`ArrowTriad`).
+- [**Hex Triad**](./components/facets/triad/hex-triad.md): 3-item interlocking hexagonal diagram for methodologies (`HexTriad`).
 
-- [**Hex Triad**](./components/hex-triad.md): 3-item interlocking hexagonal diagram for methodologies (`HexTriad`).
-- [**Arrow Triad**](./components/arrow-triad.md): Three-way curved arrow infographic (`ArrowTriad`).
-- [**Quad Hub**](./components/quad-hub.md): 4-part concentric quadrant infographic with center hub (`QuadHub`).
-- [**Arc Compare**](./components/arc-compare.md): Multi-point side-by-side architecture comparisons (`ArcCompare`).
-- [**Arc Arrow Process**](./components/arc-arrow-process.md): U-shaped curved workflow with interlocking chevron arrows (`ArcArrowProcess`).
+#### Tetrad
 
-### Animation & Transitions
+- [**Quad Hub**](./components/facets/tetrad/quad-hub.md): 4-part concentric quadrant infographic with center hub (`QuadHub`).
 
-- [**Transition Heading**](./components/transition-heading.md): Shifting heading coordinating opening and revealed states (`TransitionHeading`).
-- [**Thanks**](./components/thanks.md): Closing artwork composition for defenses and lectures (`ThanksContent`).
+### Process
+
+- [**Arc Arrow Process**](./components/process/arc-arrow-process.md): U-shaped curved workflow with interlocking chevron arrows (`ArcArrowProcess`).
+
+### Compare
+
+- [**Arc Compare**](./components/compare/arc-compare.md): Multi-point side-by-side architecture comparisons (`ArcCompare`).
+- [**Comparison Table**](./components/compare/comparison-table.md): Multi-column matrix comparison table for ablation and benchmark studies (`ComparisonTable`).
+
+### Cards
+
+- [**Horizontal Card**](./components/card/horiz-card.md): Step-based horizontal cards with accent corner blobs and badges (`HorizCard`).
+- [**Vertical Card**](./components/card/vert-card.md): Vertical cards with corner accents and flexible badge variants (`VertCard`).
+- [**Chevron Card**](./components/card/chevron-card.md): Horizontal chevron-accented cards with flexible badges (`ChevronCard`).
+
+---
+
+## Layouts
+
+- [**Cover**](./layouts/cover.md): Academic presentation title and speaker attribution layout (`cover`).
+- [**Default**](./layouts/default.md): Standard academic slide layout with footer metadata and slide numbering (`default`).
+- [**Section**](./layouts/section.md): Section divider and chapter transition layout (`section`).
+- [**End**](./layouts/end.md): Formal concluding layout for lectures, defenses, and seminars (`end`).
+- [**Arc TOC**](./layouts/arc-toc.md): Curved arc table of contents layout with connector lines and color markers (`arc-toc`).
+- [**Background Center**](./layouts/bg-center.md): Centered content slide with full-bleed background and section indexing (`bg-center`).
+- [**Shifting Intro**](./layouts/shifting-intro.md): Multi-stage transition slide shifting from centered title to top hero position (`shifting-intro`).
+- [**Table of Contents**](./layouts/table-of-contents.md): Standard structured agenda slide with heading level controls (`table-of-contents`).
+- [**Thanks**](./layouts/thanks.md): Concluding slide with animated geometric artwork and closing typography (`thanks`).
 
 ---
 
 ## Next Steps
 
-Explore any component above to try live interactive demos styled with the Academic Theme tokens.
+Explore any component or layout above to try live interactive demos styled with the Academic Theme tokens.
