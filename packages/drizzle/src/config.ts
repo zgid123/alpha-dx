@@ -1,23 +1,43 @@
 import { type Config, defineConfig } from 'drizzle-kit';
 
 interface IConfigParams {
+  out?: string;
   dbName?: string;
-  rootFolder?: string;
   dialect?: Config['dialect'];
+  rootFolder?: string | string[];
+}
+
+const DEFAULT_ROOT_FOLDER = 'src/infrastructure/drizzle';
+
+function resolveSchemaPath(folder: string): string {
+  return `./${folder}/schemas`;
+}
+
+function resolveOutPath(folder: string): string {
+  return `./${folder}/migrations`;
 }
 
 export function config({
+  out,
   dbName,
   dialect = 'postgresql',
-  rootFolder = 'infrastructure/drizzle',
+  rootFolder = DEFAULT_ROOT_FOLDER,
 }: IConfigParams = {}): Config {
   dbName ||= process.env.DB_NAME || 'db_development';
 
+  const isMultiple = Array.isArray(rootFolder);
+  const schema = isMultiple
+    ? rootFolder.map(resolveSchemaPath)
+    : resolveSchemaPath(rootFolder);
+
+  const resolvedOut =
+    out ?? (isMultiple ? './drizzle/migrations' : resolveOutPath(rootFolder));
+
   return defineConfig({
+    schema,
     dialect,
+    out: resolvedOut,
     casing: 'snake_case',
-    out: `./src/${rootFolder}/migrations`,
-    schema: `./src/${rootFolder}/schemas`,
     migrations: {
       schema: 'public',
       prefix: 'timestamp',
