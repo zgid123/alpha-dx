@@ -3,5 +3,10 @@
   "include": [
     ".vitepress/**/*",
     "**/*"
+  ],
+  "exclude": [
+    ".vitepress/dist",
+    ".vitepress/cache",
+    ".vitepress/.temp"
   ]
 }
