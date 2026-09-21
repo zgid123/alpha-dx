@@ -9,6 +9,7 @@ on:
       - 'packages/authkit/**'
       - 'packages/core-utils/**'
       - 'packages/react/**'
+      - 'packages/slidev/**'
 
 jobs:
   test:

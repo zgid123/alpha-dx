@@ -43,7 +43,7 @@ function resolveValue<T>(val: Ref<T> | (() => T) | undefined, fallback: T): T {
 
 /**
  * Automatically computes a scale factor (via CSS transform: scale)
- * so that diagram components (ArrowTriad, QuadHub, ArcArrowProcess, etc.)
+ * so that diagram components (ArrowTriad, RectOrbitTetrad, ArcArrowProcess, etc.)
  * fit comfortably inside the available slide canvas without clipping or overlaying pagination.
  */
 export function useDiagramAutoScale(

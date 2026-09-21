@@ -447,29 +447,29 @@ Vertical card component with step ribbon badge, top-right diagonal stripes, orga
 
 ---
 
-# QuadHub
+# RectOrbitTetrad
 
 4-part circular hub infographic with concentric quadrant blocks, optional icons, and symmetrical callouts.
 
 <div class="mt-4 flex items-center justify-center">
-  <QuadHub>
-    <QuadHubCallout>
-      <QuadHubHeading>Add Text Here</QuadHubHeading>
-      <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
-    </QuadHubCallout>
-    <QuadHubCallout>
-      <QuadHubHeading>Add Text Here</QuadHubHeading>
-      <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
-    </QuadHubCallout>
-    <QuadHubCallout>
-      <QuadHubHeading>Add Text Here</QuadHubHeading>
-      <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
-    </QuadHubCallout>
-    <QuadHubCallout>
-      <QuadHubHeading>Add Text Here</QuadHubHeading>
-      <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
-    </QuadHubCallout>
-  </QuadHub>
+  <RectOrbitTetrad>
+    <RectOrbitTetradCallout>
+      <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
+      <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
+    </RectOrbitTetradCallout>
+    <RectOrbitTetradCallout>
+      <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
+      <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
+    </RectOrbitTetradCallout>
+    <RectOrbitTetradCallout>
+      <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
+      <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
+    </RectOrbitTetradCallout>
+    <RectOrbitTetradCallout>
+      <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
+      <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
+    </RectOrbitTetradCallout>
+  </RectOrbitTetrad>
 </div>
 
 <div class="mt-2 text-sm">
@@ -477,126 +477,126 @@ Vertical card component with step ribbon badge, top-right diagonal stripes, orga
 </div>
 
 ```vue
-<QuadHub title="4 Parts" subtitle="Infographics">
-  <QuadHubCallout>
-    <QuadHubHeading>Add Text Here</QuadHubHeading>
-    <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
-  </QuadHubCallout>
-  <QuadHubCallout>
-    <QuadHubHeading>Add Text Here</QuadHubHeading>
-    <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
-  </QuadHubCallout>
-  <QuadHubCallout>
-    <QuadHubHeading>Add Text Here</QuadHubHeading>
-    <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
-  </QuadHubCallout>
-  <QuadHubCallout>
-    <QuadHubHeading>Add Text Here</QuadHubHeading>
-    <QuadHubContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</QuadHubContent>
-  </QuadHubCallout>
-</QuadHub>
+<RectOrbitTetrad title="4 Parts" subtitle="Infographics">
+  <RectOrbitTetradCallout>
+    <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
+    <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
+  </RectOrbitTetradCallout>
+  <RectOrbitTetradCallout>
+    <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
+    <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
+  </RectOrbitTetradCallout>
+  <RectOrbitTetradCallout>
+    <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
+    <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
+  </RectOrbitTetradCallout>
+  <RectOrbitTetradCallout>
+    <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
+    <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
+  </RectOrbitTetradCallout>
+</RectOrbitTetrad>
 ```
 
 ---
 
-# QuadHub — Optional Icons & Custom Slots
+# RectOrbitTetrad — Optional Icons & Custom Slots
 
-Icons inside each quadrant square are optional. Pass `:icon="false"` to `<QuadHubCallout>` to omit them.
+Icons inside each quadrant square are optional. Pass `:icon="false"` to `<RectOrbitTetradCallout>` to omit them.
 
 <div class="mt-4 flex items-center justify-center">
-  <QuadHub
+  <RectOrbitTetrad
     title="Clean"
     subtitle="Without Icons"
   >
-    <QuadHubCallout :icon="false">
-      <QuadHubHeading>Strategy</QuadHubHeading>
-      <QuadHubContent>Clear roadmap and measurable quarterly milestones.</QuadHubContent>
-    </QuadHubCallout>
-    <QuadHubCallout :icon="false">
-      <QuadHubHeading>Execution</QuadHubHeading>
-      <QuadHubContent>Fast feedback loops and automated deployment pipelines.</QuadHubContent>
-    </QuadHubCallout>
-    <QuadHubCallout :icon="false">
-      <QuadHubHeading>Security</QuadHubHeading>
-      <QuadHubContent>End-to-end encryption and continuous posture checks.</QuadHubContent>
-    </QuadHubCallout>
-    <QuadHubCallout :icon="false">
-      <QuadHubHeading>Scale</QuadHubHeading>
-      <QuadHubContent>Distributed edge caching with zero-downtime rollouts.</QuadHubContent>
-    </QuadHubCallout>
-  </QuadHub>
+    <RectOrbitTetradCallout :icon="false">
+      <RectOrbitTetradHeading>Strategy</RectOrbitTetradHeading>
+      <RectOrbitTetradContent>Clear roadmap and measurable quarterly milestones.</RectOrbitTetradContent>
+    </RectOrbitTetradCallout>
+    <RectOrbitTetradCallout :icon="false">
+      <RectOrbitTetradHeading>Execution</RectOrbitTetradHeading>
+      <RectOrbitTetradContent>Fast feedback loops and automated deployment pipelines.</RectOrbitTetradContent>
+    </RectOrbitTetradCallout>
+    <RectOrbitTetradCallout :icon="false">
+      <RectOrbitTetradHeading>Security</RectOrbitTetradHeading>
+      <RectOrbitTetradContent>End-to-end encryption and continuous posture checks.</RectOrbitTetradContent>
+    </RectOrbitTetradCallout>
+    <RectOrbitTetradCallout :icon="false">
+      <RectOrbitTetradHeading>Scale</RectOrbitTetradHeading>
+      <RectOrbitTetradContent>Distributed edge caching with zero-downtime rollouts.</RectOrbitTetradContent>
+    </RectOrbitTetradCallout>
+  </RectOrbitTetrad>
 </div>
 
 ```vue
-<QuadHub
+<RectOrbitTetrad
   title="Clean"
   subtitle="Without Icons"
 >
-  <QuadHubCallout :icon="false">
-    <QuadHubHeading>Strategy</QuadHubHeading>
-    <QuadHubContent>Clear roadmap and measurable quarterly milestones.</QuadHubContent>
-  </QuadHubCallout>
-  <QuadHubCallout :icon="false">
-    <QuadHubHeading>Execution</QuadHubHeading>
-    <QuadHubContent>Fast feedback loops and automated deployment pipelines.</QuadHubContent>
-  </QuadHubCallout>
-  <QuadHubCallout :icon="false">
-    <QuadHubHeading>Security</QuadHubHeading>
-    <QuadHubContent>End-to-end encryption and continuous posture checks.</QuadHubContent>
-  </QuadHubCallout>
-  <QuadHubCallout :icon="false">
-    <QuadHubHeading>Scale</QuadHubHeading>
-    <QuadHubContent>Distributed edge caching with zero-downtime rollouts.</QuadHubContent>
-  </QuadHubCallout>
-</QuadHub>
+  <RectOrbitTetradCallout :icon="false">
+    <RectOrbitTetradHeading>Strategy</RectOrbitTetradHeading>
+    <RectOrbitTetradContent>Clear roadmap and measurable quarterly milestones.</RectOrbitTetradContent>
+  </RectOrbitTetradCallout>
+  <RectOrbitTetradCallout :icon="false">
+    <RectOrbitTetradHeading>Execution</RectOrbitTetradHeading>
+    <RectOrbitTetradContent>Fast feedback loops and automated deployment pipelines.</RectOrbitTetradContent>
+  </RectOrbitTetradCallout>
+  <RectOrbitTetradCallout :icon="false">
+    <RectOrbitTetradHeading>Security</RectOrbitTetradHeading>
+    <RectOrbitTetradContent>End-to-end encryption and continuous posture checks.</RectOrbitTetradContent>
+  </RectOrbitTetradCallout>
+  <RectOrbitTetradCallout :icon="false">
+    <RectOrbitTetradHeading>Scale</RectOrbitTetradHeading>
+    <RectOrbitTetradContent>Distributed edge caching with zero-downtime rollouts.</RectOrbitTetradContent>
+  </RectOrbitTetradCallout>
+</RectOrbitTetrad>
 ```
 
 ---
 
-# QuadHub — Composition & Icons
+# RectOrbitTetrad — Composition & Icons
 
-Configure custom colors and UnoCSS icons directly on `<QuadHubCallout color="..." icon="...">`.
+Configure custom colors and UnoCSS icons directly on `<RectOrbitTetradCallout color="..." icon="...">`.
 
 <div class="mt-4 flex items-center justify-center">
-  <QuadHub title="4 mối đe dọa DBMS">
-    <QuadHubCallout color="#f29e4b" icon="i-lucide-terminal-square">
-      <QuadHubHeading>SQL Injection · C/I</QuadHubHeading>
-      <QuadHubContent>Input độc hại thay đổi câu SQL, dẫn đến đọc hoặc sửa dữ liệu trái phép.</QuadHubContent>
-    </QuadHubCallout>
-    <QuadHubCallout color="#a4cb81" icon="i-lucide-user-round-search">
-      <QuadHubHeading>Insider Threat · C</QuadHubHeading>
-      <QuadHubContent>Người nội bộ lạm dụng quyền hợp lệ để xem dữ liệu ngoài nhu cầu công việc.</QuadHubContent>
-    </QuadHubCallout>
-    <QuadHubCallout color="#62b6a8" icon="i-lucide-key-round">
-      <QuadHubHeading>Privilege Abuse · C/I</QuadHubHeading>
-      <QuadHubContent>Quyền được cấp rộng hơn nhiệm vụ, làm tăng thiệt hại khi xảy ra sai sót hoặc chiếm đoạt.</QuadHubContent>
-    </QuadHubCallout>
-    <QuadHubCallout color="#e9717a" icon="i-lucide-file-lock-2">
-      <QuadHubHeading>Ransomware · I/A</QuadHubHeading>
-      <QuadHubContent>Dữ liệu bị mã hóa hoặc phá hoại, khiến dịch vụ không thể tiếp tục hoạt động.</QuadHubContent>
-    </QuadHubCallout>
-  </QuadHub>
+  <RectOrbitTetrad title="4 mối đe dọa DBMS">
+    <RectOrbitTetradCallout color="#f29e4b" icon="i-lucide-terminal-square">
+      <RectOrbitTetradHeading>SQL Injection · C/I</RectOrbitTetradHeading>
+      <RectOrbitTetradContent>Input độc hại thay đổi câu SQL, dẫn đến đọc hoặc sửa dữ liệu trái phép.</RectOrbitTetradContent>
+    </RectOrbitTetradCallout>
+    <RectOrbitTetradCallout color="#a4cb81" icon="i-lucide-user-round-search">
+      <RectOrbitTetradHeading>Insider Threat · C</RectOrbitTetradHeading>
+      <RectOrbitTetradContent>Người nội bộ lạm dụng quyền hợp lệ để xem dữ liệu ngoài nhu cầu công việc.</RectOrbitTetradContent>
+    </RectOrbitTetradCallout>
+    <RectOrbitTetradCallout color="#62b6a8" icon="i-lucide-key-round">
+      <RectOrbitTetradHeading>Privilege Abuse · C/I</RectOrbitTetradHeading>
+      <RectOrbitTetradContent>Quyền được cấp rộng hơn nhiệm vụ, làm tăng thiệt hại khi xảy ra sai sót hoặc chiếm đoạt.</RectOrbitTetradContent>
+    </RectOrbitTetradCallout>
+    <RectOrbitTetradCallout color="#e9717a" icon="i-lucide-file-lock-2">
+      <RectOrbitTetradHeading>Ransomware · I/A</RectOrbitTetradHeading>
+      <RectOrbitTetradContent>Dữ liệu bị mã hóa hoặc phá hoại, khiến dịch vụ không thể tiếp tục hoạt động.</RectOrbitTetradContent>
+    </RectOrbitTetradCallout>
+  </RectOrbitTetrad>
 </div>
 
 ```vue
-<QuadHub title="4 mối đe dọa DBMS">
-  <QuadHubCallout color="#f29e4b" icon="i-lucide-terminal-square">
-    <QuadHubHeading>SQL Injection · C/I</QuadHubHeading>
-    <QuadHubContent>Input độc hại thay đổi câu SQL, dẫn đến đọc hoặc sửa dữ liệu trái phép.</QuadHubContent>
-  </QuadHubCallout>
-  <QuadHubCallout color="#a4cb81" icon="i-lucide-user-round-search">
-    <QuadHubHeading>Insider Threat · C</QuadHubHeading>
-    <QuadHubContent>Người nội bộ lạm dụng quyền hợp lệ để xem dữ liệu ngoài nhu cầu công việc.</QuadHubContent>
-  </QuadHubCallout>
-  <QuadHubCallout color="#62b6a8" icon="i-lucide-key-round">
-    <QuadHubHeading>Privilege Abuse · C/I</QuadHubHeading>
-    <QuadHubContent>Quyền được cấp rộng hơn nhiệm vụ, làm tăng thiệt hại khi xảy ra sai sót hoặc chiếm đoạt.</QuadHubContent>
-  </QuadHubCallout>
-  <QuadHubCallout color="#e9717a" icon="i-lucide-file-lock-2">
-    <QuadHubHeading>Ransomware · I/A</QuadHubHeading>
-    <QuadHubContent>Dữ liệu bị mã hóa hoặc phá hoại, khiến dịch vụ không thể tiếp tục hoạt động.</QuadHubContent>
-  </QuadHubCallout>
-</QuadHub>
+<RectOrbitTetrad title="4 mối đe dọa DBMS">
+  <RectOrbitTetradCallout color="#f29e4b" icon="i-lucide-terminal-square">
+    <RectOrbitTetradHeading>SQL Injection · C/I</RectOrbitTetradHeading>
+    <RectOrbitTetradContent>Input độc hại thay đổi câu SQL, dẫn đến đọc hoặc sửa dữ liệu trái phép.</RectOrbitTetradContent>
+  </RectOrbitTetradCallout>
+  <RectOrbitTetradCallout color="#a4cb81" icon="i-lucide-user-round-search">
+    <RectOrbitTetradHeading>Insider Threat · C</RectOrbitTetradHeading>
+    <RectOrbitTetradContent>Người nội bộ lạm dụng quyền hợp lệ để xem dữ liệu ngoài nhu cầu công việc.</RectOrbitTetradContent>
+  </RectOrbitTetradCallout>
+  <RectOrbitTetradCallout color="#62b6a8" icon="i-lucide-key-round">
+    <RectOrbitTetradHeading>Privilege Abuse · C/I</RectOrbitTetradHeading>
+    <RectOrbitTetradContent>Quyền được cấp rộng hơn nhiệm vụ, làm tăng thiệt hại khi xảy ra sai sót hoặc chiếm đoạt.</RectOrbitTetradContent>
+  </RectOrbitTetradCallout>
+  <RectOrbitTetradCallout color="#e9717a" icon="i-lucide-file-lock-2">
+    <RectOrbitTetradHeading>Ransomware · I/A</RectOrbitTetradHeading>
+    <RectOrbitTetradContent>Dữ liệu bị mã hóa hoặc phá hoại, khiến dịch vụ không thể tiếp tục hoạt động.</RectOrbitTetradContent>
+  </RectOrbitTetradCallout>
+</RectOrbitTetrad>
 ```
 
 ---
@@ -776,121 +776,121 @@ Dynamic arrow count automatically matches the 2 provided text blocks.
 
 ---
 
-# ArcCompare
+# ArcComparison
 
 Opposing curved comparison diagram with edge project hubs, numbered arc nodes, and central versus divider.
 
-<ArcCompare />
+<ArcComparison />
 
 ---
 
-# ArcCompare (Compound Structure)
+# ArcComparison (Compound Structure)
 
-Customizable opposing comparison using `ArcCompareLeft`, `ArcCompareRight`, `ArcCompareTitle`, and `ArcCompareContents`.
+Customizable opposing comparison using `ArcComparisonLeft`, `ArcComparisonRight`, `ArcComparisonTitle`, and `ArcComparisonContents`.
 
-<ArcCompare>
-  <ArcCompareLeft color="#ea580c">
-    <ArcCompareTitle>Traditional<br />Monolith</ArcCompareTitle>
-    <ArcCompareContents>
-      <ArcCompareCallout>
-        <ArcCompareBadge>01</ArcCompareBadge>
-        <ArcCompareHeading>Coupled State</ArcCompareHeading>
-        <ArcCompareContent>
+<ArcComparison>
+  <ArcComparisonLeft color="#ea580c">
+    <ArcComparisonTitle>Traditional<br />Monolith</ArcComparisonTitle>
+    <ArcComparisonContents>
+      <ArcComparisonCallout>
+        <ArcComparisonBadge>01</ArcComparisonBadge>
+        <ArcComparisonHeading>Coupled State</ArcComparisonHeading>
+        <ArcComparisonContent>
           Shared database schemas create cross-team deployment bottlenecks.
-        </ArcCompareContent>
-      </ArcCompareCallout>
-      <ArcCompareCallout>
-        <ArcCompareBadge>02</ArcCompareBadge>
-        <ArcCompareHeading>Vertical Scale</ArcCompareHeading>
-        <ArcCompareContent>
+        </ArcComparisonContent>
+      </ArcComparisonCallout>
+      <ArcComparisonCallout>
+        <ArcComparisonBadge>02</ArcComparisonBadge>
+        <ArcComparisonHeading>Vertical Scale</ArcComparisonHeading>
+        <ArcComparisonContent>
           Requires upgrading single instances with exponential cost increases.
-        </ArcCompareContent>
-      </ArcCompareCallout>
-      <ArcCompareCallout>
-        <ArcCompareBadge>03</ArcCompareBadge>
-        <ArcCompareHeading>Single Failure</ArcCompareHeading>
-        <ArcCompareContent>
+        </ArcComparisonContent>
+      </ArcComparisonCallout>
+      <ArcComparisonCallout>
+        <ArcComparisonBadge>03</ArcComparisonBadge>
+        <ArcComparisonHeading>Single Failure</ArcComparisonHeading>
+        <ArcComparisonContent>
           Unchecked memory leaks or crashes can bring down the entire system.
-        </ArcCompareContent>
-      </ArcCompareCallout>
-    </ArcCompareContents>
-  </ArcCompareLeft>
+        </ArcComparisonContent>
+      </ArcComparisonCallout>
+    </ArcComparisonContents>
+  </ArcComparisonLeft>
 
-  <ArcCompareRight color="#0284c7">
-    <ArcCompareTitle>Distributed<br />Microservices</ArcCompareTitle>
-    <ArcCompareContents>
-      <ArcCompareCallout>
-        <ArcCompareBadge>01</ArcCompareBadge>
-        <ArcCompareHeading>Bounded Context</ArcCompareHeading>
-        <ArcCompareContent>
+  <ArcComparisonRight color="#0284c7">
+    <ArcComparisonTitle>Distributed<br />Microservices</ArcComparisonTitle>
+    <ArcComparisonContents>
+      <ArcComparisonCallout>
+        <ArcComparisonBadge>01</ArcComparisonBadge>
+        <ArcComparisonHeading>Bounded Context</ArcComparisonHeading>
+        <ArcComparisonContent>
           Autonomous services communicate over defined asynchronous events.
-        </ArcCompareContent>
-      </ArcCompareCallout>
-      <ArcCompareCallout>
-        <ArcCompareBadge>02</ArcCompareBadge>
-        <ArcCompareHeading>Elastic Scale</ArcCompareHeading>
-        <ArcCompareContent>
+        </ArcComparisonContent>
+      </ArcComparisonCallout>
+      <ArcComparisonCallout>
+        <ArcComparisonBadge>02</ArcComparisonBadge>
+        <ArcComparisonHeading>Elastic Scale</ArcComparisonHeading>
+        <ArcComparisonContent>
           Horizontal autoscaling responds dynamically to spike traffic demand.
-        </ArcCompareContent>
-      </ArcCompareCallout>
-      <ArcCompareCallout>
-        <ArcCompareBadge>03</ArcCompareBadge>
-        <ArcCompareHeading>Isolated Faults</ArcCompareHeading>
-        <ArcCompareContent>
+        </ArcComparisonContent>
+      </ArcComparisonCallout>
+      <ArcComparisonCallout>
+        <ArcComparisonBadge>03</ArcComparisonBadge>
+        <ArcComparisonHeading>Isolated Faults</ArcComparisonHeading>
+        <ArcComparisonContent>
           Failures remain localized without cascading across service domains.
-        </ArcCompareContent>
-      </ArcCompareCallout>
-    </ArcCompareContents>
-  </ArcCompareRight>
-</ArcCompare>
+        </ArcComparisonContent>
+      </ArcComparisonCallout>
+    </ArcComparisonContents>
+  </ArcComparisonRight>
+</ArcComparison>
 
 ---
 
-# ArcCompare (4 Points)
+# ArcComparison (4 Points)
 
 Parametric 4-criteria layout using `:count="4"`.
 
-<ArcCompare :count="4" />
+<ArcComparison :count="4" />
 
 ---
 
-# ComparisonTable (Mockup Default)
+# TableComparison (Mockup Default)
 
 Multi-column comparison matrix with distinct column themes and row labels.
 
-<ComparisonTable />
+<TableComparison />
 
 ---
 
-# ComparisonTable (Compound Structure)
+# TableComparison (Compound Structure)
 
-Customizable multi-criteria comparison matrix using `ComparisonTableCols`, `ComparisonTableCol`, `ComparisonTableRows`, `ComparisonTableRow`, and `ComparisonTableCell`.
+Customizable multi-criteria comparison matrix using `TableComparisonCols`, `TableComparisonCol`, `TableComparisonRows`, `TableComparisonRow`, and `TableComparisonCell`.
 
-<ComparisonTable>
-  <ComparisonTableCols>
-    <ComparisonTableCol color="#ff0000">
+<TableComparison>
+  <TableComparisonCols>
+    <TableComparisonCol color="#ff0000">
       Column 1
-    </ComparisonTableCol>
-    <ComparisonTableCol color="#00ff00">
+    </TableComparisonCol>
+    <TableComparisonCol color="#00ff00">
       Column 2
-    </ComparisonTableCol>
-    <ComparisonTableCol color="#0000ff">
+    </TableComparisonCol>
+    <TableComparisonCol color="#0000ff">
       Column 3
-    </ComparisonTableCol>
-  </ComparisonTableCols>
-  <ComparisonTableRows>
-    <ComparisonTableRow title="Row 1">
-      <ComparisonTableCell>Row 1, Cell 1</ComparisonTableCell>
-      <ComparisonTableCell>Row 1, Cell 2</ComparisonTableCell>
-      <ComparisonTableCell>Row 1, Cell 3</ComparisonTableCell>
-    </ComparisonTableRow>
-    <ComparisonTableRow title="Row 2">
-      <ComparisonTableCell>Row 2, Cell 1</ComparisonTableCell>
-      <ComparisonTableCell>Row 2, Cell 2</ComparisonTableCell>
-      <ComparisonTableCell>Row 2, Cell 3</ComparisonTableCell>
-    </ComparisonTableRow>
-  </ComparisonTableRows>
-</ComparisonTable>
+    </TableComparisonCol>
+  </TableComparisonCols>
+  <TableComparisonRows>
+    <TableComparisonRow title="Row 1">
+      <TableComparisonCell>Row 1, Cell 1</TableComparisonCell>
+      <TableComparisonCell>Row 1, Cell 2</TableComparisonCell>
+      <TableComparisonCell>Row 1, Cell 3</TableComparisonCell>
+    </TableComparisonRow>
+    <TableComparisonRow title="Row 2">
+      <TableComparisonCell>Row 2, Cell 1</TableComparisonCell>
+      <TableComparisonCell>Row 2, Cell 2</TableComparisonCell>
+      <TableComparisonCell>Row 2, Cell 3</TableComparisonCell>
+    </TableComparisonRow>
+  </TableComparisonRows>
+</TableComparison>
 
 ---
 layout: thanks

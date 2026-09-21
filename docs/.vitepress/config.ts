@@ -217,8 +217,8 @@ export default defineConfig({
                       text: 'Tetrad',
                       items: [
                         {
-                          text: 'Quad Hub',
-                          link: '/slidev/addon/components/facets/tetrad/quad-hub',
+                          text: 'Rect Orbit Tetrad',
+                          link: '/slidev/addon/components/facets/tetrad/rect-orbit-tetrad',
                         },
                       ],
                     },
@@ -234,15 +234,15 @@ export default defineConfig({
                   ],
                 },
                 {
-                  text: 'Compare',
+                  text: 'Comparisons',
                   items: [
                     {
-                      text: 'Arc Compare',
-                      link: '/slidev/addon/components/compare/arc-compare',
+                      text: 'Arc Comparison',
+                      link: '/slidev/addon/components/comparisons/arc-comparison',
                     },
                     {
-                      text: 'Comparison Table',
-                      link: '/slidev/addon/components/compare/comparison-table',
+                      text: 'Table Comparison',
+                      link: '/slidev/addon/components/comparisons/table-comparison',
                     },
                   ],
                 },
@@ -358,8 +358,8 @@ export default defineConfig({
                       text: 'Tetrad',
                       items: [
                         {
-                          text: 'Quad Hub',
-                          link: '/slidev/academic-theme/components/facets/tetrad/quad-hub',
+                          text: 'Rect Orbit Tetrad',
+                          link: '/slidev/academic-theme/components/facets/tetrad/rect-orbit-tetrad',
                         },
                       ],
                     },
@@ -375,15 +375,15 @@ export default defineConfig({
                   ],
                 },
                 {
-                  text: 'Compare',
+                  text: 'Comparisons',
                   items: [
                     {
-                      text: 'Arc Compare',
-                      link: '/slidev/academic-theme/components/compare/arc-compare',
+                      text: 'Arc Comparison',
+                      link: '/slidev/academic-theme/components/comparisons/arc-comparison',
                     },
                     {
-                      text: 'Comparison Table',
-                      link: '/slidev/academic-theme/components/compare/comparison-table',
+                      text: 'Table Comparison',
+                      link: '/slidev/academic-theme/components/comparisons/table-comparison',
                     },
                   ],
                 },

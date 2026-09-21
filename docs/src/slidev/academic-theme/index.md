@@ -81,16 +81,16 @@ The theme provides CSS custom properties that can be adjusted in your deck-level
 
 #### Tetrad
 
-- [**Quad Hub**](./components/facets/tetrad/quad-hub.md): 4-part concentric quadrant infographic with center hub (`QuadHub`).
+- [**Rect Orbit Tetrad**](./components/facets/tetrad/rect-orbit-tetrad.md): 4-part concentric quadrant infographic with center hub (`RectOrbitTetrad`).
 
 ### Process
 
 - [**Arc Arrow Process**](./components/process/arc-arrow-process.md): U-shaped curved workflow with interlocking chevron arrows (`ArcArrowProcess`).
 
-### Compare
+### Comparisons
 
-- [**Arc Compare**](./components/compare/arc-compare.md): Multi-point side-by-side architecture comparisons (`ArcCompare`).
-- [**Comparison Table**](./components/compare/comparison-table.md): Multi-column matrix comparison table for ablation and benchmark studies (`ComparisonTable`).
+- [**Arc Comparison**](./components/comparisons/arc-comparison.md): Multi-point side-by-side architecture comparisons (`ArcComparison`).
+- [**Table Comparison**](./components/comparisons/table-comparison.md): Multi-column matrix comparison table for ablation and benchmark studies (`TableComparison`).
 
 ### Cards
 
