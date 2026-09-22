@@ -8,6 +8,9 @@ export interface IArcComparisonRootContext {
   readonly startDelay: ComputedRef<number>;
   readonly pointsCount: ComputedRef<number>;
   readonly geo: ComputedRef<IArcComparisonGeometry>;
+  readonly as?: ComputedRef<'layout' | null | undefined>;
+  readonly isMoved?: ComputedRef<boolean>;
+  readonly edgeOffset?: ComputedRef<number>;
 }
 
 export interface IArcComparisonSideContext {

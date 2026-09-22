@@ -1,47 +1,29 @@
 <script setup lang="ts">
-import { computed, inject } from 'vue';
-
-import { ARC_COMPARISON_SIDE_KEY } from '../../../utils/arcComparison';
-import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
+import ArcOrbitTitle, {
+  type IArcOrbitTitleProps,
+} from '../../core/arc-orbit/ArcOrbitTitle.vue';
 
 defineOptions({
   inheritAttrs: false,
   name: 'ArcComparisonTitle',
 });
 
-export interface IArcComparisonTitleProps {
-  readonly color?: string;
-}
+export interface IArcComparisonTitleProps extends IArcOrbitTitleProps {}
 
-const props = withDefaults(defineProps<IArcComparisonTitleProps>(), {
-  color: undefined,
-});
-
-const sideContext = inject(ARC_COMPARISON_SIDE_KEY, undefined);
-
-const titleColor = computed(() => {
-  return props.color ?? sideContext?.color.value ?? '#e87a36';
-});
-
-const titleStyle = computed(() => {
-  return {
-    color: titleColor.value,
-    fontFamily:
-      'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-  };
-});
-
-const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-arc-comparison-title font-bold text-center px-2 leading-tight flex items-center justify-center select-none text-[1.125rem] tracking-tight',
-);
+const props = defineProps<IArcComparisonTitleProps>();
 </script>
 
 <template>
-  <div
-    v-bind="forwardedAttrs()"
-    :class="className()"
-    :style="titleStyle"
+  <ArcOrbitTitle
+    v-if="$slots.default"
+    v-bind="{ ...props, ...$attrs }"
+    class="alpha-arc-comparison-title"
   >
-    <slot>Add Project<br />Name</slot>
-  </div>
+    <slot />
+  </ArcOrbitTitle>
+  <ArcOrbitTitle
+    v-else
+    v-bind="{ ...props, ...$attrs }"
+    class="alpha-arc-comparison-title"
+  />
 </template>

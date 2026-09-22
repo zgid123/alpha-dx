@@ -1,3 +1,5 @@
+import { createArcOrbitGeometry } from '../arcOrbit';
+
 export interface IArcComparisonPoint {
   readonly x: number;
   readonly y: number;
@@ -22,6 +24,7 @@ export interface IArcComparisonCalloutBox {
 
 export interface IArcComparisonSideGeometry {
   readonly hubPath: string;
+  readonly otherHubPath?: string;
   readonly hubCenter: IArcComparisonPoint;
   readonly hubRadius: number;
   readonly arcPath: string;
@@ -60,6 +63,7 @@ export interface ICreateArcComparisonGeometryOptions {
   readonly arcExtentDeg?: number;
   readonly vsRadius?: number;
   readonly pointsCount?: number;
+  readonly isLayout?: boolean;
 }
 
 export function createArcComparisonGeometry(
@@ -74,125 +78,52 @@ export function createArcComparisonGeometry(
   const vsRadius = options.vsRadius ?? 26;
   const dotRadius = 3.5;
   const pointsCount = options.pointsCount === 4 ? 4 : 3;
-
-  const defaultArcExtent = pointsCount === 4 ? 66 : 58;
-  const arcExtentDeg = options.arcExtentDeg ?? defaultArcExtent;
+  const isLayout = options.isLayout ?? false;
 
   const centerX = viewBoxWidth / 2;
   const centerY = viewBoxHeight / 2;
-  const leftArcCenterX = -arcOffset;
 
-  // Angular math for left side:
-  const extentRad = (arcExtentDeg * Math.PI) / 180;
+  const leftOrbit = createArcOrbitGeometry({
+    viewBoxWidth,
+    viewBoxHeight,
+    position: 'left',
+    hubRadius,
+    arcRadius,
+    arcOffset,
+    nodeRadius,
+    nodeAngleDeg: options.nodeAngleDeg,
+    arcExtentDeg: options.arcExtentDeg,
+    pointsCount,
+  });
 
-  // Left arc start (top) and end (bottom)
-  const leftStartCos = Math.cos(extentRad);
-  const leftStartSin = Math.sin(extentRad);
-  const leftTopX = Number(
-    (leftArcCenterX + arcRadius * leftStartCos).toFixed(2),
-  );
-  const leftTopY = Number((centerY - arcRadius * leftStartSin).toFixed(2));
-  const leftBottomX = leftTopX;
-  const leftBottomY = Number((centerY + arcRadius * leftStartSin).toFixed(2));
+  const rightOrbit = createArcOrbitGeometry({
+    viewBoxWidth,
+    viewBoxHeight,
+    position: 'right',
+    hubRadius,
+    arcRadius,
+    arcOffset,
+    nodeRadius,
+    nodeAngleDeg: options.nodeAngleDeg,
+    arcExtentDeg: options.arcExtentDeg,
+    pointsCount,
+  });
 
-  // Left arc path
-  const leftArcPath = `M ${leftTopX} ${leftTopY} A ${arcRadius} ${arcRadius} 0 0 1 ${leftBottomX} ${leftBottomY}`;
+  const leftHubPath = isLayout
+    ? `M ${centerX} ${centerY - hubRadius} A ${hubRadius} ${hubRadius} 0 0 0 ${centerX} ${centerY + hubRadius} Z`
+    : leftOrbit.hubPath;
 
-  // Left hub path (semicircle centered at 0, centerY)
-  const leftHubPath = `M 0 ${centerY - hubRadius} A ${hubRadius} ${hubRadius} 0 0 1 0 ${centerY + hubRadius} Z`;
+  const leftOtherHubPath = isLayout
+    ? `M ${centerX} ${centerY - hubRadius} A ${hubRadius} ${hubRadius} 0 0 1 ${centerX} ${centerY + hubRadius} Z`
+    : undefined;
 
-  // Determine node angles for 3 or 4 points
-  const nodeAnglesDeg: readonly number[] =
-    pointsCount === 4
-      ? [50, 16.5, -16.5, -50]
-      : [options.nodeAngleDeg ?? 38, 0, -(options.nodeAngleDeg ?? 38)];
+  const rightHubPath = isLayout
+    ? `M ${centerX} ${centerY - hubRadius} A ${hubRadius} ${hubRadius} 0 0 1 ${centerX} ${centerY + hubRadius} Z`
+    : rightOrbit.hubPath;
 
-  // Left nodes and callouts
-  const leftCalloutGap = 26;
-  const leftNodes: IArcComparisonNodeGeo[] = [];
-  const leftCallouts: IArcComparisonCalloutBox[] = [];
-  const defaultTextGap = 28;
-  const textWidth = pointsCount === 4 ? 215 : 205;
-
-  for (let i = 0; i < pointsCount; i++) {
-    const angleDeg = nodeAnglesDeg[i] ?? 0;
-    const angleRad = (angleDeg * Math.PI) / 180;
-    const nodeX = Number(
-      (leftArcCenterX + arcRadius * Math.cos(angleRad)).toFixed(2),
-    );
-    const nodeY = Number((centerY - arcRadius * Math.sin(angleRad)).toFixed(2));
-
-    leftNodes.push({
-      index: i,
-      center: {
-        x: nodeX,
-        y: nodeY,
-      },
-      radius: nodeRadius,
-    });
-
-    const badgeOffset = Math.round(nodeX - nodeRadius);
-    const top = Math.round(nodeY - nodeRadius);
-    // Only adjust position for 01 (index 0) so its text does not overlay the arc curve.
-    // 02, 03, and 04 keep their standard natural gap.
-    const textGap = i === 0 ? (pointsCount === 4 ? 46 : 36) : defaultTextGap;
-    const width = Math.round(nodeRadius * 2 + textGap + textWidth);
-
-    leftCallouts.push({
-      index: i,
-      x: nodeX + leftCalloutGap,
-      y: nodeY - 32,
-      width,
-      badgeOffset,
-      top,
-      textGap,
-      textWidth,
-    });
-  }
-
-  // Right side (symmetrical reflection across centerX)
-  const rightTopX = Number((viewBoxWidth - leftTopX).toFixed(2));
-  const rightTopY = leftTopY;
-  const rightBottomX = rightTopX;
-  const rightBottomY = leftBottomY;
-
-  const rightArcPath = `M ${rightTopX} ${rightTopY} A ${arcRadius} ${arcRadius} 0 0 0 ${rightBottomX} ${rightBottomY}`;
-  const rightHubPath = `M ${viewBoxWidth} ${centerY - hubRadius} A ${hubRadius} ${hubRadius} 0 0 0 ${viewBoxWidth} ${centerY + hubRadius} Z`;
-
-  const rightNodes: IArcComparisonNodeGeo[] = [];
-  const rightCallouts: IArcComparisonCalloutBox[] = [];
-
-  for (let i = 0; i < pointsCount; i++) {
-    const leftNode = leftNodes[i];
-    const leftCallout = leftCallouts[i];
-
-    if (!leftNode || !leftCallout) {
-      continue;
-    }
-
-    const rightNodeX = Number((viewBoxWidth - leftNode.center.x).toFixed(2));
-    const rightNodeY = leftNode.center.y;
-
-    rightNodes.push({
-      index: i,
-      center: {
-        x: rightNodeX,
-        y: rightNodeY,
-      },
-      radius: nodeRadius,
-    });
-
-    rightCallouts.push({
-      index: i,
-      x: centerX + 20,
-      y: rightNodeY - 32,
-      width: leftCallout.width,
-      badgeOffset: leftCallout.badgeOffset,
-      top: leftCallout.top,
-      textGap: leftCallout.textGap,
-      textWidth: leftCallout.textWidth,
-    });
-  }
+  const rightOtherHubPath = isLayout
+    ? `M ${centerX} ${centerY - hubRadius} A ${hubRadius} ${hubRadius} 0 0 0 ${centerX} ${centerY + hubRadius} Z`
+    : undefined;
 
   return {
     viewBoxWidth,
@@ -212,43 +143,33 @@ export function createArcComparisonGeometry(
     },
     left: {
       hubPath: leftHubPath,
+      otherHubPath: leftOtherHubPath,
       hubCenter: {
-        x: 55,
+        x: isLayout ? centerX - 55 : 55,
         y: centerY,
       },
       hubRadius,
-      arcPath: leftArcPath,
-      topDot: {
-        x: leftTopX,
-        y: leftTopY,
-      },
-      bottomDot: {
-        x: leftBottomX,
-        y: leftBottomY,
-      },
+      arcPath: leftOrbit.arcPath,
+      topDot: leftOrbit.topDot,
+      bottomDot: leftOrbit.bottomDot,
       dotRadius,
-      nodes: leftNodes,
-      callouts: leftCallouts,
+      nodes: leftOrbit.nodes,
+      callouts: leftOrbit.callouts,
     },
     right: {
       hubPath: rightHubPath,
+      otherHubPath: rightOtherHubPath,
       hubCenter: {
-        x: viewBoxWidth - 55,
+        x: isLayout ? centerX + 55 : viewBoxWidth - 55,
         y: centerY,
       },
       hubRadius,
-      arcPath: rightArcPath,
-      topDot: {
-        x: rightTopX,
-        y: rightTopY,
-      },
-      bottomDot: {
-        x: rightBottomX,
-        y: rightBottomY,
-      },
+      arcPath: rightOrbit.arcPath,
+      topDot: rightOrbit.topDot,
+      bottomDot: rightOrbit.bottomDot,
       dotRadius,
-      nodes: rightNodes,
-      callouts: rightCallouts,
+      nodes: rightOrbit.nodes,
+      callouts: rightOrbit.callouts,
     },
   };
 }

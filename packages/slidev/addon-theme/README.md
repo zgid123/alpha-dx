@@ -61,6 +61,33 @@ addons:
 </HexTriad>
 ```
 
+## Gear triad
+
+- Components: `GearTriad`, `GearTriadCallout`, `GearTriadHeading`, `GearTriadDescription`, `GearTriadContents`, `GearTriadContent`, `GearTriadIcon`, `GearTriadCenter`
+
+```vue
+<GearTriad>
+  <GearTriadCallout>
+    <GearTriadHeading>Option 1</GearTriadHeading>
+    <GearTriadDescription>
+      There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
+    </GearTriadDescription>
+  </GearTriadCallout>
+  <GearTriadCallout>
+    <GearTriadHeading>Option 2</GearTriadHeading>
+    <GearTriadDescription>
+      There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
+    </GearTriadDescription>
+  </GearTriadCallout>
+  <GearTriadCallout>
+    <GearTriadHeading>Option 3</GearTriadHeading>
+    <GearTriadDescription>
+      There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
+    </GearTriadDescription>
+  </GearTriadCallout>
+</GearTriad>
+```
+
 ## Horiz card
 
 - Components: `HorizCard`, `HorizCardBadge`, `HorizCardHeading`, `HorizCardContent`, `HorizCardIcon`
@@ -88,7 +115,7 @@ addons:
 
 ## Arc comparison
 
-- Components: `ArcComparison`, `ArcComparisonLeft`, `ArcComparisonRight`, `ArcComparisonTitle`, `ArcComparisonContents`, `ArcComparisonCallout`, `ArcComparisonBadge`, `ArcComparisonHeading`, `ArcComparisonContent`
+- Components: `ArcComparison`, `ArcComparisonLeft`, `ArcComparisonRight`, `ArcComparisonTitle`, `ArcComparisonContents`, `ArcComparisonOrbit`, `ArcComparisonBadge`, `ArcComparisonHeading`, `ArcComparisonContent`
 
 ```vue
 <!-- Self-contained mockup default (3 points) -->
@@ -98,54 +125,54 @@ addons:
   <ArcComparisonLeft color="#ea580c">
     <ArcComparisonTitle>Traditional<br />Monolith</ArcComparisonTitle>
     <ArcComparisonContents>
-      <ArcComparisonCallout>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>01</ArcComparisonBadge>
         <ArcComparisonHeading>Coupled State</ArcComparisonHeading>
         <ArcComparisonContent>
           Shared database schemas create cross-team deployment bottlenecks.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout>
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>02</ArcComparisonBadge>
         <ArcComparisonHeading>Vertical Scale</ArcComparisonHeading>
         <ArcComparisonContent>
           Requires upgrading single instances with exponential cost increases.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout>
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>03</ArcComparisonBadge>
         <ArcComparisonHeading>Single Failure</ArcComparisonHeading>
         <ArcComparisonContent>
           Unchecked memory leaks or crashes can bring down the entire system.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
+      </ArcComparisonOrbit>
     </ArcComparisonContents>
   </ArcComparisonLeft>
 
   <ArcComparisonRight color="#0284c7">
     <ArcComparisonTitle>Distributed<br />Microservices</ArcComparisonTitle>
     <ArcComparisonContents>
-      <ArcComparisonCallout>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>01</ArcComparisonBadge>
         <ArcComparisonHeading>Bounded Context</ArcComparisonHeading>
         <ArcComparisonContent>
           Autonomous services communicate over defined asynchronous events.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout>
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>02</ArcComparisonBadge>
         <ArcComparisonHeading>Elastic Scale</ArcComparisonHeading>
         <ArcComparisonContent>
           Horizontal autoscaling responds dynamically to spike traffic demand.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout>
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>03</ArcComparisonBadge>
         <ArcComparisonHeading>Isolated Faults</ArcComparisonHeading>
         <ArcComparisonContent>
           Failures remain localized without cascading across service domains.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
+      </ArcComparisonOrbit>
     </ArcComparisonContents>
   </ArcComparisonRight>
 </ArcComparison>

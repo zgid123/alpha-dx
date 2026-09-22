@@ -126,10 +126,32 @@ describe('createArcComparisonGeometry', () => {
       it('produces valid SVG move and arc commands for hubs and arcs', () => {
         const geo = createArcComparisonGeometry();
 
-        expect(geo.left.hubPath).toMatch(/^M 0 \d+(\.\d+)? A \d+/);
-        expect(geo.right.hubPath).toMatch(/^M 1000 \d+(\.\d+)? A \d+/);
+        expect(geo.left.hubPath).toMatch(/^M 30 \d+(\.\d+)? A \d+/);
+        expect(geo.right.hubPath).toMatch(/^M 970 \d+(\.\d+)? A \d+/);
         expect(geo.left.arcPath).toMatch(/^M \d+(\.\d+)? \d+(\.\d+)? A \d+/);
         expect(geo.right.arcPath).toMatch(/^M \d+(\.\d+)? \d+(\.\d+)? A \d+/);
+      });
+
+      it('produces centered hub paths along the middle divider when isLayout is true', () => {
+        const geo = createArcComparisonGeometry({ isLayout: true });
+
+        expect(geo.left.hubPath).toBe('M 500 105 A 135 135 0 0 0 500 375 Z');
+        expect(geo.left.otherHubPath).toBe(
+          'M 500 105 A 135 135 0 0 1 500 375 Z',
+        );
+        expect(geo.right.hubPath).toBe('M 500 105 A 135 135 0 0 1 500 375 Z');
+        expect(geo.right.otherHubPath).toBe(
+          'M 500 105 A 135 135 0 0 0 500 375 Z',
+        );
+        expect(geo.left.hubCenter.x).toBe(445);
+        expect(geo.right.hubCenter.x).toBe(555);
+      });
+
+      it('does not generate otherHubPath when isLayout is false', () => {
+        const geo = createArcComparisonGeometry({ isLayout: false });
+
+        expect(geo.left.otherHubPath).toBeUndefined();
+        expect(geo.right.otherHubPath).toBeUndefined();
       });
     });
   });

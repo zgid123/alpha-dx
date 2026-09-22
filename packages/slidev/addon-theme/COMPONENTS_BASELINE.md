@@ -1024,7 +1024,7 @@ All `ArcCompare*` components are renamed to `ArcComparison*`. The component cate
 | --- | --- |
 | `ArcCompare` | `ArcComparison` |
 | `ArcCompareBadge` | `ArcComparisonBadge` |
-| `ArcCompareCallout` | `ArcComparisonCallout` |
+| `ArcCompareCallout` | `ArcComparisonOrbit` |
 | `ArcCompareContent` | `ArcComparisonContent` |
 | `ArcCompareContents` | `ArcComparisonContents` |
 | `ArcCompareHeading` | `ArcComparisonHeading` |
@@ -1085,21 +1085,21 @@ CSS class prefix: `.alpha-arc-compare` → `.alpha-arc-comparison`.
   <ArcComparisonLeft color="#ea580c">
     <ArcComparisonTitle>Traditional<br />Monolith</ArcComparisonTitle>
     <ArcComparisonContents>
-      <ArcComparisonCallout>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>01</ArcComparisonBadge>
         <ArcComparisonHeading>Coupled State</ArcComparisonHeading>
         <ArcComparisonContent>Bottleneck</ArcComparisonContent>
-      </ArcComparisonCallout>
+      </ArcComparisonOrbit>
     </ArcComparisonContents>
   </ArcComparisonLeft>
   <ArcComparisonRight color="#0284c7">
     <ArcComparisonTitle>Microservices</ArcComparisonTitle>
     <ArcComparisonContents>
-      <ArcComparisonCallout>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>01</ArcComparisonBadge>
         <ArcComparisonHeading>Decoupled</ArcComparisonHeading>
         <ArcComparisonContent>Autonomous</ArcComparisonContent>
-      </ArcComparisonCallout>
+      </ArcComparisonOrbit>
     </ArcComparisonContents>
   </ArcComparisonRight>
 </ArcComparison>
