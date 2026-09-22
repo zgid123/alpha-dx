@@ -2,6 +2,12 @@
 
 The `cover` layout is designed for title slides in university lectures, conference keynotes, and thesis defenses.
 
+## Purpose
+
+Academic title slide with restrained styling for lectures, conference keynotes, and thesis defenses.
+
+**When to use**: The first slide of any academic presentation — thesis title, course name, research paper title. Pair with `Speaker` component for author attribution.
+
 ## Presentation Preview
 
 <LayoutDemo layout="cover" theme="academic" />

@@ -1,9 +1,9 @@
 import DateComponent from '@alphacifer/slidev-addon-theme/components/core/Date.vue';
 import ThanksOutlineSquare from '@alphacifer/slidev-addon-theme/components/core/thanks/ThanksOutlineSquare.vue';
 import ThanksSquare from '@alphacifer/slidev-addon-theme/components/core/thanks/ThanksSquare.vue';
-import HexTriadCallout from '@alphacifer/slidev-addon-theme/components/facets/hex-triad/HexTriadCallout.vue';
-import HexTriadCenterBadge from '@alphacifer/slidev-addon-theme/components/facets/hex-triad/HexTriadCenterBadge.vue';
-import HexTriadLayer from '@alphacifer/slidev-addon-theme/components/facets/hex-triad/HexTriadLayer.vue';
+import HexTriadCallout from '@alphacifer/slidev-addon-theme/components/facets/triad/hex-triad/HexTriadCallout.vue';
+import HexTriadCenterBadge from '@alphacifer/slidev-addon-theme/components/facets/triad/hex-triad/HexTriadCenterBadge.vue';
+import HexTriadLayer from '@alphacifer/slidev-addon-theme/components/facets/triad/hex-triad/HexTriadLayer.vue';
 import { MotionPlugin } from '@vueuse/motion';
 import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
@@ -20,6 +20,7 @@ import TocPreview from './components/common/TocPreview.vue';
 import ArcComparisonDemo from './components/comparisons/ArcComparisonDemo.vue';
 import TableComparisonDemo from './components/comparisons/TableComparisonDemo.vue';
 // Core
+import ArcOrbitDemo from './components/core/ArcOrbitDemo.vue';
 import DateDemo from './components/core/DateDemo.vue';
 import QnADemo from './components/core/QnADemo.vue';
 import QuoteDemo from './components/core/QuoteDemo.vue';
@@ -30,6 +31,8 @@ import TransitionHeadingDemo from './components/core/TransitionHeadingDemo.vue';
 import RectOrbitTetradDemo from './components/facets/tetrad/RectOrbitTetradDemo.vue';
 // Facets
 import ArrowTriadDemo from './components/facets/triad/ArrowTriadDemo.vue';
+import GearTriadContentsDemo from './components/facets/triad/GearTriadContentsDemo.vue';
+import GearTriadDemo from './components/facets/triad/GearTriadDemo.vue';
 import HexTriadDemo from './components/facets/triad/HexTriadDemo.vue';
 // Layouts
 import LayoutDemo from './components/layouts/LayoutDemo.vue';
@@ -65,6 +68,7 @@ export default {
     app.component('LayoutDemo', LayoutDemo);
 
     // Core Demos
+    app.component('ArcOrbitDemo', ArcOrbitDemo);
     app.component('SpeakerDemo', SpeakerDemo);
     app.component('DateDemo', DateDemo);
     app.component('QuoteDemo', QuoteDemo);
@@ -75,6 +79,8 @@ export default {
 
     // Facet Demos
     app.component('ArrowTriadDemo', ArrowTriadDemo);
+    app.component('GearTriadDemo', GearTriadDemo);
+    app.component('GearTriadContentsDemo', GearTriadContentsDemo);
     app.component('HexTriadDemo', HexTriadDemo);
     app.component('RectOrbitTetradDemo', RectOrbitTetradDemo);
 

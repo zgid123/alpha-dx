@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import ArrowTriad from '@alphacifer/slidev-addon-theme/components/facets/arrow-triad/ArrowTriad.vue';
-import ArrowTriadCallout from '@alphacifer/slidev-addon-theme/components/facets/arrow-triad/ArrowTriadCallout.vue';
-import ArrowTriadContent from '@alphacifer/slidev-addon-theme/components/facets/arrow-triad/ArrowTriadContent.vue';
-import ArrowTriadHeading from '@alphacifer/slidev-addon-theme/components/facets/arrow-triad/ArrowTriadHeading.vue';
+import ArrowTriad from '@alphacifer/slidev-addon-theme/components/facets/triad/arrow-triad/ArrowTriad.vue';
+import ArrowTriadCallout from '@alphacifer/slidev-addon-theme/components/facets/triad/arrow-triad/ArrowTriadCallout.vue';
+import ArrowTriadContent from '@alphacifer/slidev-addon-theme/components/facets/triad/arrow-triad/ArrowTriadContent.vue';
+import ArrowTriadHeading from '@alphacifer/slidev-addon-theme/components/facets/triad/arrow-triad/ArrowTriadHeading.vue';
 import type { TArrowTriadLayout } from '@alphacifer/slidev-addon-theme/utils/arrowTriad';
 import { ref } from 'vue';
 

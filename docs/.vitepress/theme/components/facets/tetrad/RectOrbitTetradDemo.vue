@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import RectOrbitTetrad from '@alphacifer/slidev-addon-theme/components/facets/rect-orbit-tetrad/RectOrbitTetrad.vue';
-import RectOrbitTetradCallout from '@alphacifer/slidev-addon-theme/components/facets/rect-orbit-tetrad/RectOrbitTetradCallout.vue';
-import RectOrbitTetradContent from '@alphacifer/slidev-addon-theme/components/facets/rect-orbit-tetrad/RectOrbitTetradContent.vue';
-import RectOrbitTetradHeading from '@alphacifer/slidev-addon-theme/components/facets/rect-orbit-tetrad/RectOrbitTetradHeading.vue';
+import RectOrbitTetrad from '@alphacifer/slidev-addon-theme/components/facets/tetrad/rect-orbit-tetrad/RectOrbitTetrad.vue';
+import RectOrbitTetradCallout from '@alphacifer/slidev-addon-theme/components/facets/tetrad/rect-orbit-tetrad/RectOrbitTetradCallout.vue';
+import RectOrbitTetradContent from '@alphacifer/slidev-addon-theme/components/facets/tetrad/rect-orbit-tetrad/RectOrbitTetradContent.vue';
+import RectOrbitTetradHeading from '@alphacifer/slidev-addon-theme/components/facets/tetrad/rect-orbit-tetrad/RectOrbitTetradHeading.vue';
 import { ref } from 'vue';
 
 import SlidevMockup from '../../common/SlidevMockup.vue';

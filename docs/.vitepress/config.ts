@@ -195,6 +195,10 @@ export default defineConfig({
                       text: 'Thanks',
                       link: '/slidev/addon/components/core/thanks',
                     },
+                    {
+                      text: 'Arc Orbit',
+                      link: '/slidev/addon/components/core/arc-orbit',
+                    },
                   ],
                 },
                 {
@@ -206,6 +210,10 @@ export default defineConfig({
                         {
                           text: 'Arrow Triad',
                           link: '/slidev/addon/components/facets/triad/arrow-triad',
+                        },
+                        {
+                          text: 'Gear Triad',
+                          link: '/slidev/addon/components/facets/triad/gear-triad',
                         },
                         {
                           text: 'Hex Triad',
@@ -336,6 +344,10 @@ export default defineConfig({
                       text: 'Thanks',
                       link: '/slidev/academic-theme/components/core/thanks',
                     },
+                    {
+                      text: 'Arc Orbit',
+                      link: '/slidev/academic-theme/components/core/arc-orbit',
+                    },
                   ],
                 },
                 {
@@ -347,6 +359,10 @@ export default defineConfig({
                         {
                           text: 'Arrow Triad',
                           link: '/slidev/academic-theme/components/facets/triad/arrow-triad',
+                        },
+                        {
+                          text: 'Gear Triad',
+                          link: '/slidev/academic-theme/components/facets/triad/gear-triad',
                         },
                         {
                           text: 'Hex Triad',
@@ -417,6 +433,10 @@ export default defineConfig({
                 {
                   text: 'Default',
                   link: '/slidev/academic-theme/layouts/default',
+                },
+                {
+                  text: 'Blank',
+                  link: '/slidev/academic-theme/layouts/blank',
                 },
                 {
                   text: 'Section',

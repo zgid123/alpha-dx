@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import HexTriad from '@alphacifer/slidev-addon-theme/components/facets/hex-triad/HexTriad.vue';
-import HexTriadBadge from '@alphacifer/slidev-addon-theme/components/facets/hex-triad/HexTriadBadge.vue';
-import HexTriadCallout from '@alphacifer/slidev-addon-theme/components/facets/hex-triad/HexTriadCallout.vue';
-import HexTriadContent from '@alphacifer/slidev-addon-theme/components/facets/hex-triad/HexTriadContent.vue';
-import HexTriadHeading from '@alphacifer/slidev-addon-theme/components/facets/hex-triad/HexTriadHeading.vue';
+import HexTriad from '@alphacifer/slidev-addon-theme/components/facets/triad/hex-triad/HexTriad.vue';
+import HexTriadBadge from '@alphacifer/slidev-addon-theme/components/facets/triad/hex-triad/HexTriadBadge.vue';
+import HexTriadCallout from '@alphacifer/slidev-addon-theme/components/facets/triad/hex-triad/HexTriadCallout.vue';
+import HexTriadContent from '@alphacifer/slidev-addon-theme/components/facets/triad/hex-triad/HexTriadContent.vue';
+import HexTriadHeading from '@alphacifer/slidev-addon-theme/components/facets/triad/hex-triad/HexTriadHeading.vue';
 import { ref } from 'vue';
 
 import SlidevMockup from '../../common/SlidevMockup.vue';

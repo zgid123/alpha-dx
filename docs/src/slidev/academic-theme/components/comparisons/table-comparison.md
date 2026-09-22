@@ -2,6 +2,12 @@
 
 Multi-column comparison matrix with colored column headers, criteria row labels, and cell values for comparing experimental models, baseline algorithms, or ablation studies. Includes `TableComparison`, `TableComparisonCols`, `TableComparisonCol`, `TableComparisonRows`, `TableComparisonRow`, and `TableComparisonCell`.
 
+## Purpose
+
+Multi-column comparison matrix with colored column headers, criteria row labels, and styled cells for structured feature or capability comparisons.
+
+**When to use**: When comparing 2-4 solutions across multiple criteria in a tabular format — tech stack evaluations, ablation studies, or feature matrices. Prefer this over `ArcComparison` when you have more than 4 criteria or need a compact data-dense layout.
+
 ## Presentation Preview
 
 <TableComparisonDemo theme="academic" />
@@ -91,6 +97,17 @@ addons:
 | `title` | `string` | `undefined` | No | Row criteria label displayed in the left header. |
 | `color` | `string` | `undefined` | No | Header background color override for this row. |
 | `textColor` | `string` | `undefined` | No | Header text color override for this row. |
+
+### `TableComparisonCell`
+
+| Prop | Type | Default | Required | Description |
+| :--- | :--- | :--- | :---: | :--- |
+| `text` | `string \| number` | `undefined` | No | Text content fallback when default slot is not used. |
+| `color` | `string` | `undefined` | No | Alias for cell background color. |
+| `bg` | `string` | `undefined` | No | Cell background color override. |
+| `textColor` | `string` | `undefined` | No | Cell text color override. |
+| `borderRadius` | `number \| string` | `undefined` | No | Cell corner border radius override. |
+| `align` | `'left' \| 'center' \| 'right'` | `'center'` | No | Text alignment within the cell. |
 
 ---
 

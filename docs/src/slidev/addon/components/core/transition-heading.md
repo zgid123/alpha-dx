@@ -2,6 +2,12 @@
 
 Coordinates heading position transitions between a centered opening state and a standard top-corner slide title position, typically used with the `shifting-intro` layout.
 
+## Purpose
+
+Coordinates a two-state heading transition — from centered hero position to standard top-left title position — triggered by Slidev clicks.
+
+**When to use**: Inside the `shifting-intro` layout, or any slide where the title should start centered and animate to the corner when body content is revealed.
+
 ## Presentation Preview
 
 <TransitionHeadingDemo />

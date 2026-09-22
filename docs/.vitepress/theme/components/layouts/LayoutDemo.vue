@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AcademicBlank from '@alphacifer/slidev-academic-theme/layouts/blank.vue';
 import AcademicCover from '@alphacifer/slidev-academic-theme/layouts/cover.vue';
 import AcademicDefault from '@alphacifer/slidev-academic-theme/layouts/default.vue';
 import AcademicEnd from '@alphacifer/slidev-academic-theme/layouts/end.vue';
@@ -15,6 +16,7 @@ import academicBg from '../../assets/academic-bg.png';
 import SlidevMockup from '../common/SlidevMockup.vue';
 
 export type TLayout =
+  | 'blank'
   | 'cover'
   | 'default'
   | 'section'
@@ -192,6 +194,27 @@ function replayThanks() {
         <h1>Thank You</h1>
         <p>Q&A and Discussion</p>
       </AcademicEnd>
+
+      <!-- Academic Theme Blank Layout directly from Academic Theme -->
+      <AcademicBlank
+        v-else-if="props.layout === 'blank'"
+      >
+        <p><strong>Unconstrained Canvas Slide</strong></p>
+        <p>Full layout area without forced heading typography, ideal for diagrams and content-first slides.</p>
+        <div class="alpha-canonical-sections">
+          <div
+            v-for="s in canonicalContent.sections.slice(0, 3)"
+            :key="s.badge"
+            class="alpha-canonical-item"
+          >
+            <span class="alpha-canonical-badge">{{ s.badge }}</span>
+            <div class="alpha-canonical-text">
+              <div class="alpha-canonical-title">{{ s.title }}</div>
+              <div class="alpha-canonical-desc">{{ s.desc }}</div>
+            </div>
+          </div>
+        </div>
+      </AcademicBlank>
 
       <!-- Default Layout (Academic Theme or Addon Standard) -->
       <AcademicDefault

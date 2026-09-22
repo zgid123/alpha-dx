@@ -35,6 +35,7 @@ All components exported by the addon are automatically available in your slides 
 - [**Q & A**](./components/core/qna.md): Animated "Q & A" title sequence.
 - [**Transition Heading**](./components/core/transition-heading.md): Shifting heading coordinating opening and revealed states (`TransitionHeading`).
 - [**Thanks**](./components/core/thanks.md): Closing artwork composition with decorative squares (`ThanksContent`).
+- [**Arc Orbit**](./components/core/arc-orbit.md): Edge-anchored semicircular hub with radial orbiting callout nodes (`ArcOrbit`).
 
 ### Facets
 

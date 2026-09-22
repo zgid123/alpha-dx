@@ -2,6 +2,12 @@
 
 Three-way curved arrow infographic with concentric dashed guide lines and customizable callout blocks. Includes `ArrowTriad`, `ArrowTriadCallout`, `ArrowTriadHeading`, `ArrowTriadContent`, and `ArrowTriadIcon`.
 
+## Purpose
+
+Three-way curved arrow infographic for visualizing cyclical relationships, interdependent processes, or three pillars of a methodology.
+
+**When to use**: When presenting three interconnected concepts that flow into each other — development cycles, feedback loops, or three-pillar frameworks. Choose layout variants to control callout arrangement.
+
 ## Presentation Preview
 
 <ArrowTriadDemo />
@@ -66,3 +72,17 @@ Three-way curved arrow infographic with concentric dashed guide lines and custom
 - `ArrowTriadHeading`: Callout header text.
 - `ArrowTriadContent`: Callout body content.
 - `ArrowTriadIcon`: Optional icon container for each callout.
+
+### Props Reference (`ArrowTriadCallout`)
+
+| Prop | Type | Default | Required | Description |
+| :--- | :--- | :--- | :---: | :--- |
+| `id` | `string \| number` | `undefined` | No | Override internal ID. |
+| `index` | `number` | `undefined` | No | Override auto-registered index (0, 1, or 2). |
+| `icon` | `string \| object \| false` | `undefined` | No | Iconifier icon name or object. |
+| `color` | `string` | `undefined` | No | Accent color override. |
+| `cardBg` | `string` | `undefined` | No | Background color of the callout card. |
+| `textColor` | `string` | `undefined` | No | Text color for description. |
+| `titleColor` | `string` | `undefined` | No | Text color for title. |
+| `title` | `string` | `undefined` | No | Title text. |
+| `description` | `string` | `undefined` | No | Description text. |

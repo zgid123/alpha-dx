@@ -2,6 +2,12 @@
 
 Renders an animated "Q & A" title sequence designed for transition slides and closing Q&A sessions.
 
+## Purpose
+
+Renders an animated "Q & A" title composition with entrance motion effects.
+
+**When to use**: On the final or penultimate slide of your talk to signal the Q&A session. Typically used inside an `end` or `thanks` layout. Adjust `startDelay` for immediate or delayed playback.
+
 ## Presentation Preview
 
 <QnADemo />

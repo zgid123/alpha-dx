@@ -2,6 +2,12 @@
 
 Anchors speaker or team attribution and a formatted presentation date at the bottom of a slide within the **Academic Theme**.
 
+## Purpose
+
+Provides consistent speaker, researcher, or author attribution at the bottom of any slide. Anchors the presenter name (or team list) and formatted date.
+
+**When to use**: On cover, intro, or end slides where you need to display who is presenting and the presentation date. Prefer `team` prop when multiple presenters share the stage.
+
 ## Presentation Preview
 
 <SpeakerDemo theme="academic" />
