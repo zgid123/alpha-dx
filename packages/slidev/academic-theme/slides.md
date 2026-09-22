@@ -38,6 +38,16 @@ layout: section
 > Clear structure lets the evidence carry the argument.
 
 ---
+layout: blank
+---
+
+A minimal content slide without a title heading, maximizing canvas space while retaining academic margins and footer pagination.
+
+- Clean typographic focus
+- Unconstrained vertical layout
+- Retains footer slide numbers
+
+---
 layout: end
 ---
 

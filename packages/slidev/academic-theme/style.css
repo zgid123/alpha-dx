@@ -29,9 +29,11 @@ html.dark pre.shiki span {
 
 /* Force Addon theme components to keep high-contrast light colors in Academic Theme */
 .dark .slidev-page .alpha-arc-comparison-content,
+.dark .slidev-page .alpha-arc-orbit-content,
 .dark .slidev-page .alpha-horiz-card-content,
 .dark .slidev-page .alpha-vert-card-content,
 html.dark .slidev-page .alpha-arc-comparison-content,
+html.dark .slidev-page .alpha-arc-orbit-content,
 html.dark .slidev-page .alpha-horiz-card-content,
 html.dark .slidev-page .alpha-vert-card-content {
   color: var(--alpha-academic-primary);
@@ -43,17 +45,23 @@ html.dark .slidev-page .alpha-arc-comparison__divider {
 }
 
 .dark .slidev-page .alpha-arc-comparison__hub path,
-html.dark .slidev-page .alpha-arc-comparison__hub path {
+html.dark .slidev-page .alpha-arc-comparison__hub path,
+.dark .slidev-page .alpha-arc-orbit__hub path,
+html.dark .slidev-page .alpha-arc-orbit__hub path {
   fill: #f1f3f6;
 }
 
 .dark .slidev-page .alpha-arc-comparison__arc path,
-html.dark .slidev-page .alpha-arc-comparison__arc path {
+html.dark .slidev-page .alpha-arc-comparison__arc path,
+.dark .slidev-page .alpha-arc-orbit__arc path,
+html.dark .slidev-page .alpha-arc-orbit__arc path {
   stroke: #cbd5e1;
 }
 
 .dark .slidev-page .alpha-arc-comparison__arc circle,
-html.dark .slidev-page .alpha-arc-comparison__arc circle {
+html.dark .slidev-page .alpha-arc-comparison__arc circle,
+.dark .slidev-page .alpha-arc-orbit__arc circle,
+html.dark .slidev-page .alpha-arc-orbit__arc circle {
   fill: #94a3b8;
 }
 
@@ -104,6 +112,11 @@ html.dark .slidev-page .alpha-arc-comparison__vs text {
 
 .alpha-academic-cover__content {
   width: 100%;
+}
+
+.alpha-academic-blank {
+  width: 100%;
+  height: 100%;
 }
 
 .slidev-layout h1 {

@@ -1,3 +1,6 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
 import pkg from '../../package.json';
 
 describe('academic-theme', () => {
@@ -21,6 +24,29 @@ describe('academic-theme', () => {
         expect(pkg.files).toContain('layouts');
         expect(pkg.files).toContain('style.css');
         expect(pkg.files).toContain('slide-bottom.vue');
+      });
+    });
+  });
+
+  describe('#layouts', () => {
+    suite('when inspecting available layout templates', () => {
+      it('provides blank layout alongside core academic layouts', () => {
+        const layoutsDir = path.resolve(__dirname, '../../layouts');
+        const layouts = fs.readdirSync(layoutsDir);
+
+        expect(layouts).toContain('blank.vue');
+        expect(layouts).toContain('cover.vue');
+        expect(layouts).toContain('default.vue');
+        expect(layouts).toContain('end.vue');
+        expect(layouts).toContain('section.vue');
+      });
+
+      it('defines alpha-academic-blank in blank.vue template', () => {
+        const blankPath = path.resolve(__dirname, '../../layouts/blank.vue');
+        const content = fs.readFileSync(blankPath, 'utf8');
+
+        expect(content).toContain('alpha-academic-blank');
+        expect(content).toContain('handleBackground');
       });
     });
   });
