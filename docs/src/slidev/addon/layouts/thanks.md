@@ -2,6 +2,12 @@
 
 The `thanks` layout renders a dedicated concluding slide with animated `ThanksContent` artwork and decorative geometric elements.
 
+## Purpose
+
+Dedicated closing slide with animated `ThanksContent` artwork and decorative geometric elements.
+
+**When to use**: Final slide of your presentation. Zero-config — just set `layout: thanks` and optionally `hideInToc: true`.
+
 ## Presentation Preview
 
 <LayoutDemo layout="thanks" />

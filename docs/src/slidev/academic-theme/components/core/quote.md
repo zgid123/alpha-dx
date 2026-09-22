@@ -2,6 +2,12 @@
 
 Displays a styled quotation with optional author attribution and academic typography.
 
+## Purpose
+
+Renders a styled blockquote with optional author attribution for memorable statements.
+
+**When to use**: On slides dedicated to a key insight, memorable quote, or design principle. Pair with `center` or `section` layouts for maximum visual impact.
+
 ## Presentation Preview
 
 <QuoteDemo theme="academic" />

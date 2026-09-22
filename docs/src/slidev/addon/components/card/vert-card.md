@@ -2,6 +2,12 @@
 
 Vertical card component with a step ribbon badge, top-right diagonal stripes, organic accent shape, and optional icon. Includes `VertCard`, `VertCardBadge`, `VertCardTitle`, `VertCardHeading`, `VertCardContent`, and `VertCardIcon`.
 
+## Purpose
+
+Vertical card with a step badge, diagonal stripe accents, and optional divider for presenting numbered items in a tall layout.
+
+**When to use**: When arranging cards side-by-side in a horizontal row — the vertical orientation works well in `grid-cols-3` or `grid-cols-4` layouts. Choose badge `variant` to control badge positioning style.
+
 ## Presentation Preview
 
 <VertCardDemo />

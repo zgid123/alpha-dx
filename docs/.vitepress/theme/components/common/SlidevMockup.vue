@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, provide, ref, watch } from 'vue';
+import {
+  computed,
+  onMounted,
+  onUnmounted,
+  provide,
+  ref,
+  useSlots,
+  watch,
+} from 'vue';
 
 const props = withDefaults(
   defineProps<{
@@ -107,9 +115,12 @@ const embeddedScale = computed(() => {
   return Math.min(stageWidth.value / CANVAS_WIDTH, 1);
 });
 
+const slots = useSlots();
+
 const fullscreenScale = computed(() => {
   const maxW = Math.max(windowWidth.value - 48, 320);
-  const maxH = Math.max(windowHeight.value - 96, 240);
+  const verticalPadding = slots.controls ? 160 : 96;
+  const maxH = Math.max(windowHeight.value - verticalPadding, 240);
   return Math.min(maxW / CANVAS_WIDTH, maxH / CANVAS_HEIGHT);
 });
 
@@ -187,7 +198,6 @@ defineExpose({
           {{ props.theme === 'academic' ? '@alphacifer/slidev-academic-theme' : '@alphacifer/slidev-addon-theme' }}
         </span>
       </div>
-
       <div class="slidev-mockup__header-right">
         <!-- Addon Theme Light/Dark Mode Toggle -->
         <button
@@ -200,7 +210,6 @@ defineExpose({
           <span class="slidev-mockup__theme-icon">{{ isDark ? '🌙' : '☀️' }}</span>
           <span>{{ isDark ? 'Dark Mode' : 'Light Mode' }}</span>
         </button>
-
         <button
           type="button"
           class="slidev-mockup__fullscreen-btn"
@@ -211,7 +220,6 @@ defineExpose({
         </button>
       </div>
     </div>
-
     <!-- Scaled Slide Stage -->
     <div
       ref="stageRef"
@@ -245,12 +253,10 @@ defineExpose({
         <slot v-else :is-dark="isDark" :is-fullscreen="false" />
       </div>
     </div>
-
     <!-- Optional Interactive Controls Bar -->
     <div v-if="$slots.controls" class="slidev-mockup__controls">
       <slot name="controls" :is-dark="isDark" />
     </div>
-
     <!-- Fullscreen Presentation Popup Modal -->
     <Teleport to="body">
       <div
@@ -263,7 +269,6 @@ defineExpose({
             <span>{{ props.theme === 'academic' ? 'Slidev Academic Presentation Mode' : 'Slidev Presentation Mode' }}</span>
             <span class="slidev-popup__hint">Press ESC or click outside to exit</span>
           </div>
-
           <div class="slidev-popup__actions">
             <!-- Fullscreen Light/Dark Toggle for Addon -->
             <button
@@ -276,7 +281,6 @@ defineExpose({
               <span class="slidev-mockup__theme-icon">{{ isDark ? '🌙' : '☀️' }}</span>
               <span>{{ isDark ? 'Dark Mode' : 'Light Mode' }}</span>
             </button>
-
             <button
               type="button"
               class="slidev-popup__close-btn"
@@ -286,7 +290,6 @@ defineExpose({
             </button>
           </div>
         </div>
-
         <div class="slidev-popup__screen">
           <div
             :class="[
@@ -314,6 +317,10 @@ defineExpose({
             </div>
             <slot v-else :is-dark="isDark" :is-fullscreen="true" />
           </div>
+        </div>
+        <!-- Presentation Mode Controls Bar -->
+        <div v-if="$slots.controls" class="slidev-popup__controls">
+          <slot name="controls" :is-dark="isDark" :is-fullscreen="true" />
         </div>
       </div>
     </Teleport>

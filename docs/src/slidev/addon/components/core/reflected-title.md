@@ -2,6 +2,12 @@
 
 Creates a large, prominent presentation heading accompanied by a soft, mirrored inverted reflection underneath.
 
+## Purpose
+
+Creates a large display heading with a mirrored CSS reflection effect underneath for visual emphasis.
+
+**When to use**: On hero slides or section dividers where you want a dramatic title treatment. Works best with dark backgrounds or inside banner containers.
+
 ## Presentation Preview
 
 <ReflectedTitleDemo />

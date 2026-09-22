@@ -2,6 +2,12 @@
 
 The `table-of-contents` layout renders standard Slidev table of contents navigation with support for custom heading content and depth filtering.
 
+## Purpose
+
+Standard text-based table of contents with configurable heading depth filtering.
+
+**When to use**: When you need a clean, simple agenda slide. For a more visually distinctive TOC, use the `arc-toc` layout instead.
+
 ## Presentation Preview
 
 <LayoutDemo layout="table-of-contents" />

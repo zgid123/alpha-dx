@@ -2,6 +2,12 @@
 
 The `shifting-intro` layout coordinates a multi-stage slide opening: on click 0, the first heading starts centered on the slide; on click 1, the heading automatically animates upward into standard title position while revealing the remaining slide body content.
 
+## Purpose
+
+Multi-stage slide opening where the title starts centered, then animates upward into standard position while revealing body content on click.
+
+**When to use**: Opening slides for major sections where you want a dramatic reveal — the centered title draws attention, then shifts to make room for the content. Works naturally with `TransitionHeading` component.
+
 ## Presentation Preview
 
 <LayoutDemo layout="shifting-intro" />

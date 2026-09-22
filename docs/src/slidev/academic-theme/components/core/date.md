@@ -2,6 +2,12 @@
 
 Formats presentation dates consistently across academic slides as `dd/MM/yyyy`, defaulting to the current date when omitted.
 
+## Purpose
+
+Renders a consistently formatted presentation date (`dd/MM/yyyy`).
+
+**When to use**: Whenever you need a standalone formatted date stamp — typically inside custom cover layouts or footer components. If you need date + author together, use `Speaker` instead.
+
 ## Presentation Preview
 
 <DateDemo theme="academic" />

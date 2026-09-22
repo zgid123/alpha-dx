@@ -2,6 +2,12 @@
 
 Horizontal process card featuring an indented chevron badge on the left side and rounded container on the right. Includes `ChevronCard`, `ChevronCardBadge`, `ChevronCardHeading`, and `ChevronCardContent`.
 
+## Purpose
+
+Horizontal card with an indented chevron-shaped badge for presenting sequential process steps with visual directionality.
+
+**When to use**: When building process grids where the chevron shape reinforces the sequential flow — onboarding steps, deployment pipelines, or sprint phases. Works well in 2x2 grid layouts.
+
 ## Presentation Preview
 
 <ChevronCardDemo theme="academic" />

@@ -2,6 +2,12 @@
 
 The `end` layout provides a formal concluding slide for thesis defenses, conference talks, and academic lectures.
 
+## Purpose
+
+Formal concluding layout for lectures, defenses, and seminars.
+
+**When to use**: The final slide — "Thank you", "Questions?", or contact information. Provides academic-appropriate closing typography.
+
 ## Presentation Preview
 
 <LayoutDemo layout="end" theme="academic" />

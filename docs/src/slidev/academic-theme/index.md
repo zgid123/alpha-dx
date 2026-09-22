@@ -32,10 +32,11 @@ addons:
 
 ## Layouts
 
-The theme includes four academic layouts:
+The theme includes five academic layouts:
 
 - `cover`: Title slide with a restrained academic accent and full-height centered layout.
 - `default`: Standard academic content slide with clean margins and typography.
+- `blank`: Unconstrained canvas slide for diagrams, comparisons, or content without a top title.
 - `section`: Centered section divider slide.
 - `end`: Closing slide.
 
@@ -71,6 +72,7 @@ The theme provides CSS custom properties that can be adjusted in your deck-level
 - [**Q & A**](./components/core/qna.md): Animated "Q & A" title sequence.
 - [**Transition Heading**](./components/core/transition-heading.md): Shifting heading coordinating opening and revealed states (`TransitionHeading`).
 - [**Thanks**](./components/core/thanks.md): Closing artwork composition for defenses and lectures (`ThanksContent`).
+- [**Arc Orbit**](./components/core/arc-orbit.md): Edge-anchored semicircular hub with radial orbiting callout nodes (`ArcOrbit`).
 
 ### Facets
 
@@ -104,6 +106,7 @@ The theme provides CSS custom properties that can be adjusted in your deck-level
 
 - [**Cover**](./layouts/cover.md): Academic presentation title and speaker attribution layout (`cover`).
 - [**Default**](./layouts/default.md): Standard academic slide layout with footer metadata and slide numbering (`default`).
+- [**Blank**](./layouts/blank.md): Unconstrained canvas slide without heading presumption for diagrams and content-first slides (`blank`).
 - [**Section**](./layouts/section.md): Section divider and chapter transition layout (`section`).
 - [**End**](./layouts/end.md): Formal concluding layout for lectures, defenses, and seminars (`end`).
 - [**Arc TOC**](./layouts/arc-toc.md): Curved arc table of contents layout with connector lines and color markers (`arc-toc`).

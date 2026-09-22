@@ -2,6 +2,12 @@
 
 Horizontal card component featuring a step ribbon badge, chamfered corner with organic accent blob, and optional icon circle. Includes `HorizCard`, `HorizCardBadge`, `HorizCardHeading`, `HorizCardContent`, and `HorizCardIcon`.
 
+## Purpose
+
+Horizontal card with a step ribbon badge, chamfered corner accent, and optional icon circle for presenting numbered steps or feature highlights.
+
+**When to use**: When laying out 2-4 step process cards in a grid, or presenting individual feature highlights with numbered steps. Supports both prop-based and slot composition patterns.
+
 ## Presentation Preview
 
 <HorizCardDemo />

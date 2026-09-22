@@ -1,6 +1,12 @@
 # Rect Orbit Tetrad
 
-Four-part circular hub infographic with concentric quadrant blocks, central badge, and symmetrical callouts for categorizing research components. Includes `RectOrbitTetrad`, `RectOrbitTetradCallout`, `RectOrbitTetradCenter`, `RectOrbitTetradHeading`, `RectOrbitTetradContent`, and `RectOrbitTetradIcon`.
+Four-part circular hub infographic with concentric quadrant blocks, central badge, and symmetrical callouts. Includes `RectOrbitTetrad`, `RectOrbitTetradCallout`, `RectOrbitTetradCenter`, `RectOrbitTetradHeading`, `RectOrbitTetradContent`, and `RectOrbitTetradIcon`.
+
+## Purpose
+
+Four-part circular hub infographic with concentric quadrant arcs, a central badge, and symmetrical callouts arranged in four corners.
+
+**When to use**: When presenting exactly 4 equally-weighted concepts around a central theme — four pillars of architecture, four-quadrant matrices, or balanced strategy frameworks. Each quadrant gets its own color and icon.
 
 ## Presentation Preview
 
@@ -68,6 +74,14 @@ addons:
 | `arcBorderColor` | `string` | `auto` | No | Explicit stroke color override for the concentric border line. |
 | `titleColor` | `string` | `auto` | No | Title text color override for the quadrant header. |
 | `textColor` | `string` | `auto` | No | Body text color override. |
+
+### `RectOrbitTetradCenter`
+
+| Prop | Type | Default | Required | Description |
+| :--- | :--- | :--- | :---: | :--- |
+| `title` | `string` | `undefined` | No | Primary title text displayed in the center hub disk. |
+| `subtitle` | `string` | `undefined` | No | Subtitle text displayed below the title. |
+| `radius` | `number` | `58` | No | Radius of the center circle hub in pixels. |
 
 ---
 

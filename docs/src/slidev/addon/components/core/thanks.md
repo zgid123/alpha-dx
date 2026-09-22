@@ -2,6 +2,12 @@
 
 Composes closing "Thank You" artwork with animated geometric accent squares. Includes the `ThanksContent`, `ThanksSquare`, and `ThanksOutlineSquare` components.
 
+## Purpose
+
+Composes a closing "Thank You" artwork with animated decorative geometric squares and styled typography.
+
+**When to use**: On the final slide of your presentation. Use the `thanks` layout for zero-config setup, or compose manually with `ThanksContent` for custom placement.
+
 ## Presentation Preview
 
 <ThanksDemo />

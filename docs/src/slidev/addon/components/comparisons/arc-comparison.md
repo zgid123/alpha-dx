@@ -1,6 +1,12 @@
 # Arc Comparison
 
-Opposing curved comparison diagram with edge project hubs, numbered arc nodes, and central versus divider for evaluating architectural trade-offs. Includes `ArcComparison`, `ArcComparisonLeft`, `ArcComparisonRight`, `ArcComparisonTitle`, `ArcComparisonContents`, `ArcComparisonCallout`, `ArcComparisonBadge`, `ArcComparisonHeading`, and `ArcComparisonContent`.
+Opposing curved comparison diagram with edge project hubs, numbered arc nodes, and central versus divider for evaluating architectural trade-offs. Includes `ArcComparison`, `ArcComparisonLeft`, `ArcComparisonRight`, `ArcComparisonTitle`, `ArcComparisonContents`, `ArcComparisonOrbit`, `ArcComparisonBadge`, `ArcComparisonHeading`, and `ArcComparisonContent`.
+
+## Purpose
+
+Opposing dual-arc comparison diagram with two edge hubs, numbered arc nodes, and a central "Vs" divider for evaluating architectural trade-offs side by side.
+
+**When to use**: When comparing two approaches, architectures, or solutions head-to-head — monolith vs. microservices, baseline vs. proposed, old vs. new. Each side supports 3-4 comparison criteria with matching numbering.
 
 ## Presentation Preview
 
@@ -17,54 +23,54 @@ Opposing curved comparison diagram with edge project hubs, numbered arc nodes, a
   <ArcComparisonLeft color="#ea580c">
     <ArcComparisonTitle>Traditional<br />Monolith</ArcComparisonTitle>
     <ArcComparisonContents>
-      <ArcComparisonCallout>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>01</ArcComparisonBadge>
         <ArcComparisonHeading>Coupled State</ArcComparisonHeading>
         <ArcComparisonContent>
           Shared database schemas create cross-team deployment bottlenecks.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout>
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>02</ArcComparisonBadge>
         <ArcComparisonHeading>Vertical Scale</ArcComparisonHeading>
         <ArcComparisonContent>
           Requires upgrading single instances with exponential cost increases.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout>
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>03</ArcComparisonBadge>
         <ArcComparisonHeading>Single Failure</ArcComparisonHeading>
         <ArcComparisonContent>
           Unchecked crashes can bring down the entire system.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
+      </ArcComparisonOrbit>
     </ArcComparisonContents>
   </ArcComparisonLeft>
 
   <ArcComparisonRight color="#0284c7">
     <ArcComparisonTitle>Distributed<br />Microservices</ArcComparisonTitle>
     <ArcComparisonContents>
-      <ArcComparisonCallout>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>01</ArcComparisonBadge>
         <ArcComparisonHeading>Bounded Context</ArcComparisonHeading>
         <ArcComparisonContent>
           Autonomous services communicate over defined asynchronous events.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout>
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>02</ArcComparisonBadge>
         <ArcComparisonHeading>Elastic Scale</ArcComparisonHeading>
         <ArcComparisonContent>
           Horizontal autoscaling responds dynamically to spike traffic demand.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout>
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>03</ArcComparisonBadge>
         <ArcComparisonHeading>Isolated Faults</ArcComparisonHeading>
         <ArcComparisonContent>
           Failures remain localized without cascading across service domains.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
+      </ArcComparisonOrbit>
     </ArcComparisonContents>
   </ArcComparisonRight>
 </ArcComparison>
@@ -77,71 +83,77 @@ Opposing curved comparison diagram with edge project hubs, numbered arc nodes, a
   <ArcComparisonLeft :count="4" color="#ea580c">
     <ArcComparisonTitle>Baseline<br />Approach</ArcComparisonTitle>
     <ArcComparisonContents>
-      <ArcComparisonCallout :index="0">
+      <ArcComparisonOrbit :index="0">
         <ArcComparisonBadge>01</ArcComparisonBadge>
         <ArcComparisonHeading>High Latency</ArcComparisonHeading>
         <ArcComparisonContent>
           Sequential processing incurs substantial inference latency.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout :index="1">
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit :index="1">
         <ArcComparisonBadge>02</ArcComparisonBadge>
         <ArcComparisonHeading>Memory Footprint</ArcComparisonHeading>
         <ArcComparisonContent>
           Requires extensive GPU VRAM allocations for batching.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout :index="2">
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit :index="2">
         <ArcComparisonBadge>03</ArcComparisonBadge>
         <ArcComparisonHeading>Brittle Convergence</ArcComparisonHeading>
         <ArcComparisonContent>
           Susceptible to gradient vanishing in deep layers.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout :index="3">
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit :index="3">
         <ArcComparisonBadge>04</ArcComparisonBadge>
         <ArcComparisonHeading>High Complexity</ArcComparisonHeading>
         <ArcComparisonContent>
           Quadratic computational cost scales poorly with sequence length.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
+      </ArcComparisonOrbit>
     </ArcComparisonContents>
   </ArcComparisonLeft>
 
   <ArcComparisonRight :count="4" color="#0284c7">
     <ArcComparisonTitle>Proposed<br />Architecture</ArcComparisonTitle>
     <ArcComparisonContents>
-      <ArcComparisonCallout :index="0">
+      <ArcComparisonOrbit :index="0">
         <ArcComparisonBadge>01</ArcComparisonBadge>
         <ArcComparisonHeading>Sub-linear Time</ArcComparisonHeading>
         <ArcComparisonContent>
           Parallelized attention achieves significant inference speedups.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout :index="1">
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit :index="1">
         <ArcComparisonBadge>02</ArcComparisonBadge>
         <ArcComparisonHeading>Compact Footprint</ArcComparisonHeading>
         <ArcComparisonContent>
           Quantized weights reduce runtime memory overhead by 4x.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout :index="2">
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit :index="2">
         <ArcComparisonBadge>03</ArcComparisonBadge>
         <ArcComparisonHeading>Stable Training</ArcComparisonHeading>
         <ArcComparisonContent>
           Residual normalization guarantees robust optimization.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout :index="3">
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit :index="3">
         <ArcComparisonBadge>04</ArcComparisonBadge>
         <ArcComparisonHeading>Linear Complexity</ArcComparisonHeading>
         <ArcComparisonContent>
           Sparse kernel execution achieves linear time scaling.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
+      </ArcComparisonOrbit>
     </ArcComparisonContents>
   </ArcComparisonRight>
 </ArcComparison>
+```
+
+### Layout Mode
+
+```vue
+<ArcComparison as="layout" />
 ```
 
 ---
@@ -152,6 +164,7 @@ Opposing curved comparison diagram with edge project hubs, numbered arc nodes, a
 
 | Prop | Type | Default | Required | Description |
 | :--- | :--- | :--- | :---: | :--- |
+| `as` | `'layout' \| null \| undefined` | `undefined` | No | Render mode. When set to `'layout'`, renders only the central divider line, two edge hubs, and versus badge. |
 | `count` | `number` | `3` | No | Number of comparison points per side (`3` or `4`). |
 | `vsText` | `string` | `'Vs'` | No | Text inside the central divider badge. |
 | `vsSize` | `number` | `14` | No | Font size of the central versus badge text. |
@@ -161,7 +174,7 @@ Opposing curved comparison diagram with edge project hubs, numbered arc nodes, a
 | `autoScale` | `boolean` | `true` | No | Automatically scales diagram to fit the slide bounds. |
 | `hidePagy` | `boolean` | `false` | No | Hides pagination indicators on the active slide. |
 
-### `ArcComparisonCallout`
+### `ArcComparisonOrbit`
 
 | Prop | Type | Default | Required | Description |
 | :--- | :--- | :--- | :---: | :--- |
@@ -197,7 +210,7 @@ Opposing curved comparison diagram with edge project hubs, numbered arc nodes, a
 - `ArcComparisonRight`: Right-side container with custom accent color and title.
 - `ArcComparisonTitle`: Large heading rendered inside the semicircular hub.
 - `ArcComparisonContents`: List wrapper for comparison callout points.
-- `ArcComparisonCallout`: Individual numbered criteria row positioned along the arc.
+- `ArcComparisonOrbit`: Individual numbered criteria row positioned along the arc.
 - `ArcComparisonBadge`: Circular numbered pill for each criterion.
 - `ArcComparisonHeading`: Callout header label.
 - `ArcComparisonContent`: Callout description paragraph.
