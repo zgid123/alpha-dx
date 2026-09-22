@@ -1,3 +1,4 @@
+import '@alphacifer/slidev-academic-theme/style.css';
 import DateComponent from '@alphacifer/slidev-addon-theme/components/core/Date.vue';
 import ThanksOutlineSquare from '@alphacifer/slidev-addon-theme/components/core/thanks/ThanksOutlineSquare.vue';
 import ThanksSquare from '@alphacifer/slidev-addon-theme/components/core/thanks/ThanksSquare.vue';
@@ -7,6 +8,7 @@ import HexTriadLayer from '@alphacifer/slidev-addon-theme/components/facets/tria
 import { MotionPlugin } from '@vueuse/motion';
 import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
+import 'virtual:uno.css';
 
 // Cards
 import ChevronCardDemo from './components/card/ChevronCardDemo.vue';
@@ -38,9 +40,6 @@ import HexTriadDemo from './components/facets/triad/HexTriadDemo.vue';
 import LayoutDemo from './components/layouts/LayoutDemo.vue';
 // Process
 import ArcArrowProcessDemo from './components/process/ArcArrowProcessDemo.vue';
-
-import '@alphacifer/slidev-academic-theme/style.css';
-import 'virtual:uno.css';
 import './custom.css';
 
 export default {

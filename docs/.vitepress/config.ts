@@ -141,12 +141,110 @@ export default defineConfig({
         link: '/',
       },
       {
+        text: 'Packages',
+        link: '/packages/',
+        activeMatch: '^/packages/',
+      },
+      {
         text: 'Slidev',
         link: '/slidev/',
-        activeMatch: '/slidev/',
+        activeMatch: '^/slidev/',
       },
     ],
     sidebar: {
+      '/packages/': [
+        {
+          text: 'Packages',
+          items: [
+            {
+              text: 'Overview',
+              link: '/packages/',
+            },
+          ],
+        },
+        {
+          text: 'Utilities & Auth',
+          collapsed: false,
+          items: [
+            {
+              text: 'Core Utils',
+              link: '/packages/core-utils',
+            },
+            {
+              text: 'Auth Kit',
+              link: '/packages/authkit',
+            },
+          ],
+        },
+        {
+          text: 'Backend & Data',
+          collapsed: false,
+          items: [
+            {
+              text: 'Hono',
+              link: '/packages/hono',
+            },
+            {
+              text: 'Drizzle',
+              link: '/packages/drizzle',
+            },
+          ],
+        },
+        {
+          text: 'Frontend & Networking',
+          collapsed: false,
+          items: [
+            {
+              text: 'Axios',
+              link: '/packages/axios',
+            },
+            {
+              text: 'React',
+              link: '/packages/react',
+            },
+          ],
+        },
+        {
+          text: 'Tooling & Configs',
+          collapsed: false,
+          items: [
+            {
+              text: 'TSConfig',
+              link: '/packages/tsconfig',
+            },
+            {
+              text: 'Biome',
+              link: '/packages/biome',
+            },
+            {
+              text: 'OXC',
+              link: '/packages/oxc',
+            },
+            {
+              text: 'ESLint',
+              link: '/packages/eslint',
+            },
+          ],
+        },
+        {
+          text: 'Presentations',
+          collapsed: false,
+          items: [
+            {
+              text: 'Slidev Overview',
+              link: '/slidev/',
+            },
+            {
+              text: 'Addon Theme',
+              link: '/slidev/addon/',
+            },
+            {
+              text: 'Academic Theme',
+              link: '/slidev/academic-theme/',
+            },
+          ],
+        },
+      ],
       '/slidev/': [
         {
           text: 'Overview',

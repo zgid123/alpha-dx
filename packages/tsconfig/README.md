@@ -4,6 +4,7 @@ All tsconfig for Alpha's projects.
 
 - `base.json`: base config for root monorepo
 - `cmj.json`: for all packages that are commonjs in monorepo
+- `elysia.json`: for all ElysiaJS backend services in monorepo
 - `es.json`: for all packages that are esm in monorepo
 - `hono.json`: for all Hono projects in monorepo
 - `nest.json`: for all NestJS projects in monorepo

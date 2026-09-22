@@ -20,11 +20,11 @@ pnpm add -D eslint @alphacifer/eslint typescript-eslint
 ## Apply configuration
 
 ```js
-import tsEslint from 'typescript-eslint';
 import baseLint from '@alphacifer/eslint/base';
 import nextLint from '@alphacifer/eslint/next';
 import reactLint from '@alphacifer/eslint/react';
 import reactAppLint from '@alphacifer/eslint/react-app';
+import tsEslint from 'typescript-eslint';
 
 export default tsEslint.config(
   {
