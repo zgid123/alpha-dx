@@ -5,9 +5,11 @@ import {
   Fragment,
   inject,
   provide,
+  type Ref,
   ref,
   useSlots,
   type VNode,
+  watch,
 } from 'vue';
 
 import {
@@ -24,7 +26,12 @@ defineOptions({
   inheritAttrs: false,
 });
 
+export type TArcComparisonAs = 'layout';
+
 export interface IArcComparisonProps {
+  readonly as?: TArcComparisonAs | null;
+  readonly moved?: boolean;
+  readonly edgeOffset?: number;
   readonly vsText?: string;
   readonly vsSize?: number;
   readonly count?: number;
@@ -42,6 +49,9 @@ export interface IArcComparisonProps {
 }
 
 const props = withDefaults(defineProps<IArcComparisonProps>(), {
+  as: undefined,
+  moved: undefined,
+  edgeOffset: 30,
   vsText: 'Vs',
   vsSize: 14,
   count: undefined,
@@ -58,12 +68,18 @@ const props = withDefaults(defineProps<IArcComparisonProps>(), {
   hidePagy: undefined,
 });
 
+const emit = defineEmits<{
+  (e: 'click', event: MouseEvent): void;
+  (e: 'update:moved', value: boolean): void;
+}>();
+
 const slots = useSlots();
 const rootRef = ref<HTMLElement | null>(null);
 
 const shiftingIntro = inject<
   | {
       active: ComputedRef<boolean>;
+      clicks?: Ref<number> | ComputedRef<number>;
       isShifting?: ComputedRef<boolean>;
     }
   | undefined
@@ -155,7 +171,91 @@ const geo = computed(() => {
     arcRadius: props.arcRadius,
     arcOffset: props.arcOffset,
     pointsCount: resolvedCount.value,
+    isLayout: true,
   });
+});
+
+let clipInstanceCounter = 0;
+const clipId = `alpha-arc-canvas-clip-${++clipInstanceCounter}`;
+
+const internalMoved = ref(false);
+
+const isMoved = computed(() => {
+  if (props.moved !== undefined) {
+    return props.moved;
+  }
+
+  if (shiftingIntro?.clicks && shiftingIntro.clicks.value > 0) {
+    return true;
+  }
+
+  return internalMoved.value;
+});
+
+watch(
+  () => props.as,
+  (newAs) => {
+    if (newAs === 'layout') {
+      internalMoved.value = false;
+    }
+  },
+);
+
+function handleClick(event: MouseEvent): void {
+  if (props.as === 'layout') {
+    internalMoved.value = !internalMoved.value;
+    emit('update:moved', internalMoved.value);
+  }
+
+  emit('click', event);
+}
+
+const resolvedEdgeOffset = computed(() => props.edgeOffset ?? 30);
+
+const leftTranslateX = computed(() => {
+  const delta = 500 - resolvedEdgeOffset.value;
+  return `-${delta}px`;
+});
+
+const rightTranslateX = computed(() => {
+  const delta = 500 - resolvedEdgeOffset.value;
+  return `${delta}px`;
+});
+
+const leftHubMoverStyle = computed(() => {
+  if (props.as === 'layout' && !isMoved.value) {
+    return { transform: 'translateX(0px)' };
+  }
+  return { transform: `translateX(${leftTranslateX.value})` };
+});
+
+const rightHubMoverStyle = computed(() => {
+  if (props.as === 'layout' && !isMoved.value) {
+    return { transform: 'translateX(0px)' };
+  }
+  return { transform: `translateX(${rightTranslateX.value})` };
+});
+
+const dividerScaleY = computed(() => {
+  if (props.as !== 'layout' || isMoved.value) {
+    return 1;
+  }
+
+  const fullLineLength = geo.value.dividerLine.y2 - geo.value.dividerLine.y1;
+  const circleDiameter = 2 * geo.value.left.hubRadius;
+
+  return fullLineLength > 0 ? circleDiameter / fullLineLength : 1;
+});
+
+const dividerStyle = computed(() => {
+  if (props.as !== 'layout') {
+    return undefined;
+  }
+
+  return {
+    transform: `scaleY(${dividerScaleY.value})`,
+    transformOrigin: `${geo.value.dividerLine.x}px ${geo.value.centerY}px`,
+  };
 });
 
 provide(ARC_COMPARISON_ROOT_KEY, {
@@ -163,6 +263,9 @@ provide(ARC_COMPARISON_ROOT_KEY, {
   startDelay: resolvedStartDelay,
   pointsCount: resolvedCount,
   geo,
+  as: computed(() => props.as),
+  isMoved,
+  edgeOffset: resolvedEdgeOffset,
 });
 
 const { resolvedScale, containerHeight } = useDiagramAutoScale({
@@ -209,14 +312,21 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     :class="[
       className(),
       { 'hide-pagy': props.hidePagy },
+      props.as ? `alpha-arc-comparison--as-${props.as}` : undefined,
+      { 'alpha-arc-comparison--moved': isMoved },
     ]"
+    :data-as="props.as ?? undefined"
+    :data-moved="isMoved ? '' : undefined"
     :data-hide-pagy="props.hidePagy ? '' : undefined"
     :style="{
       height: resolvedHeightStyle,
+      cursor: props.as === 'layout' ? 'pointer' : undefined,
       fontFamily:
         'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif',
       '--arc-comparison-start-delay': `${resolvedStartDelay}ms`,
+      '--arc-orbit-start-delay': `${resolvedStartDelay}ms`,
     }"
+    @click="handleClick"
   >
     <!-- Relative stage container -->
     <div
@@ -232,32 +342,96 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
         viewBox="0 0 1000 480"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <!-- Center Divider Line -->
-        <line
-          class="alpha-arc-comparison__divider transition-colors duration-300 dark:stroke-slate-700"
-          :class="{ 'alpha-arc-comparison--animated': isAnimated }"
-          :x1="geo.dividerLine.x"
-          :y1="geo.dividerLine.y1"
-          :x2="geo.dividerLine.x"
-          :y2="geo.dividerLine.y2"
-          stroke="#cbd5e1"
-          stroke-width="1.5"
-        />
-        <!-- Left Semicircular Hub Background -->
-        <g
-          class="alpha-arc-comparison__hub alpha-arc-comparison__hub--left"
-          :class="{ 'alpha-arc-comparison--animated': isAnimated }"
-        >
-          <path
-            :d="geo.left.hubPath"
-            fill="#f1f3f6"
-            class="transition-colors duration-300 dark:fill-slate-800/80"
-          />
+        <defs>
+          <clipPath :id="clipId">
+            <rect x="0" y="0" width="1000" height="480" />
+          </clipPath>
+        </defs>
+        <!-- Semicircular Hubs Group with Canvas Clip -->
+        <g :clip-path="`url(#${clipId})`">
+          <!-- Other Semicircular Hub Backgrounds (rendered underneath current hubs) -->
+          <g
+            v-if="geo.left.otherHubPath"
+            class="alpha-arc-comparison__hub-mover alpha-arc-comparison__hub-mover--left"
+            :class="{ 'alpha-arc-comparison__hub-mover--moved': isMoved || props.as !== 'layout' }"
+            :style="leftHubMoverStyle"
+          >
+            <g
+              class="alpha-arc-comparison__hub alpha-arc-comparison__hub--other alpha-arc-comparison__hub--other-left alpha-arc-comparison__hub--left"
+              :class="{ 'alpha-arc-comparison--animated': isAnimated }"
+            >
+              <path
+                :d="geo.left.otherHubPath"
+                fill="#f1f3f6"
+                class="transition-colors duration-300 dark:fill-slate-800/80"
+              />
+            </g>
+          </g>
+          <g
+            v-if="geo.right.otherHubPath"
+            class="alpha-arc-comparison__hub-mover alpha-arc-comparison__hub-mover--right"
+            :class="{ 'alpha-arc-comparison__hub-mover--moved': isMoved || props.as !== 'layout' }"
+            :style="rightHubMoverStyle"
+          >
+            <g
+              class="alpha-arc-comparison__hub alpha-arc-comparison__hub--other alpha-arc-comparison__hub--other-right alpha-arc-comparison__hub--right"
+              :class="{ 'alpha-arc-comparison--animated': isAnimated }"
+            >
+              <path
+                :d="geo.right.otherHubPath"
+                fill="#f1f3f6"
+                class="transition-colors duration-300 dark:fill-slate-800/80"
+              />
+            </g>
+          </g>
+          <!-- Left Semicircular Hub Background -->
+          <g
+            class="alpha-arc-comparison__hub-mover alpha-arc-comparison__hub-mover--left"
+            :class="{ 'alpha-arc-comparison__hub-mover--moved': isMoved || props.as !== 'layout' }"
+            :style="leftHubMoverStyle"
+          >
+            <g
+              class="alpha-arc-comparison__hub alpha-arc-comparison__hub--left"
+              :class="{ 'alpha-arc-comparison--animated': isAnimated }"
+            >
+              <path
+                :d="geo.left.hubPath"
+                fill="#f1f3f6"
+                class="transition-colors duration-300 dark:fill-slate-800/80"
+              />
+            </g>
+          </g>
+          <!-- Right Semicircular Hub Background -->
+          <g
+            class="alpha-arc-comparison__hub-mover alpha-arc-comparison__hub-mover--right"
+            :class="{ 'alpha-arc-comparison__hub-mover--moved': isMoved || props.as !== 'layout' }"
+            :style="rightHubMoverStyle"
+          >
+            <g
+              class="alpha-arc-comparison__hub alpha-arc-comparison__hub--right"
+              :class="{ 'alpha-arc-comparison--animated': isAnimated }"
+            >
+              <path
+                :d="geo.right.hubPath"
+                fill="#f1f3f6"
+                class="transition-colors duration-300 dark:fill-slate-800/80"
+              />
+            </g>
+          </g>
         </g>
         <!-- Left Arc Guide Line and End Dots -->
         <g
-          class="alpha-arc-comparison__arc alpha-arc-comparison__arc--left"
-          :class="{ 'alpha-arc-comparison--animated': isAnimated }"
+          v-if="props.as !== 'layout' || isMoved"
+          class="alpha-arc-comparison__arc alpha-arc-comparison__arc--left transition-opacity duration-500 ease-out"
+          :class="{
+            'alpha-arc-comparison--animated': isAnimated,
+            'opacity-0': props.as === 'layout' && !isMoved,
+            'opacity-100': props.as !== 'layout' || isMoved,
+          }"
+          :style="{
+            transitionDelay:
+              props.as === 'layout' && isMoved ? '300ms' : '0ms',
+          }"
         >
           <path
             :d="geo.left.arcPath"
@@ -281,21 +455,19 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
             class="dark:fill-slate-600"
           />
         </g>
-        <!-- Right Semicircular Hub Background -->
-        <g
-          class="alpha-arc-comparison__hub alpha-arc-comparison__hub--right"
-          :class="{ 'alpha-arc-comparison--animated': isAnimated }"
-        >
-          <path
-            :d="geo.right.hubPath"
-            fill="#f1f3f6"
-            class="transition-colors duration-300 dark:fill-slate-800/80"
-          />
-        </g>
         <!-- Right Arc Guide Line and End Dots -->
         <g
-          class="alpha-arc-comparison__arc alpha-arc-comparison__arc--right"
-          :class="{ 'alpha-arc-comparison--animated': isAnimated }"
+          v-if="props.as !== 'layout' || isMoved"
+          class="alpha-arc-comparison__arc alpha-arc-comparison__arc--right transition-opacity duration-500 ease-out"
+          :class="{
+            'alpha-arc-comparison--animated': isAnimated,
+            'opacity-0': props.as === 'layout' && !isMoved,
+            'opacity-100': props.as !== 'layout' || isMoved,
+          }"
+          :style="{
+            transitionDelay:
+              props.as === 'layout' && isMoved ? '300ms' : '0ms',
+          }"
         >
           <path
             :d="geo.right.arcPath"
@@ -319,6 +491,21 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
             class="dark:fill-slate-600"
           />
         </g>
+        <!-- Center Divider Line -->
+        <line
+          class="alpha-arc-comparison__divider transition-colors duration-300 dark:stroke-slate-700"
+          :class="{
+            'alpha-arc-comparison--animated': isAnimated,
+            'alpha-arc-comparison__divider--layout': props.as === 'layout',
+          }"
+          :style="dividerStyle"
+          :x1="geo.dividerLine.x"
+          :y1="geo.dividerLine.y1"
+          :x2="geo.dividerLine.x"
+          :y2="geo.dividerLine.y2"
+          stroke="#cbd5e1"
+          stroke-width="1.5"
+        />
         <!-- Center "Vs" Circle Badge -->
         <g
           class="alpha-arc-comparison__vs"
@@ -364,8 +551,19 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
 
 <style scoped>
 /* Animated Transitions */
-.alpha-arc-comparison--animated.alpha-arc-comparison__divider {
+.alpha-arc-comparison--animated.alpha-arc-comparison__divider:not(.alpha-arc-comparison__divider--layout) {
   animation: arc-divider-in 500ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-comparison-start-delay, 0ms) + 50ms) both;
+  transform-origin: 500px 240px;
+  transform-box: view-box;
+}
+
+.alpha-arc-comparison--animated.alpha-arc-comparison__divider--layout {
+  animation: arc-line-fade 500ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-comparison-start-delay, 0ms) + 50ms) both;
+}
+
+.alpha-arc-comparison__divider--layout {
+  transform-box: view-box;
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .alpha-arc-comparison--animated.alpha-arc-comparison__hub--left {
@@ -439,5 +637,18 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     opacity: 1;
     transform: scale(1);
   }
+}
+
+/* Hub mover transitions for layout mode on click */
+.alpha-arc-comparison__hub-mover {
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.alpha-arc-comparison__hub-mover--left.alpha-arc-comparison__hub-mover--moved {
+  transform: translateX(-470px);
+}
+
+.alpha-arc-comparison__hub-mover--right.alpha-arc-comparison__hub-mover--moved {
+  transform: translateX(470px);
 }
 </style>

@@ -685,6 +685,33 @@ Three-way curved arrow infographic with concentric dashed guide lines and three 
 
 ---
 
+# GearTriad
+
+Three-way mechanical cogwheel diagram with 3D folded petals, central floating hub, and perimeter callouts.
+
+<GearTriad>
+  <GearTriadCallout>
+    <GearTriadHeading>Option 1</GearTriadHeading>
+    <GearTriadDescription>
+      There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
+    </GearTriadDescription>
+  </GearTriadCallout>
+  <GearTriadCallout>
+    <GearTriadHeading>Option 2</GearTriadHeading>
+    <GearTriadDescription>
+      There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
+    </GearTriadDescription>
+  </GearTriadCallout>
+  <GearTriadCallout>
+    <GearTriadHeading>Option 3</GearTriadHeading>
+    <GearTriadDescription>
+      There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
+    </GearTriadDescription>
+  </GearTriadCallout>
+</GearTriad>
+
+---
+
 # ArcArrowProcessArrow (Single Arrow)
 
 Standalone chevron arrow component matching the design reference.
@@ -792,54 +819,54 @@ Customizable opposing comparison using `ArcComparisonLeft`, `ArcComparisonRight`
   <ArcComparisonLeft color="#ea580c">
     <ArcComparisonTitle>Traditional<br />Monolith</ArcComparisonTitle>
     <ArcComparisonContents>
-      <ArcComparisonCallout>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>01</ArcComparisonBadge>
         <ArcComparisonHeading>Coupled State</ArcComparisonHeading>
         <ArcComparisonContent>
           Shared database schemas create cross-team deployment bottlenecks.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout>
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>02</ArcComparisonBadge>
         <ArcComparisonHeading>Vertical Scale</ArcComparisonHeading>
         <ArcComparisonContent>
           Requires upgrading single instances with exponential cost increases.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout>
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>03</ArcComparisonBadge>
         <ArcComparisonHeading>Single Failure</ArcComparisonHeading>
         <ArcComparisonContent>
           Unchecked memory leaks or crashes can bring down the entire system.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
+      </ArcComparisonOrbit>
     </ArcComparisonContents>
   </ArcComparisonLeft>
 
   <ArcComparisonRight color="#0284c7">
     <ArcComparisonTitle>Distributed<br />Microservices</ArcComparisonTitle>
     <ArcComparisonContents>
-      <ArcComparisonCallout>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>01</ArcComparisonBadge>
         <ArcComparisonHeading>Bounded Context</ArcComparisonHeading>
         <ArcComparisonContent>
           Autonomous services communicate over defined asynchronous events.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout>
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>02</ArcComparisonBadge>
         <ArcComparisonHeading>Elastic Scale</ArcComparisonHeading>
         <ArcComparisonContent>
           Horizontal autoscaling responds dynamically to spike traffic demand.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
-      <ArcComparisonCallout>
+      </ArcComparisonOrbit>
+      <ArcComparisonOrbit>
         <ArcComparisonBadge>03</ArcComparisonBadge>
         <ArcComparisonHeading>Isolated Faults</ArcComparisonHeading>
         <ArcComparisonContent>
           Failures remain localized without cascading across service domains.
         </ArcComparisonContent>
-      </ArcComparisonCallout>
+      </ArcComparisonOrbit>
     </ArcComparisonContents>
   </ArcComparisonRight>
 </ArcComparison>
@@ -851,6 +878,14 @@ Customizable opposing comparison using `ArcComparisonLeft`, `ArcComparisonRight`
 Parametric 4-criteria layout using `:count="4"`.
 
 <ArcComparison :count="4" />
+
+---
+
+# ArcComparison (Layout Mode)
+
+Scaffold view displaying only central divider line, edge hubs, and versus circle with `as="layout"`.
+
+<ArcComparison as="layout" />
 
 ---
 

@@ -1,3 +1,8 @@
+import {
+  resolveArcOrbitItems,
+  DEFAULT_LOREM_TEXT as SHARED_LOREM_TEXT,
+} from '../arcOrbit';
+
 export interface IArcComparisonItem {
   readonly id?: string | number;
   readonly title?: string;
@@ -18,8 +23,7 @@ export const DEFAULT_LEFT_COLOR = '#e87a36';
 
 export const DEFAULT_RIGHT_COLOR = '#208b9e';
 
-export const DEFAULT_LOREM_TEXT =
-  'Lorem ipsum dolor sit amet, constitutor adipiscing elit. Nam vulputate augue vel ligula.';
+export const DEFAULT_LOREM_TEXT = SHARED_LOREM_TEXT;
 
 export const DEFAULT_LEFT_ITEMS: readonly [
   IResolvedArcComparisonItem,
@@ -90,34 +94,9 @@ export function resolveArcComparisonSideItems(
   defaultColor = DEFAULT_LEFT_COLOR,
   count = 3,
 ): readonly IResolvedArcComparisonItem[] {
-  const result: IResolvedArcComparisonItem[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const custom = items?.[i];
-    const defaultItem =
-      defaultColor === DEFAULT_RIGHT_COLOR
-        ? DEFAULT_RIGHT_ITEMS[i]
-        : DEFAULT_LEFT_ITEMS[i];
-
-    const id =
-      custom?.id !== undefined
-        ? custom.id
-        : (defaultItem?.id ?? String(i + 1).padStart(2, '0'));
-
-    const title = custom?.title ?? defaultItem?.title ?? 'Add Text Here';
-    const description =
-      custom?.description ?? defaultItem?.description ?? DEFAULT_LOREM_TEXT;
-    const color = custom?.color ?? defaultColor;
-    const textColor = custom?.textColor ?? defaultItem?.textColor;
-
-    result.push({
-      id,
-      title,
-      description,
-      color,
-      textColor,
-    });
-  }
-
-  return result;
+  return resolveArcOrbitItems({
+    items,
+    defaultColor,
+    count,
+  });
 }

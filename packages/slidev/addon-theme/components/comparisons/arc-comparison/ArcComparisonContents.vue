@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
+import ArcOrbitContents from '../../core/arc-orbit/ArcOrbitContents.vue';
 
 defineOptions({
   inheritAttrs: false,
   name: 'ArcComparisonContents',
 });
-
-const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-arc-comparison-contents absolute inset-0 w-full h-full pointer-events-none',
-);
 </script>
 
 <template>
-  <div v-bind="forwardedAttrs()" :class="className()">
+  <ArcOrbitContents
+    v-bind="$attrs"
+    class="alpha-arc-comparison-contents"
+  >
     <slot />
-  </div>
+  </ArcOrbitContents>
 </template>

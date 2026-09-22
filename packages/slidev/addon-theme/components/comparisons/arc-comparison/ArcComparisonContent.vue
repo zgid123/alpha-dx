@@ -1,52 +1,29 @@
 <script setup lang="ts">
-import { computed, inject } from 'vue';
-
-import {
-  ARC_COMPARISON_CALLOUT_KEY,
-  DEFAULT_LOREM_TEXT,
-} from '../../../utils/arcComparison';
-import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
+import ArcOrbitContent, {
+  type IArcOrbitContentProps,
+} from '../../core/arc-orbit/ArcOrbitContent.vue';
 
 defineOptions({
   inheritAttrs: false,
   name: 'ArcComparisonContent',
 });
 
-export interface IArcComparisonContentProps {
-  readonly color?: string;
-}
+export interface IArcComparisonContentProps extends IArcOrbitContentProps {}
 
-const props = withDefaults(defineProps<IArcComparisonContentProps>(), {
-  color: undefined,
-});
-
-const calloutContext = inject(ARC_COMPARISON_CALLOUT_KEY, undefined);
-
-const contentColor = computed(() => {
-  return props.color ?? calloutContext?.item.value.textColor ?? undefined;
-});
-
-const contentStyle = computed(() => {
-  if (!contentColor.value) {
-    return undefined;
-  }
-
-  return {
-    color: contentColor.value,
-  };
-});
-
-const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-arc-comparison-content font-sans text-[0.78rem] leading-[1.3] text-slate-600 dark:text-slate-300 opacity-90',
-);
+const props = defineProps<IArcComparisonContentProps>();
 </script>
 
 <template>
-  <p
-    v-bind="forwardedAttrs()"
-    :class="className()"
-    :style="contentStyle"
+  <ArcOrbitContent
+    v-if="$slots.default"
+    v-bind="{ ...props, ...$attrs }"
+    class="alpha-arc-comparison-content"
   >
-    <slot>{{ calloutContext?.item.value.description ?? DEFAULT_LOREM_TEXT }}</slot>
-  </p>
+    <slot />
+  </ArcOrbitContent>
+  <ArcOrbitContent
+    v-else
+    v-bind="{ ...props, ...$attrs }"
+    class="alpha-arc-comparison-content"
+  />
 </template>

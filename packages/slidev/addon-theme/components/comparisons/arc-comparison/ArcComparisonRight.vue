@@ -14,10 +14,16 @@ import {
   ARC_COMPARISON_ROOT_KEY,
   ARC_COMPARISON_SIDE_KEY,
   DEFAULT_RIGHT_COLOR,
+  DEFAULT_RIGHT_ITEMS,
 } from '../../../utils/arcComparison';
+import {
+  ARC_ORBIT_ROOT_KEY,
+  type IArcOrbitGeometry,
+  type TArcOrbitPosition,
+} from '../../../utils/arcOrbit';
 import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
-import ArcComparisonCallout from './ArcComparisonCallout.vue';
 import ArcComparisonContents from './ArcComparisonContents.vue';
+import ArcComparisonOrbit from './ArcComparisonOrbit.vue';
 import ArcComparisonTitle from './ArcComparisonTitle.vue';
 
 defineOptions({
@@ -103,6 +109,43 @@ provide(ARC_COMPARISON_SIDE_KEY, {
   count: resolvedCount,
 });
 
+const rightOrbitGeo = computed<IArcOrbitGeometry>(() => {
+  const sideGeo = rootContext?.geo.value.right;
+
+  return {
+    viewBoxWidth: rootContext?.geo.value.viewBoxWidth ?? 500,
+    viewBoxHeight: rootContext?.geo.value.viewBoxHeight ?? 480,
+    position: 'right',
+    hubCenter: sideGeo?.hubCenter ?? { x: 500, y: 240 },
+    hubRadius: sideGeo?.hubRadius ?? 135,
+    hubPath: sideGeo?.hubPath ?? '',
+    arcPath: sideGeo?.arcPath ?? '',
+    topDot: sideGeo?.topDot ?? { x: 500, y: 0 },
+    bottomDot: sideGeo?.bottomDot ?? { x: 500, y: 0 },
+    dotRadius: sideGeo?.dotRadius ?? 3.5,
+    nodes: sideGeo?.nodes ?? [],
+    callouts: sideGeo?.callouts ?? [],
+    pointsCount: resolvedCount.value,
+  };
+});
+
+provide(ARC_ORBIT_ROOT_KEY, {
+  position: computed<TArcOrbitPosition>(() => 'right'),
+  color: sideColor,
+  pointsCount: resolvedCount,
+  geo: rightOrbitGeo,
+  animation: computed(() => rootContext?.animation?.value ?? true),
+  startDelay: computed(() => rootContext?.startDelay?.value ?? 0),
+  title: computed(() => currentTitle.value),
+  setTitle: (val: string) => {
+    currentTitle.value = val;
+  },
+  registerCallout,
+  unregisterCallout,
+  edgeOffset: computed(() => rootContext?.edgeOffset?.value ?? 30),
+  items: computed(() => DEFAULT_RIGHT_ITEMS),
+});
+
 function isSignificantNode(node: VNode): boolean {
   if (typeof node.type === 'symbol') {
     if (typeof node.children === 'string' && !node.children.trim()) {
@@ -134,6 +177,7 @@ function flattenVNodes(nodes: VNode[]): VNode[] {
 function isTitleNode(node: VNode): boolean {
   return (
     hasComponentName(node.type, 'ArcComparisonTitle') ||
+    hasComponentName(node.type, 'ArcOrbitTitle') ||
     node.type === ArcComparisonTitle
   );
 }
@@ -157,11 +201,25 @@ const bodyNodes = computed(() => {
 const hubStyle = computed(() => {
   const hubR = rootContext?.geo.value.right.hubRadius ?? 170;
   const centerY = rootContext?.geo.value.centerY ?? 240;
+  const isLayout = rootContext?.as?.value === 'layout';
+  const isMoved = rootContext?.isMoved?.value ?? false;
+  const centerX = rootContext?.geo.value.centerX ?? 500;
+  const viewBoxWidth = rootContext?.geo.value.viewBoxWidth ?? 1000;
+  const edgeOffset = rootContext?.edgeOffset?.value ?? 30;
+  const inCenter = isLayout && !isMoved;
+  const targetLeft = inCenter
+    ? `${centerX}px`
+    : `${viewBoxWidth - hubR - edgeOffset}px`;
+  const targetWidth = inCenter ? `${hubR}px` : `${edgeOffset + hubR}px`;
 
   return {
     top: `${centerY - hubR}px`,
-    width: `${hubR}px`,
+    left: targetLeft,
+    width: targetWidth,
     height: `${hubR * 2}px`,
+    paddingLeft: inCenter ? '28px' : undefined,
+    paddingRight: inCenter ? '8px' : undefined,
+    transition: 'all 700ms cubic-bezier(0.16, 1, 0.3, 1)',
   };
 });
 
@@ -174,7 +232,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
   <div v-bind="forwardedAttrs()" :class="className()">
     <!-- Right Hub Title Display -->
     <div
-      class="alpha-arc-comparison__hub-title alpha-arc-comparison__hub-title--right absolute right-0 flex items-center justify-center z-10 pointer-events-auto"
+      class="alpha-arc-comparison__hub-title alpha-arc-comparison__hub-title--right absolute flex items-center justify-center z-10 pointer-events-auto"
       :style="hubStyle"
     >
       <component :is="titleNode" v-if="titleNode" />
@@ -184,15 +242,30 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
       <ArcComparisonTitle v-else />
     </div>
     <!-- Contents & Callouts -->
-    <template v-if="bodyNodes.length > 0">
-      <component :is="node" v-for="(node, i) in bodyNodes" :key="i" />
-    </template>
-    <ArcComparisonContents v-else>
-      <ArcComparisonCallout
-        v-for="idx in resolvedCount"
-        :key="idx"
-        :index="idx - 1"
-      />
-    </ArcComparisonContents>
+    <div
+      v-if="rootContext?.as?.value !== 'layout' || rootContext?.isMoved?.value"
+      class="alpha-arc-comparison__contents-wrapper transition-opacity duration-500 ease-out"
+      :class="{
+        'opacity-0': rootContext?.as?.value === 'layout' && !rootContext?.isMoved?.value,
+        'opacity-100': rootContext?.as?.value !== 'layout' || rootContext?.isMoved?.value,
+      }"
+      :style="{
+        transitionDelay:
+          rootContext?.as?.value === 'layout' && rootContext?.isMoved?.value
+            ? '300ms'
+            : '0ms',
+      }"
+    >
+      <template v-if="bodyNodes.length > 0">
+        <component :is="node" v-for="(node, i) in bodyNodes" :key="i" />
+      </template>
+      <ArcComparisonContents v-else>
+        <ArcComparisonOrbit
+          v-for="idx in resolvedCount"
+          :key="idx"
+          :index="idx - 1"
+        />
+      </ArcComparisonContents>
+    </div>
   </div>
 </template>

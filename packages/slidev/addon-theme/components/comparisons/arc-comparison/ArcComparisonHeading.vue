@@ -1,52 +1,29 @@
 <script setup lang="ts">
-import { computed, inject } from 'vue';
-
-import { ARC_COMPARISON_CALLOUT_KEY } from '../../../utils/arcComparison';
-import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
+import ArcOrbitHeading, {
+  type IArcOrbitHeadingProps,
+} from '../../core/arc-orbit/ArcOrbitHeading.vue';
 
 defineOptions({
   inheritAttrs: false,
   name: 'ArcComparisonHeading',
 });
 
-export interface IArcComparisonHeadingProps {
-  readonly color?: string;
-}
+export interface IArcComparisonHeadingProps extends IArcOrbitHeadingProps {}
 
-const props = withDefaults(defineProps<IArcComparisonHeadingProps>(), {
-  color: undefined,
-});
-
-const calloutContext = inject(ARC_COMPARISON_CALLOUT_KEY, undefined);
-
-const headingColor = computed(() => {
-  return (
-    props.color ??
-    calloutContext?.item.value.color ??
-    calloutContext?.color.value ??
-    '#e87a36'
-  );
-});
-
-const headingStyle = computed(() => {
-  return {
-    color: headingColor.value,
-    fontFamily:
-      'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-  };
-});
-
-const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-arc-comparison-heading font-bold text-[1.05rem] leading-tight mb-0.5 tracking-tight',
-);
+const props = defineProps<IArcComparisonHeadingProps>();
 </script>
 
 <template>
-  <h3
-    v-bind="forwardedAttrs()"
-    :class="className()"
-    :style="headingStyle"
+  <ArcOrbitHeading
+    v-if="$slots.default"
+    v-bind="{ ...props, ...$attrs }"
+    class="alpha-arc-comparison-heading"
   >
-    <slot>{{ calloutContext?.item.value.title ?? 'Add Text Here' }}</slot>
-  </h3>
+    <slot />
+  </ArcOrbitHeading>
+  <ArcOrbitHeading
+    v-else
+    v-bind="{ ...props, ...$attrs }"
+    class="alpha-arc-comparison-heading"
+  />
 </template>
