@@ -2,32 +2,6 @@ All React Utils for Alpha's projects.
 
 # Usage
 
-## Query
-
-```ts
-import { useQuery, useCommand, type TQueryKey } from '@alphacifer/react/query';
-import type { JSX.Element } from 'react';
-
-import { getListUsers, updateUser } from './api';
-
-const QK_FETCH_USERS: TQueryKey = 'qk_fetchUsers';
-
-export function MyComponent(): JSX.Element {
-  const { data } = useQuery(
-    getListUsers,
-    [QK_FETCH_USERS, []],
-    {},
-    {
-      defaultValue: [],
-    }
-  );
-
-  const { mutate } = useCommand(updateUser);
-
-  return <div />;
-}
-```
-
 ## Zustand
 
 ```ts
