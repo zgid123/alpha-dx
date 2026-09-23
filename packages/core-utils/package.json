@@ -113,6 +113,7 @@
   },
   "license": "MIT",
   "scripts": {
+    "test": "vitest run --coverage",
     "prepublish": "pnpm build",
     "build": "tsdown"
   },

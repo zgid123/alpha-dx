@@ -13,7 +13,10 @@
         "^build"
       ]
     },
-    "//#test": {
+    "test": {
+      "dependsOn": [
+        "^build"
+      ],
       "outputs": [
         "coverage/**"
       ]

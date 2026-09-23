@@ -4,6 +4,7 @@
   "description": "Alpha's light-only academic theme for Slidev",
   "type": "module",
   "scripts": {
+    "test": "vitest run --coverage",
     "dev": "slidev slides.md --open",
     "preview:build": "slidev build slides.md"
   },

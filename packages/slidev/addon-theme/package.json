@@ -4,6 +4,7 @@
   "description": "All Slidev addons for Alpha presentations",
   "type": "module",
   "scripts": {
+    "test": "vitest run --coverage",
     "dev": "slidev slides.md --open",
     "dev:academic": "slidev academic-slides.md --open",
     "preview:build": "slidev build slides.md"
