@@ -5,21 +5,25 @@ on:
     branches:
       - main
     paths:
-      - 'packages/axios/**'
       - 'packages/authkit/**'
+      - 'packages/axios/**'
       - 'packages/core-utils/**'
+      - 'packages/drizzle/**'
+      - 'packages/oxc/**'
       - 'packages/react/**'
       - 'packages/slidev/**'
 
 jobs:
   test:
-    name: Run all tests
+    name: Run affected tests
 
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Prepare Node.JS and pnpm
         uses: ./.github/actions/prepare-nodejs-pnpm
@@ -27,8 +31,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build core-utils
-        run: pnpm --filter @alphacifer/core-utils build
-
-      - name: Run tests
-        run: pnpm test
+      - name: Run affected tests
+        run: pnpm turbo run test --filter="...[origin/${{ github.base_ref }}]"
