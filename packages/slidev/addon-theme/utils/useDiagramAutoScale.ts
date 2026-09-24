@@ -140,14 +140,7 @@ export function useDiagramAutoScale(
         pagyEl && window.getComputedStyle(pagyEl).display !== 'none';
       const clearance = isPagyVisible ? pagyClearance : 16;
 
-      if (parent.clientHeight > 0 && parent !== slideEl) {
-        availH = Math.max(
-          0,
-          parent.clientHeight - padTop - padBottom - siblingsH - clearance,
-        );
-      }
-
-      if (availH <= 0 && slideEl && slideEl.clientHeight > 0) {
+      if (slideEl && slideEl.clientHeight > 0) {
         const slideStyle = window.getComputedStyle(slideEl);
         const sPadTop = Number.parseFloat(slideStyle.paddingTop) || 0;
         const sPadBottom = Number.parseFloat(slideStyle.paddingBottom) || 0;
@@ -180,6 +173,11 @@ export function useDiagramAutoScale(
             sPadBottom -
             slideSiblingsH -
             clearance,
+        );
+      } else if (parent.clientHeight > 0) {
+        availH = Math.max(
+          0,
+          parent.clientHeight - padTop - padBottom - siblingsH - clearance,
         );
       }
     }
