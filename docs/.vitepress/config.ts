@@ -353,6 +353,19 @@ export default defineConfig({
                   ],
                 },
                 {
+                  text: 'Pyramid',
+                  items: [
+                    {
+                      text: 'Circular Pyramid',
+                      link: '/slidev/addon/components/pyramid/circular-pyramid',
+                    },
+                    {
+                      text: 'Square Pyramid',
+                      link: '/slidev/addon/components/pyramid/square-pyramid',
+                    },
+                  ],
+                },
+                {
                   text: 'Cards',
                   items: [
                     {
@@ -498,6 +511,19 @@ export default defineConfig({
                     {
                       text: 'Table Comparison',
                       link: '/slidev/academic-theme/components/comparisons/table-comparison',
+                    },
+                  ],
+                },
+                {
+                  text: 'Pyramid',
+                  items: [
+                    {
+                      text: 'Circular Pyramid',
+                      link: '/slidev/academic-theme/components/pyramid/circular-pyramid',
+                    },
+                    {
+                      text: 'Square Pyramid',
+                      link: '/slidev/academic-theme/components/pyramid/square-pyramid',
                     },
                   ],
                 },
