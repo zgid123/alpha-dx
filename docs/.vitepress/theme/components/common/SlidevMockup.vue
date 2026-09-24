@@ -238,6 +238,7 @@ defineExpose({
           height: `${CANVAS_HEIGHT}px`,
           transform: `scale(${embeddedScale})`,
           transformOrigin: 'top left',
+          '--slidev-slide-scale': embeddedScale,
         }"
       >
         <div
@@ -303,6 +304,7 @@ defineExpose({
               height: `${CANVAS_HEIGHT}px`,
               transform: `scale(${fullscreenScale})`,
               transformOrigin: 'center center',
+              '--slidev-slide-scale': fullscreenScale,
             }"
           >
             <div

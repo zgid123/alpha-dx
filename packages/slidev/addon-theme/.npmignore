@@ -1,8 +1,10 @@
 .turbo
 __tests__
 samples
+academic-slides.md
 biome.json
-README.md
 CHANGELOG.md
-tsconfig.json
+COMPONENTS_BASELINE.md
+README.md
 slides.md
+tsconfig.json

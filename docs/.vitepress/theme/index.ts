@@ -10,6 +10,15 @@ import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
 import 'virtual:uno.css';
 
+import CircularPyramid from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramid.vue';
+import CircularPyramidStack from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramidStack.vue';
+import CircularPyramidStackContent from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramidStackContent.vue';
+import CircularPyramidStackTitle from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramidStackTitle.vue';
+import SquarePyramid from '@alphacifer/slidev-addon-theme/components/pyramid/square-pyramid/SquarePyramid.vue';
+import SquarePyramidStack from '@alphacifer/slidev-addon-theme/components/pyramid/square-pyramid/SquarePyramidStack.vue';
+import SquarePyramidStackContent from '@alphacifer/slidev-addon-theme/components/pyramid/square-pyramid/SquarePyramidStackContent.vue';
+import SquarePyramidStackTitle from '@alphacifer/slidev-addon-theme/components/pyramid/square-pyramid/SquarePyramidStackTitle.vue';
+
 // Cards
 import ChevronCardDemo from './components/card/ChevronCardDemo.vue';
 import HorizCardDemo from './components/card/HorizCardDemo.vue';
@@ -36,10 +45,12 @@ import ArrowTriadDemo from './components/facets/triad/ArrowTriadDemo.vue';
 import GearTriadContentsDemo from './components/facets/triad/GearTriadContentsDemo.vue';
 import GearTriadDemo from './components/facets/triad/GearTriadDemo.vue';
 import HexTriadDemo from './components/facets/triad/HexTriadDemo.vue';
-// Layouts
 import LayoutDemo from './components/layouts/LayoutDemo.vue';
 // Process
 import ArcArrowProcessDemo from './components/process/ArcArrowProcessDemo.vue';
+// Pyramid
+import CircularPyramidDemo from './components/pyramid/circular-pyramid/CircularPyramidDemo.vue';
+import SquarePyramidDemo from './components/pyramid/square-pyramid/SquarePyramidDemo.vue';
 import './custom.css';
 
 export default {
@@ -94,5 +105,18 @@ export default {
     app.component('HorizCardDemo', HorizCardDemo);
     app.component('VertCardDemo', VertCardDemo);
     app.component('ChevronCardDemo', ChevronCardDemo);
+
+    // Pyramid Components & Demo
+    app.component('CircularPyramid', CircularPyramid);
+    app.component('CircularPyramidStack', CircularPyramidStack);
+    app.component('CircularPyramidStackTitle', CircularPyramidStackTitle);
+    app.component('CircularPyramidStackContent', CircularPyramidStackContent);
+    app.component('CircularPyramidDemo', CircularPyramidDemo);
+
+    app.component('SquarePyramid', SquarePyramid);
+    app.component('SquarePyramidStack', SquarePyramidStack);
+    app.component('SquarePyramidStackTitle', SquarePyramidStackTitle);
+    app.component('SquarePyramidStackContent', SquarePyramidStackContent);
+    app.component('SquarePyramidDemo', SquarePyramidDemo);
   },
 } satisfies Theme;
