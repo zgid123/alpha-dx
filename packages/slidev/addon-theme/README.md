@@ -214,6 +214,86 @@ addons:
 </TableComparison>
 ```
 
+## Circular pyramid
+
+- Components: `CircularPyramid`, `CircularPyramidStack`, `CircularPyramidStackTitle`, `CircularPyramidStackContent`
+
+```vue
+<CircularPyramid>
+  <CircularPyramidStack>
+    <CircularPyramidStackTitle>01 Strategy</CircularPyramidStackTitle>
+    <CircularPyramidStackContent>
+      Define clear technical north stars, design systems, and cross-team alignment.
+    </CircularPyramidStackContent>
+  </CircularPyramidStack>
+  <CircularPyramidStack>
+    <CircularPyramidStackTitle>02 Architecture</CircularPyramidStackTitle>
+    <CircularPyramidStackContent>
+      Establish domain boundaries, type safety contracts, and scalable infrastructure.
+    </CircularPyramidStackContent>
+  </CircularPyramidStack>
+  <CircularPyramidStack>
+    <CircularPyramidStackTitle>03 Implementation</CircularPyramidStackTitle>
+    <CircularPyramidStackContent>
+      Build high-performance components with smooth motion and responsive layout.
+    </CircularPyramidStackContent>
+  </CircularPyramidStack>
+  <CircularPyramidStack>
+    <CircularPyramidStackTitle>04 Verification</CircularPyramidStackTitle>
+    <CircularPyramidStackContent>
+      Validate behavior with rigorous unit suites, formatting, and live slide builds.
+    </CircularPyramidStackContent>
+  </CircularPyramidStack>
+</CircularPyramid>
+
+<!-- Self-contained mockup with 6 layers and custom theme color -->
+<CircularPyramid
+  :count="6"
+  :active-index="0"
+  color="#6366f1"
+/>
+```
+
+## Square pyramid
+
+- Components: `SquarePyramid`, `SquarePyramidStack`, `SquarePyramidStackTitle`, `SquarePyramidStackContent`
+
+```vue
+<SquarePyramid>
+  <SquarePyramidStack>
+    <SquarePyramidStackTitle>01 Strategy</SquarePyramidStackTitle>
+    <SquarePyramidStackContent>
+      Define clear technical north stars, design systems, and cross-team alignment.
+    </SquarePyramidStackContent>
+  </SquarePyramidStack>
+  <SquarePyramidStack>
+    <SquarePyramidStackTitle>02 Architecture</SquarePyramidStackTitle>
+    <SquarePyramidStackContent>
+      Establish domain boundaries, type safety contracts, and scalable infrastructure.
+    </SquarePyramidStackContent>
+  </SquarePyramidStack>
+  <SquarePyramidStack>
+    <SquarePyramidStackTitle>03 Implementation</SquarePyramidStackTitle>
+    <SquarePyramidStackContent>
+      Build high-performance components with smooth motion and responsive layout.
+    </SquarePyramidStackContent>
+  </SquarePyramidStack>
+  <SquarePyramidStack>
+    <SquarePyramidStackTitle>04 Verification</SquarePyramidStackTitle>
+    <SquarePyramidStackContent>
+      Validate behavior with rigorous unit suites, formatting, and live slide builds.
+    </SquarePyramidStackContent>
+  </SquarePyramidStack>
+</SquarePyramid>
+
+<!-- Self-contained mockup with 5 slabs and custom theme color -->
+<SquarePyramid
+  :count="5"
+  :active-index="0"
+  color="#6366f1"
+/>
+```
+
 ## Preview
 
 ```bash
