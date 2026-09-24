@@ -1,5 +1,11 @@
 # @alphacifer/slidev-addon-theme
 
+## 0.0.9
+
+### Patch Changes
+
+- [#182](https://github.com/zgid123/alpha-dx/pull/182) [`8e60fae`](https://github.com/zgid123/alpha-dx/commit/8e60fae02c8a5f20e35f79e556ddbed4e5dce879) Thanks [@zgid123](https://github.com/zgid123)! - create pyramid components
+
 ## 0.0.8
 
 ### Patch Changes
