@@ -53,6 +53,14 @@ const isActive = computed(() => {
   return stackContext?.isActive.value ?? false;
 });
 
+const isAnimated = computed(() => {
+  return rootContext?.animation.value ?? false;
+});
+
+const stepIndex = computed(() => {
+  return stackContext?.index.value ?? 0;
+});
+
 const contentWidth = computed(() => rootContext?.contentWidthPx.value ?? 240);
 
 const deltaY = computed(() => {
@@ -107,7 +115,12 @@ const stackColor = computed(() => {
 </script>
 
 <template>
-  <div class="alpha-square-pyramid-stack-content-wrapper relative w-full flex items-center select-none overflow-visible">
+  <div
+    class="alpha-square-pyramid-stack-content-wrapper relative w-full flex items-center select-none overflow-visible"
+    :style="{
+      '--content-delay': `calc(var(--square-pyramid-start-delay, 0ms) + ${470 + stepIndex * 320}ms)`,
+    }"
+  >
     <!-- Scalable Line between Dot and Content Card (always at least 20px) -->
     <div
       ref="connectorRef"
@@ -115,6 +128,9 @@ const stackColor = computed(() => {
     >
       <div
         class="alpha-square-pyramid-stack-content__dot absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full flex-shrink-0 transition-all duration-300 pointer-events-auto"
+        :class="{
+          'alpha-square-pyramid-stack-content__dot--animated': isAnimated,
+        }"
         :style="{
           backgroundColor: stackColor,
           boxShadow: isActive
@@ -126,6 +142,9 @@ const stackColor = computed(() => {
       <div
         v-if="!effectiveDeltaY"
         class="alpha-square-pyramid-stack-content__line absolute left-0 top-0 w-full h-[1px] -translate-y-1/2 pointer-events-none transition-colors duration-300"
+        :class="{
+          'alpha-square-pyramid-stack-content__line--animated': isAnimated,
+        }"
         :style="{
           backgroundColor: stackColor,
           opacity: isActive ? 1 : 0.65,
@@ -146,12 +165,16 @@ const stackColor = computed(() => {
       >
         <path
           class="alpha-square-pyramid-stack-content__line transition-all duration-300"
+          :class="{
+            'alpha-square-pyramid-stack-content__line--svg-animated': isAnimated,
+          }"
           :d="connectorPath"
           fill="none"
           :stroke="stackColor"
           stroke-width="1.25"
           stroke-linecap="round"
           stroke-linejoin="round"
+          pathLength="1"
           :style="{
             opacity: isActive ? 1 : 0.65,
           }"
@@ -165,6 +188,9 @@ const stackColor = computed(() => {
         isActive
           ? 'alpha-square-pyramid-stack-content--active'
           : 'alpha-square-pyramid-stack-content--default',
+        {
+          'alpha-square-pyramid-stack-content--animated': isAnimated,
+        },
       ]"
       :style="{
         width: `${contentWidth}px`,
@@ -178,6 +204,7 @@ const stackColor = computed(() => {
         boxShadow: isActive
           ? `0 4px 14px ${stackColor}26`
           : 'none',
+        '--card-transform': deltaY ? `translateY(${deltaY}px)` : 'none',
         transform: deltaY ? `translateY(${deltaY}px)` : undefined,
       }"
     >
@@ -200,5 +227,75 @@ const stackColor = computed(() => {
 
 .alpha-square-pyramid-stack-content--active {
   backdrop-filter: blur(8px);
+}
+
+.alpha-square-pyramid-stack-content__dot--animated {
+  animation: alpha-pyramid-dot-pop 120ms cubic-bezier(0.16, 1, 0.3, 1) var(--content-delay) both;
+}
+
+@keyframes alpha-pyramid-dot-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.alpha-square-pyramid-stack-content__line--animated {
+  transform-origin: left center;
+  animation: alpha-pyramid-line-draw 500ms cubic-bezier(0.4, 0, 0.2, 1) calc(var(--content-delay) + 120ms) both;
+}
+
+@keyframes alpha-pyramid-line-draw {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) scaleX(0);
+  }
+  2% {
+    opacity: 1;
+    transform: translateY(-50%) scaleX(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-50%) scaleX(1);
+  }
+}
+
+.alpha-square-pyramid-stack-content__line--svg-animated {
+  stroke-dasharray: 1;
+  animation: alpha-pyramid-svg-line-draw 500ms cubic-bezier(0.4, 0, 0.2, 1) calc(var(--content-delay) + 120ms) both;
+}
+
+@keyframes alpha-pyramid-svg-line-draw {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: 1;
+  }
+  2% {
+    opacity: 1;
+    stroke-dashoffset: 1;
+  }
+  100% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+.alpha-square-pyramid-stack-content--animated {
+  animation: alpha-pyramid-card-in 240ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--content-delay) + 380ms) both;
+}
+
+@keyframes alpha-pyramid-card-in {
+  0% {
+    opacity: 0;
+    transform: var(--card-transform, none) translateX(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: var(--card-transform, none) translateX(0);
+  }
 }
 </style>

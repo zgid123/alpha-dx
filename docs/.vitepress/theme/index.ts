@@ -10,6 +10,12 @@ import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
 import 'virtual:uno.css';
 
+// Defense in Depth
+import ArcDiD from '@alphacifer/slidev-addon-theme/components/defense-in-depth/arc-did/ArcDiD.vue';
+import ArcDiDLayer from '@alphacifer/slidev-addon-theme/components/defense-in-depth/arc-did/ArcDiDLayer.vue';
+import ArcDiDLayerPart from '@alphacifer/slidev-addon-theme/components/defense-in-depth/arc-did/ArcDiDLayerPart.vue';
+import ArcDiDLayerParts from '@alphacifer/slidev-addon-theme/components/defense-in-depth/arc-did/ArcDiDLayerParts.vue';
+import ArcDiDLayerTitle from '@alphacifer/slidev-addon-theme/components/defense-in-depth/arc-did/ArcDiDLayerTitle.vue';
 import CircularPyramid from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramid.vue';
 import CircularPyramidStack from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramidStack.vue';
 import CircularPyramidStackContent from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramidStackContent.vue';
@@ -39,6 +45,7 @@ import ReflectedTitleDemo from './components/core/ReflectedTitleDemo.vue';
 import SpeakerDemo from './components/core/SpeakerDemo.vue';
 import ThanksDemo from './components/core/ThanksDemo.vue';
 import TransitionHeadingDemo from './components/core/TransitionHeadingDemo.vue';
+import ArcDiDDemo from './components/defense-in-depth/arc-did/ArcDiDDemo.vue';
 import RectOrbitTetradDemo from './components/facets/tetrad/RectOrbitTetradDemo.vue';
 // Facets
 import ArrowTriadDemo from './components/facets/triad/ArrowTriadDemo.vue';
@@ -118,5 +125,13 @@ export default {
     app.component('SquarePyramidStackTitle', SquarePyramidStackTitle);
     app.component('SquarePyramidStackContent', SquarePyramidStackContent);
     app.component('SquarePyramidDemo', SquarePyramidDemo);
+
+    // Defense in Depth Components & Demo
+    app.component('ArcDiD', ArcDiD);
+    app.component('ArcDiDLayer', ArcDiDLayer);
+    app.component('ArcDiDLayerTitle', ArcDiDLayerTitle);
+    app.component('ArcDiDLayerParts', ArcDiDLayerParts);
+    app.component('ArcDiDLayerPart', ArcDiDLayerPart);
+    app.component('ArcDiDDemo', ArcDiDDemo);
   },
 } satisfies Theme;

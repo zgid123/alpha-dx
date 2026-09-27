@@ -82,6 +82,19 @@ describe('CircularPyramid compound components', () => {
         });
       });
     });
+
+    describe('#styles', () => {
+      suite('when inspecting component animation rules', () => {
+        it('declares upward entrance animation moving from bottom to top', () => {
+          const style = descriptor.styles[0]?.content ?? '';
+
+          expect(style).toContain('@keyframes alpha-pyramid-layer-enter');
+          expect(style).toContain('transform: translateY(80px) scale(0.92);');
+          expect(style).toContain('transform: translateY(0) scale(1);');
+          expect(style).toContain('animation: alpha-pyramid-layer-enter 450ms');
+        });
+      });
+    });
   });
 
   describe('CircularPyramidStack.vue', () => {
@@ -92,27 +105,43 @@ describe('CircularPyramid compound components', () => {
     const stackContent = fs.readFileSync(stackPath, 'utf8');
     const { descriptor: stackDesc } = parse(stackContent);
 
-    it('compiles CircularPyramidStack template without errors', () => {
-      const result = compileTemplate({
-        source: stackDesc.template?.content ?? '',
-        id: 'circular-pyramid-stack-spec',
-        filename: 'CircularPyramidStack.vue',
+    describe('#template', () => {
+      it('compiles CircularPyramidStack template without errors', () => {
+        const result = compileTemplate({
+          source: stackDesc.template?.content ?? '',
+          id: 'circular-pyramid-stack-spec',
+          filename: 'CircularPyramidStack.vue',
+        });
+
+        expect(result.errors).toEqual([]);
       });
 
-      expect(result.errors).toEqual([]);
+      it('renders left title and right content containers with 150px and 240px widths', () => {
+        const template = stackDesc.template?.content ?? '';
+        const script = stackDesc.scriptSetup?.content ?? '';
+
+        expect(template).toContain('alpha-circular-pyramid-stack__left');
+        expect(template).toContain('alpha-circular-pyramid-stack__right');
+        expect(script).toContain('DOT_POSITION_X');
+        expect(script).toContain('const leftWidth = computed(');
+        expect(script).toContain(
+          'const rightWidth = computed(() => rootContext?.contentWidthPx.value ?? 240);',
+        );
+      });
     });
 
-    it('renders left title and right content containers with 150px and 240px widths', () => {
-      const template = stackDesc.template?.content ?? '';
-      const script = stackDesc.scriptSetup?.content ?? '';
+    describe('#styles', () => {
+      suite('when inspecting stack title and content animation rules', () => {
+        it('delays title and content animations until the stack reaches its position', () => {
+          const style = stackDesc.styles[0]?.content ?? '';
 
-      expect(template).toContain('alpha-circular-pyramid-stack__left');
-      expect(template).toContain('alpha-circular-pyramid-stack__right');
-      expect(script).toContain('DOT_POSITION_X');
-      expect(script).toContain('const leftWidth = computed(');
-      expect(script).toContain(
-        'const rightWidth = computed(() => rootContext?.contentWidthPx.value ?? 240);',
-      );
+          expect(style).toContain('@keyframes alpha-pyramid-left-in');
+          expect(style).toContain('@keyframes alpha-pyramid-right-in');
+          expect(style).toContain('transform: translateX(-10px);');
+          expect(style).toContain('transform: translateX(10px);');
+          expect(style).toContain('var(--wing-delay');
+        });
+      });
     });
   });
 
@@ -148,6 +177,15 @@ describe('CircularPyramid compound components', () => {
       expect(template).toContain('borderColor: stackColor');
       expect(template).toContain('backgroundColor: stackColor');
     });
+
+    it('declares sequenced animations for dot pop, line draw, and pill entrance', () => {
+      const style = titleDesc.styles[0]?.content ?? '';
+
+      expect(style).toContain('@keyframes alpha-pyramid-title-dot-pop');
+      expect(style).toContain('@keyframes alpha-pyramid-title-line-draw');
+      expect(style).toContain('@keyframes alpha-pyramid-title-pill-in');
+      expect(style).toContain('transform-origin: right center;');
+    });
   });
 
   describe('CircularPyramidStackContent.vue', () => {
@@ -175,6 +213,16 @@ describe('CircularPyramid compound components', () => {
       expect(template).toContain('alpha-circular-pyramid-stack-content');
       expect(script).toContain('stackColor');
       expect(template).toContain('borderColor: stackColor');
+    });
+
+    it('declares sequenced animations for dot pop, line draw, and content card entrance', () => {
+      const style = contentDesc.styles[0]?.content ?? '';
+
+      expect(style).toContain('@keyframes alpha-pyramid-dot-pop');
+      expect(style).toContain('@keyframes alpha-pyramid-line-draw');
+      expect(style).toContain('@keyframes alpha-pyramid-svg-line-draw');
+      expect(style).toContain('@keyframes alpha-pyramid-card-in');
+      expect(style).toContain('transform-origin: left center;');
     });
   });
 });

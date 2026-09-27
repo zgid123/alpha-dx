@@ -1034,6 +1034,50 @@ Supports 1 to 6 isometric square slabs with interactive layer activation matchin
 </div>
 
 ---
+
+# ArcDiD (Compound Defense-in-Depth)
+
+Concentric semicircular security defense-in-depth shield layers with customizable titles and radial control parts.
+
+<div class="w-full flex items-center justify-center">
+  <ArcDiD>
+    <ArcDiDLayer>
+      <ArcDiDLayerTitle>Physical
+controls</ArcDiDLayerTitle>
+      <ArcDiDLayerParts>
+        <ArcDiDLayerPart>Access to servers</ArcDiDLayerPart>
+        <ArcDiDLayerPart>Infrastructure</ArcDiDLayerPart>
+      </ArcDiDLayerParts>
+    </ArcDiDLayer>
+    <ArcDiDLayer>
+      <ArcDiDLayerTitle>Administrative
+controls</ArcDiDLayerTitle>
+      <ArcDiDLayerParts>
+        <ArcDiDLayerPart>Data-sharing<br />policy</ArcDiDLayerPart>
+        <ArcDiDLayerPart>Approved destinations</ArcDiDLayerPart>
+        <ArcDiDLayerPart>Staff procedures</ArcDiDLayerPart>
+      </ArcDiDLayerParts>
+    </ArcDiDLayer>
+    <ArcDiDLayer>
+      <ArcDiDLayerTitle>Technical
+controls</ArcDiDLayerTitle>
+      <ArcDiDLayerParts>
+        <ArcDiDLayerPart :span="22">Authentication</ArcDiDLayerPart>
+        <ArcDiDLayerSector :span="46" rotate="tangent">
+          <ArcDiDLayerPart position="top">Access control</ArcDiDLayerPart>
+          <ArcDiDLayerPart position="bottom">Encryption</ArcDiDLayerPart>
+        </ArcDiDLayerSector>
+        <ArcDiDLayerSector>
+          <ArcDiDLayerPart position="top">DDM</ArcDiDLayerPart>
+          <ArcDiDLayerPart position="bottom">DLP</ArcDiDLayerPart>
+        </ArcDiDLayerSector>
+        <ArcDiDLayerPart>Audit</ArcDiDLayerPart>
+      </ArcDiDLayerParts>
+    </ArcDiDLayer>
+  </ArcDiD>
+</div>
+
+---
 layout: thanks
 ---
 

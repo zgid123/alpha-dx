@@ -773,6 +773,10 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
                   ? `url(#${getActiveShadowId(layer.index)})`
                   : undefined
               "
+              :style="{
+                '--layer-order': layer.index,
+                '--layer-delay': `calc(var(--square-pyramid-start-delay, 0ms) + ${layer.index * 260 + 10}ms)`,
+              }"
               @click.stop="handleLayerClick(layer.index, $event)"
             >
               <!-- 1. 3D Square Slab Thickness Rim (Mantle) -->
@@ -839,34 +843,17 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
   filter: brightness(1.05);
 }
 
-.alpha-square-pyramid--animated .alpha-square-pyramid__layer--0 {
-  animation: alpha-pyramid-layer-enter 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--square-pyramid-start-delay, 0ms) + 60ms) both;
-}
-
-.alpha-square-pyramid--animated .alpha-square-pyramid__layer--1 {
-  animation: alpha-pyramid-layer-enter 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--square-pyramid-start-delay, 0ms) + 140ms) both;
-}
-
-.alpha-square-pyramid--animated .alpha-square-pyramid__layer--2 {
-  animation: alpha-pyramid-layer-enter 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--square-pyramid-start-delay, 0ms) + 220ms) both;
-}
-
-.alpha-square-pyramid--animated .alpha-square-pyramid__layer--3 {
-  animation: alpha-pyramid-layer-enter 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--square-pyramid-start-delay, 0ms) + 300ms) both;
-}
-
-.alpha-square-pyramid--animated .alpha-square-pyramid__layer--4 {
-  animation: alpha-pyramid-layer-enter 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--square-pyramid-start-delay, 0ms) + 380ms) both;
-}
-
-.alpha-square-pyramid--animated .alpha-square-pyramid__layer--5 {
-  animation: alpha-pyramid-layer-enter 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--square-pyramid-start-delay, 0ms) + 460ms) both;
+.alpha-square-pyramid--animated .alpha-square-pyramid__layer {
+  animation: alpha-pyramid-layer-enter 450ms cubic-bezier(0.16, 1, 0.3, 1) var(--layer-delay, calc(var(--square-pyramid-start-delay, 0ms) + 10ms)) both;
 }
 
 @keyframes alpha-pyramid-layer-enter {
   0% {
     opacity: 0;
-    transform: translateY(12px) scale(0.97);
+    transform: translateY(80px) scale(0.92);
+  }
+  25% {
+    opacity: 1;
   }
   100% {
     opacity: 1;

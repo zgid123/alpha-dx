@@ -6,3 +6,4 @@ export const PYRAMID_TITLE_WIDTH_PX = 150;
 export const PYRAMID_CONTENT_WIDTH_PX = 240;
 export const PYRAMID_CONTENT_RIGHT_OFFSET_PX = 0;
 export const PYRAMID_DOT_POSITION_X = 210;
+export const PYRAMID_DOT_GAP_PX = 10;
