@@ -14,6 +14,9 @@ export interface IUseDiagramAutoScaleOptions {
   readonly scale?: Ref<number | undefined> | (() => number | undefined);
   readonly autoScale?: Ref<boolean | undefined> | (() => boolean | undefined);
   readonly maxScale?: Ref<number | undefined> | (() => number | undefined);
+  readonly width?:
+    | Ref<number | string | undefined>
+    | (() => number | string | undefined);
   readonly height?:
     | Ref<number | string | undefined>
     | (() => number | string | undefined);
@@ -94,6 +97,19 @@ export function useDiagramAutoScale(
       availW = el.clientWidth;
     }
 
+    const explicitWidth = resolveValue(options.width, undefined);
+    if (typeof explicitWidth === 'number' && explicitWidth > 0) {
+      availW = availW > 0 ? Math.min(availW, explicitWidth) : explicitWidth;
+    } else if (
+      typeof explicitWidth === 'string' &&
+      explicitWidth.endsWith('px')
+    ) {
+      const parsedW = Number.parseFloat(explicitWidth);
+      if (parsedW > 0) {
+        availW = availW > 0 ? Math.min(availW, parsedW) : parsedW;
+      }
+    }
+
     // Available height inside parent or slide layout
     let availH = 0;
     const explicitHeight = resolveValue(options.height, undefined);
@@ -140,6 +156,25 @@ export function useDiagramAutoScale(
         pagyEl && window.getComputedStyle(pagyEl).display !== 'none';
       const clearance = isPagyVisible ? pagyClearance : 16;
 
+      // Check for internal component header inside el (e.g. ArcDiD, GearTriad, HexTriad)
+      let internalHeaderH = 0;
+      for (let i = 0; i < el.children.length; i++) {
+        const child = el.children[i];
+        if (
+          child instanceof HTMLElement &&
+          (child.tagName === 'HEADER' ||
+            child.classList.contains('alpha-arc-did__header') ||
+            child.classList.contains('alpha-gear-triad__header') ||
+            child.classList.contains('alpha-hex-triad__header'))
+        ) {
+          internalHeaderH += child.offsetHeight;
+          const cs = window.getComputedStyle(child);
+          internalHeaderH +=
+            (Number.parseFloat(cs.marginTop) || 0) +
+            (Number.parseFloat(cs.marginBottom) || 0);
+        }
+      }
+
       if (slideEl && slideEl.clientHeight > 0) {
         const slideStyle = window.getComputedStyle(slideEl);
         const sPadTop = Number.parseFloat(slideStyle.paddingTop) || 0;
@@ -148,21 +183,26 @@ export function useDiagramAutoScale(
         let slideSiblingsH = siblingsH;
 
         if (parent !== slideEl) {
-          for (let i = 0; i < slideEl.children.length; i++) {
-            const child = slideEl.children[i];
-
-            if (
-              child &&
-              child !== parent &&
-              !child.contains(parent) &&
-              child instanceof HTMLElement
-            ) {
-              slideSiblingsH += child.offsetHeight;
-              const cs = window.getComputedStyle(child);
-              slideSiblingsH +=
-                (Number.parseFloat(cs.marginTop) || 0) +
-                (Number.parseFloat(cs.marginBottom) || 0);
+          let curr: HTMLElement | null = parent;
+          while (curr && curr !== slideEl && curr.parentElement) {
+            const p: HTMLElement = curr.parentElement;
+            for (let i = 0; i < p.children.length; i++) {
+              const child = p.children[i];
+              if (
+                child &&
+                child !== curr &&
+                !child.contains(curr) &&
+                child instanceof HTMLElement
+              ) {
+                slideSiblingsH += child.offsetHeight;
+                const cs = window.getComputedStyle(child);
+                slideSiblingsH +=
+                  (Number.parseFloat(cs.marginTop) || 0) +
+                  (Number.parseFloat(cs.marginBottom) || 0);
+              }
             }
+            if (p === slideEl) break;
+            curr = p;
           }
         }
 
@@ -172,12 +212,18 @@ export function useDiagramAutoScale(
             sPadTop -
             sPadBottom -
             slideSiblingsH -
+            internalHeaderH -
             clearance,
         );
       } else if (parent.clientHeight > 0) {
         availH = Math.max(
           0,
-          parent.clientHeight - padTop - padBottom - siblingsH - clearance,
+          parent.clientHeight -
+            padTop -
+            padBottom -
+            siblingsH -
+            internalHeaderH -
+            clearance,
         );
       }
     }

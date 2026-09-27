@@ -366,6 +366,15 @@ export default defineConfig({
                   ],
                 },
                 {
+                  text: 'Defense in Depth',
+                  items: [
+                    {
+                      text: 'Arc DiD',
+                      link: '/slidev/addon/components/defense-in-depth/arc-did',
+                    },
+                  ],
+                },
+                {
                   text: 'Cards',
                   items: [
                     {
@@ -524,6 +533,15 @@ export default defineConfig({
                     {
                       text: 'Square Pyramid',
                       link: '/slidev/academic-theme/components/pyramid/square-pyramid',
+                    },
+                  ],
+                },
+                {
+                  text: 'Defense in Depth',
+                  items: [
+                    {
+                      text: 'Arc DiD',
+                      link: '/slidev/academic-theme/components/defense-in-depth/arc-did',
                     },
                   ],
                 },

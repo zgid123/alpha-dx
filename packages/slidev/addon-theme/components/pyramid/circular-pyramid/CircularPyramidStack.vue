@@ -15,6 +15,7 @@ import {
   DEFAULT_CIRCULAR_PYRAMID_COLOR,
   DEFAULT_CIRCULAR_PYRAMID_STACK_COLORS,
 } from '../../../utils/pyramid/circular-pyramid';
+import { PYRAMID_DOT_GAP_PX } from '../../../utils/pyramid/shared';
 import CircularPyramidStackContent from './CircularPyramidStackContent.vue';
 import CircularPyramidStackTitle from './CircularPyramidStackTitle.vue';
 
@@ -158,7 +159,7 @@ const leftWidth = computed(() => {
   if (layerGeometry.value) {
     const rx = layerGeometry.value.rx;
     const cx = 465;
-    return Math.max(180, Math.round(cx - rx - 40));
+    return Math.max(180, Math.round(cx - rx - PYRAMID_DOT_GAP_PX));
   }
   return DOT_POSITION_X;
 });
@@ -169,11 +170,11 @@ const rightWingWidth = computed(() => {
   if (layerGeometry.value) {
     const rx = layerGeometry.value.rx;
     const cx = 465;
-    const dotRightX = cx + rx + 40;
+    const dotRightX = cx + rx + PYRAMID_DOT_GAP_PX;
     const containerW = 960;
     return Math.max(rightWidth.value + 20, Math.round(containerW - dotRightX));
   }
-  return rightWidth.value + 40;
+  return rightWidth.value + PYRAMID_DOT_GAP_PX;
 });
 
 const rightOffset = computed(
@@ -216,6 +217,10 @@ const connectorWidth = computed(() => {
   return Math.max(20, rightWingWidth.value - rightWidth.value);
 });
 
+const stepIndex = computed(() => {
+  return resolvedIndex.value;
+});
+
 provide(CIRCULAR_PYRAMID_STACK_KEY, {
   index: resolvedIndex,
   isActive,
@@ -252,6 +257,7 @@ provide(CIRCULAR_PYRAMID_STACK_KEY, {
         { 'alpha-circular-pyramid-stack--animated': rootContext?.animation.value },
       ]"
       :style="{
+        '--wing-delay': `calc(var(--circular-pyramid-start-delay, 0ms) + ${460 + stepIndex * 320}ms)`,
         width: `${leftWidth}px`,
         minWidth: `${leftWidth}px`,
         maxWidth: `${leftWidth}px`,
@@ -267,7 +273,7 @@ provide(CIRCULAR_PYRAMID_STACK_KEY, {
         :connector-width="props.connectorWidth"
       />
     </div>
-    <!-- Right Wing: Dot + Connector + Content Card (40px from slab) -->
+    <!-- Right Wing: Dot + Connector + Content Card (10px from slab) -->
     <div
       class="alpha-circular-pyramid-stack__right flex-shrink-0 flex items-center justify-end pointer-events-auto cursor-pointer"
       :class="[
@@ -275,6 +281,7 @@ provide(CIRCULAR_PYRAMID_STACK_KEY, {
         { 'alpha-circular-pyramid-stack--animated': rootContext?.animation.value },
       ]"
       :style="{
+        '--wing-delay': `calc(var(--circular-pyramid-start-delay, 0ms) + ${470 + stepIndex * 320}ms)`,
         width: `${rightWingWidth}px`,
         minWidth: `${rightWidth}px`,
         maxWidth: `${rightWingWidth}px`,
@@ -303,34 +310,14 @@ provide(CIRCULAR_PYRAMID_STACK_KEY, {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.alpha-circular-pyramid-stack--animated.alpha-circular-pyramid-stack__left--0 {
-  animation: alpha-pyramid-left-in 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--circular-pyramid-start-delay, 0ms) + 100ms) both;
-}
-
-.alpha-circular-pyramid-stack--animated.alpha-circular-pyramid-stack__left--1 {
-  animation: alpha-pyramid-left-in 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--circular-pyramid-start-delay, 0ms) + 180ms) both;
-}
-
-.alpha-circular-pyramid-stack--animated.alpha-circular-pyramid-stack__left--2 {
-  animation: alpha-pyramid-left-in 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--circular-pyramid-start-delay, 0ms) + 260ms) both;
-}
-
-.alpha-circular-pyramid-stack--animated.alpha-circular-pyramid-stack__left--3 {
-  animation: alpha-pyramid-left-in 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--circular-pyramid-start-delay, 0ms) + 340ms) both;
-}
-
-.alpha-circular-pyramid-stack--animated.alpha-circular-pyramid-stack__left--4 {
-  animation: alpha-pyramid-left-in 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--circular-pyramid-start-delay, 0ms) + 420ms) both;
-}
-
-.alpha-circular-pyramid-stack--animated.alpha-circular-pyramid-stack__left--5 {
-  animation: alpha-pyramid-left-in 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--circular-pyramid-start-delay, 0ms) + 500ms) both;
+.alpha-circular-pyramid-stack--animated .alpha-circular-pyramid-stack__left {
+  animation: alpha-pyramid-left-in 140ms cubic-bezier(0.16, 1, 0.3, 1) var(--wing-delay, calc(var(--circular-pyramid-start-delay, 0ms) + 460ms)) both;
 }
 
 @keyframes alpha-pyramid-left-in {
   0% {
     opacity: 0;
-    transform: translateX(-12px);
+    transform: translateX(-10px);
   }
   100% {
     opacity: 1;
@@ -338,34 +325,14 @@ provide(CIRCULAR_PYRAMID_STACK_KEY, {
   }
 }
 
-.alpha-circular-pyramid-stack--animated.alpha-circular-pyramid-stack__right--0 {
-  animation: alpha-pyramid-right-in 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--circular-pyramid-start-delay, 0ms) + 120ms) both;
-}
-
-.alpha-circular-pyramid-stack--animated.alpha-circular-pyramid-stack__right--1 {
-  animation: alpha-pyramid-right-in 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--circular-pyramid-start-delay, 0ms) + 200ms) both;
-}
-
-.alpha-circular-pyramid-stack--animated.alpha-circular-pyramid-stack__right--2 {
-  animation: alpha-pyramid-right-in 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--circular-pyramid-start-delay, 0ms) + 280ms) both;
-}
-
-.alpha-circular-pyramid-stack--animated.alpha-circular-pyramid-stack__right--3 {
-  animation: alpha-pyramid-right-in 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--circular-pyramid-start-delay, 0ms) + 360ms) both;
-}
-
-.alpha-circular-pyramid-stack--animated.alpha-circular-pyramid-stack__right--4 {
-  animation: alpha-pyramid-right-in 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--circular-pyramid-start-delay, 0ms) + 440ms) both;
-}
-
-.alpha-circular-pyramid-stack--animated.alpha-circular-pyramid-stack__right--5 {
-  animation: alpha-pyramid-right-in 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--circular-pyramid-start-delay, 0ms) + 520ms) both;
+.alpha-circular-pyramid-stack--animated .alpha-circular-pyramid-stack__right {
+  animation: alpha-pyramid-right-in 140ms cubic-bezier(0.16, 1, 0.3, 1) var(--wing-delay, calc(var(--circular-pyramid-start-delay, 0ms) + 470ms)) both;
 }
 
 @keyframes alpha-pyramid-right-in {
   0% {
     opacity: 0;
-    transform: translateX(12px);
+    transform: translateX(10px);
   }
   100% {
     opacity: 1;
