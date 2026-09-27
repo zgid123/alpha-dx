@@ -1,5 +1,11 @@
 # @alphacifer/slidev-addon-theme
 
+## 0.0.10
+
+### Patch Changes
+
+- [#185](https://github.com/zgid123/alpha-dx/pull/185) [`874819e`](https://github.com/zgid123/alpha-dx/commit/874819e285c3bd8f48b19be0a0c145ad02151146) Thanks [@zgid123](https://github.com/zgid123)! - improve components and add DiD components"
+
 ## 0.0.9
 
 ### Patch Changes
