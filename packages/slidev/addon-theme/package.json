@@ -4,7 +4,7 @@
   "description": "All Slidev addons for Alpha presentations",
   "type": "module",
   "scripts": {
-    "test": "vitest run --coverage",
+    "test": "vitest run --globals",
     "dev": "slidev slides.md --open",
     "dev:academic": "slidev academic-slides.md --open",
     "preview:build": "slidev build slides.md"
@@ -39,9 +39,8 @@
     "@vueuse/motion": "3.0.3"
   },
   "devDependencies": {
-    "@slidev/client": "52.19.0",
     "@slidev/cli": "52.19.0",
-    "@slidev/theme-seriph": "0.25.0",
-    "vue": "3.5.40"
+    "@slidev/client": "52.19.0",
+    "@slidev/theme-seriph": "0.25.0"
   }
 }

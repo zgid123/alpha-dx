@@ -32,7 +32,7 @@
     "lib"
   ],
   "scripts": {
-    "test": "vitest run --coverage",
+    "test": "vitest run --globals",
     "prepublish": "pnpm build",
     "build": "tsdown"
   },
