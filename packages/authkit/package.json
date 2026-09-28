@@ -1,6 +1,6 @@
 {
   "name": "@alphacifer/authkit",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Auth Kit for Alpha's projects.",
   "exports": {
     "./hash": {
