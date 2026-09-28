@@ -1,5 +1,11 @@
 # @alphacifer/authkit
 
+## 0.0.3
+
+### Patch Changes
+
+- [#191](https://github.com/zgid123/alpha-dx/pull/191) [`d480822`](https://github.com/zgid123/alpha-dx/commit/d480822dfc4457f6dd0e9690161fb3ccd193f13b) Thanks [@zgid123](https://github.com/zgid123)! - update nanoid version
+
 ## 0.0.2
 
 ### Patch Changes

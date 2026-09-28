@@ -1,5 +1,11 @@
 # @alphacifer/react
 
+## 0.1.5
+
+### Patch Changes
+
+- [#188](https://github.com/zgid123/alpha-dx/pull/188) [`b02ef1e`](https://github.com/zgid123/alpha-dx/commit/b02ef1e91153fcd7db8207593168a24dfd56a875) Thanks [@zgid123](https://github.com/zgid123)! - remove react-query wrapper
+
 ## 0.1.4
 
 ### Patch Changes
