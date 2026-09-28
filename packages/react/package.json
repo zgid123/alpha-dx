@@ -3,10 +3,6 @@
   "version": "0.1.4",
   "description": "React Utils for Alpha's projects.",
   "exports": {
-    "./query": {
-      "types": "./lib/query/index.d.mts",
-      "import": "./lib/query/index.mjs"
-    },
     "./zustand": {
       "types": "./lib/zustand/index.d.mts",
       "import": "./lib/zustand/index.mjs"
@@ -33,18 +29,10 @@
     "build": "tsdown"
   },
   "peerDependencies": {
-    "@tanstack/react-query": ">=5.100.6",
-    "@tanstack/react-query-devtools": ">=5.100.6",
     "react": ">=19.2.5",
     "zustand": ">=5.0.12"
   },
   "peerDependenciesMeta": {
-    "@tanstack/react-query": {
-      "optional": true
-    },
-    "@tanstack/react-query-devtools": {
-      "optional": true
-    },
     "zustand": {
       "optional": true
     }
@@ -54,8 +42,6 @@
     "remeda": "2.39.0"
   },
   "devDependencies": {
-    "@tanstack/react-query": "5.100.6",
-    "@tanstack/react-query-devtools": "5.100.6",
     "@types/react": "19.2.14",
     "react": "19.2.5",
     "zustand": "5.0.12"
