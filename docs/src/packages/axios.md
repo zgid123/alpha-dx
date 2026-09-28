@@ -35,7 +35,7 @@ const user = await client.get<IUser>({
 
 ## HTTP Requests
 
-The client supports `get`, `post`, `put`, and `delete`:
+The client supports `get`, `post`, `put`, `patch`, and `delete`:
 
 ```ts
 // GET request with parameters
@@ -51,6 +51,14 @@ await client.post<IUser>({
   url: '/users',
   data: {
     firstName: 'Alpha',
+  },
+});
+
+// PATCH request with a partial body
+await client.patch<IUser>({
+  url: '/users/user-1',
+  data: {
+    firstName: 'Updated Alpha',
   },
 });
 ```

@@ -1048,6 +1048,58 @@ describe('AxiosClient', () => {
     });
   });
 
+  suite('#patch', () => {
+    it('sends transformed body and params and returns the transformed response', async () => {
+      const requests: IRequestLogEntry[] = [];
+      const client = AxiosClient.create({
+        adapter: createAdapter({
+          requests,
+          data: {
+            data: {
+              user_id: 'user-1',
+              full_name: 'Updated Alpha',
+            },
+          },
+        }),
+      });
+
+      const response = await client.patch<
+        IUserProfileResponse,
+        ICreateProfileCamelBody
+      >({
+        url: '/users/user-1',
+        data: {
+          firstName: 'Updated Alpha',
+          contactInfo: {
+            emailAddress: 'alpha@example.com',
+          },
+        },
+        dataTransform: 'snake',
+        params: {
+          include_roles: true,
+        },
+        onUploadProgress: () => undefined,
+      });
+
+      expect(response).toEqual({
+        userId: 'user-1',
+        fullName: 'Updated Alpha',
+      });
+      expect(requests[0]?.url).toBe('/users/user-1');
+      expect(requests[0]?.method).toBe('patch');
+      expect(requests[0]?.data).toEqual({
+        first_name: 'Updated Alpha',
+        contact_info: {
+          email_address: 'alpha@example.com',
+        },
+      });
+      expect(requests[0]?.params).toEqual({
+        includeRoles: true,
+      });
+      expect(requests[0]?.hasOnUploadProgress).toBe(true);
+    });
+  });
+
   suite('#delete', () => {
     it('calls axios with delete and returns response data', async () => {
       const requests: IRequestLogEntry[] = [];
