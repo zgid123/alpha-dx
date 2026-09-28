@@ -136,6 +136,19 @@ export class AxiosClient {
     });
   }
 
+  public async patch<TResponse, TBody = unknown>({
+    url,
+    data,
+    ...rest
+  }: IMutateParams<TBody>): Promise<TResponse> {
+    return this.#request<TResponse, TBody>({
+      ...rest,
+      url,
+      data,
+      method: 'patch',
+    });
+  }
+
   public async delete<TResponse, TBody = unknown>({
     url,
     data,

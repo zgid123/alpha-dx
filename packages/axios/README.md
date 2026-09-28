@@ -27,7 +27,7 @@ const user = await client.get<IUser>({
 
 # Requests
 
-The client supports `get`, `post`, `put`, and `delete`.
+The client supports `get`, `post`, `put`, `patch`, and `delete`.
 
 ```ts
 await client.get<IUser>({
@@ -41,6 +41,13 @@ await client.post<IUser>({
   url: '/users',
   data: {
     first_name: 'Alpha',
+  },
+});
+
+await client.patch<IUser>({
+  url: '/users/user-1',
+  data: {
+    first_name: 'Updated Alpha',
   },
 });
 ```
@@ -174,4 +181,3 @@ await storage.refreshToken;
 
 await storage.clearToken();
 ```
-
