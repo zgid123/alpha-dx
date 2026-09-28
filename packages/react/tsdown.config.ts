@@ -6,8 +6,6 @@ export default defineConfig({
   outDir: 'lib',
   format: 'esm',
   external: [
-    '@tanstack/react-query',
-    '@tanstack/react-query-devtools',
     'immer',
     'react',
     'remeda',
@@ -17,5 +15,5 @@ export default defineConfig({
     'zustand/react/shallow',
     'zustand/shallow',
   ],
-  entry: ['src/query/index.ts', 'src/zustand/index.ts'],
+  entry: ['src/zustand/index.ts'],
 });
