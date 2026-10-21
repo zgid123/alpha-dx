@@ -1,5 +1,11 @@
 # @alphacifer/biome
 
+## 0.0.12
+
+### Patch Changes
+
+- [#192](https://github.com/zgid123/alpha-dx/pull/192) [`f66269a`](https://github.com/zgid123/alpha-dx/commit/f66269ab3dc0a1e437937cd6586ed60de06e2ac0) Thanks [@zgid123](https://github.com/zgid123)! - update components design system
+
 ## 0.0.11
 
 ### Patch Changes
