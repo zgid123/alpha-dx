@@ -2,7 +2,7 @@
 import SquarePyramid from '@alphacifer/slidev-addon-theme/components/pyramid/square-pyramid/SquarePyramid.vue';
 import SquarePyramidStack from '@alphacifer/slidev-addon-theme/components/pyramid/square-pyramid/SquarePyramidStack.vue';
 import SquarePyramidStackContent from '@alphacifer/slidev-addon-theme/components/pyramid/square-pyramid/SquarePyramidStackContent.vue';
-import SquarePyramidStackTitle from '@alphacifer/slidev-addon-theme/components/pyramid/square-pyramid/SquarePyramidStackTitle.vue';
+import SquarePyramidStackHeading from '@alphacifer/slidev-addon-theme/components/pyramid/square-pyramid/SquarePyramidStackHeading.vue';
 import { computed, ref } from 'vue';
 
 import SlidevMockup from '../../common/SlidevMockup.vue';
@@ -95,9 +95,9 @@ function setLayersCount(n: number): void {
           :key="idx"
           :step="stack.step"
         >
-          <SquarePyramidStackTitle>
+          <SquarePyramidStackHeading>
             {{ stack.title }}
-          </SquarePyramidStackTitle>
+          </SquarePyramidStackHeading>
           <SquarePyramidStackContent>
             {{ stack.content }}
           </SquarePyramidStackContent>

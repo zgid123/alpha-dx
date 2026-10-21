@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-import { mergeUno } from '../../utils/mergeUno';
+import { mergeUno } from '../../utils/merge-uno';
 import { useMergedUnoAttrs } from '../../utils/useMergedUnoAttrs';
 
 defineOptions({
@@ -30,11 +30,8 @@ const titleClasses = computed(() => mergeUno('text-center', props.titleClass));
 </script>
 
 <template>
-  <div
-    v-bind="forwardedAttrs()"
-    :class="className()"
-  >
-    <h1 :class="titleClasses">"{{ text }}"</h1>
+  <div v-bind="forwardedAttrs()" :class="className()">
+    <h3 :class="titleClasses">"{{ text }}"</h3>
     <p v-if="author" class="self-end">— {{ author }}</p>
   </div>
 </template>

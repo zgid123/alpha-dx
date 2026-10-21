@@ -1,0 +1,22 @@
+/* Color defaults shared by this component family. */
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-hexagon-triad-content: var(--alpha-foreground-primary, #475569);
+    --alpha-hexagon-triad-badge: #ffffff;
+    --alpha-hexagon-triad-badge-bg: #e11d48;
+    --alpha-hexagon-triad-badge-light: #fb7185;
+    --alpha-hexagon-triad-center-badge-fill: #ffffff;
+    --alpha-hexagon-triad-center-badge-stroke: #ffffff;
+    --alpha-hexagon-triad-connector-stroke: #ffffff;
+    --alpha-hexagon-triad-heading: var(--alpha-foreground-primary, #e11d48);
+    --alpha-hexagon-triad-item-1-color: #ee3248;
+    --alpha-hexagon-triad-item-1-depth: #9e1526;
+    --alpha-hexagon-triad-item-1-light: #ff8595;
+    --alpha-hexagon-triad-item-2-color: #f26522;
+    --alpha-hexagon-triad-item-2-depth: #a83908;
+    --alpha-hexagon-triad-item-2-light: #ffb088;
+    --alpha-hexagon-triad-item-3-color: #2b4594;
+    --alpha-hexagon-triad-item-3-depth: #172554;
+    --alpha-hexagon-triad-item-3-light: #8da4e2;
+  }
+}

@@ -8,37 +8,30 @@ import {
   type IArrowTriadItem,
   type IResolvedArrowTriadItem,
   resolveSingleArrowTriadItem,
-} from '../../../../utils/arrowTriad';
-import ArrowTriadContent from './ArrowTriadContent.vue';
-import ArrowTriadHeading from './ArrowTriadHeading.vue';
-import ArrowTriadIcon from './ArrowTriadIcon.vue';
+} from '../../../../utils/facets/triad/arrow-triad';
+import { useMergedUnoAttrs } from '../../../../utils/useMergedUnoAttrs';
 
 defineOptions({
+  inheritAttrs: false,
   name: 'ArrowTriadCallout',
 });
 
 export interface IArrowTriadCalloutProps {
   readonly id?: string | number;
   readonly index?: number;
-  readonly icon?: string | object | false;
   readonly color?: string;
   readonly cardBg?: string;
   readonly textColor?: string;
   readonly titleColor?: string;
-  readonly title?: string;
-  readonly description?: string;
 }
 
 const props = withDefaults(defineProps<IArrowTriadCalloutProps>(), {
   id: undefined,
   index: undefined,
-  icon: undefined,
   color: undefined,
   cardBg: undefined,
   textColor: undefined,
   titleColor: undefined,
-  title: undefined,
-  description: undefined,
 });
 
 interface INamedComponent {
@@ -80,12 +73,9 @@ const activeItem = computed<IResolvedArrowTriadItem>(() => {
   const override: IArrowTriadItem = {
     id: props.id,
     color: props.color,
-    icon: props.icon,
     cardBg: props.cardBg,
     textColor: props.textColor,
     titleColor: props.titleColor,
-    title: props.title,
-    description: props.description,
   };
 
   return resolveSingleArrowTriadItem(
@@ -142,6 +132,12 @@ const contentNode = computed(() => {
   });
 });
 
+const iconNode = computed(() => {
+  return defaultNodes.value.find((node) => {
+    return hasComponentName(node.type, 'ArrowTriadIcon');
+  });
+});
+
 function isValidSlottedNode(node: VNode): boolean {
   if (typeof node.type === 'symbol') {
     return typeof node.children === 'string' && node.children.trim().length > 0;
@@ -155,7 +151,8 @@ const otherSlottedNodes = computed(() => {
     return (
       isValidSlottedNode(node) &&
       !hasComponentName(node.type, 'ArrowTriadHeading') &&
-      !hasComponentName(node.type, 'ArrowTriadContent')
+      !hasComponentName(node.type, 'ArrowTriadContent') &&
+      !hasComponentName(node.type, 'ArrowTriadIcon')
     );
   });
 });
@@ -191,6 +188,7 @@ const positionStyle = computed(() => {
       // Top-Right (aligned with Yellow arrow tip pointing North-East)
       return 'left: calc(50% + 150px); top: calc(50% - 170px);';
     }
+
     case 1: {
       // Bottom-Right (aligned with Green arrow tip pointing South-East)
       return 'left: calc(50% + 150px); top: calc(50% + 15px);';
@@ -209,82 +207,56 @@ const animation = computed(() => {
   return rootContext?.animation?.value ?? true;
 });
 
-const hasIcon = computed(() => {
-  if (slots.icon) {
-    return true;
-  }
+const hasIcon = computed(() => Boolean(iconNode.value));
 
-  const iconVal = props.icon !== undefined ? props.icon : activeItem.value.icon;
-
-  if (!iconVal || iconVal === 'false') {
-    return false;
-  }
-
-  if (typeof iconVal === 'string' && iconVal.trim() === '') {
-    return false;
-  }
-
-  return true;
-});
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-arrow-triad-callout absolute w-70 h-38.75 rounded-[20px] px-4 py-3 flex flex-col items-center justify-center text-center z-10 font-sans transition-all duration-300 pointer-events-auto select-none box-border',
+);
 </script>
 
 <template>
   <div
     v-if="resolvedIndex < 3"
+    v-bind="forwardedAttrs()"
     :class="[
-      'alpha-arrow-triad-callout absolute w-[280px] h-[155px] rounded-[20px] px-4 py-3 flex flex-col items-center justify-center text-center z-10 transition-all duration-300 pointer-events-auto select-none box-border shadow-[0_10px_30px_-5px_rgba(0,0,0,0.06),0_4px_6px_-4px_rgba(0,0,0,0.03)]',
+      className(),
       `alpha-arrow-triad-callout--${resolvedIndex}`,
       { 'alpha-arrow-triad-callout--animated': animation },
     ]"
     :style="[
       positionStyle,
-      {
-        backgroundColor: activeItem.cardBg,
-        fontFamily:
-          'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif',
-      },
+      activeItem.cardBg
+        ? { backgroundColor: activeItem.cardBg }
+        : undefined,
     ]"
   >
     <!-- Card Icon Header -->
     <div v-if="hasIcon" class="mb-2 flex items-center justify-center">
-      <slot name="icon">
-        <ArrowTriadIcon :icon="activeItem.icon" :size="32" />
-      </slot>
+      <component :is="iconNode" />
     </div>
     <!-- Title -->
-    <slot name="title">
-      <component :is="headingNode" v-if="headingNode" />
-      <ArrowTriadHeading v-else :color="activeItem.titleColor">
-        {{ activeItem.title }}
-      </ArrowTriadHeading>
-    </slot>
+    <component :is="headingNode" v-if="headingNode" />
     <!-- Description -->
-    <slot name="description">
-      <component :is="contentNode" v-if="contentNode" />
-      <ArrowTriadContent v-else :color="activeItem.textColor">
-        {{ activeItem.description }}
-      </ArrowTriadContent>
-    </slot>
+    <component :is="contentNode" v-if="contentNode" />
     <!-- Other slotted nodes -->
-    <component
-      :is="node"
-      v-for="(node, idx) in otherSlottedNodes"
-      :key="idx"
-    />
+    <component :is="node" v-for="(node, idx) in otherSlottedNodes" :key="idx" />
   </div>
 </template>
 
 <style scoped>
 .alpha-arrow-triad-callout--animated.alpha-arrow-triad-callout--0 {
-  animation: arrow-triad-callout-fade 400ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arrow-triad-start-delay, 0ms) + 150ms) both;
+  animation: arrow-triad-callout-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--alpha-arrow-triad-start-delay, 0ms) + 150ms) both;
 }
 
 .alpha-arrow-triad-callout--animated.alpha-arrow-triad-callout--1 {
-  animation: arrow-triad-callout-fade 400ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arrow-triad-start-delay, 0ms) + 250ms) both;
+  animation: arrow-triad-callout-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--alpha-arrow-triad-start-delay, 0ms) + 250ms) both;
 }
 
 .alpha-arrow-triad-callout--animated.alpha-arrow-triad-callout--2 {
-  animation: arrow-triad-callout-fade 400ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arrow-triad-start-delay, 0ms) + 350ms) both;
+  animation: arrow-triad-callout-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--alpha-arrow-triad-start-delay, 0ms) + 350ms) both;
 }
 
 @keyframes arrow-triad-callout-fade {

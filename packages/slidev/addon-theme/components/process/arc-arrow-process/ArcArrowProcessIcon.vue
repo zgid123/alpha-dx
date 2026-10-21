@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 
+import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
+
 defineOptions({
   name: 'ArcArrowProcessIcon',
+  inheritAttrs: false,
 });
 
 export interface IArcArrowProcessIconProps {
@@ -14,7 +17,7 @@ export interface IArcArrowProcessIconProps {
 const props = withDefaults(defineProps<IArcArrowProcessIconProps>(), {
   size: 36,
   icon: undefined,
-  color: '#888d94',
+  color: undefined,
 });
 
 const slots = useSlots();
@@ -64,14 +67,19 @@ const isInbox = computed((): boolean => {
 const isBriefcase = computed((): boolean => {
   return props.icon === 'briefcase';
 });
+
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-arc-arrow-process-icon flex items-center justify-center shrink-0 text-(--alpha-arc-arrow-process-icon) pointer-events-none select-none opacity-85',
+);
 </script>
 
 <template>
   <div
     v-if="hasIcon"
-    class="alpha-arc-arrow-process-icon flex items-center justify-center shrink-0 pointer-events-none select-none opacity-85"
+    v-bind="forwardedAttrs()"
+    :class="className()"
     :style="{
-      color: props.color,
+      ...(props.color ? { '--alpha-arc-arrow-process-icon': props.color } : {}),
       width: `${props.size}px`,
       height: `${props.size}px`,
     }"
@@ -80,11 +88,11 @@ const isBriefcase = computed((): boolean => {
       <component
         :is="props.icon"
         v-if="isComponentIcon"
-        class="w-full h-full"
-        :style="{ color: props.color }"
+        class="w-full h-full text-current"
       />
       <!-- Built-in Folder Outline Icon matching design reference -->
       <svg
+        aria-hidden="true"
         v-else-if="isFolder"
         class="w-full h-full"
         viewBox="0 0 24 24"
@@ -94,10 +102,13 @@ const isBriefcase = computed((): boolean => {
         stroke-linecap="round"
         stroke-linejoin="round"
       >
-        <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+        <path
+          d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"
+        />
       </svg>
       <!-- Built-in Inbox/Tray Outline Icon matching design reference -->
       <svg
+        aria-hidden="true"
         v-else-if="isInbox"
         class="w-full h-full"
         viewBox="0 0 24 24"
@@ -109,10 +120,13 @@ const isBriefcase = computed((): boolean => {
       >
         <path d="M12 3v10" />
         <path d="m8 9 4 4 4-4" />
-        <path d="M3 14h5.2a2 2 0 0 1 1.6.8l1.2 1.6c.4.6 1 .9 1.8.9h0c.8 0 1.4-.3 1.8-.9l1.2-1.6a2 2 0 0 1 1.6-.8H21v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Z" />
+        <path
+          d="M3 14h5.2a2 2 0 0 1 1.6.8l1.2 1.6c.4.6 1 .9 1.8.9h0c.8 0 1.4-.3 1.8-.9l1.2-1.6a2 2 0 0 1 1.6-.8H21v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Z"
+        />
       </svg>
       <!-- Built-in Briefcase Outline Icon matching design reference -->
       <svg
+        aria-hidden="true"
         v-else-if="isBriefcase"
         class="w-full h-full"
         viewBox="0 0 24 24"
@@ -130,9 +144,8 @@ const isBriefcase = computed((): boolean => {
       <span
         v-else-if="isStringIcon && resolvedIconClass"
         :class="resolvedIconClass"
-        class="inline-block"
+        class="inline-block text-current"
         :style="{
-          color: props.color,
           width: `${props.size}px`,
           height: `${props.size}px`,
           fontSize: `${props.size}px`,
@@ -141,9 +154,8 @@ const isBriefcase = computed((): boolean => {
       <!-- Text fallback -->
       <span
         v-else-if="isStringIcon"
-        class="inline-block font-semibold"
+        class="inline-block font-semibold text-current"
         :style="{
-          color: props.color,
           fontSize: `${props.size * 0.75}px`,
         }"
       >

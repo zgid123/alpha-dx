@@ -17,6 +17,8 @@
     "components",
     "layouts",
     "utils",
+    "style.css",
+    "uno.config.ts",
     "README.md"
   ],
   "publishConfig": {
@@ -36,6 +38,7 @@
   },
   "dependencies": {
     "@alphacifer/core-utils": "workspace:^",
+    "@alphacifer/slidev-core-theme": "workspace:^",
     "@vueuse/motion": "3.0.3"
   },
   "devDependencies": {

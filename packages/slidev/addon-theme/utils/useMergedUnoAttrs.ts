@@ -1,12 +1,12 @@
 import { useAttrs } from 'vue';
 
-import { mergeUno } from './mergeUno';
-import type { TUnoClassValue } from './mergeUno/types';
+import { mergeUno } from './merge-uno';
+import type { TUnoClassValue } from './merge-uno/types';
 
 type TUnoClassSource = TUnoClassValue | (() => TUnoClassValue);
 
 interface IUseMergedUnoAttrsResult {
-  readonly className: () => string;
+  readonly className: (...extraDefaults: TUnoClassValue[]) => string;
   readonly forwardedAttrs: () => Record<string, unknown>;
 }
 
@@ -20,11 +20,15 @@ export function useMergedUnoAttrs(
 ): IUseMergedUnoAttrsResult {
   const attrs = useAttrs();
 
-  const className = (): string => {
+  const className = (...extraDefaults: TUnoClassValue[]): string => {
     const resolvedDefaults =
       typeof defaultClasses === 'function' ? defaultClasses() : defaultClasses;
 
-    return mergeUno(resolvedDefaults, attrs.class as TUnoClassValue);
+    return mergeUno(
+      resolvedDefaults,
+      ...extraDefaults,
+      attrs.class as TUnoClassValue,
+    );
   };
 
   const forwardedAttrs = (): Record<string, unknown> => {

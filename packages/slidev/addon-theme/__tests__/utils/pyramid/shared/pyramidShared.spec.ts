@@ -4,8 +4,6 @@ import {
   clampPyramidCount,
   computePyramidStacking,
   DEFAULT_PYRAMID_COLOR,
-  darkenColor,
-  lightenColor,
   MAX_PYRAMID_COUNT,
   MIN_PYRAMID_COUNT,
   PYRAMID_CONTENT_WIDTH_PX,
@@ -17,7 +15,7 @@ import {
 describe('pyramid shared utilities', () => {
   describe('constants', () => {
     it('declares standard layout and boundary constants', () => {
-      expect(DEFAULT_PYRAMID_COLOR).toBe('#3b82f6');
+      expect(DEFAULT_PYRAMID_COLOR).toBe('var(--alpha-pyramid-accent)');
       expect(MIN_PYRAMID_COUNT).toBe(1);
       expect(MAX_PYRAMID_COUNT).toBe(6);
       expect(PYRAMID_TITLE_WIDTH_PX).toBe(150);
@@ -49,38 +47,14 @@ describe('pyramid shared utilities', () => {
     });
   });
 
-  describe('#lightenColor & #darkenColor', () => {
-    it('lightens hex color correctly', () => {
-      expect(lightenColor({ hex: '#000000', ratio: 0.5 })).toBe('#808080');
-      expect(lightenColor({ hex: '#3b82f6', ratio: 1 })).toBe('#ffffff');
-      expect(lightenColor({ hex: '#3b82f6', ratio: 0 })).toBe('#3b82f6');
-    });
-
-    it('darkens hex color correctly', () => {
-      expect(darkenColor({ hex: '#ffffff', ratio: 0.5 })).toBe('#808080');
-      expect(darkenColor({ hex: '#3b82f6', ratio: 1 })).toBe('#000000');
-      expect(darkenColor({ hex: '#3b82f6', ratio: 0 })).toBe('#3b82f6');
-    });
-
-    it('handles shorthand 3-character hex colors', () => {
-      expect(lightenColor({ hex: '#fff', ratio: 0 })).toBe('#ffffff');
-      expect(darkenColor({ hex: '#000', ratio: 0 })).toBe('#000000');
-    });
-
-    it('returns original input if invalid hex format', () => {
-      expect(lightenColor({ hex: 'invalid' })).toBe('invalid');
-      expect(darkenColor({ hex: 'invalid' })).toBe('invalid');
-    });
-  });
-
   describe('#resolvePyramidPalette', () => {
     it('generates a full palette with default base color', () => {
       const palette = resolvePyramidPalette();
       expect(palette.activeTopEnd).toBe(DEFAULT_PYRAMID_COLOR);
       expect(palette.glow).toBe(DEFAULT_PYRAMID_COLOR);
-      expect(palette.activeTopStart).toMatch(/^#[0-9a-f]{6}$/i);
-      expect(palette.activeStroke).toMatch(/^#[0-9a-f]{6}$/i);
-      expect(palette.defaultTopStart).toMatch(/^#[0-9a-f]{6}$/i);
+      expect(palette.activeTopStart).toContain('color-mix(in srgb');
+      expect(palette.activeStroke).toContain('color-mix(in srgb');
+      expect(palette.defaultTopStart).toBe('var(--alpha-pyramid-highlight)');
     });
 
     it('adapts palette when custom base color is provided', () => {
@@ -88,6 +62,7 @@ describe('pyramid shared utilities', () => {
       const palette = resolvePyramidPalette(customColor);
       expect(palette.activeTopEnd).toBe(customColor);
       expect(palette.glow).toBe(customColor);
+      expect(palette.activeTopStart).toMatch(/^#[0-9a-f]{6}$/i);
     });
   });
 

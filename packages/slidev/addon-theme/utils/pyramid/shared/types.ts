@@ -1,8 +1,3 @@
-export interface IColorModifierParams {
-  readonly hex: string;
-  readonly ratio?: number;
-}
-
 export interface IPyramidPalette {
   readonly activeTopStart: string;
   readonly activeTopEnd: string;

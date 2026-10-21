@@ -14,10 +14,9 @@ import {
   ARC_ORBIT_ROOT_KEY,
   DEFAULT_ARC_ORBIT_COLOR,
   DEFAULT_ARC_ORBIT_ITEMS,
-  type IArcOrbitItem,
   type IResolvedArcOrbitItem,
   type TArcOrbitPosition,
-} from '../../../utils/arcOrbit';
+} from '../../../utils/core/arc-orbit';
 import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 import ArcOrbitBadge from './ArcOrbitBadge.vue';
 import ArcOrbitContent from './ArcOrbitContent.vue';
@@ -32,8 +31,6 @@ export interface IArcOrbitCalloutProps {
   readonly position?: TArcOrbitPosition;
   readonly index?: number;
   readonly id?: string | number;
-  readonly title?: string;
-  readonly description?: string;
   readonly color?: string;
   readonly textColor?: string;
   readonly textGap?: number;
@@ -43,8 +40,6 @@ const props = withDefaults(defineProps<IArcOrbitCalloutProps>(), {
   position: undefined,
   index: undefined,
   id: undefined,
-  title: undefined,
-  description: undefined,
   color: undefined,
   textColor: undefined,
   textGap: undefined,
@@ -111,9 +106,8 @@ const activeItem = computed<IResolvedArcOrbitItem>(() => {
   const defaultColor = rootContext?.color.value ?? DEFAULT_ARC_ORBIT_COLOR;
 
   const id = props.id ?? customItem?.id ?? defaultItem.id;
-  const title = props.title ?? customItem?.title ?? defaultItem.title;
-  const description =
-    props.description ?? customItem?.description ?? defaultItem.description;
+  const title = '';
+  const description = '';
   const color =
     props.color ?? customItem?.color ?? defaultColor ?? defaultItem.color;
   const textColor =
@@ -302,15 +296,12 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     <!-- Left position: [Badge] [Heading + Content] -->
     <template v-if="!isRight">
       <component :is="badgeNode" v-if="badgeNode" />
-      <ArcOrbitBadge v-else />
       <div
         class="flex flex-col items-start text-left min-w-0 pt-0.5"
         :style="textStyle"
       >
         <component :is="headingNode" v-if="headingNode" />
-        <ArcOrbitHeading v-else />
         <component :is="contentNode" v-if="contentNode" />
-        <ArcOrbitContent v-else />
         <component :is="node" v-for="(node, i) in otherNodes" :key="i" />
       </div>
     </template>
@@ -321,59 +312,66 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
         :style="textStyle"
       >
         <component :is="headingNode" v-if="headingNode" />
-        <ArcOrbitHeading v-else />
         <component :is="contentNode" v-if="contentNode" />
-        <ArcOrbitContent v-else />
         <component :is="node" v-for="(node, i) in otherNodes" :key="i" />
       </div>
       <component :is="badgeNode" v-if="badgeNode" />
-      <ArcOrbitBadge v-else />
     </template>
   </div>
 </template>
 
 <style scoped>
-.alpha-arc-orbit-callout :deep(p),
-.alpha-arc-orbit-callout :deep(h1),
-.alpha-arc-orbit-callout :deep(h2),
-.alpha-arc-orbit-callout :deep(h3),
-.alpha-arc-orbit-callout :deep(h4),
-.alpha-arc-orbit-callout :deep(h5),
-.alpha-arc-orbit-callout :deep(h6) {
-  margin: 0;
-  padding: 0;
+@layer alpha-theme-tokens {
+  .alpha-arc-orbit-callout :deep(p),
+  .alpha-arc-orbit-callout :deep(h1),
+  .alpha-arc-orbit-callout :deep(h2),
+  .alpha-arc-orbit-callout :deep(h3),
+  .alpha-arc-orbit-callout :deep(h4),
+  .alpha-arc-orbit-callout :deep(h5),
+  .alpha-arc-orbit-callout :deep(h6) {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .alpha-arc-orbit-callout--animated.alpha-arc-orbit-callout--left-0 {
-  animation: arc-orbit-fade-left 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-orbit-start-delay, 0ms) + 120ms) both;
+  animation: arc-orbit-fade-left 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--alpha-arc-orbit-start-delay, 0ms) + 120ms) both;
 }
 
 .alpha-arc-orbit-callout--animated.alpha-arc-orbit-callout--left-1 {
-  animation: arc-orbit-fade-left 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-orbit-start-delay, 0ms) + 200ms) both;
+  animation: arc-orbit-fade-left 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--alpha-arc-orbit-start-delay, 0ms) + 200ms) both;
 }
 
 .alpha-arc-orbit-callout--animated.alpha-arc-orbit-callout--left-2 {
-  animation: arc-orbit-fade-left 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-orbit-start-delay, 0ms) + 280ms) both;
+  animation: arc-orbit-fade-left 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--alpha-arc-orbit-start-delay, 0ms) + 280ms) both;
 }
 
 .alpha-arc-orbit-callout--animated.alpha-arc-orbit-callout--left-3 {
-  animation: arc-orbit-fade-left 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-orbit-start-delay, 0ms) + 360ms) both;
+  animation: arc-orbit-fade-left 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--alpha-arc-orbit-start-delay, 0ms) + 360ms) both;
 }
 
 .alpha-arc-orbit-callout--animated.alpha-arc-orbit-callout--right-0 {
-  animation: arc-orbit-fade-right 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-orbit-start-delay, 0ms) + 120ms) both;
+  animation: arc-orbit-fade-right 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--alpha-arc-orbit-start-delay, 0ms) + 120ms) both;
 }
 
 .alpha-arc-orbit-callout--animated.alpha-arc-orbit-callout--right-1 {
-  animation: arc-orbit-fade-right 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-orbit-start-delay, 0ms) + 200ms) both;
+  animation: arc-orbit-fade-right 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--alpha-arc-orbit-start-delay, 0ms) + 200ms) both;
 }
 
 .alpha-arc-orbit-callout--animated.alpha-arc-orbit-callout--right-2 {
-  animation: arc-orbit-fade-right 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-orbit-start-delay, 0ms) + 280ms) both;
+  animation: arc-orbit-fade-right 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--alpha-arc-orbit-start-delay, 0ms) + 280ms) both;
 }
 
 .alpha-arc-orbit-callout--animated.alpha-arc-orbit-callout--right-3 {
-  animation: arc-orbit-fade-right 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-orbit-start-delay, 0ms) + 360ms) both;
+  animation: arc-orbit-fade-right 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--alpha-arc-orbit-start-delay, 0ms) + 360ms) both;
 }
 
 @keyframes arc-orbit-fade-left {

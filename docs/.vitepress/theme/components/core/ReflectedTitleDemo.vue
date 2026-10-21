@@ -22,14 +22,16 @@ const title = ref("Alpha's Slidev Addon");
 
     <template #controls>
       <div class="slidev-mockup__control-group">
-        <label for="reflected-title-input" class="slidev-mockup__label">Title:</label>
+        <label for="reflected-title-input" class="slidev-mockup__label"
+          >Title:</label
+        >
         <input
           id="reflected-title-input"
           v-model="title"
           class="slidev-mockup__input"
           style="min-width: 240px;"
           placeholder="Title text"
-        />
+        >
       </div>
     </template>
   </SlidevMockup>

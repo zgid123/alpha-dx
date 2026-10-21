@@ -1,0 +1,20 @@
+/* Color defaults shared by this component family. */
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-arc-orbit-heading: var(--alpha-arc-orbit-accent);
+    --alpha-arc-orbit-title: var(--alpha-arc-orbit-accent);
+    --alpha-arc-orbit-accent: #ea580c;
+    --alpha-arc-orbit-badge: #ffffff;
+    --alpha-arc-orbit-content: var(--alpha-foreground-primary, #475569);
+    --alpha-arc-orbit-guide-dot: #94a3b8;
+    --alpha-arc-orbit-guide-stroke: var(--alpha-stroke-primary);
+    --alpha-arc-orbit-hub-fill: #f1f3f6;
+  }
+
+  .dark,
+  html.dark {
+    --alpha-arc-orbit-guide-dot: #475569;
+    --alpha-arc-orbit-guide-stroke: #334155;
+    --alpha-arc-orbit-hub-fill: #1e293bcc;
+  }
+}

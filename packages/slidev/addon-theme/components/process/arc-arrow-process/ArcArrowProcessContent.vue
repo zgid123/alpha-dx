@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue';
 
-import { ARC_ARROW_PROCESS_CALLOUT_KEY } from '../../../utils/arcArrowProcess';
+import { ARC_ARROW_PROCESS_CALLOUT_KEY } from '../../../utils/process/arc-arrow-process';
+import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 
 defineOptions({
   name: 'ArcArrowProcessContent',
+  inheritAttrs: false,
 });
 
 export interface IArcArrowProcessContentProps {
@@ -18,21 +20,24 @@ const props = withDefaults(defineProps<IArcArrowProcessContentProps>(), {
 const calloutContext = inject(ARC_ARROW_PROCESS_CALLOUT_KEY, undefined);
 
 const contentColor = computed(() => {
-  return props.color;
+  return props.color ?? calloutContext?.item.value.textColor;
 });
+
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-arc-arrow-process-content font-sans leading-[1.45] font-normal text-(--alpha-arc-arrow-process-content) select-none',
+);
 </script>
 
 <template>
-  <div
-    class="alpha-arc-arrow-process-content text-[1rem] leading-[1.45] font-normal select-none"
-    :style="{
-      color: contentColor,
-      fontFamily:
-        'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif',
-    }"
+  <p
+    v-bind="forwardedAttrs()"
+    :class="className()"
+    :style="
+      contentColor && !contentColor.includes('--alpha-arc-arrow-process-content')
+        ? { '--alpha-arc-arrow-process-content': contentColor }
+        : undefined
+    "
   >
-    <slot>
-      {{ calloutContext?.item.value.description }}
-    </slot>
-  </div>
+    <slot />
+  </p>
 </template>

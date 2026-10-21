@@ -10,6 +10,10 @@ Install the theme package into your presentation project:
 pnpm add -D @alphacifer/slidev-academic-theme
 ```
 
+The theme installs `@alphacifer/slidev-core-theme` automatically for shared
+color tokens, typography defaults, and UnoCSS utilities. Core does not need to
+be listed in `addons`.
+
 Register the theme in your `slides.md` frontmatter:
 
 ```yaml
@@ -42,22 +46,28 @@ The theme includes five academic layouts:
 
 ---
 
-## Design Tokens
+## Color Tokens
 
 The theme provides CSS custom properties that can be adjusted in your deck-level `style.css`:
 
 ```css
 :root {
-  /* Primary text and heading color */
-  --alpha-academic-primary: #0f172a;
-  /* Content background color */
-  --alpha-academic-bg: #f8fafc;
-  /* Accent highlight (e.g. Cover / Badge) */
-  --alpha-academic-accent: #0ea5e9;
-  /* Accent foreground (e.g. highlighted terms) */
-  --alpha-academic-accent-foreground: #0284c7;
+  --alpha-primary: #f8fafc;
+  --alpha-foreground-primary: #0f172a;
+  --alpha-foreground-accent: #0284c7;
+  --alpha-stroke-primary: #cbd5e1;
+}
+
+.dark {
+  --alpha-foreground-accent: #34d399;
 }
 ```
+
+Core provides these shared tokens and UnoCSS color utilities through the theme:
+`bg-primary`, `text-foreground-primary`, `text-foreground-accent`,
+`border-stroke-primary`, `fill-primary`, and `stroke-stroke-primary`. The
+optional addon package adds reusable components and layouts; the academic theme
+does not require it.
 
 ---
 
@@ -71,7 +81,7 @@ The theme provides CSS custom properties that can be adjusted in your deck-level
 - [**Reflected Title**](./components/core/reflected-title.md): Title with an inverted pseudo-element reflection.
 - [**Q & A**](./components/core/qna.md): Animated "Q & A" title sequence.
 - [**Transition Heading**](./components/core/transition-heading.md): Shifting heading coordinating opening and revealed states (`TransitionHeading`).
-- [**Thanks**](./components/core/thanks.md): Closing artwork composition for defenses and lectures (`ThanksContent`).
+- [**Thanks**](./components/core/thanks.md): Closing artwork composition for defenses and lectures (`SquareThanks`).
 - [**Arc Orbit**](./components/core/arc-orbit.md): Edge-anchored semicircular hub with radial orbiting callout nodes (`ArcOrbit`).
 
 ### Facets
@@ -79,11 +89,11 @@ The theme provides CSS custom properties that can be adjusted in your deck-level
 #### Triad
 
 - [**Arrow Triad**](./components/facets/triad/arrow-triad.md): Three-way curved arrow infographic (`ArrowTriad`).
-- [**Hex Triad**](./components/facets/triad/hex-triad.md): 3-item interlocking hexagonal diagram for methodologies (`HexTriad`).
+- [**Hexagon Triad**](./components/facets/triad/hex-triad.md): 3-item interlocking hexagonal diagram for methodologies (`HexagonTriad`).
 
 #### Tetrad
 
-- [**Rect Orbit Tetrad**](./components/facets/tetrad/rect-orbit-tetrad.md): 4-part concentric quadrant infographic with center hub (`RectOrbitTetrad`).
+- [**Rectangle Orbit Tetrad**](./components/facets/tetrad/rect-orbit-tetrad.md): 4-part concentric quadrant infographic with center hub (`RectangleOrbitTetrad`).
 
 ### Process
 
@@ -96,8 +106,8 @@ The theme provides CSS custom properties that can be adjusted in your deck-level
 
 ### Cards
 
-- [**Horizontal Card**](./components/card/horiz-card.md): Step-based horizontal cards with accent corner blobs and badges (`HorizCard`).
-- [**Vertical Card**](./components/card/vert-card.md): Vertical cards with corner accents and flexible badge variants (`VertCard`).
+- [**Horizontal Card**](./components/card/horiz-card.md): Step-based horizontal cards with accent corner blobs and badges (`HorizontalCard`).
+- [**Vertical Card**](./components/card/vert-card.md): Vertical cards with corner accents and flexible badge variants (`VerticalCard`).
 - [**Chevron Card**](./components/card/chevron-card.md): Horizontal chevron-accented cards with flexible badges (`ChevronCard`).
 
 ---
@@ -108,11 +118,9 @@ The theme provides CSS custom properties that can be adjusted in your deck-level
 - [**Default**](./layouts/default.md): Standard academic slide layout with footer metadata and slide numbering (`default`).
 - [**Blank**](./layouts/blank.md): Unconstrained canvas slide without heading presumption for diagrams and content-first slides (`blank`).
 - [**Section**](./layouts/section.md): Section divider and chapter transition layout (`section`).
-- [**End**](./layouts/end.md): Formal concluding layout for lectures, defenses, and seminars (`end`).
 - [**Arc TOC**](./layouts/arc-toc.md): Curved arc table of contents layout with connector lines and color markers (`arc-toc`).
 - [**Background Center**](./layouts/bg-center.md): Centered content slide with full-bleed background and section indexing (`bg-center`).
 - [**Shifting Intro**](./layouts/shifting-intro.md): Multi-stage transition slide shifting from centered title to top hero position (`shifting-intro`).
-- [**Table of Contents**](./layouts/table-of-contents.md): Standard structured agenda slide with heading level controls (`table-of-contents`).
 - [**Thanks**](./layouts/thanks.md): Concluding slide with animated geometric artwork and closing typography (`thanks`).
 
 ---

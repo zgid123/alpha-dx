@@ -1,0 +1,19 @@
+/* Color defaults shared by this component family. */
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-vertical-card-accent: #ea583a;
+    --alpha-vertical-card-badge: #ffffff;
+    /* Resolved from the component accent or props unless overridden. */
+    --alpha-vertical-card-badge-bg: var(--alpha-vertical-card-accent);
+    --alpha-vertical-card-bg: #ffffff;
+    --alpha-vertical-card-content: var(--alpha-foreground-primary, #475569);
+    /* Resolved from the component accent or props unless overridden. */
+    --alpha-vertical-card-title: var(--alpha-vertical-card-accent);
+    /* Resolved from the component accent or props unless overridden. */
+    --alpha-vertical-card-icon: var(--alpha-vertical-card-accent);
+    /* Resolved from the component accent or props unless overridden. */
+    --alpha-vertical-card-icon-bg: color-mix(in srgb, var(--alpha-vertical-card-accent) 18%, transparent);
+    /* Resolved from the component accent or props unless overridden. */
+    --alpha-vertical-card-stripe-light: color-mix(in srgb, var(--alpha-vertical-card-accent) 45%, transparent);
+  }
+}

@@ -1,34 +1,40 @@
+import '@alphacifer/slidev-addon-theme/style.css';
 import '@alphacifer/slidev-academic-theme/style.css';
+import HorizontalCardBadge from '@alphacifer/slidev-addon-theme/components/card/horizontal-card/HorizontalCardBadge.vue';
+import HorizontalCardIcon from '@alphacifer/slidev-addon-theme/components/card/horizontal-card/HorizontalCardIcon.vue';
+import VerticalCardBadge from '@alphacifer/slidev-addon-theme/components/card/vertical-card/VerticalCardBadge.vue';
+import VerticalCardIcon from '@alphacifer/slidev-addon-theme/components/card/vertical-card/VerticalCardIcon.vue';
 import DateComponent from '@alphacifer/slidev-addon-theme/components/core/Date.vue';
+import TransitionHeading from '@alphacifer/slidev-addon-theme/components/core/TransitionHeading.vue';
+import SquareThanks from '@alphacifer/slidev-addon-theme/components/core/thanks/SquareThanks.vue';
 import ThanksOutlineSquare from '@alphacifer/slidev-addon-theme/components/core/thanks/ThanksOutlineSquare.vue';
 import ThanksSquare from '@alphacifer/slidev-addon-theme/components/core/thanks/ThanksSquare.vue';
-import HexTriadCallout from '@alphacifer/slidev-addon-theme/components/facets/triad/hex-triad/HexTriadCallout.vue';
-import HexTriadCenterBadge from '@alphacifer/slidev-addon-theme/components/facets/triad/hex-triad/HexTriadCenterBadge.vue';
-import HexTriadLayer from '@alphacifer/slidev-addon-theme/components/facets/triad/hex-triad/HexTriadLayer.vue';
+import HexagonTriadCallout from '@alphacifer/slidev-addon-theme/components/facets/triad/hexagon-triad/HexagonTriadCallout.vue';
+import HexagonTriadCenterBadge from '@alphacifer/slidev-addon-theme/components/facets/triad/hexagon-triad/HexagonTriadCenterBadge.vue';
+import HexagonTriadLayer from '@alphacifer/slidev-addon-theme/components/facets/triad/hexagon-triad/HexagonTriadLayer.vue';
 import { MotionPlugin } from '@vueuse/motion';
 import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
 import 'virtual:uno.css';
 
 // Defense in Depth
-import ArcDiD from '@alphacifer/slidev-addon-theme/components/defense-in-depth/arc-did/ArcDiD.vue';
-import ArcDiDLayer from '@alphacifer/slidev-addon-theme/components/defense-in-depth/arc-did/ArcDiDLayer.vue';
-import ArcDiDLayerPart from '@alphacifer/slidev-addon-theme/components/defense-in-depth/arc-did/ArcDiDLayerPart.vue';
-import ArcDiDLayerParts from '@alphacifer/slidev-addon-theme/components/defense-in-depth/arc-did/ArcDiDLayerParts.vue';
-import ArcDiDLayerTitle from '@alphacifer/slidev-addon-theme/components/defense-in-depth/arc-did/ArcDiDLayerTitle.vue';
+import ArcDefenseInDepth from '@alphacifer/slidev-addon-theme/components/defense-in-depth/arc-defense-in-depth/ArcDefenseInDepth.vue';
+import ArcDefenseInDepthLayer from '@alphacifer/slidev-addon-theme/components/defense-in-depth/arc-defense-in-depth/ArcDefenseInDepthLayer.vue';
+import ArcDefenseInDepthLayerHeading from '@alphacifer/slidev-addon-theme/components/defense-in-depth/arc-defense-in-depth/ArcDefenseInDepthLayerHeading.vue';
+import ArcDefenseInDepthLayerPart from '@alphacifer/slidev-addon-theme/components/defense-in-depth/arc-defense-in-depth/ArcDefenseInDepthLayerPart.vue';
 import CircularPyramid from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramid.vue';
 import CircularPyramidStack from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramidStack.vue';
 import CircularPyramidStackContent from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramidStackContent.vue';
-import CircularPyramidStackTitle from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramidStackTitle.vue';
+import CircularPyramidStackHeading from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramidStackHeading.vue';
 import SquarePyramid from '@alphacifer/slidev-addon-theme/components/pyramid/square-pyramid/SquarePyramid.vue';
 import SquarePyramidStack from '@alphacifer/slidev-addon-theme/components/pyramid/square-pyramid/SquarePyramidStack.vue';
 import SquarePyramidStackContent from '@alphacifer/slidev-addon-theme/components/pyramid/square-pyramid/SquarePyramidStackContent.vue';
-import SquarePyramidStackTitle from '@alphacifer/slidev-addon-theme/components/pyramid/square-pyramid/SquarePyramidStackTitle.vue';
+import SquarePyramidStackHeading from '@alphacifer/slidev-addon-theme/components/pyramid/square-pyramid/SquarePyramidStackHeading.vue';
 
 // Cards
 import ChevronCardDemo from './components/card/ChevronCardDemo.vue';
-import HorizCardDemo from './components/card/HorizCardDemo.vue';
-import VertCardDemo from './components/card/VertCardDemo.vue';
+import HorizontalCardDemo from './components/card/HorizontalCardDemo.vue';
+import VerticalCardDemo from './components/card/VerticalCardDemo.vue';
 // Common
 import RouterLinkShim from './components/common/RouterLinkShim.vue';
 import SlidevMockup from './components/common/SlidevMockup.vue';
@@ -45,13 +51,13 @@ import ReflectedTitleDemo from './components/core/ReflectedTitleDemo.vue';
 import SpeakerDemo from './components/core/SpeakerDemo.vue';
 import ThanksDemo from './components/core/ThanksDemo.vue';
 import TransitionHeadingDemo from './components/core/TransitionHeadingDemo.vue';
-import ArcDiDDemo from './components/defense-in-depth/arc-did/ArcDiDDemo.vue';
-import RectOrbitTetradDemo from './components/facets/tetrad/RectOrbitTetradDemo.vue';
+import ArcDefenseInDepthDemo from './components/defense-in-depth/arc-defense-in-depth/ArcDefenseInDepthDemo.vue';
+import RectangleOrbitTetradDemo from './components/facets/tetrad/RectangleOrbitTetradDemo.vue';
 // Facets
 import ArrowTriadDemo from './components/facets/triad/ArrowTriadDemo.vue';
-import GearTriadContentsDemo from './components/facets/triad/GearTriadContentsDemo.vue';
 import GearTriadDemo from './components/facets/triad/GearTriadDemo.vue';
-import HexTriadDemo from './components/facets/triad/HexTriadDemo.vue';
+import GearTriadDetailsDemo from './components/facets/triad/GearTriadDetailsDemo.vue';
+import HexagonTriadDemo from './components/facets/triad/HexagonTriadDemo.vue';
 import LayoutDemo from './components/layouts/LayoutDemo.vue';
 // Process
 import ArcArrowProcessDemo from './components/process/ArcArrowProcessDemo.vue';
@@ -72,11 +78,17 @@ export default {
 
     // Core Components
     app.component('Date', DateComponent);
+    app.component('TransitionHeading', TransitionHeading);
+    app.component('SquareThanks', SquareThanks);
 
     // Slidev Addon Components
-    app.component('HexTriadCallout', HexTriadCallout);
-    app.component('HexTriadCenterBadge', HexTriadCenterBadge);
-    app.component('HexTriadLayer', HexTriadLayer);
+    app.component('HorizontalCardBadge', HorizontalCardBadge);
+    app.component('HorizontalCardIcon', HorizontalCardIcon);
+    app.component('VerticalCardBadge', VerticalCardBadge);
+    app.component('VerticalCardIcon', VerticalCardIcon);
+    app.component('HexagonTriadCallout', HexagonTriadCallout);
+    app.component('HexagonTriadCenterBadge', HexagonTriadCenterBadge);
+    app.component('HexagonTriadLayer', HexagonTriadLayer);
     app.component('ThanksSquare', ThanksSquare);
     app.component('ThanksOutlineSquare', ThanksOutlineSquare);
 
@@ -97,9 +109,9 @@ export default {
     // Facet Demos
     app.component('ArrowTriadDemo', ArrowTriadDemo);
     app.component('GearTriadDemo', GearTriadDemo);
-    app.component('GearTriadContentsDemo', GearTriadContentsDemo);
-    app.component('HexTriadDemo', HexTriadDemo);
-    app.component('RectOrbitTetradDemo', RectOrbitTetradDemo);
+    app.component('GearTriadDetailsDemo', GearTriadDetailsDemo);
+    app.component('HexagonTriadDemo', HexagonTriadDemo);
+    app.component('RectangleOrbitTetradDemo', RectangleOrbitTetradDemo);
 
     // Process Demos
     app.component('ArcArrowProcessDemo', ArcArrowProcessDemo);
@@ -109,29 +121,31 @@ export default {
     app.component('TableComparisonDemo', TableComparisonDemo);
 
     // Card Demos
-    app.component('HorizCardDemo', HorizCardDemo);
-    app.component('VertCardDemo', VertCardDemo);
+    app.component('HorizontalCardDemo', HorizontalCardDemo);
+    app.component('VerticalCardDemo', VerticalCardDemo);
     app.component('ChevronCardDemo', ChevronCardDemo);
 
     // Pyramid Components & Demo
     app.component('CircularPyramid', CircularPyramid);
     app.component('CircularPyramidStack', CircularPyramidStack);
-    app.component('CircularPyramidStackTitle', CircularPyramidStackTitle);
+    app.component('CircularPyramidStackHeading', CircularPyramidStackHeading);
     app.component('CircularPyramidStackContent', CircularPyramidStackContent);
     app.component('CircularPyramidDemo', CircularPyramidDemo);
 
     app.component('SquarePyramid', SquarePyramid);
     app.component('SquarePyramidStack', SquarePyramidStack);
-    app.component('SquarePyramidStackTitle', SquarePyramidStackTitle);
+    app.component('SquarePyramidStackHeading', SquarePyramidStackHeading);
     app.component('SquarePyramidStackContent', SquarePyramidStackContent);
     app.component('SquarePyramidDemo', SquarePyramidDemo);
 
     // Defense in Depth Components & Demo
-    app.component('ArcDiD', ArcDiD);
-    app.component('ArcDiDLayer', ArcDiDLayer);
-    app.component('ArcDiDLayerTitle', ArcDiDLayerTitle);
-    app.component('ArcDiDLayerParts', ArcDiDLayerParts);
-    app.component('ArcDiDLayerPart', ArcDiDLayerPart);
-    app.component('ArcDiDDemo', ArcDiDDemo);
+    app.component('ArcDefenseInDepth', ArcDefenseInDepth);
+    app.component('ArcDefenseInDepthLayer', ArcDefenseInDepthLayer);
+    app.component(
+      'ArcDefenseInDepthLayerHeading',
+      ArcDefenseInDepthLayerHeading,
+    );
+    app.component('ArcDefenseInDepthLayerPart', ArcDefenseInDepthLayerPart);
+    app.component('ArcDefenseInDepthDemo', ArcDefenseInDepthDemo);
   },
 } satisfies Theme;

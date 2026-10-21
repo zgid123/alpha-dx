@@ -14,6 +14,9 @@ description: Naming and formatting guidelines for Alpha's TypeScript projects
 - Define private class fields and methods with ECMAScript `#private` syntax instead of the TypeScript `private` keyword.
 - Prefer early returns and guard clauses to reduce nesting.
 - Conditions must always use block braces `{}`; do not use single-statement form without braces.
+- Leave a blank line between a completed control-flow block and the next
+  regular statement. Keep `else`, `catch`, and `finally` attached to their
+  preceding block.
 - Format objects with one property per line and a trailing comma after the last property.
 - When passing an object parameter to a function, always put it on multiple lines, even with one property. Put each property on its own line, include a trailing comma, and sort properties by key length from shortest to longest.
 - In callbacks, use a concise arrow return only when the return value is a **single, simple expression** (e.g., accessing a property or calling one function). When the return value is an object literal or requires any multi-step mapping, always use a block body with `return`.

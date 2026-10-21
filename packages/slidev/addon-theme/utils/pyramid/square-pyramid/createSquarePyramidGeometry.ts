@@ -2,8 +2,6 @@ import {
   clampPyramidCount,
   computePyramidStacking,
   DEFAULT_PYRAMID_COLOR,
-  darkenColor,
-  lightenColor,
   MAX_PYRAMID_COUNT,
   MIN_PYRAMID_COUNT,
   resolvePyramidPalette,
@@ -17,18 +15,16 @@ import type {
 
 export const DEFAULT_SQUARE_PYRAMID_COLOR = DEFAULT_PYRAMID_COLOR;
 export const DEFAULT_SQUARE_PYRAMID_STACK_COLORS: readonly string[] = [
-  '#ec4899', // 0: Pink (matches top slab)
-  '#8b5cf6', // 1: Purple (matches 2nd slab)
-  '#3b82f6', // 2: Blue (matches 3rd slab)
-  '#06b6d4', // 3: Cyan (matches 4th slab)
-  '#14b8a6', // 4: Teal (matches 5th slab)
-  '#f59e0b', // 5: Amber (warm accent)
+  'var(--alpha-square-pyramid-stack-1-color)',
+  'var(--alpha-square-pyramid-stack-2-color)',
+  'var(--alpha-square-pyramid-stack-3-color)',
+  'var(--alpha-square-pyramid-stack-4-color)',
+  'var(--alpha-square-pyramid-stack-5-color)',
+  'var(--alpha-square-pyramid-stack-6-color)',
 ] as const;
 
 export const MIN_SQUARE_COUNT = MIN_PYRAMID_COUNT;
 export const MAX_SQUARE_COUNT = MAX_PYRAMID_COUNT;
-
-export { darkenColor, lightenColor };
 
 export function clampSquareCount(count?: number): number {
   return clampPyramidCount(count);

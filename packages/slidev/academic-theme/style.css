@@ -1,15 +1,8 @@
-:root {
-  /* --alpha-academic-primary: #0369a1; */
-  --alpha-academic-primary: #0f172a;
-  --alpha-academic-bg: #f8fafc;
-  --alpha-academic-accent: #0ea5e9;
-  --alpha-academic-accent-foreground: #0284c7;
-}
+@import '@alphacifer/slidev-core-theme/style.css';
 
 .dark,
 html.dark {
-  --alpha-academic-accent: #10b981;
-  --alpha-academic-accent-foreground: #34d399;
+  --alpha-foreground-accent: #34d399;
   --slidev-code-background: #f5f5f5;
   --slidev-code-foreground: #1b1b1b;
   --slidev-code-tab-divider: #e5e5e5;
@@ -27,60 +20,25 @@ html.dark pre.shiki span {
   color: var(--shiki-light, inherit);
 }
 
-/* Force Addon theme components to keep high-contrast light colors in Academic Theme */
-.dark .slidev-page .alpha-arc-comparison-content,
-.dark .slidev-page .alpha-arc-orbit-content,
-.dark .slidev-page .alpha-horiz-card-content,
-.dark .slidev-page .alpha-vert-card-content,
-html.dark .slidev-page .alpha-arc-comparison-content,
-html.dark .slidev-page .alpha-arc-orbit-content,
-html.dark .slidev-page .alpha-horiz-card-content,
-html.dark .slidev-page .alpha-vert-card-content {
-  color: var(--alpha-academic-primary);
-}
+.slidev-page {
+  --alpha-arc-comparison-hub-fill: #f1f3f6;
+  --alpha-arc-comparison-guide-stroke: #cbd5e1;
+  --alpha-arc-comparison-guide-dot: #94a3b8;
+  --alpha-arc-comparison-vs-bg: #ffffff;
+  --alpha-arc-comparison-vs: var(--alpha-foreground-primary);
 
-.dark .slidev-page .alpha-arc-comparison__divider,
-html.dark .slidev-page .alpha-arc-comparison__divider {
-  stroke: #cbd5e1;
-}
-
-.dark .slidev-page .alpha-arc-comparison__hub path,
-html.dark .slidev-page .alpha-arc-comparison__hub path,
-.dark .slidev-page .alpha-arc-orbit__hub path,
-html.dark .slidev-page .alpha-arc-orbit__hub path {
-  fill: #f1f3f6;
-}
-
-.dark .slidev-page .alpha-arc-comparison__arc path,
-html.dark .slidev-page .alpha-arc-comparison__arc path,
-.dark .slidev-page .alpha-arc-orbit__arc path,
-html.dark .slidev-page .alpha-arc-orbit__arc path {
-  stroke: #cbd5e1;
-}
-
-.dark .slidev-page .alpha-arc-comparison__arc circle,
-html.dark .slidev-page .alpha-arc-comparison__arc circle,
-.dark .slidev-page .alpha-arc-orbit__arc circle,
-html.dark .slidev-page .alpha-arc-orbit__arc circle {
-  fill: #94a3b8;
-}
-
-.dark .slidev-page .alpha-arc-comparison__vs circle,
-html.dark .slidev-page .alpha-arc-comparison__vs circle {
-  fill: #ffffff;
-  stroke: #cbd5e1;
-}
-
-.dark .slidev-page .alpha-arc-comparison__vs text,
-html.dark .slidev-page .alpha-arc-comparison__vs text {
-  fill: var(--alpha-academic-primary);
+  --alpha-arc-orbit-hub-fill: #f1f3f6;
+  --alpha-arc-orbit-guide-stroke: #cbd5e1;
+  --alpha-arc-orbit-guide-dot: #94a3b8;
 }
 
 .slidev-page {
-  background-color: var(--alpha-academic-bg);
+  background-color: var(--alpha-academic-page-background, var(--alpha-primary));
 }
 
-.alpha-bg-center {
+/* Keep Addon component colors legible on the Academic dark canvas. */
+.dark .slidev-page,
+html.dark .alpha-bg-center {
   /* Neutralise the dark gradient overlay injected by handleBackground(bg, true).
      screen(black, X) = X, so the background image renders at its original brightness. */
   background-blend-mode: screen;
@@ -89,20 +47,17 @@ html.dark .slidev-page .alpha-arc-comparison__vs text {
 .slidev-layout {
   height: 100%;
   padding: 2.5rem 3rem;
-  color: var(--alpha-academic-primary);
+  color: var(--alpha-academic-layout-text, var(--alpha-foreground-primary));
 }
 
 .slidev-layout mark {
   font-weight: bold;
-  color: var(--alpha-academic-accent-foreground);
+  color: var(--alpha-academic-mark-text, var(--alpha-foreground-accent));
   background-color: transparent;
 }
 
-.slidev-layout p {
-  font-size: 1.25rem;
-}
-
-.alpha-academic-cover {
+.alpha-academic-cover,
+.slidev-page .slidev-layout.alpha-academic-cover {
   display: grid;
   place-items: center;
   width: 100%;
@@ -110,8 +65,15 @@ html.dark .slidev-page .alpha-arc-comparison__vs text {
   text-align: center;
 }
 
-.alpha-academic-cover__content {
+.alpha-academic-cover__content,
+.slidev-page .slidev-layout.alpha-academic-cover .alpha-academic-cover__content {
   width: 100%;
+  text-align: center;
+}
+
+.slidev-page .slidev-layout.alpha-academic-cover h1,
+.slidev-page .slidev-layout.alpha-academic-cover h2 {
+  text-align: center;
 }
 
 .alpha-academic-blank {
@@ -119,35 +81,59 @@ html.dark .slidev-page .alpha-arc-comparison__vs text {
   height: 100%;
 }
 
-.slidev-layout h1 {
+.slidev-page .slidev-layout h1:not([class]) {
   margin-bottom: 0.5rem;
-  font-size: 2.5rem;
   font-weight: bold;
-  color: var(--alpha-academic-primary);
+  color: var(--alpha-academic-heading-text, var(--alpha-foreground-primary));
 }
 
-.alpha-academic-cover.slidev-layout h1 {
+.slidev-page .slidev-layout h4:not([class]) {
+  font-size: var(--alpha-font-size-h4, 1.25rem);
+  font-weight: 500;
+  color: var(--alpha-foreground-secondary, #475569);
+}
+
+.slidev-page .slidev-layout.alpha-academic-cover h1:not([class]) {
   margin: 0;
-  font-size: 3.75rem;
+  font-size: var(--alpha-font-size-cover, 3.75rem);
   font-weight: bold;
-  color: var(--alpha-academic-accent);
+  color: var(--alpha-academic-cover-title, var(--alpha-foreground-accent));
 }
 
-.alpha-speaker {
-  font-size: 20px;
+.slidev-page .slidev-layout.alpha-academic-cover h2:not([class]) {
+  margin-top: 0.75rem;
+  margin-bottom: 2rem;
+  font-size: var(--alpha-font-size-h2, 2rem);
+  font-weight: 500;
+  color: var(--alpha-foreground-secondary, #475569);
+}
+
+.slidev-page .slidev-layout.alpha-academic-cover h4:not([class]) {
+  margin-top: 0.75rem;
+  margin-bottom: 2rem;
+  font-size: var(--alpha-font-size-h4, 1.25rem);
+  font-weight: 500;
+  color: var(--alpha-foreground-secondary, #475569);
+}
+
+.slidev-page .slidev-layout.alpha-academic-section h4:not([class]) {
+  margin-top: 0.5rem;
+  font-size: var(--alpha-font-size-h4, 1.25rem);
+  font-weight: 500;
+  color: var(--alpha-foreground-secondary, #475569);
 }
 
 .alpha-academic-pagy {
   position: absolute;
   right: 3rem;
-  bottom: 2.5rem;
+  bottom: 0.75rem;
   z-index: 50;
   display: flex;
   gap: 0.4rem;
   font-size: 1.2rem;
   font-weight: bold;
   font-variant-numeric: tabular-nums;
-  color: var(--alpha-academic-primary);
+  color: var(--alpha-academic-page-number-text, var(--alpha-foreground-primary));
 }
 
 .slidev-page:has(.alpha-academic-cover) .alpha-academic-pagy,
@@ -158,13 +144,9 @@ html.dark .slidev-page .alpha-arc-comparison__vs text {
 
 .alpha-arc-toc.slidev-layout .alpha-arc-toc__heading,
 .alpha-arc-toc.slidev-layout .alpha-arc-toc__heading h1 {
-  font-size: 2.5rem;
+  font-size: var(--alpha-font-size-h1, 2.5rem);
 }
 
 .slidev-page .alpha-arc-toc.slidev-layout .alpha-arc-toc__item > a {
   font-size: 1.25rem;
-}
-
-.alpha-bg-center .alpha-bg-center__index {
-  color: var(--alpha-academic-accent-foreground);
 }

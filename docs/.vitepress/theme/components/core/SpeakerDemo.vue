@@ -28,16 +28,8 @@ const parsedTeam = computed(() => {
 
 <template>
   <SlidevMockup :theme="props.theme">
-    <Speaker
-      v-if="mode === 'single'"
-      :author="author"
-      :date="date"
-    />
-    <Speaker
-      v-else
-      :team="parsedTeam"
-      :date="date"
-    />
+    <Speaker v-if="mode === 'single'" :author="author" :date="date" />
+    <Speaker v-else :team="parsedTeam" :date="date" />
 
     <template #controls>
       <div class="slidev-mockup__control-group">
@@ -59,33 +51,39 @@ const parsedTeam = computed(() => {
       </div>
 
       <div v-if="mode === 'single'" class="slidev-mockup__control-group">
-        <label for="speaker-author-input" class="slidev-mockup__label">Author:</label>
+        <label for="speaker-author-input" class="slidev-mockup__label"
+          >Author:</label
+        >
         <input
           id="speaker-author-input"
           v-model="author"
           class="slidev-mockup__input"
           placeholder="Author name"
-        />
+        >
       </div>
 
       <div v-else class="slidev-mockup__control-group">
-        <label for="speaker-team-input" class="slidev-mockup__label">Team:</label>
+        <label for="speaker-team-input" class="slidev-mockup__label"
+          >Team:</label
+        >
         <input
           id="speaker-team-input"
           v-model="teamInput"
           class="slidev-mockup__input"
           placeholder="Alpha, Beta"
-        />
+        >
       </div>
 
       <div class="slidev-mockup__control-group">
-        <label for="speaker-date-input" class="slidev-mockup__label">Date:</label>
+        <label for="speaker-date-input" class="slidev-mockup__label"
+          >Date:</label
+        >
         <input
           id="speaker-date-input"
           v-model="date"
           type="date"
           class="slidev-mockup__input"
-        />
+        >
       </div>
     </template>
   </SlidevMockup>

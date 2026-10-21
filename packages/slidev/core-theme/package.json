@@ -1,0 +1,38 @@
+{
+  "name": "@alphacifer/slidev-core-theme",
+  "version": "0.0.1",
+  "description": "Shared color tokens and typography for Alpha Slidev themes",
+  "type": "module",
+  "exports": {
+    "./style.css": "./style.css",
+    "./uno": {
+      "types": "./lib/uno.d.mts",
+      "import": "./lib/uno.mjs"
+    }
+  },
+  "files": [
+    "lib",
+    "style.css",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "author": "Alpha",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zgid123/alpha-dx.git",
+    "directory": "packages/slidev/core-theme"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsdown",
+    "pretest": "pnpm build",
+    "test": "vitest run --globals",
+    "prepack": "pnpm build"
+  },
+  "devDependencies": {
+    "@types/node": "25.9.0"
+  }
+}

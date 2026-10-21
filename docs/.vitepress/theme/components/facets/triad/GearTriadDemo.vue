@@ -2,8 +2,10 @@
 import GearTriad from '@alphacifer/slidev-addon-theme/components/facets/triad/gear-triad/GearTriad.vue';
 import GearTriadCallout from '@alphacifer/slidev-addon-theme/components/facets/triad/gear-triad/GearTriadCallout.vue';
 import GearTriadContent from '@alphacifer/slidev-addon-theme/components/facets/triad/gear-triad/GearTriadContent.vue';
-import GearTriadContents from '@alphacifer/slidev-addon-theme/components/facets/triad/gear-triad/GearTriadContents.vue';
-import GearTriadDescription from '@alphacifer/slidev-addon-theme/components/facets/triad/gear-triad/GearTriadDescription.vue';
+import GearTriadDetail from '@alphacifer/slidev-addon-theme/components/facets/triad/gear-triad/GearTriadDetail.vue';
+import GearTriadDetails from '@alphacifer/slidev-addon-theme/components/facets/triad/gear-triad/GearTriadDetails.vue';
+import GearTriadDetailsContent from '@alphacifer/slidev-addon-theme/components/facets/triad/gear-triad/GearTriadDetailsContent.vue';
+import GearTriadDetailsHeading from '@alphacifer/slidev-addon-theme/components/facets/triad/gear-triad/GearTriadDetailsHeading.vue';
 import GearTriadHeading from '@alphacifer/slidev-addon-theme/components/facets/triad/gear-triad/GearTriadHeading.vue';
 import { ref } from 'vue';
 
@@ -12,97 +14,99 @@ import SlidevMockup from '../../common/SlidevMockup.vue';
 const props = withDefaults(
   defineProps<{
     theme?: 'seriph' | 'academic';
-    withContents?: boolean;
+    withDetails?: boolean;
   }>(),
   {
     theme: 'seriph',
-    withContents: false,
+    withDetails: false,
   },
 );
 
-const title = ref('');
-const subtitle = ref('');
 const animation = ref(true);
 const step = ref(0);
 </script>
 
 <template>
   <SlidevMockup :theme="props.theme">
-    <template #default="{ isFullscreen }">
-      <div class="gear-triad-demo-container">
-        <GearTriad
-          v-model:step="step"
-          :title="title || undefined"
-          :subtitle="subtitle || undefined"
-          :animation="animation"
-        >
-          <GearTriadCallout>
-            <GearTriadHeading>Option 1</GearTriadHeading>
-            <GearTriadDescription>
-              Formulate testable research questions and theoretical models.
-            </GearTriadDescription>
-          </GearTriadCallout>
-          <GearTriadCallout>
-            <GearTriadHeading>Option 2</GearTriadHeading>
-            <GearTriadDescription>
-              Execute controlled investigations with automated measurement pipelines.
-            </GearTriadDescription>
-          </GearTriadCallout>
-          <GearTriadCallout>
-            <GearTriadHeading>Option 3</GearTriadHeading>
-            <GearTriadDescription>
-              Subject findings to reproducible peer reviews and empirical analysis.
-            </GearTriadDescription>
-          </GearTriadCallout>
-          <template v-if="props.withContents">
-            <GearTriadContents :option="1">
-              <GearTriadContent>
-                Option 1: Modern high-performance reactivity layer.
-              </GearTriadContent>
-              <GearTriadContent>
-                Option 1: Seamless automated slide deck layout shifts.
-              </GearTriadContent>
-              <GearTriadContent>
-                Option 1: Declarative SVG geometry computation.
-              </GearTriadContent>
-              <GearTriadContent>
-                Option 1: Synchronized rotation and translation.
-              </GearTriadContent>
-            </GearTriadContents>
-            <GearTriadContents :option="2">
-              <GearTriadContent>
-                Option 2: Robust type-safe props and slots contract.
-              </GearTriadContent>
-              <GearTriadContent>
-                Option 2: Cross-browser hardware-accelerated animations.
-              </GearTriadContent>
-              <GearTriadContent>
-                Option 2: Layered Vitest and Biome verification safety net.
-              </GearTriadContent>
-              <GearTriadContent>
-                Option 2: Zero-config Slidev click sequence integration.
-              </GearTriadContent>
-            </GearTriadContents>
-            <GearTriadContents :option="3">
-              <GearTriadContent>
-                Option 3: Modular theme tokens with dark/light variants.
-              </GearTriadContent>
-              <GearTriadContent>
-                Option 3: Adaptive aspect-ratio autoscale and responsive fitting.
-              </GearTriadContent>
-              <GearTriadContent>
-                Option 3: Clean headless primitives with unstyled defaults.
-              </GearTriadContent>
-              <GearTriadContent>
-                Option 3: Enterprise-ready slide presentation components.
-              </GearTriadContent>
-            </GearTriadContents>
-          </template>
-        </GearTriad>
-      </div>
-    </template>
+    <GearTriad v-model:step="step" :animation="animation">
+      <GearTriadCallout>
+        <GearTriadHeading>Option 1</GearTriadHeading>
+        <GearTriadContent>
+          Formulate testable research questions and theoretical models.
+        </GearTriadContent>
+      </GearTriadCallout>
+      <GearTriadCallout>
+        <GearTriadHeading>Option 2</GearTriadHeading>
+        <GearTriadContent>
+          Execute controlled investigations with automated measurement
+          pipelines.
+        </GearTriadContent>
+      </GearTriadCallout>
+      <GearTriadCallout>
+        <GearTriadHeading>Option 3</GearTriadHeading>
+        <GearTriadContent>
+          Subject findings to reproducible peer reviews and empirical analysis.
+        </GearTriadContent>
+      </GearTriadCallout>
+      <template v-if="props.withDetails">
+        <GearTriadDetails :option="1">
+          <GearTriadDetailsHeading>Phase Deep Dive</GearTriadDetailsHeading>
+          <GearTriadDetailsContent>
+            Detailed workflow and execution steps for Option 1.
+          </GearTriadDetailsContent>
+          <GearTriadDetail>
+            Option 1: Modern high-performance reactivity layer.
+          </GearTriadDetail>
+          <GearTriadDetail>
+            Option 1: Seamless automated slide deck layout shifts.
+          </GearTriadDetail>
+          <GearTriadDetail>
+            Option 1: Declarative SVG geometry computation.
+          </GearTriadDetail>
+          <GearTriadDetail>
+            Option 1: Synchronized rotation and translation.
+          </GearTriadDetail>
+        </GearTriadDetails>
+        <GearTriadDetails :option="2">
+          <GearTriadDetailsHeading>Phase Deep Dive</GearTriadDetailsHeading>
+          <GearTriadDetailsContent>
+            Detailed workflow and execution steps for Option 2.
+          </GearTriadDetailsContent>
+          <GearTriadDetail>
+            Option 2: Robust type-safe props and slots contract.
+          </GearTriadDetail>
+          <GearTriadDetail>
+            Option 2: Cross-browser hardware-accelerated animations.
+          </GearTriadDetail>
+          <GearTriadDetail>
+            Option 2: Layered Vitest and Biome verification safety net.
+          </GearTriadDetail>
+          <GearTriadDetail>
+            Option 2: Zero-config Slidev click sequence integration.
+          </GearTriadDetail>
+        </GearTriadDetails>
+        <GearTriadDetails :option="3">
+          <GearTriadDetailsHeading>Phase Deep Dive</GearTriadDetailsHeading>
+          <GearTriadDetailsContent>
+            Detailed workflow and execution steps for Option 3.
+          </GearTriadDetailsContent>
+          <GearTriadDetail>
+            Option 3: Modular theme tokens with dark/light variants.
+          </GearTriadDetail>
+          <GearTriadDetail>
+            Option 3: Adaptive aspect-ratio autoscale and responsive fitting.
+          </GearTriadDetail>
+          <GearTriadDetail>
+            Option 3: Clean headless primitives with unstyled defaults.
+          </GearTriadDetail>
+          <GearTriadDetail>
+            Option 3: Enterprise-ready slide presentation components.
+          </GearTriadDetail>
+        </GearTriadDetails>
+      </template>
+    </GearTriad>
     <template #controls>
-      <div v-if="props.withContents" class="slidev-mockup__control-group">
+      <div v-if="props.withDetails" class="slidev-mockup__control-group">
         <span class="slidev-mockup__label">Active State:</span>
         <button
           type="button"
@@ -134,24 +138,6 @@ const step = ref(0);
         </button>
       </div>
       <div class="slidev-mockup__control-group">
-        <label for="gear-title" class="slidev-mockup__label">Title:</label>
-        <input
-          id="gear-title"
-          v-model="title"
-          placeholder="Optional Title"
-          class="slidev-mockup__input"
-        />
-      </div>
-      <div class="slidev-mockup__control-group">
-        <label for="gear-subtitle" class="slidev-mockup__label">Subtitle:</label>
-        <input
-          id="gear-subtitle"
-          v-model="subtitle"
-          placeholder="Optional Subtitle"
-          class="slidev-mockup__input"
-        />
-      </div>
-      <div class="slidev-mockup__control-group">
         <span class="slidev-mockup__label">Animation:</span>
         <button
           type="button"
@@ -171,14 +157,3 @@ const step = ref(0);
     </template>
   </SlidevMockup>
 </template>
-
-<style scoped>
-.gear-triad-demo-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
-</style>

@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue';
 
-import {
-  ARC_ORBIT_CALLOUT_KEY,
-  DEFAULT_LOREM_TEXT,
-} from '../../../utils/arcOrbit';
+import { ARC_ORBIT_CALLOUT_KEY } from '../../../utils/core/arc-orbit';
 import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 
 defineOptions({
@@ -32,21 +29,18 @@ const contentStyle = computed(() => {
   }
 
   return {
-    color: contentColor.value,
+    '--alpha-arc-orbit-content': contentColor.value,
+    '--alpha-arc-comparison-content': contentColor.value,
   };
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-arc-orbit-content font-sans text-[0.78rem] leading-[1.3] text-slate-600 dark:text-slate-300 opacity-90',
+  'alpha-arc-orbit-content font-sans leading-[1.3] text-(--alpha-arc-orbit-content) opacity-90',
 );
 </script>
 
 <template>
-  <p
-    v-bind="forwardedAttrs()"
-    :class="className()"
-    :style="contentStyle"
-  >
-    <slot>{{ calloutContext?.item.value.description ?? DEFAULT_LOREM_TEXT }}</slot>
+  <p v-bind="forwardedAttrs()" :class="className()" :style="contentStyle">
+    <slot />
   </p>
 </template>

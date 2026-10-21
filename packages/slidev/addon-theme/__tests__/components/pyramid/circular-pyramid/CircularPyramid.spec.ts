@@ -32,7 +32,9 @@ describe('CircularPyramid compound components', () => {
           expect(script).toContain('readonly animation?: boolean;');
 
           expect(script).toMatch(/activeIndex:\s*-1/);
-          expect(script).toMatch(/color:\s*DEFAULT_CIRCULAR_PYRAMID_COLOR/);
+          expect(script).toMatch(
+            /color:\s*`var\(--alpha-circular-pyramid-accent, \$\{DEFAULT_CIRCULAR_PYRAMID_COLOR\}\)`/,
+          );
           expect(script).toMatch(/autoScale:\s*true/);
           expect(script).toMatch(/interactive:\s*true/);
           expect(script).toMatch(/animation:\s*true/);
@@ -72,6 +74,16 @@ describe('CircularPyramid compound components', () => {
           expect(template).toContain('alpha-circular-pyramid__layer');
           expect(template).toContain('alpha-circular-pyramid__rim');
           expect(template).toContain('alpha-circular-pyramid__face');
+        });
+
+        it('uses native buttons over SVG layers for keyboard selection', () => {
+          const template = descriptor.template?.content ?? '';
+
+          expect(template).toContain('aria-label="Circular pyramid diagram"');
+          expect(template).toContain('class="alpha-interaction-control"');
+          expect(template).toContain(`path('\${layer.cylinderPath}')`);
+          expect(template).not.toContain('role="group"');
+          expect(template).not.toContain('role="button"');
         });
 
         it('binds active and blur classes conditionally based on active index', () => {
@@ -122,6 +134,8 @@ describe('CircularPyramid compound components', () => {
 
         expect(template).toContain('alpha-circular-pyramid-stack__left');
         expect(template).toContain('alpha-circular-pyramid-stack__right');
+        expect(template).toMatch(/<button\s+type="button"/);
+        expect(template).not.toContain('role="button"');
         expect(script).toContain('DOT_POSITION_X');
         expect(script).toContain('const leftWidth = computed(');
         expect(script).toContain(
@@ -139,25 +153,25 @@ describe('CircularPyramid compound components', () => {
           expect(style).toContain('@keyframes alpha-pyramid-right-in');
           expect(style).toContain('transform: translateX(-10px);');
           expect(style).toContain('transform: translateX(10px);');
-          expect(style).toContain('var(--wing-delay');
+          expect(style).toMatch(/var\(\s*--wing-delay/);
         });
       });
     });
   });
 
-  describe('CircularPyramidStackTitle.vue', () => {
+  describe('CircularPyramidStackHeading.vue', () => {
     const titlePath = path.resolve(
       __dirname,
-      '../../../../components/pyramid/circular-pyramid/CircularPyramidStackTitle.vue',
+      '../../../../components/pyramid/circular-pyramid/CircularPyramidStackHeading.vue',
     );
     const titleContent = fs.readFileSync(titlePath, 'utf8');
     const { descriptor: titleDesc } = parse(titleContent);
 
-    it('compiles CircularPyramidStackTitle template without errors', () => {
+    it('compiles CircularPyramidStackHeading template without errors', () => {
       const result = compileTemplate({
         source: titleDesc.template?.content ?? '',
-        id: 'circular-pyramid-stack-title-spec',
-        filename: 'CircularPyramidStackTitle.vue',
+        id: 'circular-pyramid-stack-heading-spec',
+        filename: 'CircularPyramidStackHeading.vue',
       });
 
       expect(result.errors).toEqual([]);
@@ -167,12 +181,12 @@ describe('CircularPyramid compound components', () => {
       const template = titleDesc.template?.content ?? '';
       const script = titleDesc.scriptSetup?.content ?? '';
 
-      expect(template).toContain('alpha-circular-pyramid-stack-title__pill');
+      expect(template).toContain('alpha-circular-pyramid-stack-heading__pill');
       expect(template).toContain(
-        'alpha-circular-pyramid-stack-title__connector',
+        'alpha-circular-pyramid-stack-heading__connector',
       );
-      expect(template).toContain('alpha-circular-pyramid-stack-title__line');
-      expect(template).toContain('alpha-circular-pyramid-stack-title__dot');
+      expect(template).toContain('alpha-circular-pyramid-stack-heading__line');
+      expect(template).toContain('alpha-circular-pyramid-stack-heading__dot');
       expect(script).toContain('stackColor');
       expect(template).toContain('borderColor: stackColor');
       expect(template).toContain('backgroundColor: stackColor');

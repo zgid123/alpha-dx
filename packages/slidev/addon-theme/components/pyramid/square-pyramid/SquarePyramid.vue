@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { activateOnKeyboard } from '../../../utils/activateOnKeyboard';
 import {
   type ComputedRef,
   computed,
@@ -13,20 +14,22 @@ import {
   watch,
 } from 'vue';
 
-import { resolvePyramidCardPositions } from '../../../utils/pyramid/shared';
+import {
+  PYRAMID_CONTENT_WIDTH_PX,
+  PYRAMID_TITLE_WIDTH_PX,
+  resolvePyramidCardPositions,
+} from '../../../utils/pyramid/shared';
 import {
   clampSquareCount,
   createSquarePyramidGeometry,
   DEFAULT_SQUARE_PYRAMID_COLOR,
   DEFAULT_SQUARE_PYRAMID_STACK_COLORS,
-  darkenColor,
-  lightenColor,
   resolveSquarePyramidPalette,
   SQUARE_PYRAMID_ROOT_KEY,
 } from '../../../utils/pyramid/square-pyramid';
+import { darkenColor, lightenColor } from '../../../utils/colors';
 import { useDiagramAutoScale } from '../../../utils/useDiagramAutoScale';
 import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
-import SquarePyramidStack from './SquarePyramidStack.vue';
 
 defineOptions({
   inheritAttrs: false,
@@ -103,7 +106,7 @@ export interface ISquarePyramidProps {
 const props = withDefaults(defineProps<ISquarePyramidProps>(), {
   count: undefined,
   activeIndex: -1,
-  color: DEFAULT_SQUARE_PYRAMID_COLOR,
+  color: `var(--alpha-square-pyramid-accent, ${DEFAULT_SQUARE_PYRAMID_COLOR})`,
   colors: undefined,
   width: undefined,
   height: undefined,
@@ -177,45 +180,62 @@ interface INamedComponent {
 }
 
 function countSlottedStacks(slotNodes: VNode[] | undefined): number {
-  if (!slotNodes) return 0;
+  if (!slotNodes) {
+    return 0;
+  }
+
   let count = 0;
+
   for (const node of slotNodes) {
     if (typeof node.type === 'object' && node.type !== null) {
       const comp = node.type as INamedComponent['type'];
+
       if (
         comp?.name === 'SquarePyramidStack' ||
         comp?.displayName === 'SquarePyramidStack'
       ) {
         count++;
+
         continue;
       }
     }
+
     if (node.type === Fragment && Array.isArray(node.children)) {
       count += countSlottedStacks(node.children as VNode[]);
     }
   }
+
   return count;
 }
 
 const slottedStackCount = computed(() => {
   const defaultSlotNodes = slots.default?.();
-  if (!defaultSlotNodes) return 0;
+
+  if (!defaultSlotNodes) {
+    return 0;
+  }
+
   let count = 0;
+
   for (const node of defaultSlotNodes) {
     if (typeof node.type === 'object' && node.type !== null) {
       const comp = node.type as INamedComponent['type'];
+
       if (
         comp?.name === 'SquarePyramidStack' ||
         comp?.displayName === 'SquarePyramidStack'
       ) {
         count++;
+
         continue;
       }
     }
+
     if (node.type === Fragment && Array.isArray(node.children)) {
       count += countSlottedStacks(node.children as VNode[]);
     }
   }
+
   return count;
 });
 
@@ -227,10 +247,13 @@ function registerStack(
   colorRef?: ComputedRef<string | undefined>,
 ) {
   const token = id ?? Symbol();
+
   if (!registeredStackTokens.value.includes(token)) {
     registeredStackTokens.value.push(token);
   }
+
   let stopWatch: (() => void) | undefined;
+
   if (colorRef) {
     stopWatch = watch(
       colorRef,
@@ -241,10 +264,14 @@ function registerStack(
           registeredStackColors.value.delete(token);
         }
       },
-      { immediate: true },
+      {
+        immediate: true,
+      },
     );
   }
+
   const index = computed(() => registeredStackTokens.value.indexOf(token));
+
   return {
     index,
     unregister: () => {
@@ -260,8 +287,10 @@ function registerStack(
 function getLayerColor(index: number): string {
   if (index >= 0 && index < registeredStackTokens.value.length) {
     const token = registeredStackTokens.value[index];
+
     if (token) {
       const custom = registeredStackColors.value.get(token);
+
       if (custom) {
         return custom;
       }
@@ -269,16 +298,18 @@ function getLayerColor(index: number): string {
   }
 
   const customPaletteColor = props.colors?.[index];
+
   if (customPaletteColor) {
     return customPaletteColor;
   }
 
-  const stackColor =
-    DEFAULT_SQUARE_PYRAMID_STACK_COLORS[
-      Math.abs(index) % DEFAULT_SQUARE_PYRAMID_STACK_COLORS.length
-    ];
+  const stackIndex =
+    Math.abs(index) % DEFAULT_SQUARE_PYRAMID_STACK_COLORS.length;
+  const stackColor = DEFAULT_SQUARE_PYRAMID_STACK_COLORS[stackIndex];
 
-  return stackColor ?? props.color ?? DEFAULT_SQUARE_PYRAMID_COLOR;
+  return (
+    stackColor ?? `var(--alpha-square-pyramid-stack-${stackIndex + 1}-color)`
+  );
 }
 
 const activeLayerColor = computed<string>(() => {
@@ -293,12 +324,15 @@ const resolvedCount = computed(() => {
   if (props.count !== undefined) {
     return clampSquareCount(props.count);
   }
+
   if (slottedStackCount.value > 0) {
     return clampSquareCount(slottedStackCount.value);
   }
+
   if (registeredStackTokens.value.length > 0) {
     return clampSquareCount(registeredStackTokens.value.length);
   }
+
   return 4;
 });
 
@@ -337,13 +371,8 @@ function setActiveIndex(index: number): void {
   emit('select', index);
 }
 
-const TITLE_WIDTH_PX = 150;
-const CONTENT_WIDTH_PX = 240;
-const CONTENT_RIGHT_OFFSET_PX = 0;
-
-const titleWidthPx = computed(() => TITLE_WIDTH_PX);
-const contentWidthPx = computed(() => CONTENT_WIDTH_PX);
-const contentRightOffsetPx = computed(() => CONTENT_RIGHT_OFFSET_PX);
+const titleWidthPx = computed(() => PYRAMID_TITLE_WIDTH_PX);
+const contentWidthPx = computed(() => PYRAMID_CONTENT_WIDTH_PX);
 
 const cardHeights = ref<number[]>([]);
 const cardDeltaYList = ref<number[]>([]);
@@ -358,6 +387,7 @@ const initialDeltaYList = computed(() => {
     minY: 16,
     maxY: geo.value.viewBoxHeight - 16,
   });
+
   return resolvedY.map((y, i) => y - (targetY[i] ?? y));
 });
 
@@ -365,6 +395,7 @@ function getCardDeltaY(index: number): number {
   if (cardDeltaYList.value[index] !== undefined) {
     return cardDeltaYList.value[index] ?? 0;
   }
+
   return initialDeltaYList.value[index] ?? 0;
 }
 
@@ -374,9 +405,11 @@ function updateCardPositions(): void {
   if (typeof window === 'undefined' || !rootRef.value) {
     return;
   }
+
   const cardEls = rootRef.value.querySelectorAll<HTMLElement>(
     '.alpha-square-pyramid-stack-content',
   );
+
   if (cardEls.length === 0) {
     return;
   }
@@ -403,9 +436,11 @@ function scheduleCardUpdate(): void {
   if (typeof window === 'undefined') {
     return;
   }
+
   if (cardAnimationFrame !== undefined) {
     cancelAnimationFrame(cardAnimationFrame);
   }
+
   cardAnimationFrame = requestAnimationFrame(() => {
     cardAnimationFrame = undefined;
     updateCardPositions();
@@ -417,10 +452,12 @@ let cardMutationObserver: MutationObserver | null = null;
 
 onMounted(() => {
   scheduleCardUpdate();
+
   if (typeof ResizeObserver !== 'undefined' && rootRef.value) {
     cardResizeObserver = new ResizeObserver(scheduleCardUpdate);
     cardResizeObserver.observe(rootRef.value);
   }
+
   if (typeof MutationObserver !== 'undefined' && rootRef.value) {
     cardMutationObserver = new MutationObserver(scheduleCardUpdate);
     cardMutationObserver.observe(rootRef.value, {
@@ -435,6 +472,7 @@ onUnmounted(() => {
   if (cardAnimationFrame !== undefined) {
     cancelAnimationFrame(cardAnimationFrame);
   }
+
   cardResizeObserver?.disconnect();
   cardMutationObserver?.disconnect();
 });
@@ -449,7 +487,6 @@ provide(SQUARE_PYRAMID_ROOT_KEY, {
   interactive: computed(() => props.interactive),
   titleWidthPx,
   contentWidthPx,
-  contentRightOffsetPx,
   registerStack,
   getLayerColor,
   setActiveIndex,
@@ -463,6 +500,7 @@ const stackedLayers = computed(() => {
 
 const lowestLayer = computed(() => {
   const layers = geo.value.layers;
+
   return layers.length > 0 ? layers[layers.length - 1] : undefined;
 });
 
@@ -531,6 +569,7 @@ const resolvedHeightStyle = computed(() => {
   if (resolvedCount.value >= 6) {
     return '480px';
   }
+
   if (resolvedCount.value >= 5) {
     return '450px';
   }
@@ -553,13 +592,14 @@ function handleContainerClick(event: MouseEvent): void {
 }
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-square-pyramid w-full flex items-center justify-center select-none relative',
+  'alpha-square-pyramid w-full flex items-center justify-center select-none relative border-0 p-0 m-0 min-w-0 bg-transparent',
 );
 </script>
 
 <template>
-  <div
+  <fieldset
     ref="rootRef"
+    aria-label="Square pyramid diagram"
     v-bind="forwardedAttrs()"
     :class="className()"
     :data-count="resolvedCount"
@@ -567,14 +607,15 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     :style="{
       width: resolvedWidthStyle,
       height: resolvedHeightStyle,
-      '--square-pyramid-start-delay': `${resolvedStartDelay}ms`,
-      '--square-pyramid-title-width': `${titleWidthPx}px`,
-      '--square-pyramid-content-width': `${contentWidthPx}px`,
+      '--alpha-square-pyramid-start-delay': `${resolvedStartDelay}ms`,
+      '--alpha-square-pyramid-stack-heading-width': `${titleWidthPx}px`,
+      '--alpha-square-pyramid-stack-content-width': `${contentWidthPx}px`,
     }"
     @click="handleContainerClick"
+    @keydown="activateOnKeyboard"
   >
     <div
-      class="alpha-square-pyramid__stage relative flex items-center justify-center overflow-visible flex-shrink-0"
+      class="alpha-square-pyramid__stage relative flex items-center justify-center overflow-visible shrink-0"
       :style="{
         width: `${props.viewBoxWidth ?? 960}px`,
         height: `${geo.viewBoxHeight}px`,
@@ -593,6 +634,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
           preserveAspectRatio="xMidYMid meet"
           xmlns="http://www.w3.org/2000/svg"
         >
+          <title>Square pyramid diagram</title>
           <defs>
             <!-- Per-layer Gradients: Inactive Frosted Glass & Active Luminous -->
             <template v-for="layer in geo.layers" :key="layer.index">
@@ -604,8 +646,16 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
                 x2="10%"
                 y2="90%"
               >
-                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
-                <stop offset="45%" stop-color="#ffffff" stop-opacity="0.7" />
+                <stop
+                  offset="0%"
+                  stop-color="var(--alpha-square-pyramid-highlight)"
+                  stop-opacity="0.9"
+                />
+                <stop
+                  offset="45%"
+                  stop-color="var(--alpha-square-pyramid-highlight)"
+                  stop-opacity="0.7"
+                />
                 <stop
                   offset="80%"
                   :stop-color="lightenColor({ hex: getLayerColor(layer.index), ratio: 0.88 })"
@@ -709,24 +759,90 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
               </filter>
             </template>
             <!-- Fallback Global Gradients for Test Spec Compatibility -->
-            <linearGradient :id="activeTopGradId" x1="90%" y1="10%" x2="15%" y2="90%">
-              <stop offset="0%" :stop-color="lightenColor({ hex: activeLayerColor, ratio: 0.92 })" stop-opacity="1" />
-              <stop offset="100%" :stop-color="darkenColor({ hex: activeLayerColor, ratio: 0.18 })" stop-opacity="1" />
+            <linearGradient
+              :id="activeTopGradId"
+              x1="90%"
+              y1="10%"
+              x2="15%"
+              y2="90%"
+            >
+              <stop
+                offset="0%"
+                :stop-color="lightenColor({ hex: activeLayerColor, ratio: 0.92 })"
+                stop-opacity="1"
+              />
+              <stop
+                offset="100%"
+                :stop-color="darkenColor({ hex: activeLayerColor, ratio: 0.18 })"
+                stop-opacity="1"
+              />
             </linearGradient>
-            <linearGradient :id="activeSideGradId" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" :stop-color="darkenColor({ hex: activeLayerColor, ratio: 0.25 })" />
-              <stop offset="100%" :stop-color="lightenColor({ hex: activeLayerColor, ratio: 0.45 })" />
+            <linearGradient
+              :id="activeSideGradId"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
+              <stop
+                offset="0%"
+                :stop-color="darkenColor({ hex: activeLayerColor, ratio: 0.25 })"
+              />
+              <stop
+                offset="100%"
+                :stop-color="lightenColor({ hex: activeLayerColor, ratio: 0.45 })"
+              />
             </linearGradient>
-            <linearGradient :id="defaultTopGradId" x1="90%" y1="10%" x2="10%" y2="90%">
-              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
-              <stop offset="100%" :stop-color="lightenColor({ hex: props.color, ratio: 0.78 })" stop-opacity="0.35" />
+            <linearGradient
+              :id="defaultTopGradId"
+              x1="90%"
+              y1="10%"
+              x2="10%"
+              y2="90%"
+            >
+              <stop
+                offset="0%"
+                stop-color="var(--alpha-square-pyramid-highlight)"
+                stop-opacity="0.9"
+              />
+              <stop
+                offset="100%"
+                :stop-color="lightenColor({ hex: props.color, ratio: 0.78 })"
+                stop-opacity="0.35"
+              />
             </linearGradient>
-            <linearGradient :id="defaultSideGradId" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" :stop-color="lightenColor({ hex: props.color, ratio: 0.65 })" stop-opacity="0.65" />
-              <stop offset="100%" :stop-color="lightenColor({ hex: props.color, ratio: 0.88 })" stop-opacity="0.75" />
+            <linearGradient
+              :id="defaultSideGradId"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
+              <stop
+                offset="0%"
+                :stop-color="lightenColor({ hex: props.color, ratio: 0.65 })"
+                stop-opacity="0.65"
+              />
+              <stop
+                offset="100%"
+                :stop-color="lightenColor({ hex: props.color, ratio: 0.88 })"
+                stop-opacity="0.75"
+              />
             </linearGradient>
-            <filter :id="filterActiveShadowId" x="-40%" y="-40%" width="180%" height="200%">
-              <feDropShadow dx="0" dy="8" stdDeviation="10" :flood-color="activeLayerColor" flood-opacity="0.35" />
+            <filter
+              :id="filterActiveShadowId"
+              x="-40%"
+              y="-40%"
+              width="180%"
+              height="200%"
+            >
+              <feDropShadow
+                dx="0"
+                dy="8"
+                stdDeviation="10"
+                :flood-color="activeLayerColor"
+                flood-opacity="0.35"
+              />
             </filter>
             <!-- Ambient Bottom Surface Shadow -->
             <filter
@@ -746,7 +862,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
             :cy="lowestLayer.cy + lowestLayer.slabHeight + 14"
             :rx="lowestLayer.rx * 0.92"
             :ry="lowestLayer.ry * 0.3"
-            fill="#0f172a"
+            fill="var(--alpha-square-pyramid-center)"
             opacity="0.1"
             :filter="`url(#${filterAmbientShadowId})`"
           />
@@ -758,14 +874,13 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
             <g
               v-for="layer in stackedLayers"
               :key="layer.index"
-              class="alpha-square-pyramid__layer transition-all duration-300 ease-out pointer-events-auto"
+              class="alpha-square-pyramid__layer transition-all duration-300 ease-out pointer-events-none"
               :class="[
                 layer.index === currentActiveIndex
                   ? 'alpha-square-pyramid__layer--active'
                   : 'alpha-square-pyramid__layer--default',
                 `alpha-square-pyramid__layer--${layer.index}`,
-                { 'cursor-pointer': props.interactive },
-              ]"
+                ]"
               :data-layer-index="layer.index"
               :data-is-active="layer.index === currentActiveIndex"
               :filter="
@@ -775,9 +890,8 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
               "
               :style="{
                 '--layer-order': layer.index,
-                '--layer-delay': `calc(var(--square-pyramid-start-delay, 0ms) + ${layer.index * 260 + 10}ms)`,
+                '--layer-delay': `calc(var(--alpha-square-pyramid-start-delay, 0ms) + ${layer.index * 260 + 10}ms)`,
               }"
-              @click.stop="handleLayerClick(layer.index, $event)"
             >
               <!-- 1. 3D Square Slab Thickness Rim (Mantle) -->
               <path
@@ -801,7 +915,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
                 :stroke="
                   layer.index === currentActiveIndex
                     ? 'none'
-                    : 'rgba(255, 255, 255, 0.5)'
+                    : 'var(--alpha-square-pyramid-connector-highlight)'
                 "
                 stroke-width="0.5"
               />
@@ -809,24 +923,34 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
               <path
                 class="alpha-square-pyramid__inner transition-all duration-300 pointer-events-none"
                 :d="layer.innerFacePath"
-                fill="#ffffff"
+                fill="var(--alpha-square-pyramid-connector-fill)"
                 :fill-opacity="layer.index === currentActiveIndex ? 0.35 : 0.2"
               />
             </g>
           </g>
         </svg>
+        <template v-if="props.interactive">
+          <template v-for="layer in stackedLayers" :key="layer.index">
+            <button
+              type="button"
+              class="alpha-interaction-control"
+              :aria-label="`Select layer ${layer.index + 1}`"
+              :style="{ clipPath: `path('${layer.sidePath}')` }"
+              @click.stop="handleLayerClick(layer.index, $event)"
+            />
+            <button
+              type="button"
+              class="alpha-interaction-control"
+              :aria-label="`Select layer ${layer.index + 1}`"
+              :style="{ clipPath: `path('${layer.topFacePath}')` }"
+              @click.stop="handleLayerClick(layer.index, $event)"
+            />
+          </template>
+        </template>
       </div>
-      <!-- Slotted or Default Stack Items -->
-      <slot v-if="slots.default" />
-      <template v-else>
-        <SquarePyramidStack
-          v-for="idx in resolvedCount"
-          :key="idx - 1"
-          :index="idx - 1"
-        />
-      </template>
+      <slot />
     </div>
-  </div>
+  </fieldset>
 </template>
 
 <style scoped>
@@ -844,7 +968,12 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
 }
 
 .alpha-square-pyramid--animated .alpha-square-pyramid__layer {
-  animation: alpha-pyramid-layer-enter 450ms cubic-bezier(0.16, 1, 0.3, 1) var(--layer-delay, calc(var(--square-pyramid-start-delay, 0ms) + 10ms)) both;
+  animation: alpha-pyramid-layer-enter 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    var(
+      --layer-delay,
+      calc(var(--alpha-square-pyramid-start-delay, 0ms) + 10ms)
+    )
+    both;
 }
 
 @keyframes alpha-pyramid-layer-enter {

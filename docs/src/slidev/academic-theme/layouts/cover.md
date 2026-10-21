@@ -34,6 +34,6 @@ background: /images/cover.jpg
 
 ## Frontmatter Configuration
 
-| Property | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `background` | `string` | `''` | Optional background image or CSS gradient passed to Slidev's `handleBackground`. |
+| Property     | Type     | Default | Description                                                                      |
+| :----------- | :------- | :------ | :------------------------------------------------------------------------------- |
+| `background` | `string` | `''`    | Optional background image or CSS gradient passed to Slidev's `handleBackground`. |

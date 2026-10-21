@@ -1,0 +1,218 @@
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-primary: #f8fafc;
+
+    --alpha-foreground-primary: #0f172a;
+    --alpha-foreground-secondary: #475569;
+    --alpha-foreground-accent: #0284c7;
+
+    --alpha-stroke-primary: #cbd5e1;
+
+    --alpha-font-size-cover: 3.75rem;
+
+    --alpha-font-size-h1: 2.5rem;
+    --alpha-font-size-h2: 2rem;
+    --alpha-font-size-h3: 1.625rem;
+    --alpha-font-size-h4: 1.25rem;
+    --alpha-font-size-h5: 1rem;
+    --alpha-font-size-h6: 0.875rem;
+    --alpha-font-size-base: 1rem;
+    --alpha-font-size-small: 0.875rem;
+  }
+
+  .dark,
+  html.dark {
+    --alpha-primary: #0f172a;
+
+    --alpha-foreground-primary: #f1f5f9;
+    --alpha-foreground-secondary: #94a3b8;
+    --alpha-foreground-accent: #38bdf8;
+
+    --alpha-stroke-primary: #475569;
+  }
+}
+
+.slidev-page .slidev-layout {
+  font-size: var(--alpha-font-size-base, 1rem);
+}
+
+.slidev-page .slidev-layout h1,
+.slidev-page .slidev-layout h2,
+.slidev-page .slidev-layout h3,
+.slidev-page .slidev-layout h4,
+.slidev-page .slidev-layout h5,
+.slidev-page .slidev-layout h6 {
+  font-weight: bold;
+}
+
+.slidev-page
+  .slidev-layout
+  h1:not(
+    [class*='text-xs'],
+    [class*='text-sm'],
+    [class*='text-base'],
+    [class*='text-lg'],
+    [class*='text-xl'],
+    [class*='text-2xl'],
+    [class*='text-3xl'],
+    [class*='text-4xl'],
+    [class*='text-5xl'],
+    [class*='text-6xl'],
+    [class*='text-7xl'],
+    [class*='text-8xl'],
+    [class*='text-9xl'],
+    [class*='text-['][class*='px]'],
+    [class*='text-['][class*='rem]'],
+    [class*='text-['][class*='em]'],
+    [class*='text-['][class*='%]']
+  ) {
+  font-size: var(--alpha-font-size-h1, 2.5rem);
+}
+
+.slidev-page
+  .slidev-layout.cover
+  h1:not(
+    [class*='text-xs'],
+    [class*='text-sm'],
+    [class*='text-base'],
+    [class*='text-lg'],
+    [class*='text-xl'],
+    [class*='text-2xl'],
+    [class*='text-3xl'],
+    [class*='text-4xl'],
+    [class*='text-5xl'],
+    [class*='text-6xl'],
+    [class*='text-7xl'],
+    [class*='text-8xl'],
+    [class*='text-9xl'],
+    [class*='text-['][class*='px]'],
+    [class*='text-['][class*='rem]'],
+    [class*='text-['][class*='em]'],
+    [class*='text-['][class*='%]']
+  ) {
+  font-size: var(--alpha-font-size-cover, 3.75rem);
+}
+
+.slidev-page
+  .slidev-layout
+  h2:not(
+    [class*='text-xs'],
+    [class*='text-sm'],
+    [class*='text-base'],
+    [class*='text-lg'],
+    [class*='text-xl'],
+    [class*='text-2xl'],
+    [class*='text-3xl'],
+    [class*='text-4xl'],
+    [class*='text-5xl'],
+    [class*='text-6xl'],
+    [class*='text-7xl'],
+    [class*='text-8xl'],
+    [class*='text-9xl'],
+    [class*='text-['][class*='px]'],
+    [class*='text-['][class*='rem]'],
+    [class*='text-['][class*='em]'],
+    [class*='text-['][class*='%]']
+  ) {
+  font-size: var(--alpha-font-size-h2, 2rem);
+}
+
+.slidev-page
+  .slidev-layout
+  h3:not(
+    [class*='text-xs'],
+    [class*='text-sm'],
+    [class*='text-base'],
+    [class*='text-lg'],
+    [class*='text-xl'],
+    [class*='text-2xl'],
+    [class*='text-3xl'],
+    [class*='text-4xl'],
+    [class*='text-5xl'],
+    [class*='text-6xl'],
+    [class*='text-7xl'],
+    [class*='text-8xl'],
+    [class*='text-9xl'],
+    [class*='text-['][class*='px]'],
+    [class*='text-['][class*='rem]'],
+    [class*='text-['][class*='em]'],
+    [class*='text-['][class*='%]']
+  ) {
+  font-size: var(--alpha-font-size-h3, 1.625rem);
+}
+
+.slidev-page
+  .slidev-layout
+  h4:not(
+    [class*='text-xs'],
+    [class*='text-sm'],
+    [class*='text-base'],
+    [class*='text-lg'],
+    [class*='text-xl'],
+    [class*='text-2xl'],
+    [class*='text-3xl'],
+    [class*='text-4xl'],
+    [class*='text-5xl'],
+    [class*='text-6xl'],
+    [class*='text-7xl'],
+    [class*='text-8xl'],
+    [class*='text-9xl'],
+    [class*='text-['][class*='px]'],
+    [class*='text-['][class*='rem]'],
+    [class*='text-['][class*='em]'],
+    [class*='text-['][class*='%]']
+  ) {
+  font-size: var(--alpha-font-size-h4, 1.25rem);
+}
+
+.slidev-page
+  .slidev-layout
+  h5:not(
+    [class*='text-xs'],
+    [class*='text-sm'],
+    [class*='text-base'],
+    [class*='text-lg'],
+    [class*='text-xl'],
+    [class*='text-2xl'],
+    [class*='text-3xl'],
+    [class*='text-4xl'],
+    [class*='text-5xl'],
+    [class*='text-6xl'],
+    [class*='text-7xl'],
+    [class*='text-8xl'],
+    [class*='text-9xl'],
+    [class*='text-['][class*='px]'],
+    [class*='text-['][class*='rem]'],
+    [class*='text-['][class*='em]'],
+    [class*='text-['][class*='%]']
+  ) {
+  font-size: var(--alpha-font-size-h5, 1rem);
+}
+
+.slidev-page
+  .slidev-layout
+  h6:not(
+    [class*='text-xs'],
+    [class*='text-sm'],
+    [class*='text-base'],
+    [class*='text-lg'],
+    [class*='text-xl'],
+    [class*='text-2xl'],
+    [class*='text-3xl'],
+    [class*='text-4xl'],
+    [class*='text-5xl'],
+    [class*='text-6xl'],
+    [class*='text-7xl'],
+    [class*='text-8xl'],
+    [class*='text-9xl'],
+    [class*='text-['][class*='px]'],
+    [class*='text-['][class*='rem]'],
+    [class*='text-['][class*='em]'],
+    [class*='text-['][class*='%]']
+  ) {
+  font-size: var(--alpha-font-size-h6, 0.875rem);
+}
+
+.slidev-page .slidev-layout small {
+  font-size: var(--alpha-font-size-small, 0.875rem);
+}

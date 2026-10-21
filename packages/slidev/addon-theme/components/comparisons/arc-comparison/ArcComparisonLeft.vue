@@ -7,24 +7,22 @@ import {
   provide,
   ref,
   useSlots,
+  isVNode,
   type VNode,
+  watch,
 } from 'vue';
 
 import {
   ARC_COMPARISON_ROOT_KEY,
   ARC_COMPARISON_SIDE_KEY,
   DEFAULT_LEFT_COLOR,
-  DEFAULT_LEFT_ITEMS,
-} from '../../../utils/arcComparison';
+} from '../../../utils/comparisons/arc-comparison';
 import {
   ARC_ORBIT_ROOT_KEY,
   type IArcOrbitGeometry,
   type TArcOrbitPosition,
-} from '../../../utils/arcOrbit';
+} from '../../../utils/core/arc-orbit';
 import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
-import ArcComparisonContents from './ArcComparisonContents.vue';
-import ArcComparisonOrbit from './ArcComparisonOrbit.vue';
-import ArcComparisonTitle from './ArcComparisonTitle.vue';
 
 defineOptions({
   inheritAttrs: false,
@@ -33,7 +31,7 @@ defineOptions({
 
 export interface IArcComparisonLeftProps {
   readonly color?: string;
-  readonly title?: string;
+  readonly title?: string | VNode;
   readonly count?: number;
 }
 
@@ -47,25 +45,6 @@ const rootContext = inject(ARC_COMPARISON_ROOT_KEY, undefined);
 
 const slots = useSlots();
 
-interface INamedComponent {
-  readonly name?: string;
-  readonly __name?: string;
-}
-
-function hasComponentName(type: unknown, name: string): boolean {
-  if (typeof type === 'object' && type !== null) {
-    const comp = type as INamedComponent;
-
-    return comp.name === name || comp.__name === name;
-  }
-
-  if (typeof type === 'function') {
-    return (type as { name?: string }).name === name;
-  }
-
-  return false;
-}
-
 const registeredCalloutIds = ref<symbol[]>([]);
 
 const registerCallout = (id?: symbol): number | ComputedRef<number> => {
@@ -73,6 +52,7 @@ const registerCallout = (id?: symbol): number | ComputedRef<number> => {
     if (!registeredCalloutIds.value.includes(id)) {
       registeredCalloutIds.value.push(id);
     }
+
     return computed(() => registeredCalloutIds.value.indexOf(id));
   }
 
@@ -95,7 +75,15 @@ const resolvedCount = computed(() => {
   return props.count ?? rootContext?.pointsCount.value ?? 3;
 });
 
-const currentTitle = ref<string>(props.title ?? 'Add Project\nName');
+const currentTitle = ref<string>(
+  typeof props.title === 'string' ? props.title : '',
+);
+watch(
+  () => props.title,
+  (title) => {
+    currentTitle.value = typeof title === 'string' ? title : '';
+  },
+);
 
 provide(ARC_COMPARISON_SIDE_KEY, {
   side: 'left',
@@ -143,7 +131,7 @@ provide(ARC_ORBIT_ROOT_KEY, {
   registerCallout,
   unregisterCallout,
   edgeOffset: computed(() => rootContext?.edgeOffset?.value ?? 30),
-  items: computed(() => DEFAULT_LEFT_ITEMS),
+  items: computed(() => []),
 });
 
 function isSignificantNode(node: VNode): boolean {
@@ -174,28 +162,12 @@ function flattenVNodes(nodes: VNode[]): VNode[] {
   return result;
 }
 
-function isTitleNode(node: VNode): boolean {
-  return (
-    hasComponentName(node.type, 'ArcComparisonTitle') ||
-    hasComponentName(node.type, 'ArcOrbitTitle') ||
-    node.type === ArcComparisonTitle
-  );
-}
-
 const defaultNodes = computed(() => {
   if (!slots.default) {
     return [];
   }
 
   return flattenVNodes(slots.default());
-});
-
-const titleNode = computed(() => {
-  return defaultNodes.value.find(isTitleNode);
-});
-
-const bodyNodes = computed(() => {
-  return defaultNodes.value.filter((node) => !isTitleNode(node));
 });
 
 const hubStyle = computed(() => {
@@ -220,24 +192,33 @@ const hubStyle = computed(() => {
   };
 });
 
+const rootStyle = computed(() => {
+  if (!props.color || props.color === DEFAULT_LEFT_COLOR) {
+    return undefined;
+  }
+
+  return {
+    '--alpha-arc-comparison-left-title': props.color,
+    '--alpha-arc-comparison-left-accent': props.color,
+  };
+});
+
 const { className, forwardedAttrs } = useMergedUnoAttrs(
   'alpha-arc-comparison-left absolute inset-0 w-full h-full pointer-events-none',
 );
 </script>
 
 <template>
-  <div v-bind="forwardedAttrs()" :class="className()">
+  <div v-bind="forwardedAttrs()" :class="className()" :style="rootStyle">
     <!-- Left Hub Title Display -->
-    <div
-      class="alpha-arc-comparison__hub-title alpha-arc-comparison__hub-title--left absolute flex items-center justify-center z-10 pointer-events-auto"
+    <h3
+      class="alpha-arc-comparison__hub-title alpha-arc-comparison__hub-title--left absolute flex items-center justify-center z-10 pointer-events-auto font-sans font-bold text-center px-2 leading-tight select-none tracking-tight whitespace-pre-line text-[18px] text-(--alpha-arc-comparison-left-title)"
       :style="hubStyle"
     >
-      <component :is="titleNode" v-if="titleNode" />
-      <ArcComparisonTitle v-else-if="props.title">
-        {{ props.title }}
-      </ArcComparisonTitle>
-      <ArcComparisonTitle v-else />
-    </div>
+      <slot v-if="$slots.title" name="title" />
+      <component :is="props.title" v-else-if="isVNode(props.title)" />
+      <span v-else-if="typeof props.title === 'string'">{{ props.title }}</span>
+    </h3>
     <!-- Contents & Callouts -->
     <div
       v-if="rootContext?.as?.value !== 'layout' || rootContext?.isMoved?.value"
@@ -253,16 +234,11 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
             : '0ms',
       }"
     >
-      <template v-if="bodyNodes.length > 0">
-        <component :is="node" v-for="(node, i) in bodyNodes" :key="i" />
-      </template>
-      <ArcComparisonContents v-else>
-        <ArcComparisonOrbit
-          v-for="idx in resolvedCount"
-          :key="idx"
-          :index="idx - 1"
-        />
-      </ArcComparisonContents>
+      <div
+        class="alpha-arc-comparison-contents absolute inset-0 w-full h-full pointer-events-none"
+      >
+        <component :is="node" v-for="(node, i) in defaultNodes" :key="i" />
+      </div>
     </div>
   </div>
 </template>

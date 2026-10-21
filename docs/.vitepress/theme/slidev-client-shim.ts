@@ -74,7 +74,14 @@ export function useSlideContext() {
     '$$slidev-clicks-context',
     ref({ current: 0, total: 0 }),
   );
-  const $clicks = toRef($clicksContext.value, 'current');
+  const $clicks = computed({
+    get: () => $clicksContext.value?.current ?? 0,
+    set: (value: number) => {
+      if ($clicksContext.value) {
+        $clicksContext.value.current = value;
+      }
+    },
+  });
   const $page = inject<Ref<number>>('$$slidev-page', ref(1));
   const $renderContext = inject<Ref<string>>(
     '$$slidev-render-context',

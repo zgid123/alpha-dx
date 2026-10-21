@@ -23,24 +23,28 @@ const author = ref('Alpha');
 
     <template #controls>
       <div class="slidev-mockup__control-group">
-        <label for="quote-text-input" class="slidev-mockup__label">Quote:</label>
+        <label for="quote-text-input" class="slidev-mockup__label"
+          >Quote:</label
+        >
         <input
           id="quote-text-input"
           v-model="text"
           class="slidev-mockup__input"
           style="min-width: 260px;"
           placeholder="Enter quote text"
-        />
+        >
       </div>
 
       <div class="slidev-mockup__control-group">
-        <label for="quote-author-input" class="slidev-mockup__label">Author:</label>
+        <label for="quote-author-input" class="slidev-mockup__label"
+          >Author:</label
+        >
         <input
           id="quote-author-input"
           v-model="author"
           class="slidev-mockup__input"
           placeholder="Author name"
-        />
+        >
       </div>
     </template>
   </SlidevMockup>

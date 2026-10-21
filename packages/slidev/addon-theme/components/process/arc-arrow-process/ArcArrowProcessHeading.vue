@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue';
 
-import { ARC_ARROW_PROCESS_CALLOUT_KEY } from '../../../utils/arcArrowProcess';
+import { ARC_ARROW_PROCESS_CALLOUT_KEY } from '../../../utils/process/arc-arrow-process';
+import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 
 defineOptions({
   name: 'ArcArrowProcessHeading',
+  inheritAttrs: false,
 });
 
 export interface IArcArrowProcessHeadingProps {
@@ -18,26 +20,24 @@ const props = withDefaults(defineProps<IArcArrowProcessHeadingProps>(), {
 const calloutContext = inject(ARC_ARROW_PROCESS_CALLOUT_KEY, undefined);
 
 const headingColor = computed(() => {
-  return (
-    props.color ??
-    calloutContext?.item.value.color ??
-    calloutContext?.item.value.titleColor ??
-    '#1e293b'
-  );
+  return props.color ?? calloutContext?.item.value.titleColor;
 });
+
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-arc-arrow-process-heading mb-1.5 font-sans font-bold leading-tight text-(--alpha-arc-arrow-process-heading) select-none',
+);
 </script>
 
 <template>
-  <div
-    class="alpha-arc-arrow-process-heading font-bold text-[1.25rem] leading-tight mb-1.5 select-none"
-    :style="{
-      color: headingColor,
-      fontFamily:
-        'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif',
-    }"
+  <h4
+    v-bind="forwardedAttrs()"
+    :class="className()"
+    :style="
+      headingColor && !headingColor.includes('--alpha-arc-arrow-process-heading')
+        ? { '--alpha-arc-arrow-process-heading': headingColor }
+        : undefined
+    "
   >
-    <slot>
-      {{ calloutContext?.item.value.title }}
-    </slot>
-  </div>
+    <slot>{{ '' }}</slot>
+  </h4>
 </template>

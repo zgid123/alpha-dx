@@ -1,0 +1,26 @@
+/* Color defaults shared by this component family. */
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-gear-triad-content: var(--alpha-foreground-primary, #64748b);
+    --alpha-gear-triad-center-bg-end: #f1f5f9;
+    --alpha-gear-triad-center-bg-start: #ffffff;
+    --alpha-gear-triad-center-icon: #0f172a;
+    --alpha-gear-triad-center-shadow: 0 6px 20px -2px rgba(0, 0, 0, 0.22), 0 2px 6px -1px rgba(0, 0, 0, 0.12);
+    --alpha-gear-triad-detail: var(--alpha-foreground-primary, #475569);
+    --alpha-gear-triad-detail-number: #334155;
+    --alpha-gear-triad-details-content: var(--alpha-foreground-primary, #64748b);
+    --alpha-gear-triad-details-heading: var(--alpha-foreground-primary, #0f172a);
+    --alpha-gear-triad-heading: var(--alpha-foreground-primary, #0f172a);
+    --alpha-gear-triad-icon: #0f172a;
+    --alpha-gear-triad-item-1-color: #1fb5b5;
+    --alpha-gear-triad-item-1-depth: #126e7a;
+    --alpha-gear-triad-item-2-color: #f38942;
+    --alpha-gear-triad-item-2-depth: #aa521d;
+    --alpha-gear-triad-item-3-color: #f05367;
+    --alpha-gear-triad-item-3-depth: #a82c3c;
+    --alpha-gear-triad-muted-icon: #ffffff;
+    --alpha-gear-triad-muted-sector: #d5d8dc;
+    --alpha-gear-triad-shadow: #0f172a;
+    --alpha-gear-triad-valley: #11455c;
+  }
+}

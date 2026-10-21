@@ -27,26 +27,26 @@ function replay() {
 
     <template #controls>
       <div class="slidev-mockup__control-group">
-        <button
-          type="button"
-          class="slidev-mockup__btn active"
-          @click="replay"
-        >
+        <button type="button" class="slidev-mockup__btn active" @click="replay">
           ↻ Replay Animation
         </button>
       </div>
 
       <div class="slidev-mockup__control-group">
-        <label for="qna-delay-input" class="slidev-mockup__label">Start Delay (ms):</label>
+        <label
+          for="questions-and-answers-delay-input"
+          class="slidev-mockup__label"
+          >Start Delay (ms):</label
+        >
         <input
-          id="qna-delay-input"
+          id="questions-and-answers-delay-input"
           v-model.number="startDelay"
           type="number"
           class="slidev-mockup__input"
           style="width: 90px;"
           min="0"
           step="500"
-        />
+        >
       </div>
     </template>
   </SlidevMockup>

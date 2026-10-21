@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import { computed, Fragment, provide, useSlots, type VNode } from 'vue';
+import {
+  computed,
+  Fragment,
+  isVNode,
+  provide,
+  useSlots,
+  type VNode,
+} from 'vue';
 
-import { CHEVRON_CARD_KEY } from '../../../utils/chevronCard';
+import { CHEVRON_CARD_KEY } from '../../../utils/card/chevron-card';
 import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 import ChevronCardBadge from './ChevronCardBadge.vue';
 import ChevronCardContent from './ChevronCardContent.vue';
-import ChevronCardHeading from './ChevronCardHeading.vue';
 
 defineOptions({
   name: 'ChevronCard',
@@ -13,6 +19,7 @@ defineOptions({
 });
 
 export interface IChevronCardProps {
+  readonly title?: string | VNode;
   readonly step?: string | number;
   readonly icon?: string | object;
   readonly color?: string;
@@ -28,11 +35,12 @@ export interface IChevronCardProps {
 }
 
 const props = withDefaults(defineProps<IChevronCardProps>(), {
+  title: undefined,
   step: '01',
   icon: undefined,
-  color: '#f59e0b',
+  color: 'var(--alpha-chevron-card-accent)',
   width: undefined,
-  cardBg: '#f5f5f7',
+  cardBg: 'var(--alpha-chevron-card-bg)',
   height: undefined,
   textColor: undefined,
   animation: true,
@@ -77,13 +85,6 @@ function isBadgeNode(node: VNode): boolean {
   );
 }
 
-function isHeadingNode(node: VNode): boolean {
-  return (
-    hasComponentName(node.type, 'ChevronCardHeading') ||
-    node.type === ChevronCardHeading
-  );
-}
-
 function isContentNode(node: VNode): boolean {
   return (
     hasComponentName(node.type, 'ChevronCardContent') ||
@@ -103,17 +104,13 @@ const slottedBadge = computed(() => {
   return defaultNodes.value.find(isBadgeNode);
 });
 
-const slottedHeading = computed(() => {
-  return defaultNodes.value.find(isHeadingNode);
-});
-
 const slottedContent = computed(() => {
   return defaultNodes.value.find(isContentNode);
 });
 
 const otherSlottedNodes = computed(() => {
   return defaultNodes.value.filter((node) => {
-    return !isBadgeNode(node) && !isHeadingNode(node) && !isContentNode(node);
+    return !isBadgeNode(node) && !isContentNode(node);
   });
 });
 
@@ -121,8 +118,10 @@ const resolvedStep = computed(() => {
   return props.step;
 });
 
-const resolvedColor = computed(() => {
-  return props.color;
+const customColor = computed(() => {
+  return props.color !== 'var(--alpha-chevron-card-accent)'
+    ? props.color
+    : undefined;
 });
 
 const resolvedCardBg = computed(() => {
@@ -134,12 +133,12 @@ const resolvedTextColor = computed(() => {
 });
 
 const resolvedTitleColor = computed(() => {
-  return props.titleColor;
+  return props.titleColor ?? 'var(--alpha-chevron-card-title)';
 });
 
 provide(CHEVRON_CARD_KEY, {
   step: resolvedStep,
-  color: resolvedColor,
+  color: customColor,
   cardBg: resolvedCardBg,
   textColor: resolvedTextColor,
   titleColor: resolvedTitleColor,
@@ -176,19 +175,17 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     :style="{
       width: resolvedWidth,
       minHeight: resolvedHeight ?? '112px',
-      fontFamily:
-        'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif',
     }"
   >
     <!-- Chevron Step Badge Layer -->
-    <div class="flex-shrink-0 z-10 flex">
+    <div class="shrink-0 z-10 flex">
       <slot name="badge">
         <component :is="slottedBadge" v-if="slottedBadge" />
         <ChevronCardBadge
           v-else
           :step="resolvedStep"
           :icon="props.icon"
-          :color="resolvedColor"
+          :color="customColor"
           :width="props.chevronWidth"
           :notch-depth="props.notchDepth"
         />
@@ -196,18 +193,33 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     </div>
     <!-- Content Body Layer -->
     <div
-      class="flex-1 min-w-0 flex flex-col justify-center py-4 pr-6"
+      class="flex-1 min-w-0 flex flex-col justify-center py-4 pr-6 bg-(--alpha-chevron-card-bg)"
       :style="{
-        backgroundColor: resolvedCardBg,
+        '--alpha-chevron-card-bg':
+          props.cardBg !== 'var(--alpha-chevron-card-bg)'
+            ? resolvedCardBg
+            : undefined,
         borderRadius: `0 ${props.borderRadius}px ${props.borderRadius}px 0`,
         marginLeft: `-${props.notchDepth}px`,
         paddingLeft: `${props.notchDepth + 20}px`,
       }"
     >
-      <slot name="title">
-        <component :is="slottedHeading" v-if="slottedHeading" />
-      </slot>
-      <slot name="description">
+      <h4
+        v-if="$slots.title || props.title != null"
+        class="alpha-chevron-card-title font-bold uppercase tracking-wider leading-tight mb-1 select-none font-sans text-(--alpha-chevron-card-title)"
+        :style="
+          props.titleColor
+            ? { '--alpha-chevron-card-title': props.titleColor }
+            : undefined
+        "
+      >
+        <slot v-if="$slots.title" name="title" />
+        <component :is="props.title" v-else-if="isVNode(props.title)" />
+        <span v-else-if="typeof props.title === 'string'">{{
+          props.title
+        }}</span>
+      </h4>
+      <slot name="content">
         <component :is="slottedContent" v-if="slottedContent" />
       </slot>
       <component

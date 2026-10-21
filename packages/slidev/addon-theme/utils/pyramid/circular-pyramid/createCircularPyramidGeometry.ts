@@ -2,8 +2,6 @@ import {
   clampPyramidCount,
   computePyramidStacking,
   DEFAULT_PYRAMID_COLOR,
-  darkenColor,
-  lightenColor,
   MAX_PYRAMID_COUNT,
   MIN_PYRAMID_COUNT,
   resolvePyramidPalette,
@@ -17,18 +15,16 @@ import type {
 
 export const DEFAULT_CIRCULAR_PYRAMID_COLOR = DEFAULT_PYRAMID_COLOR;
 export const DEFAULT_CIRCULAR_PYRAMID_STACK_COLORS: readonly string[] = [
-  '#3b82f6', // 0: Blue
-  '#6366f1', // 1: Indigo
-  '#10b981', // 2: Emerald
-  '#f59e0b', // 3: Amber
-  '#ec4899', // 4: Pink
-  '#06b6d4', // 5: Cyan
+  'var(--alpha-circular-pyramid-stack-1-color)',
+  'var(--alpha-circular-pyramid-stack-2-color)',
+  'var(--alpha-circular-pyramid-stack-3-color)',
+  'var(--alpha-circular-pyramid-stack-4-color)',
+  'var(--alpha-circular-pyramid-stack-5-color)',
+  'var(--alpha-circular-pyramid-stack-6-color)',
 ] as const;
 
 export const MIN_CIRCULAR_COUNT = MIN_PYRAMID_COUNT;
 export const MAX_CIRCULAR_COUNT = MAX_PYRAMID_COUNT;
-
-export { darkenColor, lightenColor };
 
 export function clampCircularCount(count?: number): number {
   return clampPyramidCount(count);

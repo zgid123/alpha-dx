@@ -1,0 +1,30 @@
+/* Color defaults shared by this component family. */
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-square-thanks-content: #2b90b6;
+    --alpha-thanks-square-start: #06b6d4;
+    --alpha-thanks-square-end: #2563eb;
+    --alpha-thanks-outline-stroke: #06b6d4;
+  }
+}
+
+.alpha-square-thanks-content h1,
+.alpha-square-thanks-content h2,
+.alpha-square-thanks-content h3,
+.alpha-square-thanks-content h4,
+.alpha-square-thanks-content h5,
+.alpha-square-thanks-content h6,
+.alpha-square-thanks-content p,
+.alpha-square-thanks-content div {
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.alpha-thanks-square:not([class*='bg-']) {
+  background-image: linear-gradient(to bottom right, var(--alpha-thanks-square-start), var(--alpha-thanks-square-end));
+}

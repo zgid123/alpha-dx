@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue';
 
-import { GEAR_TRIAD_CALLOUT_KEY } from '../../../../utils/gearTriad';
+import { GEAR_TRIAD_CALLOUT_KEY } from '../../../../utils/facets/triad/gear-triad';
+import { useMergedUnoAttrs } from '../../../../utils/useMergedUnoAttrs';
 
 defineOptions({
+  inheritAttrs: false,
   name: 'GearTriadHeading',
 });
 
@@ -18,21 +20,25 @@ const props = withDefaults(defineProps<IGearTriadHeadingProps>(), {
 const calloutContext = inject(GEAR_TRIAD_CALLOUT_KEY, undefined);
 
 const headingColor = computed(() => {
-  return props.color ?? calloutContext?.item.value.titleColor ?? '#0f172a';
+  return (
+    props.color ??
+    calloutContext?.item.value.color ??
+    'var(--alpha-gear-triad-heading)'
+  );
 });
+
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-gear-triad-heading mb-1.5 font-sans font-bold leading-snug tracking-tight select-none',
+);
 </script>
 
 <template>
-  <div
-    class="alpha-gear-triad-heading font-bold text-[1.15rem] tracking-tight leading-snug mb-1.5 select-none"
-    :style="{
-      color: headingColor,
-      fontFamily:
-        'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif',
-    }"
+  <h4
+    v-if="$slots.default"
+    v-bind="forwardedAttrs()"
+    :class="className()"
+    :style="{ color: headingColor }"
   >
-    <slot>
-      {{ calloutContext?.item.value.title }}
-    </slot>
-  </div>
+    <slot>{{ '' }}</slot>
+  </h4>
 </template>

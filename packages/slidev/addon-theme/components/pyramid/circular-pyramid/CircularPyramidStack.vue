@@ -16,18 +16,16 @@ import {
   DEFAULT_CIRCULAR_PYRAMID_STACK_COLORS,
 } from '../../../utils/pyramid/circular-pyramid';
 import { PYRAMID_DOT_GAP_PX } from '../../../utils/pyramid/shared';
-import CircularPyramidStackContent from './CircularPyramidStackContent.vue';
-import CircularPyramidStackTitle from './CircularPyramidStackTitle.vue';
+import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 
 defineOptions({
   name: 'CircularPyramidStack',
+  inheritAttrs: false,
 });
 
 export interface ICircularPyramidStackProps {
   readonly index?: number;
   readonly step?: string | number;
-  readonly title?: string;
-  readonly content?: string;
   readonly color?: string;
   readonly active?: boolean;
   readonly connectorWidth?: number;
@@ -36,8 +34,6 @@ export interface ICircularPyramidStackProps {
 const props = withDefaults(defineProps<ICircularPyramidStackProps>(), {
   index: undefined,
   step: undefined,
-  title: undefined,
-  content: undefined,
   color: undefined,
   active: undefined,
   connectorWidth: undefined,
@@ -56,13 +52,16 @@ interface INamedComponent {
 function hasComponentName(type: unknown, targetName: string): boolean {
   if (typeof type === 'object' && type !== null) {
     const comp = type as INamedComponent['type'];
+
     return comp?.name === targetName || comp?.displayName === targetName;
   }
+
   return false;
 }
 
 function flattenVNodes(nodes: VNode[]): VNode[] {
   const result: VNode[] = [];
+
   for (const node of nodes) {
     if (node.type === Fragment && Array.isArray(node.children)) {
       result.push(...flattenVNodes(node.children as VNode[]));
@@ -70,6 +69,7 @@ function flattenVNodes(nodes: VNode[]): VNode[] {
       result.push(node);
     }
   }
+
   return result;
 }
 
@@ -77,12 +77,13 @@ const defaultNodes = computed(() => {
   if (!slots.default) {
     return [];
   }
+
   return flattenVNodes(slots.default());
 });
 
 const slottedTitle = computed(() => {
   return defaultNodes.value.find((node) =>
-    hasComponentName(node.type, 'CircularPyramidStackTitle'),
+    hasComponentName(node.type, 'CircularPyramidStackHeading'),
   );
 });
 
@@ -108,6 +109,7 @@ const resolvedIndex = computed<number>(() => {
   if (props.index !== undefined) {
     return Number(props.index);
   }
+
   return registration?.index.value ?? 0;
 });
 
@@ -115,9 +117,11 @@ const isActive = computed<boolean>(() => {
   if (props.active !== undefined) {
     return props.active;
   }
+
   if (!rootContext) {
     return false;
   }
+
   return rootContext.activeIndex.value === resolvedIndex.value;
 });
 
@@ -125,6 +129,7 @@ const resolvedStep = computed(() => {
   if (props.step !== undefined) {
     return props.step;
   }
+
   return String(resolvedIndex.value + 1).padStart(2, '0');
 });
 
@@ -132,6 +137,7 @@ const layerGeometry = computed(() => {
   if (!rootContext) {
     return undefined;
   }
+
   return rootContext.geo.value.layers[resolvedIndex.value];
 });
 
@@ -139,18 +145,13 @@ const posY = computed(() => {
   if (!layerGeometry.value) {
     return 0;
   }
+
   const geo = layerGeometry.value;
+
   return (
     geo.slabCenterY ??
     Number((geo.cy + (geo.cylinderHeight ?? 0) / 2).toFixed(2))
   );
-});
-
-const discRadiusX = computed(() => {
-  if (!layerGeometry.value) {
-    return 140;
-  }
-  return layerGeometry.value.rx;
 });
 
 const DOT_POSITION_X = 210;
@@ -159,8 +160,10 @@ const leftWidth = computed(() => {
   if (layerGeometry.value) {
     const rx = layerGeometry.value.rx;
     const cx = 465;
+
     return Math.max(180, Math.round(cx - rx - PYRAMID_DOT_GAP_PX));
   }
+
   return DOT_POSITION_X;
 });
 
@@ -172,26 +175,28 @@ const rightWingWidth = computed(() => {
     const cx = 465;
     const dotRightX = cx + rx + PYRAMID_DOT_GAP_PX;
     const containerW = 960;
+
     return Math.max(rightWidth.value + 20, Math.round(containerW - dotRightX));
   }
+
   return rightWidth.value + PYRAMID_DOT_GAP_PX;
 });
-
-const rightOffset = computed(
-  () => rootContext?.contentRightOffsetPx.value ?? 0,
-);
 
 const resolvedColor = computed<string>(() => {
   if (effectiveColor.value) {
     return effectiveColor.value;
   }
+
+  const stackIndex =
+    Math.abs(resolvedIndex.value) %
+    DEFAULT_CIRCULAR_PYRAMID_STACK_COLORS.length;
+  const stackColor =
+    DEFAULT_CIRCULAR_PYRAMID_STACK_COLORS[stackIndex] ??
+    DEFAULT_CIRCULAR_PYRAMID_COLOR;
+
   return (
     rootContext?.getLayerColor(resolvedIndex.value) ??
-    DEFAULT_CIRCULAR_PYRAMID_STACK_COLORS[
-      Math.abs(resolvedIndex.value) %
-        DEFAULT_CIRCULAR_PYRAMID_STACK_COLORS.length
-    ] ??
-    DEFAULT_CIRCULAR_PYRAMID_COLOR
+    `var(--alpha-circular-pyramid-stack-${stackIndex + 1}-color, ${stackColor})`
   );
 });
 
@@ -231,17 +236,23 @@ provide(CIRCULAR_PYRAMID_STACK_KEY, {
   connectorWidth,
   setActive: handleStackClick,
 });
+
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-circular-pyramid-stack absolute inset-x-0 pointer-events-none select-none flex items-center justify-between',
+);
 </script>
 
 <template>
   <div
-    class="alpha-circular-pyramid-stack absolute inset-x-0 pointer-events-none select-none flex items-center justify-between"
-    :class="[
-      isActive
-        ? 'alpha-circular-pyramid-stack--active'
-        : 'alpha-circular-pyramid-stack--inactive',
-      `alpha-circular-pyramid-stack--${resolvedIndex}`,
-    ]"
+    v-bind="forwardedAttrs()"
+    :class="
+      className([
+        isActive
+          ? 'alpha-circular-pyramid-stack--active'
+          : 'alpha-circular-pyramid-stack--inactive',
+        `alpha-circular-pyramid-stack--${resolvedIndex}`,
+      ])
+    "
     :data-index="resolvedIndex"
     :data-active="isActive"
     :style="{
@@ -250,14 +261,17 @@ provide(CIRCULAR_PYRAMID_STACK_KEY, {
     }"
   >
     <!-- Left Wing: Title Pill (150px) -->
-    <div
-      class="alpha-circular-pyramid-stack__left flex-shrink-0 flex items-center justify-start pointer-events-auto cursor-pointer"
+    <button
+      type="button"
+      class="alpha-circular-pyramid-stack__left shrink-0 flex items-center justify-start pointer-events-auto cursor-pointer bg-transparent border-0 p-0 m-0 appearance-none"
+      :disabled="!rootContext?.interactive.value"
+      :aria-label="`Select stage ${resolvedStep}`"
       :class="[
         `alpha-circular-pyramid-stack__left--${resolvedIndex}`,
         { 'alpha-circular-pyramid-stack--animated': rootContext?.animation.value },
       ]"
       :style="{
-        '--wing-delay': `calc(var(--circular-pyramid-start-delay, 0ms) + ${460 + stepIndex * 320}ms)`,
+        '--wing-delay': `calc(var(--alpha-circular-pyramid-start-delay, 0ms) + ${460 + stepIndex * 320}ms)`,
         width: `${leftWidth}px`,
         minWidth: `${leftWidth}px`,
         maxWidth: `${leftWidth}px`,
@@ -266,36 +280,28 @@ provide(CIRCULAR_PYRAMID_STACK_KEY, {
       @click="handleStackClick"
     >
       <component :is="slottedTitle" v-if="slottedTitle" />
-      <CircularPyramidStackTitle
-        v-else
-        :step="resolvedStep"
-        :title="props.title || `Stage ${resolvedStep}`"
-        :connector-width="props.connectorWidth"
-      />
-    </div>
+    </button>
     <!-- Right Wing: Dot + Connector + Content Card (10px from slab) -->
-    <div
-      class="alpha-circular-pyramid-stack__right flex-shrink-0 flex items-center justify-end pointer-events-auto cursor-pointer"
+    <button
+      type="button"
+      class="alpha-circular-pyramid-stack__right shrink-0 flex items-center justify-end pointer-events-auto cursor-pointer bg-transparent border-0 p-0 m-0 appearance-none"
+      :disabled="!rootContext?.interactive.value"
+      :aria-label="`Select stage ${resolvedStep}`"
       :class="[
         `alpha-circular-pyramid-stack__right--${resolvedIndex}`,
         { 'alpha-circular-pyramid-stack--animated': rootContext?.animation.value },
       ]"
       :style="{
-        '--wing-delay': `calc(var(--circular-pyramid-start-delay, 0ms) + ${470 + stepIndex * 320}ms)`,
+        '--wing-delay': `calc(var(--alpha-circular-pyramid-start-delay, 0ms) + ${470 + stepIndex * 320}ms)`,
         width: `${rightWingWidth}px`,
         minWidth: `${rightWidth}px`,
         maxWidth: `${rightWingWidth}px`,
-        marginRight: rightOffset ? `${rightOffset}px` : undefined,
         opacity: !hasActiveStack || isActive ? 1 : 0.65,
       }"
       @click="handleStackClick"
     >
       <component :is="slottedContent" v-if="slottedContent" />
-      <CircularPyramidStackContent
-        v-else
-        :content="props.content || 'Layer details and operational description.'"
-      />
-    </div>
+    </button>
   </div>
 </template>
 
@@ -307,11 +313,18 @@ provide(CIRCULAR_PYRAMID_STACK_KEY, {
 
 .alpha-circular-pyramid-stack__left,
 .alpha-circular-pyramid-stack__right {
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .alpha-circular-pyramid-stack--animated .alpha-circular-pyramid-stack__left {
-  animation: alpha-pyramid-left-in 140ms cubic-bezier(0.16, 1, 0.3, 1) var(--wing-delay, calc(var(--circular-pyramid-start-delay, 0ms) + 460ms)) both;
+  animation: alpha-pyramid-left-in 140ms cubic-bezier(0.16, 1, 0.3, 1)
+    var(
+      --wing-delay,
+      calc(var(--alpha-circular-pyramid-start-delay, 0ms) + 460ms)
+    )
+    both;
 }
 
 @keyframes alpha-pyramid-left-in {
@@ -326,7 +339,12 @@ provide(CIRCULAR_PYRAMID_STACK_KEY, {
 }
 
 .alpha-circular-pyramid-stack--animated .alpha-circular-pyramid-stack__right {
-  animation: alpha-pyramid-right-in 140ms cubic-bezier(0.16, 1, 0.3, 1) var(--wing-delay, calc(var(--circular-pyramid-start-delay, 0ms) + 470ms)) both;
+  animation: alpha-pyramid-right-in 140ms cubic-bezier(0.16, 1, 0.3, 1)
+    var(
+      --wing-delay,
+      calc(var(--alpha-circular-pyramid-start-delay, 0ms) + 470ms)
+    )
+    both;
 }
 
 @keyframes alpha-pyramid-right-in {

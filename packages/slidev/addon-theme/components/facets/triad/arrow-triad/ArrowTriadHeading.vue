@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue';
 
-import { ARROW_TRIAD_CALLOUT_KEY } from '../../../../utils/arrowTriad';
+import { ARROW_TRIAD_CALLOUT_KEY } from '../../../../utils/facets/triad/arrow-triad';
+import { useMergedUnoAttrs } from '../../../../utils/useMergedUnoAttrs';
 
 defineOptions({
+  inheritAttrs: false,
   name: 'ArrowTriadHeading',
 });
 
@@ -18,21 +20,26 @@ const props = withDefaults(defineProps<IArrowTriadHeadingProps>(), {
 const calloutContext = inject(ARROW_TRIAD_CALLOUT_KEY, undefined);
 
 const headingColor = computed(() => {
-  return props.color ?? calloutContext?.item.value.titleColor ?? '#1e293b';
+  return (
+    props.color ??
+    calloutContext?.item.value.titleColor ??
+    calloutContext?.item.value.color ??
+    'var(--alpha-arrow-triad-heading)'
+  );
 });
+
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-arrow-triad-heading font-sans font-bold uppercase tracking-wider text-center leading-tight mb-2 select-none',
+);
 </script>
 
 <template>
-  <div
-    class="alpha-arrow-triad-heading font-bold text-[1.25rem] uppercase tracking-wider text-center leading-tight mb-2 select-none"
-    :style="{
-      color: headingColor,
-      fontFamily:
-        'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif',
-    }"
+  <h4
+    v-if="$slots.default"
+    v-bind="forwardedAttrs()"
+    :class="className()"
+    :style="{ color: headingColor }"
   >
-    <slot>
-      {{ calloutContext?.item.value.title }}
-    </slot>
-  </div>
+    <slot>{{ '' }}</slot>
+  </h4>
 </template>

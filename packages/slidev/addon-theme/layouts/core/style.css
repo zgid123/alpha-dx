@@ -1,0 +1,17 @@
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-arc-toc-curve-stroke: #d7d7d5;
+    --alpha-arc-toc-item: #ffffff;
+    --alpha-arc-toc-item-shadow: 0.45rem 0.65rem 0.85rem rgb(15 23 42 / 18%);
+    --alpha-arc-toc-marker-border: #f8f8f7;
+    --alpha-arc-toc-marker-orange: #ffad21;
+    --alpha-arc-toc-marker-teal: #24b9aa;
+    --alpha-arc-toc-marker-blue: #3188e4;
+    --alpha-arc-toc-marker-green: #59d875;
+    --alpha-arc-toc-marker-pink: #f53270;
+    --alpha-arc-toc-marker-purple: #8b5cf6;
+    --alpha-arc-toc-marker-red: #ef4444;
+
+    --alpha-bg-center-text: var(--alpha-foreground-accent, #fff);
+  }
+}

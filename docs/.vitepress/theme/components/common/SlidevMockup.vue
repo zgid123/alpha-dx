@@ -5,6 +5,8 @@ import {
   onUnmounted,
   provide,
   ref,
+  shallowReactive,
+  shallowRef,
   useSlots,
   watch,
 } from 'vue';
@@ -39,6 +41,7 @@ const resolvedLayoutClass = computed(() => {
   if (props.layoutClass && props.layoutClass !== 'default') {
     return props.layoutClass;
   }
+
   return props.theme === 'academic' ? 'alpha-academic-default' : 'default';
 });
 
@@ -55,17 +58,20 @@ const defaultTocTree = [
 const activeTocTree = computed(() => props.tocTree ?? defaultTocTree);
 
 const currentClicks = ref(props.clicks);
+const clicksContext = shallowReactive({
+  current: props.clicks,
+  total: 2,
+});
+
 watch(
   () => props.clicks,
   (val) => {
     currentClicks.value = val;
+    clicksContext.current = val;
   },
 );
 
-const clicksContextRef = computed(() => ({
-  current: currentClicks.value,
-  total: 2,
-}));
+const clicksContextRef = shallowRef(clicksContext);
 
 const pageRef = computed(() => props.page);
 
@@ -111,7 +117,10 @@ const CANVAS_WIDTH = 980;
 const CANVAS_HEIGHT = 551.25;
 
 const embeddedScale = computed(() => {
-  if (!stageWidth.value) return 1;
+  if (!stageWidth.value) {
+    return 1;
+  }
+
   return Math.min(stageWidth.value / CANVAS_WIDTH, 1);
 });
 
@@ -146,6 +155,7 @@ function updateDimensions() {
     windowWidth.value = window.innerWidth;
     windowHeight.value = window.innerHeight;
   }
+
   if (stageRef.value) {
     stageWidth.value = stageRef.value.clientWidth;
   }
@@ -173,6 +183,7 @@ onUnmounted(() => {
     window.removeEventListener('resize', updateDimensions);
     window.removeEventListener('keydown', handleKeydown);
   }
+
   if (resizeObserver) {
     resizeObserver.disconnect();
   }
@@ -192,10 +203,18 @@ defineExpose({
     <div class="slidev-mockup__header">
       <div class="slidev-mockup__header-left">
         <span class="slidev-mockup__badge">
-          {{ props.theme === 'academic' ? 'Slidev Academic Theme (16:9)' : 'Slidev Presentation (16:9)' }}
+          {{
+            props.theme === 'academic'
+              ? 'Slidev Academic Theme (16:9)'
+              : 'Slidev Presentation (16:9)'
+          }}
         </span>
         <span class="slidev-mockup__package">
-          {{ props.theme === 'academic' ? '@alphacifer/slidev-academic-theme' : '@alphacifer/slidev-addon-theme' }}
+          {{
+            props.theme === 'academic'
+              ? '@alphacifer/slidev-academic-theme'
+              : '@alphacifer/slidev-addon-theme'
+          }}
         </span>
       </div>
       <div class="slidev-mockup__header-right">
@@ -207,7 +226,9 @@ defineExpose({
           :title="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
           @click="toggleColorMode"
         >
-          <span class="slidev-mockup__theme-icon">{{ isDark ? '🌙' : '☀️' }}</span>
+          <span class="slidev-mockup__theme-icon">{{
+            isDark ? '🌙' : '☀️'
+          }}</span>
           <span>{{ isDark ? 'Dark Mode' : 'Light Mode' }}</span>
         </button>
         <button
@@ -263,12 +284,22 @@ defineExpose({
       <div
         v-if="isFullscreen"
         class="slidev-popup"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Presentation preview"
         @click.self="toggleFullscreen"
+        @keydown.esc.stop="toggleFullscreen"
       >
         <div class="slidev-popup__bar">
           <div class="slidev-popup__title">
-            <span>{{ props.theme === 'academic' ? 'Slidev Academic Presentation Mode' : 'Slidev Presentation Mode' }}</span>
-            <span class="slidev-popup__hint">Press ESC or click outside to exit</span>
+            <span>{{
+              props.theme === 'academic'
+                ? 'Slidev Academic Presentation Mode'
+                : 'Slidev Presentation Mode'
+            }}</span>
+            <span class="slidev-popup__hint"
+              >Press ESC or click outside to exit</span
+            >
           </div>
           <div class="slidev-popup__actions">
             <!-- Fullscreen Light/Dark Toggle for Addon -->
@@ -279,7 +310,9 @@ defineExpose({
               :title="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
               @click="toggleColorMode"
             >
-              <span class="slidev-mockup__theme-icon">{{ isDark ? '🌙' : '☀️' }}</span>
+              <span class="slidev-mockup__theme-icon">{{
+                isDark ? '🌙' : '☀️'
+              }}</span>
               <span>{{ isDark ? 'Dark Mode' : 'Light Mode' }}</span>
             </button>
             <button

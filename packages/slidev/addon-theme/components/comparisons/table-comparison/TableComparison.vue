@@ -1,21 +1,11 @@
 <script setup lang="ts">
-import {
-  type ComputedRef,
-  computed,
-  Fragment,
-  inject,
-  provide,
-  useSlots,
-  type VNode,
-} from 'vue';
+import { type ComputedRef, computed, inject, provide } from 'vue';
 
 import {
   DEFAULT_BORDER_RADIUS,
   DEFAULT_CELL_BG,
   DEFAULT_CELL_COLOR,
   DEFAULT_COL_HEADER_TEXT_COLOR,
-  DEFAULT_MOCKUP_COLS,
-  DEFAULT_MOCKUP_ROWS,
   DEFAULT_ROW_HEADER_COLOR,
   DEFAULT_ROW_HEADER_TEXT_COLOR,
   DEFAULT_ROW_HEADER_WIDTH,
@@ -23,13 +13,8 @@ import {
   type ITableComparisonContext,
   resolveDimension,
   TABLE_COMPARISON_KEY,
-} from '../../../utils/tableComparison';
+} from '../../../utils/comparisons/table-comparison';
 import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
-import TableComparisonCell from './TableComparisonCell.vue';
-import TableComparisonCol from './TableComparisonCol.vue';
-import TableComparisonCols from './TableComparisonCols.vue';
-import TableComparisonRow from './TableComparisonRow.vue';
-import TableComparisonRows from './TableComparisonRows.vue';
 
 defineOptions({
   inheritAttrs: false,
@@ -54,9 +39,9 @@ export interface ITableComparisonProps {
 }
 
 const props = withDefaults(defineProps<ITableComparisonProps>(), {
-  cellBg: DEFAULT_CELL_BG,
+  cellBg: `var(--alpha-table-comparison-cell-bg, ${DEFAULT_CELL_BG})`,
   cellColor: DEFAULT_CELL_COLOR,
-  rowHeaderColor: DEFAULT_ROW_HEADER_COLOR,
+  rowHeaderColor: `var(--alpha-table-comparison-row-bg, ${DEFAULT_ROW_HEADER_COLOR})`,
   rowHeaderTextColor: DEFAULT_ROW_HEADER_TEXT_COLOR,
   colHeaderTextColor: DEFAULT_COL_HEADER_TEXT_COLOR,
   borderRadius: DEFAULT_BORDER_RADIUS,
@@ -69,8 +54,6 @@ const props = withDefaults(defineProps<ITableComparisonProps>(), {
   width: '100%',
   height: undefined,
 });
-
-const slots = useSlots();
 
 const shiftingIntro = inject<
   | {
@@ -129,46 +112,6 @@ provide<ITableComparisonContext>(TABLE_COMPARISON_KEY, {
   animation: isAnimated,
 });
 
-function isSignificantNode(node: VNode): boolean {
-  if (typeof node.type === 'symbol') {
-    if (typeof node.children === 'string' && !node.children.trim()) {
-      return false;
-    }
-  }
-
-  if (typeof node.children === 'string' && !node.children.trim()) {
-    return false;
-  }
-
-  return true;
-}
-
-function flattenVNodes(nodes: VNode[]): VNode[] {
-  const result: VNode[] = [];
-
-  for (const node of nodes) {
-    if (node.type === Fragment && Array.isArray(node.children)) {
-      result.push(...flattenVNodes(node.children as VNode[]));
-    } else if (isSignificantNode(node)) {
-      result.push(node);
-    }
-  }
-
-  return result;
-}
-
-const defaultNodes = computed(() => {
-  if (!slots.default) {
-    return [];
-  }
-
-  return flattenVNodes(slots.default());
-});
-
-const hasCustomContent = computed(() => {
-  return defaultNodes.value.length > 0;
-});
-
 const tableStyle = computed(() => {
   return {
     width: resolvedWidth.value,
@@ -185,7 +128,9 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
 </script>
 
 <template>
-  <div class="alpha-table-comparison-wrapper w-full flex items-center justify-center overflow-x-auto">
+  <div
+    class="alpha-table-comparison-wrapper w-full flex items-center justify-center overflow-x-auto"
+  >
     <table
       v-bind="forwardedAttrs()"
       :class="[
@@ -194,34 +139,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
       ]"
       :style="tableStyle"
     >
-      <template v-if="hasCustomContent">
-        <slot />
-      </template>
-      <template v-else>
-        <TableComparisonCols>
-          <TableComparisonCol
-            v-for="col in DEFAULT_MOCKUP_COLS"
-            :key="col.title"
-            :color="col.color"
-          >
-            {{ col.title }}
-          </TableComparisonCol>
-        </TableComparisonCols>
-        <TableComparisonRows>
-          <TableComparisonRow
-            v-for="row in DEFAULT_MOCKUP_ROWS"
-            :key="row.title"
-            :title="row.title"
-          >
-            <TableComparisonCell
-              v-for="(cellText, idx) in row.cells"
-              :key="idx"
-            >
-              {{ cellText }}
-            </TableComparisonCell>
-          </TableComparisonRow>
-        </TableComparisonRows>
-      </template>
+      <slot />
     </table>
   </div>
 </template>
@@ -242,13 +160,15 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
   }
 }
 
-.alpha-table-comparison :deep(tr) {
-  background-color: transparent;
-  border: none;
-}
+@layer alpha-theme-tokens {
+  .alpha-table-comparison :deep(tr) {
+    background-color: transparent;
+    border: none;
+  }
 
-.alpha-table-comparison :deep(th),
-.alpha-table-comparison :deep(td) {
-  border: none;
+  .alpha-table-comparison :deep(th),
+  .alpha-table-comparison :deep(td) {
+    border: none;
+  }
 }
 </style>

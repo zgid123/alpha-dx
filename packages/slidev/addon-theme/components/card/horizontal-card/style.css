@@ -1,0 +1,17 @@
+/* Color defaults shared by this component family. */
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-horizontal-card-accent: #ea583a;
+    --alpha-horizontal-card-badge: #ffffff;
+    /* Resolved from the component accent or props unless overridden. */
+    --alpha-horizontal-card-badge-bg: var(--alpha-horizontal-card-accent);
+    --alpha-horizontal-card-bg: #ffffff;
+    --alpha-horizontal-card-content: var(--alpha-foreground-primary, #475569);
+    /* Resolved from the component accent or props unless overridden. */
+    --alpha-horizontal-card-title: var(--alpha-horizontal-card-accent);
+    /* Resolved from the component accent or props unless overridden. */
+    --alpha-horizontal-card-icon: var(--alpha-horizontal-card-accent);
+    /* Resolved from the component accent or props unless overridden. */
+    --alpha-horizontal-card-icon-bg: color-mix(in srgb, var(--alpha-horizontal-card-accent) 16%, transparent);
+  }
+}

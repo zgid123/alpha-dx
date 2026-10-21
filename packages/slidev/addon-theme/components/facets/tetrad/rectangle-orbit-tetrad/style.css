@@ -1,0 +1,22 @@
+/* Color defaults shared by this component family. */
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-rectangle-orbit-tetrad-center: #2c3e50;
+    --alpha-rectangle-orbit-tetrad-center-bg: #ffffff;
+    --alpha-rectangle-orbit-tetrad-center-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+    --alpha-rectangle-orbit-tetrad-title: var(--alpha-foreground-primary, #1e293b);
+    --alpha-rectangle-orbit-tetrad-center-content: var(--alpha-foreground-primary, #94a3b8);
+    --alpha-rectangle-orbit-tetrad-connector: #ffffff;
+    --alpha-rectangle-orbit-tetrad-content: var(--alpha-foreground-primary, #555555);
+    --alpha-rectangle-orbit-tetrad-icon: #ffffff;
+    --alpha-rectangle-orbit-tetrad-item-1-color: #f29e4b;
+    --alpha-rectangle-orbit-tetrad-item-2-color: #a4cb81;
+    --alpha-rectangle-orbit-tetrad-item-3-color: #62b6a8;
+    --alpha-rectangle-orbit-tetrad-item-4-color: #e9717a;
+    --alpha-rectangle-orbit-tetrad-card-bg: color-mix(
+      in srgb,
+      var(--alpha-rectangle-orbit-tetrad-item-1-color) 18%,
+      #ffffff
+    );
+  }
+}

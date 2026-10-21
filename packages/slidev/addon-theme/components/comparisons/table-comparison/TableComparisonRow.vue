@@ -6,7 +6,7 @@ import {
   DEFAULT_ROW_HEADER_TEXT_COLOR,
   resolveDimension,
   TABLE_COMPARISON_KEY,
-} from '../../../utils/tableComparison';
+} from '../../../utils/comparisons/table-comparison';
 import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 
 defineOptions({
@@ -15,14 +15,12 @@ defineOptions({
 });
 
 export interface ITableComparisonRowProps {
-  readonly title?: string;
   readonly color?: string;
   readonly textColor?: string;
   readonly borderRadius?: number | string;
 }
 
 const props = withDefaults(defineProps<ITableComparisonRowProps>(), {
-  title: undefined,
   color: undefined,
   textColor: undefined,
   borderRadius: undefined,
@@ -60,12 +58,13 @@ const resolvedPadding = computed(() => {
 
 const headerStyle = computed(() => {
   return {
-    backgroundColor: resolvedBg.value,
-    color: resolvedTextColor.value,
+    ...(!resolvedBg.value.includes('--alpha-table-comparison-row-bg')
+      ? { '--alpha-table-comparison-row-bg': resolvedBg.value }
+      : {}),
+    ...(!resolvedTextColor.value.includes('--alpha-table-comparison-row')
+      ? { '--alpha-table-comparison-row': resolvedTextColor.value }
+      : {}),
     borderRadius: resolvedBorderRadius.value,
-    fontSize: '1rem',
-    textAlign: 'center' as const,
-    verticalAlign: 'middle' as const,
   };
 });
 
@@ -75,17 +74,14 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
 </script>
 
 <template>
-  <tr
-    v-bind="forwardedAttrs()"
-    :class="className()"
-  >
+  <tr v-bind="forwardedAttrs()" :class="className()">
     <th
       scope="row"
-      class="alpha-table-comparison-row-title font-bold uppercase tracking-wider text-[1rem] leading-snug text-center align-middle select-text transition-all duration-200 [&_p]:text-[1rem] [&_p]:text-center [&_p]:m-0"
+      class="alpha-table-comparison-row-title bg-(--alpha-table-comparison-row-bg) text-(--alpha-table-comparison-row) font-bold uppercase tracking-wider text-[1rem] leading-snug text-center align-middle select-text transition-all duration-200 [&_p]:text-[1rem] [&_p]:text-center [&_p]:m-0"
       :class="resolvedPadding"
       :style="headerStyle"
     >
-      <slot name="title">{{ title }}</slot>
+      <slot name="heading" />
     </th>
     <slot />
   </tr>

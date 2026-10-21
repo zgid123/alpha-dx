@@ -1,0 +1,12 @@
+/* Color defaults shared by this component family. */
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-chevron-card-accent: #f59e0b;
+    /* Resolved from the component accent or props unless overridden. */
+    --alpha-chevron-card-badge-bg: var(--alpha-chevron-card-accent);
+    --alpha-chevron-card-badge-foreground: #ffffff;
+    --alpha-chevron-card-bg: #f5f5f7;
+    --alpha-chevron-card-content: var(--alpha-foreground-primary, #6b7280);
+    --alpha-chevron-card-title: var(--alpha-foreground-primary, #4b5563);
+  }
+}

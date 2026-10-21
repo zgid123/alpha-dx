@@ -1,0 +1,27 @@
+/* Color defaults shared by this component family. */
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-arc-comparison-badge: #ffffff;
+    --alpha-arc-comparison-content: var(--alpha-foreground-primary, #475569);
+    --alpha-arc-comparison-left-accent: #e87a36;
+    --alpha-arc-comparison-right-accent: #208b9e;
+    --alpha-arc-comparison-left-title: var(--alpha-arc-comparison-left-accent);
+    --alpha-arc-comparison-right-title: var(--alpha-arc-comparison-right-accent);
+    --alpha-arc-comparison-heading: var(--alpha-foreground-primary, #1e293b);
+    --alpha-arc-comparison-guide-dot: #94a3b8;
+    --alpha-arc-comparison-guide-stroke: var(--alpha-stroke-primary);
+    --alpha-arc-comparison-hub-fill: #f1f3f6;
+    --alpha-arc-comparison-vs: var(--alpha-foreground-primary);
+    --alpha-arc-comparison-vs-bg: #ffffff;
+    --alpha-arc-comparison-vs-shadow: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.22));
+  }
+
+  .dark,
+  html.dark {
+    --alpha-arc-comparison-guide-dot: #475569;
+    --alpha-arc-comparison-guide-stroke: #334155;
+    --alpha-arc-comparison-hub-fill: #1e293bcc;
+    --alpha-arc-comparison-vs: #0f172a;
+    --alpha-arc-comparison-vs-bg: #f1f5f9;
+  }
+}

@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue';
 
-import {
-  ARC_ORBIT_CALLOUT_KEY,
-  DEFAULT_ARC_ORBIT_COLOR,
-} from '../../../utils/arcOrbit';
+import { ARC_ORBIT_CALLOUT_KEY } from '../../../utils/core/arc-orbit';
 import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 
 defineOptions({
@@ -27,29 +24,34 @@ const headingColor = computed(() => {
     props.color ??
     calloutContext?.item.value.color ??
     calloutContext?.color.value ??
-    DEFAULT_ARC_ORBIT_COLOR
+    undefined
   );
 });
 
 const headingStyle = computed(() => {
+  if (!headingColor.value) {
+    return undefined;
+  }
+
   return {
     color: headingColor.value,
-    fontFamily:
-      'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    '--alpha-arc-orbit-heading': headingColor.value,
+    '--alpha-arc-comparison-heading': headingColor.value,
   };
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-arc-orbit-heading font-bold text-[1.05rem] leading-tight mb-0.5 tracking-tight',
+  'alpha-arc-orbit-heading mb-0.5 font-sans font-bold leading-tight tracking-tight text-(--alpha-arc-orbit-heading)',
 );
 </script>
 
 <template>
-  <h3
+  <h4
+    v-if="$slots.default"
     v-bind="forwardedAttrs()"
     :class="className()"
     :style="headingStyle"
   >
-    <slot>{{ calloutContext?.item.value.title ?? 'Add Text Here' }}</slot>
-  </h3>
+    <slot>{{ '' }}</slot>
+  </h4>
 </template>

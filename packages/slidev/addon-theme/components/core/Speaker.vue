@@ -25,24 +25,19 @@ const props = defineProps({
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(() => [
-  'alpha-speaker flex absolute bottom-[15px] right-[30px] flex-col',
+  'alpha-speaker flex absolute bottom-3.75 right-7.5 flex-col',
   props.team.length ? 'text-left gap-2' : undefined,
 ]);
 </script>
 
 <template>
-  <div
-    v-bind="forwardedAttrs()"
-    :class="className()"
-  >
+  <div v-bind="forwardedAttrs()" :class="className()">
     <div v-if="team.length">
-      <div v-for="member in team" :key="member as string">
+      <p v-for="member in team" :key="member as string">
         {{ member }}
-      </div>
+      </p>
     </div>
-    <div v-else>
-      Author: {{ author }}
-    </div>
+    <p v-else>Author: {{ author }}</p>
     <Date :date="date" />
   </div>
 </template>

@@ -19,7 +19,9 @@ const tocTree = computed(() => $slidev?.nav?.tocTree ?? []);
 <template>
   <div class="alpha-toc-container">
     <div v-for="item in tocTree" :key="item.no" class="alpha-toc-entry">
-      <span class="alpha-toc-badge">{{ String(item.no).padStart(2, '0') }}</span>
+      <span class="alpha-toc-badge">{{
+        String(item.no).padStart(2, '0')
+      }}</span>
       <span class="alpha-toc-title">{{ item.title }}</span>
     </div>
   </div>

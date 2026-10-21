@@ -3,9 +3,7 @@ import ArcOrbit from '@alphacifer/slidev-addon-theme/components/core/arc-orbit/A
 import ArcOrbitBadge from '@alphacifer/slidev-addon-theme/components/core/arc-orbit/ArcOrbitBadge.vue';
 import ArcOrbitCallout from '@alphacifer/slidev-addon-theme/components/core/arc-orbit/ArcOrbitCallout.vue';
 import ArcOrbitContent from '@alphacifer/slidev-addon-theme/components/core/arc-orbit/ArcOrbitContent.vue';
-import ArcOrbitContents from '@alphacifer/slidev-addon-theme/components/core/arc-orbit/ArcOrbitContents.vue';
 import ArcOrbitHeading from '@alphacifer/slidev-addon-theme/components/core/arc-orbit/ArcOrbitHeading.vue';
-import ArcOrbitTitle from '@alphacifer/slidev-addon-theme/components/core/arc-orbit/ArcOrbitTitle.vue';
 import { ref } from 'vue';
 
 import SlidevMockup from '../common/SlidevMockup.vue';
@@ -30,39 +28,36 @@ const animation = ref(true);
       :position="position"
       :count="count"
       :animation="animation"
-      color="#ea580c"
+      :scale="0.9"
+      height="100%"
     >
-      <ArcOrbitTitle>Implementing<br />a New CRM System</ArcOrbitTitle>
-      <ArcOrbitContents>
-        <ArcOrbitCallout :index="0">
-          <ArcOrbitBadge>01</ArcOrbitBadge>
-          <ArcOrbitHeading>Customer Service:</ArcOrbitHeading>
-          <ArcOrbitContent>
-            Streamline resolution and client messaging.
-          </ArcOrbitContent>
-        </ArcOrbitCallout>
-        <ArcOrbitCallout :index="1">
-          <ArcOrbitBadge>02</ArcOrbitBadge>
-          <ArcOrbitHeading>Sales Efficiency:</ArcOrbitHeading>
-          <ArcOrbitContent>
-            Automate tasks and track pipeline leads.
-          </ArcOrbitContent>
-        </ArcOrbitCallout>
-        <ArcOrbitCallout :index="2">
-          <ArcOrbitBadge>03</ArcOrbitBadge>
-          <ArcOrbitHeading>Data Analysis:</ArcOrbitHeading>
-          <ArcOrbitContent>
-            Gain customer insights through unified data.
-          </ArcOrbitContent>
-        </ArcOrbitCallout>
-        <ArcOrbitCallout v-if="count === 4" :index="3">
-          <ArcOrbitBadge>04</ArcOrbitBadge>
-          <ArcOrbitHeading>Scalability:</ArcOrbitHeading>
-          <ArcOrbitContent>
-            Modular cloud sync for team growth.
-          </ArcOrbitContent>
-        </ArcOrbitCallout>
-      </ArcOrbitContents>
+      <template #title>CRM<br>System</template>
+      <ArcOrbitCallout :index="0">
+        <ArcOrbitBadge>01</ArcOrbitBadge>
+        <ArcOrbitHeading>Customer Service:</ArcOrbitHeading>
+        <ArcOrbitContent>
+          Streamline resolution and client messaging.
+        </ArcOrbitContent>
+      </ArcOrbitCallout>
+      <ArcOrbitCallout :index="1">
+        <ArcOrbitBadge>02</ArcOrbitBadge>
+        <ArcOrbitHeading>Sales Efficiency:</ArcOrbitHeading>
+        <ArcOrbitContent>
+          Automate tasks and track pipeline leads.
+        </ArcOrbitContent>
+      </ArcOrbitCallout>
+      <ArcOrbitCallout :index="2">
+        <ArcOrbitBadge>03</ArcOrbitBadge>
+        <ArcOrbitHeading>Data Analysis:</ArcOrbitHeading>
+        <ArcOrbitContent>
+          Gain customer insights through unified data.
+        </ArcOrbitContent>
+      </ArcOrbitCallout>
+      <ArcOrbitCallout v-if="count === 4" :index="3">
+        <ArcOrbitBadge>04</ArcOrbitBadge>
+        <ArcOrbitHeading>Scalability:</ArcOrbitHeading>
+        <ArcOrbitContent> Modular cloud sync for team growth. </ArcOrbitContent>
+      </ArcOrbitCallout>
     </ArcOrbit>
     <template #controls>
       <div class="slidev-mockup__control-group">

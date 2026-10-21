@@ -27,7 +27,8 @@ const animation = ref(true);
       <ArrowTriadCallout>
         <ArrowTriadHeading>Architect</ArrowTriadHeading>
         <ArrowTriadContent>
-          Design clear domain boundaries, clean abstractions, and modular contracts.
+          Design clear domain boundaries, clean abstractions, and modular
+          contracts.
         </ArrowTriadContent>
       </ArrowTriadCallout>
       <ArrowTriadCallout>

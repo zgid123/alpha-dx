@@ -28,7 +28,7 @@ const date = ref('2026-08-12');
           v-model="date"
           type="date"
           class="slidev-mockup__input"
-        />
+        >
       </div>
     </template>
   </SlidevMockup>

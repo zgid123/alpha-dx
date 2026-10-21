@@ -8,11 +8,7 @@ const isVisible = computed(() => !$frontmatter.hidePagy);
 </script>
 
 <template>
-  <div
-    v-if="isVisible"
-    aria-label="Slide pagination"
-    class="alpha-academic-pagy"
-  >
+  <div v-if="isVisible" class="alpha-academic-pagy">
     <SlideCurrentNo />
     <span aria-hidden="true">/</span>
     <SlidesTotal />

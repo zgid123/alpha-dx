@@ -1,0 +1,9 @@
+@import './arc-orbit/style.css';
+@import './thanks/style.css';
+
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-qna-color: var(--alpha-foreground-primary, #2b90b6);
+    --alpha-reflected-title-color: var(--alpha-foreground-primary, #a5f3fc);
+  }
+}

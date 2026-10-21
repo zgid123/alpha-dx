@@ -39,5 +39,5 @@ Formal framework and computational foundations.
 
 ## Academic Theme Notes
 
-- In Academic Theme, the section index badge uses `--alpha-academic-accent-foreground` for subtle emphasis.
+- In Academic Theme, the section index badge uses `--alpha-foreground-accent` for subtle emphasis.
 - The footer slide counter is automatically hidden on centered background slides.
