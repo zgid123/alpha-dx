@@ -6,13 +6,10 @@ defineOptions({
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-thanks-square absolute bg-gradient-to-br from-cyan-500 to-blue-500 rounded-3xl',
+  'alpha-thanks-square absolute rounded-3xl',
 );
 </script>
 
 <template>
-  <div
-    v-bind="forwardedAttrs()"
-    :class="className()"
-  />
+  <div v-bind="forwardedAttrs()" :class="className()" />
 </template>

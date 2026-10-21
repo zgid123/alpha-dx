@@ -15,14 +15,12 @@ import {
   ARC_ARROW_PROCESS_ROOT_KEY,
   createArcArrowProcessGeometry,
   getDefaultArcArrowProcessItem,
-  type IArcArrowProcessItem,
   type IArcArrowProcessRegistration,
   type IResolvedArcArrowProcessItem,
   resolveArcArrowProcessItems,
-} from '../../../utils/arcArrowProcess';
+} from '../../../utils/process/arc-arrow-process';
 import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 import ArcArrowProcessArrow from './ArcArrowProcessArrow.vue';
-import ArcArrowProcessCallout from './ArcArrowProcessCallout.vue';
 
 defineOptions({
   name: 'ArcArrowProcess',
@@ -30,7 +28,6 @@ defineOptions({
 });
 
 export interface IArcArrowProcessProps {
-  readonly items?: readonly IArcArrowProcessItem[];
   readonly count?: number;
   readonly animation?: boolean;
   readonly height?: number | string;
@@ -40,7 +37,6 @@ export interface IArcArrowProcessProps {
 }
 
 const props = withDefaults(defineProps<IArcArrowProcessProps>(), {
-  items: undefined,
   count: undefined,
   animation: true,
   height: 370,
@@ -145,15 +141,11 @@ const resolvedCount = computed<number>(() => {
     return slottedCount.value;
   }
 
-  if (props.items && props.items.length > 0) {
-    return props.items.length;
-  }
-
   return 4;
 });
 
 const resolvedItems = computed(() => {
-  return resolveArcArrowProcessItems(props.items, resolvedCount.value);
+  return resolveArcArrowProcessItems(undefined, resolvedCount.value);
 });
 
 const registeredCalloutColors = ref<Record<number, string>>({});
@@ -204,18 +196,10 @@ const getArrowColor = (idx: number): string => {
     return slottedMatch.color;
   }
 
-  if (props.items?.[idx]?.color) {
-    return props.items[idx].color;
-  }
-
   return getDefaultArcArrowProcessItem(idx, resolvedCount.value).color;
 };
 
 const getArrowGradientEnd = (idx: number): string | undefined => {
-  if (props.items?.[idx]?.gradientEnd) {
-    return props.items[idx].gradientEnd;
-  }
-
   if (registeredCalloutColors.value[idx]) {
     return registeredCalloutColors.value[idx];
   }
@@ -274,7 +258,7 @@ const resolvedHeightStyle = computed(() => {
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-arc-arrow-process w-full flex items-start justify-center select-none font-sans relative',
+  'alpha-arc-arrow-process w-full min-h-[340px] flex items-start justify-center select-none font-sans relative',
 );
 </script>
 
@@ -284,15 +268,12 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     :class="className()"
     :style="{
       height: resolvedHeightStyle,
-      minHeight: '340px',
-      fontFamily:
-        'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif',
       '--arc-arrow-start-delay': `${resolvedStartDelay}ms`,
     }"
   >
     <!-- Relative stage container -->
     <div
-      class="alpha-arc-arrow-process__stage relative w-full h-full max-w-[1000px] flex items-start justify-center overflow-visible"
+      class="alpha-arc-arrow-process__stage relative w-full h-full max-w-250 flex items-start justify-center overflow-visible"
     >
       <!-- Central Graphic: Reusing ArcArrowProcessArrow -->
       <div
@@ -315,36 +296,33 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
         />
       </div>
       <!-- Callout Cards -->
-      <slot v-if="slots.default" />
-      <template v-else>
-        <ArcArrowProcessCallout
-          v-for="idx in resolvedCount"
-          :key="idx - 1"
-          :index="idx - 1"
-        />
-      </template>
+      <slot />
     </div>
   </div>
 </template>
 
 <style scoped>
 .alpha-arc-arrow-process--animated.alpha-arc-arrow-process__arrow--0 {
-  animation: arc-arrow-pop 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-arrow-start-delay, 0ms) + 50ms) both;
+  animation: arc-arrow-pop 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--arc-arrow-start-delay, 0ms) + 50ms) both;
   transform-origin: 500px -220px;
 }
 
 .alpha-arc-arrow-process--animated.alpha-arc-arrow-process__arrow--1 {
-  animation: arc-arrow-pop 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-arrow-start-delay, 0ms) + 130ms) both;
+  animation: arc-arrow-pop 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--arc-arrow-start-delay, 0ms) + 130ms) both;
   transform-origin: 500px -220px;
 }
 
 .alpha-arc-arrow-process--animated.alpha-arc-arrow-process__arrow--2 {
-  animation: arc-arrow-pop 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-arrow-start-delay, 0ms) + 210ms) both;
+  animation: arc-arrow-pop 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--arc-arrow-start-delay, 0ms) + 210ms) both;
   transform-origin: 500px -220px;
 }
 
 .alpha-arc-arrow-process--animated.alpha-arc-arrow-process__arrow--3 {
-  animation: arc-arrow-pop 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-arrow-start-delay, 0ms) + 290ms) both;
+  animation: arc-arrow-pop 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--arc-arrow-start-delay, 0ms) + 290ms) both;
   transform-origin: 500px -220px;
 }
 

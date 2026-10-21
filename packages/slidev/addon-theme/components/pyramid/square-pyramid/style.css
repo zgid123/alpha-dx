@@ -1,0 +1,48 @@
+/* Color defaults shared by this component family. */
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-square-pyramid-accent: #3b82f6;
+    --alpha-square-pyramid-center: #0f172a;
+
+    --alpha-square-pyramid-connector-fill: #ffffff;
+    --alpha-square-pyramid-connector-highlight: rgba(255, 255, 255, 0.5);
+
+    --alpha-square-pyramid-stack-1-color: #ec4899;
+    --alpha-square-pyramid-stack-2-color: #8b5cf6;
+    --alpha-square-pyramid-stack-3-color: #3b82f6;
+    --alpha-square-pyramid-stack-4-color: #06b6d4;
+    --alpha-square-pyramid-stack-5-color: #14b8a6;
+    --alpha-square-pyramid-stack-6-color: #f59e0b;
+
+    --alpha-square-pyramid-stack-content: var(
+      --alpha-foreground-primary,
+      #475569
+    );
+    --alpha-square-pyramid-stack-content-accent: #3b82f6;
+    --alpha-square-pyramid-stack-content-active: #0f172a;
+    --alpha-square-pyramid-stack-content-border: rgba(255, 255, 255, 0.85);
+    --alpha-square-pyramid-stack-content-border-active: rgba(
+      255,
+      255,
+      255,
+      0.95
+    );
+
+    --alpha-square-pyramid-highlight: #ffffff;
+
+    --alpha-square-pyramid-stack-heading: var(
+      --alpha-foreground-primary,
+      #334155
+    );
+    --alpha-square-pyramid-stack-heading-accent: #3b82f6;
+    --alpha-square-pyramid-stack-heading-active: #0f172a;
+    --alpha-square-pyramid-stack-heading-border: rgba(255, 255, 255, 0.85);
+    --alpha-square-pyramid-stack-heading-border-active: rgba(
+      255,
+      255,
+      255,
+      0.95
+    );
+    --alpha-square-pyramid-stack-heading-number: #ffffff;
+  }
+}

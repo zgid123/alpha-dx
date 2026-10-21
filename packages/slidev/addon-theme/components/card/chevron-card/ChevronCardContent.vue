@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue';
 
-import { CHEVRON_CARD_KEY } from '../../../utils/chevronCard';
+import { CHEVRON_CARD_KEY } from '../../../utils/card/chevron-card';
+import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 
 defineOptions({
   name: 'ChevronCardContent',
+  inheritAttrs: false,
 });
 
 export interface IChevronCardContentProps {
@@ -18,22 +20,22 @@ const props = withDefaults(defineProps<IChevronCardContentProps>(), {
 const cardContext = inject(CHEVRON_CARD_KEY, undefined);
 
 const contentColor = computed(() => {
-  return props.color ?? cardContext?.textColor.value ?? '#6b7280';
+  return props.color ?? cardContext?.textColor.value ?? undefined;
 });
+
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-chevron-card-content leading-[1.45] font-normal tracking-tight select-none font-sans text-(--alpha-chevron-card-content)',
+);
 </script>
 
 <template>
-  <div
-    class="alpha-chevron-card-content text-[1rem] leading-[1.45] font-normal tracking-tight select-none font-sans"
-    :style="{
-      color: contentColor,
-      margin: 0,
-      padding: 0,
-      fontSize: '1rem',
-      fontFamily:
-        'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif',
-    }"
+  <p
+    v-bind="forwardedAttrs()"
+    :class="className()"
+    :style="
+      contentColor ? { '--alpha-chevron-card-content': contentColor } : undefined
+    "
   >
     <slot />
-  </div>
+  </p>
 </template>

@@ -8,23 +8,21 @@ import {
   type Ref,
   ref,
   useSlots,
-  type VNode,
   watch,
+  type VNode,
 } from 'vue';
 
 import {
   createGearTriadGeometry,
   GEAR_TRIAD_BASE_COLOR,
   GEAR_TRIAD_ROOT_KEY,
-  type IGearTriadItem,
   type IResolvedGearTriadItem,
   resolveGearTriadItems,
   resolveSingleGearTriadItem,
-  type TGearTriadIcon,
-} from '../../../../utils/gearTriad';
+  type IGearTriadItem,
+} from '../../../../utils/facets/triad/gear-triad';
 import { useDiagramAutoScale } from '../../../../utils/useDiagramAutoScale';
 import { useMergedUnoAttrs } from '../../../../utils/useMergedUnoAttrs';
-import GearTriadCallout from './GearTriadCallout.vue';
 import GearTriadCenter from './GearTriadCenter.vue';
 import GearTriadIcon from './GearTriadIcon.vue';
 
@@ -34,10 +32,6 @@ defineOptions({
 });
 
 export interface IGearTriadProps {
-  readonly title?: string;
-  readonly subtitle?: string;
-  readonly items?: readonly IGearTriadItem[];
-  readonly icons?: readonly (TGearTriadIcon | undefined)[];
   readonly animation?: boolean;
   readonly active?: boolean;
   readonly startDelay?: number;
@@ -52,10 +46,6 @@ export interface IGearTriadProps {
 }
 
 const props = withDefaults(defineProps<IGearTriadProps>(), {
-  title: undefined,
-  subtitle: undefined,
-  items: undefined,
-  icons: undefined,
   animation: true,
   active: undefined,
   startDelay: undefined,
@@ -101,43 +91,46 @@ interface INamedComponent {
   readonly __name?: string;
 }
 
-const registeredContentsCount = ref(0);
-const registerContents = () => {
-  registeredContentsCount.value++;
+const registeredDetailsCount = ref(0);
+const registerDetails = () => {
+  registeredDetailsCount.value++;
 };
 
-function checkHasContentsVNodes(nodes: readonly VNode[] | undefined): boolean {
+function checkHasDetailsVNodes(nodes: readonly VNode[] | undefined): boolean {
   if (!nodes) {
     return false;
   }
+
   for (const node of nodes) {
     if (!node) {
       continue;
     }
+
     if (typeof node.type === 'object' && node.type !== null) {
       const comp = node.type as INamedComponent;
       if (
-        comp.name === 'GearTriadContents' ||
-        comp.__name === 'GearTriadContents'
+        comp.name === 'GearTriadDetails' ||
+        comp.__name === 'GearTriadDetails'
       ) {
         return true;
       }
     }
     if (Array.isArray(node.children)) {
-      if (checkHasContentsVNodes(node.children as readonly VNode[])) {
+      if (checkHasDetailsVNodes(node.children as readonly VNode[])) {
         return true;
       }
     }
   }
+
   return false;
 }
 
-const slotHasContents = computed(() => {
-  return slots.default ? checkHasContentsVNodes(slots.default()) : false;
+const slotHasDetails = computed(() => {
+  return slots.default ? checkHasDetailsVNodes(slots.default()) : false;
 });
 
 const supportsClicks = computed(() => {
-  return registeredContentsCount.value > 0 || slotHasContents.value;
+  return registeredDetailsCount.value > 0 || slotHasDetails.value;
 });
 
 watch(
@@ -162,15 +155,19 @@ const resolvedStep = computed(() => {
   if (props.step !== undefined) {
     return props.step;
   }
+
   if (props.moved !== undefined) {
     return props.moved ? 1 : 0;
   }
+
   if (props.clicks !== undefined) {
     return props.clicks;
   }
+
   if (shiftingIntro?.clicks && typeof shiftingIntro.clicks.value === 'number') {
     return shiftingIntro.clicks.value;
   }
+
   if (slidevClicks) {
     const curr =
       typeof slidevClicks.current === 'object' &&
@@ -181,6 +178,7 @@ const resolvedStep = computed(() => {
       return curr;
     }
   }
+
   return internalStep.value;
 });
 
@@ -190,6 +188,7 @@ const activeOptionIndex = computed(() => {
   if (resolvedStep.value <= 0) {
     return 0;
   }
+
   return (resolvedStep.value - 1) % 3;
 });
 
@@ -198,6 +197,7 @@ function handleDiagramClick(event: MouseEvent): void {
   if (!supportsClicks.value) {
     return;
   }
+
   const nextStep = (internalStep.value + 1) % 4;
   internalStep.value = nextStep;
   emit('update:step', nextStep);
@@ -212,12 +212,15 @@ const gearRotation = computed(() => {
   if (!isShifted.value) {
     return 0;
   }
+
   if (activeOptionIndex.value === 0) {
     return 150;
   }
+
   if (activeOptionIndex.value === 1) {
     return 30;
   }
+
   return -90;
 });
 
@@ -252,7 +255,7 @@ const resolvedStartDelay = computed(() => {
 const calloutOverrides = ref<Record<number, IGearTriadItem>>({});
 
 const resolvedItems = computed(() => {
-  const base = resolveGearTriadItems(props.items, props.icons);
+  const base = resolveGearTriadItems();
 
   return [
     resolveSingleGearTriadItem(
@@ -311,8 +314,8 @@ const registerCallout = (
 
 provide(GEAR_TRIAD_ROOT_KEY, {
   registerCallout,
-  registerContents,
-  hasContents: supportsClicks,
+  registerDetails,
+  hasDetails: supportsClicks,
   items: resolvedItems,
   animation: isAnimated,
   isShifted,
@@ -354,6 +357,7 @@ function getSectorFaceColor(sector: {
   if (!isShifted.value) {
     return sector.item.color;
   }
+
   const focusedSectorName =
     activeOptionIndex.value === 0
       ? 'cyan'
@@ -363,13 +367,15 @@ function getSectorFaceColor(sector: {
   if (sector.name === focusedSectorName) {
     return sector.item.color;
   }
-  return '#d5d8dc';
+
+  return 'var(--alpha-gear-triad-muted-sector)';
 }
 
 function getSectorIconColor(sector: { name: string }): string {
   if (!isShifted.value) {
-    return '#0f172a';
+    return 'var(--alpha-gear-triad-icon)';
   }
+
   const focusedSectorName =
     activeOptionIndex.value === 0
       ? 'cyan'
@@ -377,9 +383,10 @@ function getSectorIconColor(sector: { name: string }): string {
         ? 'orange'
         : 'pink';
   if (sector.name === focusedSectorName) {
-    return '#0f172a';
+    return 'var(--alpha-gear-triad-icon)';
   }
-  return '#ffffff';
+
+  return 'var(--alpha-gear-triad-muted-icon)';
 }
 
 const rootRef = ref<HTMLElement | null>(null);
@@ -423,23 +430,6 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
       height: resolvedHeightStyle,
     }"
   >
-    <!-- Header (Title / Subtitle) -->
-    <header
-      v-if="title || $slots.title"
-      class="alpha-gear-triad__header mb-2 text-center"
-    >
-      <slot name="title">
-        <h2 class="alpha-gear-triad__title text-2xl font-bold font-sans tracking-tight text-slate-900">
-          {{ title }}
-        </h2>
-      </slot>
-      <p
-        v-if="subtitle || $slots.subtitle"
-        class="alpha-gear-triad__subtitle text-sm font-sans text-slate-500 mt-1"
-      >
-        <slot name="subtitle">{{ subtitle }}</slot>
-      </p>
-    </header>
     <!-- Auto-Scaled Stage -->
     <div
       class="alpha-gear-triad__scaler relative flex items-center justify-center origin-center transition-transform duration-200"
@@ -450,8 +440,11 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
       }"
     >
       <!-- Central Gear SVG Assembly -->
-      <div
-        class="alpha-gear-triad__diagram relative flex items-center justify-center w-[540px] h-[480px] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+      <button
+        type="button"
+        class="alpha-gear-triad__diagram relative flex items-center justify-center w-135 h-120 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] bg-transparent border-0 p-0 m-0 appearance-none"
+        :disabled="!supportsClicks"
+        aria-label="Advance gear diagram"
         :class="[
           { 'alpha-gear-triad__diagram--animated': isAnimated },
           supportsClicks ? 'cursor-pointer' : 'cursor-default',
@@ -463,21 +456,40 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
       >
         <!-- Rotating Wheel (simultaneously rotates while diagram translates) -->
         <div
-          class="alpha-gear-triad__wheel relative w-[540px] h-[480px] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          class="alpha-gear-triad__wheel relative w-135 h-120 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
           :style="{
             transformOrigin: `${geo.centerX}px ${geo.centerY}px`,
             transform: `rotate(${gearRotation}deg)`,
           }"
         >
           <svg
-            class="alpha-gear-triad__svg w-[540px] h-[480px] overflow-visible"
+            aria-hidden="true"
+            class="alpha-gear-triad__svg w-135 h-120 overflow-visible"
             :viewBox="`0 0 ${geo.viewBoxWidth} ${geo.viewBoxHeight}`"
           >
             <defs>
               <!-- Elevation Drop Shadow for Gear Assembly -->
-              <filter id="alpha-gear-assembly-shadow" x="-20%" y="-20%" width="140%" height="140%">
-                <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#0f172a" flood-opacity="0.22" />
-                <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.10" />
+              <filter
+                id="alpha-gear-assembly-shadow"
+                x="-20%"
+                y="-20%"
+                width="140%"
+                height="140%"
+              >
+                <feDropShadow
+                  dx="0"
+                  dy="10"
+                  stdDeviation="14"
+                  flood-color="var(--alpha-gear-triad-shadow)"
+                  flood-opacity="0.22"
+                />
+                <feDropShadow
+                  dx="0"
+                  dy="3"
+                  stdDeviation="5"
+                  flood-color="var(--alpha-gear-triad-shadow)"
+                  flood-opacity="0.10"
+                />
               </filter>
             </defs>
             <!-- Group containing all gear elements with overall elevation drop shadow -->
@@ -548,25 +560,22 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
             }"
           />
         </slot>
-      </div>
-      <!-- LAYER 6: Surrounding Callouts & Detail Contents -->
-      <slot v-if="$slots.default" />
-      <template v-else>
-        <GearTriadCallout />
-        <GearTriadCallout />
-        <GearTriadCallout />
-      </template>
+      </button>
+      <!-- Surrounding callouts and their details -->
+      <slot />
     </div>
   </div>
 </template>
 
 <style scoped>
 .alpha-gear-triad__diagram--animated {
-  animation: gear-triad-fade-in 700ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--gear-start-delay, 0ms)) backwards;
+  animation: gear-triad-fade-in 700ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--gear-start-delay, 0ms)) backwards;
 }
 
 .alpha-gear-center--animated {
-  animation: gear-center-pop-in 600ms cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--gear-start-delay, 0ms) + 100ms) backwards;
+  animation: gear-center-pop-in 600ms cubic-bezier(0.34, 1.56, 0.64, 1)
+    calc(var(--gear-start-delay, 0ms) + 100ms) backwards;
 }
 
 @keyframes gear-triad-fade-in {

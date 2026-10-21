@@ -28,6 +28,7 @@
     "@alphacifer/core-utils": "workspace:^",
     "@alphacifer/slidev-academic-theme": "workspace:^",
     "@alphacifer/slidev-addon-theme": "workspace:^",
+    "@alphacifer/slidev-core-theme": "workspace:^",
     "@alphacifer/tsconfig": "workspace:^",
     "@biomejs/biome": "2.5.14",
     "@changesets/changelog-github": "1.0.1",

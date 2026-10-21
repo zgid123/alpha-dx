@@ -6,13 +6,10 @@ defineOptions({
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-thanks-outline-square absolute rounded-2xl border-2 border-color-cyan-500',
+  'alpha-thanks-outline-square absolute rounded-2xl border-2 border-(--alpha-thanks-outline-stroke)',
 );
 </script>
 
 <template>
-  <div
-    v-bind="forwardedAttrs()"
-    :class="className()"
-  />
+  <div v-bind="forwardedAttrs()" :class="className()" />
 </template>

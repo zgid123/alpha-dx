@@ -17,33 +17,28 @@ import {
   type IArcArrowProcessItem,
   type IResolvedArcArrowProcessItem,
   resolveSingleArcArrowProcessItem,
-} from '../../../utils/arcArrowProcess';
-import ArcArrowProcessContent from './ArcArrowProcessContent.vue';
-import ArcArrowProcessHeading from './ArcArrowProcessHeading.vue';
-import ArcArrowProcessIcon from './ArcArrowProcessIcon.vue';
+} from '../../../utils/process/arc-arrow-process';
+import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 
 defineOptions({
   name: 'ArcArrowProcessCallout',
+  inheritAttrs: false,
 });
 
 export interface IArcArrowProcessCalloutProps {
   readonly id?: string | number;
   readonly index?: number;
-  readonly icon?: string | object | false;
   readonly color?: string;
   readonly textColor?: string;
-  readonly title?: string;
-  readonly description?: string;
+  readonly titleColor?: string;
 }
 
 const props = withDefaults(defineProps<IArcArrowProcessCalloutProps>(), {
   id: undefined,
   index: undefined,
-  icon: undefined,
   color: undefined,
   textColor: undefined,
-  title: undefined,
-  description: undefined,
+  titleColor: undefined,
 });
 
 interface INamedComponent {
@@ -92,11 +87,8 @@ const activeItem = computed<IResolvedArcArrowProcessItem>(() => {
   const override: IArcArrowProcessItem = {
     id: props.id,
     color: props.color,
-    icon: props.icon,
     textColor: props.textColor,
-    titleColor: props.color,
-    title: props.title,
-    description: props.description,
+    titleColor: props.titleColor,
   };
 
   return resolveSingleArcArrowProcessItem(
@@ -256,59 +248,30 @@ const animation = computed(() => {
 });
 
 const hasIcon = computed(() => {
-  if (props.icon === false || props.icon === 'false') {
-    return false;
-  }
-
-  if (slots.icon || iconNode.value) {
-    return true;
-  }
-
-  const iconVal = props.icon !== undefined ? props.icon : activeItem.value.icon;
-
-  if (!iconVal || iconVal === 'false') {
-    return false;
-  }
-
-  if (typeof iconVal === 'string' && iconVal.trim() === '') {
-    return false;
-  }
-
-  return true;
+  return Boolean(iconNode.value);
 });
+
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-arc-arrow-process-callout absolute flex items-start justify-between gap-3 text-left font-sans z-10 transition-all duration-300 pointer-events-auto select-none',
+);
 </script>
 
 <template>
   <div
     v-if="resolvedIndex < resolvedCount"
-    :class="[
-      'alpha-arc-arrow-process-callout absolute flex items-start justify-between gap-3 text-left z-10 transition-all duration-300 pointer-events-auto select-none',
-      `alpha-arc-arrow-process-callout--${resolvedIndex}`,
-      { 'alpha-arc-arrow-process-callout--animated': animation },
-    ]"
-    :style="[
-      positionStyle,
-      {
-        fontFamily:
-          'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif',
-      },
-    ]"
+    v-bind="forwardedAttrs()"
+    :class="
+      className([
+        `alpha-arc-arrow-process-callout--${resolvedIndex}`,
+        { 'alpha-arc-arrow-process-callout--animated': animation },
+      ])
+    "
+    :style="positionStyle"
   >
     <!-- Text Column (Heading + Description) -->
     <div class="flex-1 flex flex-col items-start min-w-0">
-      <!-- Title -->
-      <slot name="title">
-        <component :is="headingNode" v-if="headingNode" />
-        <ArcArrowProcessHeading v-else :color="activeItem.titleColor">
-          {{ activeItem.title }}
-        </ArcArrowProcessHeading>
-      </slot>
-      <!-- Description -->
-      <slot name="description">
-        <component :is="contentNode" v-if="contentNode" />
-        <ArcArrowProcessContent v-else :color="props.textColor">
-        </ArcArrowProcessContent>
-      </slot>
+      <component :is="headingNode" v-if="headingNode" />
+      <component :is="contentNode" v-if="contentNode" />
       <!-- Other slotted nodes -->
       <component
         :is="node"
@@ -318,34 +281,30 @@ const hasIcon = computed(() => {
     </div>
     <!-- Outline Icon beside text block -->
     <div v-if="hasIcon" class="shrink-0 mt-1">
-      <slot name="icon">
-        <component :is="iconNode" v-if="iconNode" />
-        <ArcArrowProcessIcon
-          v-else
-          :icon="activeItem.icon"
-          :color="activeItem.titleColor"
-          :size="36"
-        />
-      </slot>
+      <component :is="iconNode" v-if="iconNode" />
     </div>
   </div>
 </template>
 
 <style scoped>
 .alpha-arc-arrow-process-callout--animated.alpha-arc-arrow-process-callout--0 {
-  animation: arc-arrow-callout-fade 400ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-arrow-start-delay, 0ms) + 120ms) both;
+  animation: arc-arrow-callout-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--arc-arrow-start-delay, 0ms) + 120ms) both;
 }
 
 .alpha-arc-arrow-process-callout--animated.alpha-arc-arrow-process-callout--1 {
-  animation: arc-arrow-callout-fade 400ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-arrow-start-delay, 0ms) + 200ms) both;
+  animation: arc-arrow-callout-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--arc-arrow-start-delay, 0ms) + 200ms) both;
 }
 
 .alpha-arc-arrow-process-callout--animated.alpha-arc-arrow-process-callout--2 {
-  animation: arc-arrow-callout-fade 400ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-arrow-start-delay, 0ms) + 280ms) both;
+  animation: arc-arrow-callout-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--arc-arrow-start-delay, 0ms) + 280ms) both;
 }
 
 .alpha-arc-arrow-process-callout--animated.alpha-arc-arrow-process-callout--3 {
-  animation: arc-arrow-callout-fade 400ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arc-arrow-start-delay, 0ms) + 360ms) both;
+  animation: arc-arrow-callout-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--arc-arrow-start-delay, 0ms) + 360ms) both;
 }
 
 @keyframes arc-arrow-callout-fade {

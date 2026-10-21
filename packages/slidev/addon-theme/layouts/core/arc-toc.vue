@@ -22,7 +22,7 @@ import {
   calculateUniformTocArticleWidthPx,
   createTocArcPath,
   createTocConnectorPath,
-} from '../../utils/tableOfContents';
+} from '../../utils/layouts/table-of-contents';
 import { useMergedUnoAttrs } from '../../utils/useMergedUnoAttrs';
 
 defineOptions({
@@ -49,13 +49,13 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
 );
 
 const markerColors = [
-  '#ffad21',
-  '#24b9aa',
-  '#3188e4',
-  '#59d875',
-  '#f53270',
-  '#8b5cf6',
-  '#ef4444',
+  'var(--alpha-arc-toc-marker-orange)',
+  'var(--alpha-arc-toc-marker-teal)',
+  'var(--alpha-arc-toc-marker-blue)',
+  'var(--alpha-arc-toc-marker-green)',
+  'var(--alpha-arc-toc-marker-pink)',
+  'var(--alpha-arc-toc-marker-purple)',
+  'var(--alpha-arc-toc-marker-red)',
 ] as const;
 
 interface ITocConnector {
@@ -87,7 +87,7 @@ const markerPositions = computed(() => {
 });
 const tocContentStyle = computed(() => {
   return {
-    '--toc-list-gap': `${calculateTocListGapRem(tocItemCount.value)}rem`,
+    '--alpha-arc-toc-list-gap': `${calculateTocListGapRem(tocItemCount.value)}rem`,
     left: `calc(40.4% + ${calculateTocMiddleMarkerOffsetPx(tocItemCount.value)}px)`,
   } satisfies CSSProperties;
 });
@@ -95,7 +95,7 @@ const markerStyles = computed(() => {
   return markerPositions.value.map(
     ({ offsetFromMiddlePx, rightShiftPx, topPercent }, index) => {
       return {
-        '--marker-color': markerColors[index],
+        '--alpha-arc-toc-marker-color': markerColors[index],
         left: `calc(40.4% - ${offsetFromMiddlePx}px + ${rightShiftPx}px)`,
         top: `${topPercent}%`,
       } satisfies CSSProperties;
@@ -109,6 +109,7 @@ let connectorResizeObserver: ResizeObserver | undefined;
 
 function isMiddleItem(index: number, count: number): boolean {
   const middleIndex = (count - 1) / 2;
+
   return Math.abs(index - middleIndex) < 1;
 }
 
@@ -118,6 +119,7 @@ function updateConnectors(): void {
   if (!root || root.clientWidth === 0 || root.clientHeight === 0) {
     arcPath.value = '';
     connectors.value = [];
+
     return;
   }
 
@@ -173,18 +175,20 @@ function updateConnectors(): void {
     const markerCenterY =
       middleIndices.reduce((sum, index) => {
         const rect = markers[index]?.getBoundingClientRect();
+
         return sum + (rect ? rect.top + rect.height / 2 : 0);
       }, 0) / middleIndices.length;
     const articleCenterY =
       middleIndices.reduce((sum, index) => {
         const rect = articles[index]?.getBoundingClientRect();
+
         return sum + (rect ? rect.top + rect.height / 2 : 0);
       }, 0) / middleIndices.length;
-    const offsetPx = calculateTocCenterAlignmentOffsetPx(
+    const offsetPx = calculateTocCenterAlignmentOffsetPx({
       markerCenterY,
       articleCenterY,
       scaleY,
-    );
+    });
 
     tocContent.style.transform = `translateY(${offsetPx}px)`;
   }
@@ -212,7 +216,11 @@ function updateConnectors(): void {
 
     nextConnectors.push({
       color: markerColors[index % markerColors.length] ?? markerColors[0],
-      path: createTocConnectorPath(start, end, isMiddleItem(index, count)),
+      path: createTocConnectorPath({
+        start,
+        end,
+        isMiddle: isMiddleItem(index, count),
+      }),
     });
   }
 
@@ -249,11 +257,13 @@ onMounted(async () => {
       subtree: true,
     });
   }
+
   window.addEventListener('resize', scheduleConnectorUpdate);
 });
 
 watch(tocItemCount, async () => {
   await nextTick();
+
   scheduleConnectorUpdate();
 });
 
@@ -269,11 +279,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div
-    ref="rootElement"
-    v-bind="forwardedAttrs()"
-    :class="className()"
-  >
+  <div ref="rootElement" v-bind="forwardedAttrs()" :class="className()">
     <header class="alpha-arc-toc__heading">
       <slot>
         <h1>Table of Contents</h1>
@@ -308,26 +314,25 @@ onBeforeUnmount(() => {
         :stroke="connector.color"
       />
     </svg>
-    <nav
-      class="alpha-arc-toc__content"
-      :style="tocContentStyle"
-    >
+    <nav class="alpha-arc-toc__content" :style="tocContentStyle">
       <ol class="alpha-arc-toc__list">
         <li
           v-for="(item, index) in visibleTocItems"
           :key="item.path"
           class="alpha-arc-toc__item"
           :class="{ 'alpha-arc-toc__item--active': item.active }"
-          :style="{ '--toc-color': markerColors[index % markerColors.length] }"
+          :style="{
+            '--alpha-arc-toc-marker-color':
+              markerColors[index % markerColors.length],
+          }"
         >
           <RouterLink
             :to="isPresenter ? `/presenter${item.path}` : item.path"
             @click="($event.target as HTMLElement)?.blur()"
           >
-            <span
-              v-if="props.indexed"
-              class="alpha-arc-toc__item-index"
-            >{{ index + 1 }}. </span>
+            <span v-if="props.indexed" class="alpha-arc-toc__item-index"
+              >{{ index + 1 }}.
+            </span>
             <span class="alpha-arc-toc__item-text">{{ item.title }}</span>
           </RouterLink>
         </li>
@@ -337,16 +342,6 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-.alpha-arc-toc {
-  --toc-orange: #ffad21;
-  --toc-teal: #24b9aa;
-  --toc-blue: #3188e4;
-  --toc-green: #59d875;
-  --toc-pink: #f53270;
-  --toc-purple: #8b5cf6;
-  --toc-red: #ef4444;
-}
-
 .alpha-arc-toc.slidev-layout {
   position: relative;
   overflow: hidden;
@@ -392,7 +387,7 @@ onBeforeUnmount(() => {
 
 .alpha-arc-toc__curve path {
   fill: none;
-  stroke: #d7d7d5;
+  stroke: var(--alpha-arc-toc-curve-stroke);
   stroke-width: 2;
   vector-effect: non-scaling-stroke;
 }
@@ -402,10 +397,10 @@ onBeforeUnmount(() => {
   z-index: 2;
   width: 1rem;
   height: 1rem;
-  border: 0.23rem solid #f8f8f7;
+  border: 0.23rem solid var(--alpha-arc-toc-marker-border);
   border-radius: 50%;
-  background: var(--marker-color);
-  box-shadow: 0 0 0 2px var(--marker-color);
+  background: var(--alpha-arc-toc-marker-color);
+  box-shadow: 0 0 0 2px var(--alpha-arc-toc-marker-color);
   transform: translate(-50%, -50%);
 }
 
@@ -438,7 +433,7 @@ onBeforeUnmount(() => {
 .alpha-arc-toc__list {
   display: flex;
   flex-direction: column;
-  gap: var(--toc-list-gap);
+  gap: var(--alpha-arc-toc-list-gap);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -461,9 +456,9 @@ onBeforeUnmount(() => {
   padding: 0.5rem 1.25rem;
   border: 0;
   border-radius: 999px;
-  background: var(--toc-color);
-  box-shadow: 0.45rem 0.65rem 0.85rem rgb(15 23 42 / 18%);
-  color: white;
+  background: var(--alpha-arc-toc-marker-color);
+  box-shadow: var(--alpha-arc-toc-item-shadow);
+  color: var(--alpha-arc-toc-item);
   font-family: inherit;
   font-size: 0.9rem;
   font-weight: 700;

@@ -45,16 +45,17 @@ const tocIndex = computed(() => {
 </script>
 
 <template>
-  <div
-    v-bind="forwardedAttrs()"
-    :class="className()"
-    :style="style"
-  >
+  <div v-bind="forwardedAttrs()" :class="className()" :style="style">
     <div
       v-if="indexed && tocIndex !== null"
       class="alpha-bg-center__indexed-content flex flex-col items-center gap-2"
     >
-      <span class="alpha-bg-center__index text-5xl font-extrabold leading-none text-white opacity-50 tracking-tighter">{{ tocIndex }}</span>
+      <span
+        class="alpha-bg-center__index text-5xl font-extrabold leading-none text-(--alpha-bg-center-text) opacity-50 tracking-tighter"
+        >{{
+          tocIndex
+        }}</span
+      >
       <slot />
     </div>
     <slot v-else />

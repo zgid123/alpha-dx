@@ -46,7 +46,7 @@ function resolveValue<T>(val: Ref<T> | (() => T) | undefined, fallback: T): T {
 
 /**
  * Automatically computes a scale factor (via CSS transform: scale)
- * so that diagram components (ArrowTriad, RectOrbitTetrad, ArcArrowProcess, etc.)
+ * so that diagram components (ArrowTriad, RectangleOrbitTetrad, ArcArrowProcess, etc.)
  * fit comfortably inside the available slide canvas without clipping or overlaying pagination.
  */
 export function useDiagramAutoScale(
@@ -156,16 +156,14 @@ export function useDiagramAutoScale(
         pagyEl && window.getComputedStyle(pagyEl).display !== 'none';
       const clearance = isPagyVisible ? pagyClearance : 16;
 
-      // Check for internal component header inside el (e.g. ArcDiD, GearTriad, HexTriad)
+      // Check for internal component header inside el (e.g. ArcDefenseInDepth, GearTriad, HexagonTriad)
       let internalHeaderH = 0;
       for (let i = 0; i < el.children.length; i++) {
         const child = el.children[i];
         if (
           child instanceof HTMLElement &&
           (child.tagName === 'HEADER' ||
-            child.classList.contains('alpha-arc-did__header') ||
-            child.classList.contains('alpha-gear-triad__header') ||
-            child.classList.contains('alpha-hex-triad__header'))
+            child.classList.contains('alpha-arc-defense-in-depth__header'))
         ) {
           internalHeaderH += child.offsetHeight;
           const cs = window.getComputedStyle(child);
@@ -201,7 +199,11 @@ export function useDiagramAutoScale(
                   (Number.parseFloat(cs.marginBottom) || 0);
               }
             }
-            if (p === slideEl) break;
+
+            if (p === slideEl) {
+              break;
+            }
+
             curr = p;
           }
         }

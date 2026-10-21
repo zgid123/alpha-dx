@@ -32,7 +32,9 @@ describe('SquarePyramid compound components', () => {
           expect(script).toContain('readonly animation?: boolean;');
 
           expect(script).toMatch(/activeIndex:\s*-1/);
-          expect(script).toMatch(/color:\s*DEFAULT_SQUARE_PYRAMID_COLOR/);
+          expect(script).toMatch(
+            /color:\s*`var\(--alpha-square-pyramid-accent, \$\{DEFAULT_SQUARE_PYRAMID_COLOR\}\)`/,
+          );
           expect(script).toMatch(/autoScale:\s*true/);
           expect(script).toMatch(/interactive:\s*true/);
           expect(script).toMatch(/animation:\s*true/);
@@ -73,6 +75,16 @@ describe('SquarePyramid compound components', () => {
           expect(template).toContain('alpha-square-pyramid__rim');
           expect(template).toContain('alpha-square-pyramid__face');
           expect(template).toContain('alpha-square-pyramid__inner');
+        });
+
+        it('uses native buttons over SVG layers for keyboard selection', () => {
+          const template = descriptor.template?.content ?? '';
+
+          expect(template).toContain('aria-label="Square pyramid diagram"');
+          expect(template).toContain('class="alpha-interaction-control"');
+          expect(template).toContain(`path('\${layer.topFacePath}')`);
+          expect(template).not.toContain('role="group"');
+          expect(template).not.toContain('role="button"');
         });
 
         it('binds active and default classes conditionally based on active index', () => {
@@ -123,6 +135,8 @@ describe('SquarePyramid compound components', () => {
 
         expect(template).toContain('alpha-square-pyramid-stack__left');
         expect(template).toContain('alpha-square-pyramid-stack__right');
+        expect(template).toMatch(/<button\s+type="button"/);
+        expect(template).not.toContain('role="button"');
         expect(script).toContain('DOT_POSITION_X');
         expect(script).toContain('const leftWidth = computed(');
         expect(script).toContain(
@@ -140,25 +154,25 @@ describe('SquarePyramid compound components', () => {
           expect(style).toContain('@keyframes alpha-pyramid-right-in');
           expect(style).toContain('transform: translateX(-10px);');
           expect(style).toContain('transform: translateX(10px);');
-          expect(style).toContain('var(--wing-delay');
+          expect(style).toMatch(/var\(\s*--wing-delay/);
         });
       });
     });
   });
 
-  describe('SquarePyramidStackTitle.vue', () => {
+  describe('SquarePyramidStackHeading.vue', () => {
     const titlePath = path.resolve(
       __dirname,
-      '../../../../components/pyramid/square-pyramid/SquarePyramidStackTitle.vue',
+      '../../../../components/pyramid/square-pyramid/SquarePyramidStackHeading.vue',
     );
     const titleContent = fs.readFileSync(titlePath, 'utf8');
     const { descriptor: titleDesc } = parse(titleContent);
 
-    it('compiles SquarePyramidStackTitle template without errors', () => {
+    it('compiles SquarePyramidStackHeading template without errors', () => {
       const result = compileTemplate({
         source: titleDesc.template?.content ?? '',
-        id: 'square-pyramid-stack-title-spec',
-        filename: 'SquarePyramidStackTitle.vue',
+        id: 'square-pyramid-stack-heading-spec',
+        filename: 'SquarePyramidStackHeading.vue',
       });
 
       expect(result.errors).toEqual([]);
@@ -168,10 +182,12 @@ describe('SquarePyramid compound components', () => {
       const template = titleDesc.template?.content ?? '';
       const script = titleDesc.scriptSetup?.content ?? '';
 
-      expect(template).toContain('alpha-square-pyramid-stack-title__pill');
-      expect(template).toContain('alpha-square-pyramid-stack-title__connector');
-      expect(template).toContain('alpha-square-pyramid-stack-title__line');
-      expect(template).toContain('alpha-square-pyramid-stack-title__dot');
+      expect(template).toContain('alpha-square-pyramid-stack-heading__pill');
+      expect(template).toContain(
+        'alpha-square-pyramid-stack-heading__connector',
+      );
+      expect(template).toContain('alpha-square-pyramid-stack-heading__line');
+      expect(template).toContain('alpha-square-pyramid-stack-heading__dot');
       expect(script).toContain('stackColor');
       expect(template).toContain('borderColor: stackColor');
       expect(template).toContain('backgroundColor: stackColor');

@@ -1,0 +1,15 @@
+/* Color defaults shared by this component family. */
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-arrow-triad-connector-stroke: #94a3b8;
+    --alpha-arrow-triad-content: var(--alpha-foreground-primary, #64748b);
+    --alpha-arrow-triad-heading: var(--alpha-foreground-primary, #1e293b);
+    --alpha-arrow-triad-icon: #334155;
+    --alpha-arrow-triad-item-1-color: #fec201;
+    --alpha-arrow-triad-item-1-depth: #d59b01;
+    --alpha-arrow-triad-item-2-color: #71ad49;
+    --alpha-arrow-triad-item-2-depth: #548235;
+    --alpha-arrow-triad-item-3-color: #5b9bd5;
+    --alpha-arrow-triad-item-3-depth: #41719c;
+  }
+}

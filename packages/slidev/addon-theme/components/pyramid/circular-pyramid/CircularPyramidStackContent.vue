@@ -6,19 +6,19 @@ import {
   CIRCULAR_PYRAMID_STACK_KEY,
 } from '../../../utils/pyramid/circular-pyramid';
 import { createPyramidConnectorPath } from '../../../utils/pyramid/shared';
+import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 
 defineOptions({
   name: 'CircularPyramidStackContent',
+  inheritAttrs: false,
 });
 
 export interface ICircularPyramidStackContentProps {
-  readonly content?: string;
   readonly color?: string;
   readonly connectorWidth?: number;
 }
 
 const props = withDefaults(defineProps<ICircularPyramidStackContentProps>(), {
-  content: undefined,
   color: undefined,
   connectorWidth: undefined,
 });
@@ -61,17 +61,15 @@ const stepIndex = computed(() => {
   return stackContext?.index.value ?? 0;
 });
 
-const palette = computed(() => {
-  return rootContext?.palette.value;
-});
-
 const contentWidth = computed(() => rootContext?.contentWidthPx.value ?? 240);
 
 const deltaY = computed(() => {
   if (stackContext?.deltaY?.value !== undefined) {
     return stackContext.deltaY.value;
   }
+
   const idx = stackContext?.index.value ?? 0;
+
   return rootContext?.getCardDeltaY?.(idx) ?? 0;
 });
 
@@ -81,9 +79,11 @@ const connectorWidth = computed(() => {
   if (props.connectorWidth !== undefined) {
     return props.connectorWidth;
   }
+
   if (stackContext?.connectorWidth?.value !== undefined) {
     return stackContext.connectorWidth.value;
   }
+
   return measuredConnectorWidth.value || 40;
 });
 
@@ -102,9 +102,16 @@ const svgTop = computed(() => {
 
 const connectorPath = computed(() => {
   const w = connectorWidth.value;
+
   return createPyramidConnectorPath(
-    { x: 0, y: 0 },
-    { x: w, y: effectiveDeltaY.value },
+    {
+      x: 0,
+      y: 0,
+    },
+    {
+      x: w,
+      y: effectiveDeltaY.value,
+    },
   );
 });
 
@@ -113,25 +120,32 @@ const stackColor = computed(() => {
     props.color ??
     stackContext?.color?.value ??
     rootContext?.color.value ??
-    '#3b82f6'
+    'var(--alpha-circular-pyramid-stack-content-accent)'
   );
 });
+
+const { className, forwardedAttrs } = useMergedUnoAttrs(() => [
+  'alpha-circular-pyramid-stack-content rounded-xl p-2 px-2.5 text-[10px] leading-snug transition-all duration-300 border select-none box-border shrink-0',
+  isActive.value
+    ? 'alpha-circular-pyramid-stack-content--active bg-(--alpha-circular-pyramid-stack-content-border-active) text-(--alpha-circular-pyramid-stack-content-active)'
+    : 'alpha-circular-pyramid-stack-content--default bg-(--alpha-circular-pyramid-stack-content-border) text-(--alpha-circular-pyramid-stack-content)',
+]);
 </script>
 
 <template>
   <div
     class="alpha-circular-pyramid-stack-content-wrapper relative w-full flex items-center select-none overflow-visible"
     :style="{
-      '--content-delay': `calc(var(--circular-pyramid-start-delay, 0ms) + ${470 + stepIndex * 320}ms)`,
+      '--content-delay': `calc(var(--alpha-circular-pyramid-start-delay, 0ms) + ${470 + stepIndex * 320}ms)`,
     }"
   >
     <!-- Scalable Line between Dot and Content Card (always at least 20px) -->
     <div
       ref="connectorRef"
-      class="alpha-circular-pyramid-stack-content__connector flex-1 flex items-center min-w-[20px] pointer-events-none relative overflow-visible h-0"
+      class="alpha-circular-pyramid-stack-content__connector flex-1 flex items-center min-w-5 pointer-events-none relative overflow-visible h-0"
     >
       <div
-        class="alpha-circular-pyramid-stack-content__dot absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full flex-shrink-0 transition-all duration-300 pointer-events-auto"
+        class="alpha-circular-pyramid-stack-content__dot absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-300 pointer-events-auto"
         :class="{
           'alpha-circular-pyramid-stack-content__dot--animated': isAnimated,
         }"
@@ -139,13 +153,13 @@ const stackColor = computed(() => {
           backgroundColor: stackColor,
           boxShadow: isActive
             ? `0 0 6px ${stackColor}`
-            : `0 0 2px ${stackColor}80`,
+            : `0 0 2px color-mix(in srgb, ${stackColor} 50%, transparent)`,
         }"
       />
       <!-- Straight horizontal line when deltaY is 0 -->
       <div
         v-if="!effectiveDeltaY"
-        class="alpha-circular-pyramid-stack-content__line absolute left-0 top-0 w-full h-[1px] -translate-y-1/2 pointer-events-none transition-colors duration-300"
+        class="alpha-circular-pyramid-stack-content__line absolute left-0 top-0 w-full h-px -translate-y-1/2 pointer-events-none transition-colors duration-300"
         :class="{
           'alpha-circular-pyramid-stack-content__line--animated': isAnimated,
         }"
@@ -156,6 +170,7 @@ const stackColor = computed(() => {
       />
       <!-- Zigzag SVG connector when deltaY !== 0 -->
       <svg
+        aria-hidden="true"
         v-else
         class="alpha-circular-pyramid-stack-content__line-svg absolute left-0 pointer-events-none overflow-visible"
         :width="connectorWidth"
@@ -187,39 +202,30 @@ const stackColor = computed(() => {
     </div>
     <!-- Content Card -->
     <div
-      class="alpha-circular-pyramid-stack-content rounded-xl p-2 px-2.5 transition-all duration-300 border select-none box-border flex-shrink-0"
-      :class="[
-        isActive
-          ? 'alpha-circular-pyramid-stack-content--active'
-          : 'alpha-circular-pyramid-stack-content--default',
-        {
+      v-bind="forwardedAttrs()"
+      :class="
+        className({
           'alpha-circular-pyramid-stack-content--animated': isAnimated,
-        },
-      ]"
+        })
+      "
       :style="{
         width: `${contentWidth}px`,
         minWidth: `${contentWidth}px`,
         maxWidth: `${contentWidth}px`,
         boxSizing: 'border-box',
         borderColor: stackColor,
-        backgroundColor: isActive
-          ? 'rgba(255, 255, 255, 0.95)'
-          : 'rgba(255, 255, 255, 0.85)',
         boxShadow: isActive
-          ? `0 4px 14px ${stackColor}26`
+          ? `0 4px 14px color-mix(in srgb, ${stackColor} 15%, transparent)`
           : 'none',
         '--card-transform': deltaY ? `translateY(${deltaY}px)` : 'none',
         transform: deltaY ? `translateY(${deltaY}px)` : undefined,
       }"
     >
-      <div
-        class="text-[10px] leading-snug transition-colors duration-300 break-words line-clamp-3"
-        :style="{
-          color: isActive ? '#0f172a' : '#475569',
-        }"
+      <p
+        class="text-[10px] transition-colors duration-300 wrap-break-word line-clamp-3"
       >
-        <slot>{{ props.content }}</slot>
-      </div>
+        <slot />
+      </p>
     </div>
   </div>
 </template>
@@ -234,7 +240,8 @@ const stackColor = computed(() => {
 }
 
 .alpha-circular-pyramid-stack-content__dot--animated {
-  animation: alpha-pyramid-dot-pop 120ms cubic-bezier(0.16, 1, 0.3, 1) var(--content-delay) both;
+  animation: alpha-pyramid-dot-pop 120ms cubic-bezier(0.16, 1, 0.3, 1)
+    var(--content-delay) both;
 }
 
 @keyframes alpha-pyramid-dot-pop {
@@ -250,7 +257,8 @@ const stackColor = computed(() => {
 
 .alpha-circular-pyramid-stack-content__line--animated {
   transform-origin: left center;
-  animation: alpha-pyramid-line-draw 500ms cubic-bezier(0.4, 0, 0.2, 1) calc(var(--content-delay) + 120ms) both;
+  animation: alpha-pyramid-line-draw 500ms cubic-bezier(0.4, 0, 0.2, 1)
+    calc(var(--content-delay) + 120ms) both;
 }
 
 @keyframes alpha-pyramid-line-draw {
@@ -270,7 +278,8 @@ const stackColor = computed(() => {
 
 .alpha-circular-pyramid-stack-content__line--svg-animated {
   stroke-dasharray: 1;
-  animation: alpha-pyramid-svg-line-draw 500ms cubic-bezier(0.4, 0, 0.2, 1) calc(var(--content-delay) + 120ms) both;
+  animation: alpha-pyramid-svg-line-draw 500ms cubic-bezier(0.4, 0, 0.2, 1)
+    calc(var(--content-delay) + 120ms) both;
 }
 
 @keyframes alpha-pyramid-svg-line-draw {
@@ -289,7 +298,8 @@ const stackColor = computed(() => {
 }
 
 .alpha-circular-pyramid-stack-content--animated {
-  animation: alpha-pyramid-card-in 240ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--content-delay) + 380ms) both;
+  animation: alpha-pyramid-card-in 240ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--content-delay) + 380ms) both;
 }
 
 @keyframes alpha-pyramid-card-in {

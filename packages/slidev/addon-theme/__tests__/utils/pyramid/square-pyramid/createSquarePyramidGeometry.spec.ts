@@ -5,8 +5,6 @@ import {
   createSquarePyramidGeometry,
   DEFAULT_SQUARE_PYRAMID_COLOR,
   DEFAULT_SQUARE_PYRAMID_STACK_COLORS,
-  darkenColor,
-  lightenColor,
   MAX_SQUARE_COUNT,
   MIN_SQUARE_COUNT,
   resolveSquarePyramidPalette,
@@ -36,51 +34,14 @@ describe('squarePyramid utilities', () => {
     });
   });
 
-  describe('#lightenColor & #darkenColor', () => {
-    it('lightens hex color correctly', () => {
-      const lighter = lightenColor({ hex: '#000000', ratio: 0.5 });
-      expect(lighter).toBe('#808080');
-
-      const fullWhite = lightenColor({ hex: '#3b82f6', ratio: 1 });
-      expect(fullWhite).toBe('#ffffff');
-
-      const unchanged = lightenColor({ hex: '#3b82f6', ratio: 0 });
-      expect(unchanged).toBe('#3b82f6');
-    });
-
-    it('darkens hex color correctly', () => {
-      const darker = darkenColor({ hex: '#ffffff', ratio: 0.5 });
-      expect(darker).toBe('#808080');
-
-      const fullBlack = darkenColor({ hex: '#3b82f6', ratio: 1 });
-      expect(fullBlack).toBe('#000000');
-
-      const unchanged = darkenColor({ hex: '#3b82f6', ratio: 0 });
-      expect(unchanged).toBe('#3b82f6');
-    });
-
-    it('handles shorthand 3-character hex colors', () => {
-      const lightened = lightenColor({ hex: '#fff', ratio: 0 });
-      expect(lightened).toBe('#ffffff');
-
-      const darkened = darkenColor({ hex: '#000', ratio: 0 });
-      expect(darkened).toBe('#000000');
-    });
-
-    it('returns original input if invalid hex format', () => {
-      expect(lightenColor({ hex: 'invalid' })).toBe('invalid');
-      expect(darkenColor({ hex: 'invalid' })).toBe('invalid');
-    });
-  });
-
   describe('#resolveSquarePyramidPalette', () => {
     it('generates a full palette with default base color', () => {
       const palette = resolveSquarePyramidPalette();
       expect(palette.activeTopEnd).toBe(DEFAULT_SQUARE_PYRAMID_COLOR);
       expect(palette.glow).toBe(DEFAULT_SQUARE_PYRAMID_COLOR);
-      expect(palette.activeTopStart).toMatch(/^#[0-9a-f]{6}$/i);
-      expect(palette.activeStroke).toMatch(/^#[0-9a-f]{6}$/i);
-      expect(palette.defaultTopStart).toMatch(/^#[0-9a-f]{6}$/i);
+      expect(palette.activeTopStart).toContain('color-mix(in srgb');
+      expect(palette.activeStroke).toContain('color-mix(in srgb');
+      expect(palette.defaultTopStart).toBe('var(--alpha-pyramid-highlight)');
     });
 
     it('adapts palette when custom base color is provided', () => {
@@ -88,15 +49,19 @@ describe('squarePyramid utilities', () => {
       const palette = resolveSquarePyramidPalette(customColor);
       expect(palette.activeTopEnd).toBe(customColor);
       expect(palette.glow).toBe(customColor);
+      expect(palette.activeTopStart).toMatch(/^#[0-9a-f]{6}$/i);
     });
   });
 
   describe('#DEFAULT_SQUARE_PYRAMID_STACK_COLORS', () => {
-    it('defines 6 distinct vibrant stack colors with valid hex formats', () => {
+    it('defines 6 distinct stack color tokens', () => {
       expect(DEFAULT_SQUARE_PYRAMID_STACK_COLORS).toHaveLength(6);
-      for (const hex of DEFAULT_SQUARE_PYRAMID_STACK_COLORS) {
-        expect(hex).toMatch(/^#[0-9a-f]{6}$/i);
+      for (const token of DEFAULT_SQUARE_PYRAMID_STACK_COLORS) {
+        expect(token).toMatch(
+          /^var\(--alpha-square-pyramid-stack-[1-6]-color\)$/,
+        );
       }
+
       const uniqueColors = new Set(DEFAULT_SQUARE_PYRAMID_STACK_COLORS);
       expect(uniqueColors.size).toBe(6);
     });
@@ -110,7 +75,10 @@ describe('squarePyramid utilities', () => {
 
       const layer = geo.layers[0];
       expect(layer).toBeDefined();
-      if (!layer) return;
+      if (!layer) {
+        return;
+      }
+
       expect(layer.index).toBe(0);
       expect(layer.rx).toBe(110);
       expect(layer.cx).toBe(480);

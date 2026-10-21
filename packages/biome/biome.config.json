@@ -67,6 +67,18 @@
       "lineWidth": 10
     }
   },
+  "html": {
+    "assist": {
+      "enabled": false
+    },
+    "experimentalFullSupportEnabled": true,
+    "formatter": {
+      "enabled": true
+    },
+    "linter": {
+      "enabled": false
+    }
+  },
   "linter": {
     "enabled": true,
     "rules": {

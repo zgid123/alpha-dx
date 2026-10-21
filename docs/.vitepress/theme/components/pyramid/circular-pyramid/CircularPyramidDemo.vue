@@ -2,7 +2,7 @@
 import CircularPyramid from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramid.vue';
 import CircularPyramidStack from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramidStack.vue';
 import CircularPyramidStackContent from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramidStackContent.vue';
-import CircularPyramidStackTitle from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramidStackTitle.vue';
+import CircularPyramidStackHeading from '@alphacifer/slidev-addon-theme/components/pyramid/circular-pyramid/CircularPyramidStackHeading.vue';
 import { computed, ref } from 'vue';
 
 import SlidevMockup from '../../common/SlidevMockup.vue';
@@ -95,9 +95,9 @@ function setLayersCount(n: number): void {
           :key="idx"
           :step="stack.step"
         >
-          <CircularPyramidStackTitle>
+          <CircularPyramidStackHeading>
             {{ stack.title }}
-          </CircularPyramidStackTitle>
+          </CircularPyramidStackHeading>
           <CircularPyramidStackContent>
             {{ stack.content }}
           </CircularPyramidStackContent>

@@ -18,7 +18,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(`
   text-center
   font-bold
   tracking-tight
-  text-[#a5f3fc]
+  text-(--alpha-reflected-title-color)
   after:content-[attr(data-title)]
   after:block
   after:mt-2
@@ -38,11 +38,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(`
 </script>
 
 <template>
-  <h1
-    v-bind="forwardedAttrs()"
-    :class="className()"
-    :data-title="title"
-  >
+  <h1 v-bind="forwardedAttrs()" :class="className()" :data-title="title">
     {{ title }}
   </h1>
 </template>

@@ -12,10 +12,7 @@ const style = computed(() => handleBackground(background));
 </script>
 
 <template>
-  <main
-    class="slidev-layout alpha-academic-blank"
-    :style="style"
-  >
+  <main class="slidev-layout alpha-academic-blank" :style="style">
     <slot />
   </main>
 </template>

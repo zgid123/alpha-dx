@@ -44,7 +44,7 @@ No component declares `defineEmits`, `defineModel`, or `defineExpose`.
 - Several diagram callouts use provide/inject context and registration order.
   Keep callouts inside their matching root and text/icon/badge children inside their
   matching callout. Explicit `index`, where supported, is zero-based.
-- `ArrowTriad`, `ArcCompare`, `ArcArrowProcess`, `QuadHub`, and `HexTriad` default
+- `ArrowTriad`, `ArcCompare`, `ArcArrowProcess`, `QuadHub`, and `HexagonTriad` default
   to animation enabled. Explicit `active` overrides the injected active state;
   `animation: false` disables it. Inside `shifting-intro`, activity follows clicks
   greater than zero. An omitted `startDelay` becomes 600 ms during the heading
@@ -52,7 +52,7 @@ No component declares `defineEmits`, `defineModel`, or `defineExpose`.
 - `ArrowTriad` and `ArcCompare` use `useDiagramAutoScale`; `QuadHub` has its own
   sizing implementation. Explicit `scale` wins; otherwise `autoScale: false`
   yields 1, and `maxScale` caps automatic scaling. Do not assume every diagram
-  supports these props: `HexTriad` and `ArcArrowProcess` do not.
+  supports these props: `HexagonTriad` and `ArcArrowProcess` do not.
 - `hidePagy` on `ArrowTriad`/`ArcCompare` adds `hide-pagy` and `data-hide-pagy`
   hooks. Its visible effect depends on consumer/theme CSS.
 - Components using `useMergedUnoAttrs` merge consumer classes with defaults and
@@ -65,7 +65,7 @@ No component declares `defineEmits`, `defineModel`, or `defineExpose`.
 ## Component inventory
 
 [Core](#core) · [Shifting heading](#shifting-heading) · [Thanks](#thanks) ·
-[Hex triad](#hex-triad) · [Horizontal card](#horizontal-card) ·
+[Hex triad](#hexagon-triad) · [Horizontal card](#horizontal-card) ·
 [Vertical card](#vertical-card) · [Chevron card](#chevron-card) ·
 [Arrow triad](#arrow-triad) · [Quad hub](#quad-hub) ·
 [Arc compare](#arc-compare) · [Arc arrow process](#arc-arrow-process)
@@ -81,9 +81,9 @@ Date formatting, speaker metadata, quotations, and animated titles. `Date` falls
 
 [Source](./components/core/Date.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `date` | `string` | `undefined` |
+| Prop   | Type     | Declared default |
+| ------ | -------- | ---------------- |
+| `date` | `string` | `undefined`      |
 
 Slots: none. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -91,9 +91,9 @@ Slots: none. Class/attribute handling: `useMergedUnoAttrs`.
 
 [Source](./components/core/QnA.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `startDelay` | `number` | `11_500` |
+| Prop         | Type     | Declared default |
+| ------------ | -------- | ---------------- |
+| `startDelay` | `number` | `11_500`         |
 
 Slots: none. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -101,11 +101,11 @@ Slots: none. Class/attribute handling: `useMergedUnoAttrs`.
 
 [Source](./components/core/Quote.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `text` | `string` | **required** |
-| `author` | `string` | `undefined` |
-| `titleClass` | `string` | `undefined` |
+| Prop         | Type     | Declared default |
+| ------------ | -------- | ---------------- |
+| `text`       | `string` | **required**     |
+| `author`     | `string` | `undefined`      |
+| `titleClass` | `string` | `undefined`      |
 
 Slots: none. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -113,9 +113,9 @@ Slots: none. Class/attribute handling: `useMergedUnoAttrs`.
 
 [Source](./components/core/ReflectedTitle.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `title` | `string` | **required** |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `title` | `string` | **required**     |
 
 Slots: none. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -123,11 +123,11 @@ Slots: none. Class/attribute handling: `useMergedUnoAttrs`.
 
 [Source](./components/core/Speaker.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `author` | `string` | `'Alpha'` |
-| `team` | `string[]` | `[]` |
-| `date` | `string` | **required** |
+| Prop     | Type       | Declared default |
+| -------- | ---------- | ---------------- |
+| `author` | `string`   | `'Alpha'`        |
+| `team`   | `string[]` | `[]`             |
+| `date`   | `string`   | **required**     |
 
 Slots: none. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -139,26 +139,26 @@ Slots: none. Class/attribute handling: `useMergedUnoAttrs`.
 
 [Source](./components/shifting-heading/TransitionHeading.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `idle` | `boolean` | `false` |
-| `center` | `boolean` | `false` |
+| Prop     | Type      | Declared default |
+| -------- | --------- | ---------------- |
+| `idle`   | `boolean` | `false`          |
+| `center` | `boolean` | `false`          |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
 ### Thanks
 
-`ThanksContent` renders decorative squares and fixed “Thank You / for your attention!” text. It has multiple root nodes; consumer attributes do not have a single automatic fallthrough target. `animation: false` renders final motion states immediately. `ThanksSquare` and `ThanksOutlineSquare` are empty decorative elements sized/positioned by classes.
+`SquareThanks` renders decorative squares and custom or fallback “Thank You / for your attention!” text. It has multiple root nodes; consumer attributes do not have a single automatic fallthrough target. `animation: false` renders final motion states immediately. `ThanksSquare` and `ThanksOutlineSquare` are empty decorative elements sized/positioned by classes.
 
-#### ThanksContent
+#### SquareThanks
 
-[Source](./components/thanks/ThanksContent.vue)
+[Source](./components/thanks/SquareThanks.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `animation` | `boolean` | `true` |
+| Prop        | Type      | Declared default |
+| ----------- | --------- | ---------------- |
+| `animation` | `boolean` | `true`           |
 
-Slots: none. Class/attribute handling: component-specific Vue fallthrough/template behavior.
+Slots: default (custom text or headings; fallback "Thank You<br>for your attention!"). Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
 #### ThanksOutlineSquare
 
@@ -178,236 +178,236 @@ Slots: none. Class/attribute handling: `useMergedUnoAttrs`.
 
 ### Hex triad
 
-Three overlapping hexagons with three callouts. Item resolution takes the first three entries and fills missing entries with defaults. Callouts register in order; indices beyond two do not render. Root slots: title/subtitle plus default callouts; the header is rendered only when a title prop or title slot exists. `HexTriadCallout` extracts badge, heading, and content children. It has no props. **Current quirk:** item `title` and `description` do not populate the heading/content fallback text; those children use fixed placeholders unless given slots. `HexTriadBadge` synchronizes textual slot content or its ID with the center badge. `HexTriadLayer` renders an SVG path; `HexTriadCenterBadge` renders an SVG group and expects an SVG coordinate system/filter definitions.
+Three overlapping hexagons with three callouts. Item resolution takes the first three entries and fills missing entries with defaults. Callouts register in order; indices beyond two do not render. Root slots: title/subtitle plus default callouts; the header is rendered only when a title prop or title slot exists. `HexagonTriadCallout` extracts badge, heading, and content children. It has no props. **Current quirk:** item `title` and `description` do not populate the heading/content fallback text; those children use fixed placeholders unless given slots. `HexagonTriadBadge` synchronizes textual slot content or its ID with the center badge. `HexagonTriadLayer` renders an SVG path; `HexagonTriadCenterBadge` renders an SVG group and expects an SVG coordinate system/filter definitions.
 
-#### HexTriad
+#### HexagonTriad
 
-[Source](./components/hex-triad/HexTriad.vue)
+[Source](./components/hexagon-triad/HexagonTriad.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `title` | `string` | `undefined` |
-| `subtitle` | `string` | `undefined` |
-| `animation` | `boolean` | `true` |
-| `items` | `readonly IHexTriadItem[]` | `undefined` |
-| `startDelay` | `number` | `undefined` |
-| `active` | `boolean` | `undefined` |
+| Prop         | Type                           | Declared default |
+| ------------ | ------------------------------ | ---------------- |
+| `title`      | `string`                       | `undefined`      |
+| `subtitle`   | `string`                       | `undefined`      |
+| `animation`  | `boolean`                      | `true`           |
+| `items`      | `readonly IHexagonTriadItem[]` | `undefined`      |
+| `startDelay` | `number`                       | `undefined`      |
+| `active`     | `boolean`                      | `undefined`      |
 
 Slots: `default`, `subtitle`, `title`. Class/attribute handling: `useMergedUnoAttrs`.
 
-#### HexTriadBadge
+#### HexagonTriadBadge
 
-[Source](./components/hex-triad/HexTriadBadge.vue)
+[Source](./components/hexagon-triad/HexagonTriadBadge.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `id` | `string \| number` | `undefined` |
-| `color` | `string` | `undefined` |
-| `lightColor` | `string` | `undefined` |
+| Prop         | Type               | Declared default |
+| ------------ | ------------------ | ---------------- |
+| `id`         | `string \| number` | `undefined`      |
+| `color`      | `string`           | `undefined`      |
+| `lightColor` | `string`           | `undefined`      |
 
 Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
-#### HexTriadCallout
+#### HexagonTriadCallout
 
-[Source](./components/hex-triad/HexTriadCallout.vue)
+[Source](./components/hexagon-triad/HexagonTriadCallout.vue)
 
 Props: none.
 
 Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
-#### HexTriadCenterBadge
+#### HexagonTriadCenterBadge
 
-[Source](./components/hex-triad/HexTriadCenterBadge.vue)
+[Source](./components/hexagon-triad/HexagonTriadCenterBadge.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `x` | `number` | **required** |
-| `y` | `number` | **required** |
-| `text` | `string \| number` | **required** |
-| `color` | `string` | **required** |
-| `filter` | `string` | `'url(#hex-badge-shadow)'` |
-| `radius` | `number` | **required** |
+| Prop     | Type               | Declared default           |
+| -------- | ------------------ | -------------------------- |
+| `x`      | `number`           | **required**               |
+| `y`      | `number`           | **required**               |
+| `text`   | `string \| number` | **required**               |
+| `color`  | `string`           | **required**               |
+| `filter` | `string`           | `'url(#hex-badge-shadow)'` |
+| `radius` | `number`           | **required**               |
 
 Slots: none. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
-#### HexTriadContent
+#### HexagonTriadContent
 
-[Source](./components/hex-triad/HexTriadContent.vue)
-
-Props: none.
-
-Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
-
-#### HexTriadHeading
-
-[Source](./components/hex-triad/HexTriadHeading.vue)
+[Source](./components/hexagon-triad/HexagonTriadContent.vue)
 
 Props: none.
 
 Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
-#### HexTriadLayer
+#### HexagonTriadHeading
 
-[Source](./components/hex-triad/HexTriadLayer.vue)
+[Source](./components/hexagon-triad/HexagonTriadHeading.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `d` | `string` | **required** |
-| `fill` | `string` | `undefined` |
-| `filter` | `string` | `undefined` |
-| `opacity` | `number \| string` | `1` |
+Props: none.
+
+Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
+
+#### HexagonTriadLayer
+
+[Source](./components/hexagon-triad/HexagonTriadLayer.vue)
+
+| Prop      | Type               | Declared default |
+| --------- | ------------------ | ---------------- |
+| `d`       | `string`           | **required**     |
+| `fill`    | `string`           | `undefined`      |
+| `filter`  | `string`           | `undefined`      |
+| `opacity` | `number \| string` | `1`              |
 
 Slots: none. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
 ### Horizontal card
 
-Rounded horizontal card with a ribbon badge, optional icon circle, title, description, and dots. Named slots take precedence over extracted `HorizCardBadge`, `HorizCardIcon`, `HorizCardHeading`, and `HorizCardContent` children, then prop/default content. Other default children render as extra content. The icon circle is enabled by an icon prop/slot/child unless `hasIconCircle` explicitly overrides it. Descendants inherit card colors and step where applicable. Default accent is `#ea583a`; light color derives from that accent at alpha 0.16.
+Rounded horizontal card with a ribbon badge, optional icon circle, title, description, and dots. Named slots take precedence over extracted `HorizontalCardBadge`, `HorizontalCardIcon`, `HorizontalCardHeading`, and `HorizontalCardContent` children, then prop/default content. Other default children render as extra content. The icon circle is enabled by an icon prop/slot/child unless `hasIconCircle` explicitly overrides it. Descendants inherit card colors and step where applicable. Default accent is `#ea583a`; light color derives from that accent at alpha 0.16.
 
-#### HorizCard
+#### HorizontalCard
 
-[Source](./components/horiz-card/HorizCard.vue)
+[Source](./components/horizontal-card/HorizontalCard.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `'#ea583a'` |
-| `dots` | `boolean` | `true` |
-| `title` | `string` | `'Lorem Ipsum'` |
-| `cardBg` | `string` | `'#ffffff'` |
-| `textColor` | `string` | `undefined` |
-| `titleColor` | `string` | `undefined` |
-| `lightColor` | `string` | `undefined` |
-| `description` | `string` | `undefined` |
-| `step` | `string \| number` | `'01'` |
-| `icon` | `string \| object` | `undefined` |
-| `hasIconCircle` | `boolean` | `undefined` |
+| Prop            | Type               | Declared default |
+| --------------- | ------------------ | ---------------- |
+| `color`         | `string`           | `'#ea583a'`      |
+| `dots`          | `boolean`          | `true`           |
+| `title`         | `string`           | `'Lorem Ipsum'`  |
+| `cardBg`        | `string`           | `'#ffffff'`      |
+| `textColor`     | `string`           | `undefined`      |
+| `titleColor`    | `string`           | `undefined`      |
+| `lightColor`    | `string`           | `undefined`      |
+| `description`   | `string`           | `undefined`      |
+| `step`          | `string \| number` | `'01'`           |
+| `icon`          | `string \| object` | `undefined`      |
+| `hasIconCircle` | `boolean`          | `undefined`      |
 
 Slots: `badge`, `default`, `description`, `dots`, `icon`, `title`. Class/attribute handling: `useMergedUnoAttrs`.
 
-#### HorizCardBadge
+#### HorizontalCardBadge
 
-[Source](./components/horiz-card/HorizCardBadge.vue)
+[Source](./components/horizontal-card/HorizontalCardBadge.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
-| `step` | `string \| number` | `undefined` |
-
-Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
-
-#### HorizCardContent
-
-[Source](./components/horiz-card/HorizCardContent.vue)
-
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
+| Prop    | Type               | Declared default |
+| ------- | ------------------ | ---------------- |
+| `color` | `string`           | `undefined`      |
+| `step`  | `string \| number` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
-#### HorizCardHeading
+#### HorizontalCardContent
 
-[Source](./components/horiz-card/HorizCardHeading.vue)
+[Source](./components/horizontal-card/HorizontalCardContent.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
-#### HorizCardIcon
+#### HorizontalCardHeading
 
-[Source](./components/horiz-card/HorizCardIcon.vue)
+[Source](./components/horizontal-card/HorizontalCardHeading.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `icon` | `string \| object` | `undefined` |
-| `color` | `string` | `undefined` |
-| `lightColor` | `string` | `undefined` |
-| `size` | `number \| string` | `96` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `undefined`      |
+
+Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
+
+#### HorizontalCardIcon
+
+[Source](./components/horizontal-card/HorizontalCardIcon.vue)
+
+| Prop         | Type               | Declared default |
+| ------------ | ------------------ | ---------------- |
+| `icon`       | `string \| object` | `undefined`      |
+| `color`      | `string`           | `undefined`      |
+| `lightColor` | `string`           | `undefined`      |
+| `size`       | `number \| string` | `96`             |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
 ### Vertical card
 
-Vertical card with corner accents, badge, optional icon circle, divider, and dots. Named slots take precedence over extracted children, then props. Both `VertCardTitle` and `VertCardHeading` are recognized as the title. `variant` overrides `badgeVariant`; accepted values are `outside`, `inside`, `none`, and `hidden`. **Current quirk:** only `outside` renders a badge; `inside` is declared but has no rendered placement. `VertCardTitle` inherits the parent divider setting, while `VertCardHeading` defaults its own `hasDivider` to true. The icon circle is inferred from icon content unless explicitly controlled. Descendants inherit the card context; light color defaults to accent at alpha 0.16.
+Vertical card with corner accents, badge, optional icon circle, divider, and dots. Named slots take precedence over extracted children, then props. Both `VerticalCardTitle` and `VerticalCardHeading` are recognized as the title. `variant` overrides `badgeVariant`; accepted values are `outside`, `inside`, `none`, and `hidden`. **Current quirk:** only `outside` renders a badge; `inside` is declared but has no rendered placement. `VerticalCardTitle` inherits the parent divider setting, while `VerticalCardHeading` defaults its own `hasDivider` to true. The icon circle is inferred from icon content unless explicitly controlled. Descendants inherit the card context; light color defaults to accent at alpha 0.16.
 
-#### VertCard
+#### VerticalCard
 
-[Source](./components/vert-card/VertCard.vue)
+[Source](./components/vertical-card/VerticalCard.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `'#ea583a'` |
-| `dots` | `boolean` | `true` |
-| `title` | `string` | `undefined` |
-| `cardBg` | `string` | `'#ffffff'` |
-| `textColor` | `string` | `undefined` |
-| `titleColor` | `string` | `undefined` |
-| `lightColor` | `string` | `undefined` |
-| `stripeColor` | `string` | `undefined` |
-| `description` | `string` | `undefined` |
-| `hasDivider` | `boolean` | `true` |
-| `step` | `string \| number` | `'01'` |
-| `icon` | `string \| object` | `undefined` |
-| `hasIconCircle` | `boolean` | `undefined` |
-| `variant` | `TVertCardBadgeVariant` | `undefined` |
-| `badgeVariant` | `TVertCardBadgeVariant` | `'outside'` |
+| Prop            | Type                        | Declared default |
+| --------------- | --------------------------- | ---------------- |
+| `color`         | `string`                    | `'#ea583a'`      |
+| `dots`          | `boolean`                   | `true`           |
+| `title`         | `string`                    | `undefined`      |
+| `cardBg`        | `string`                    | `'#ffffff'`      |
+| `textColor`     | `string`                    | `undefined`      |
+| `titleColor`    | `string`                    | `undefined`      |
+| `lightColor`    | `string`                    | `undefined`      |
+| `stripeColor`   | `string`                    | `undefined`      |
+| `description`   | `string`                    | `undefined`      |
+| `hasDivider`    | `boolean`                   | `true`           |
+| `step`          | `string \| number`          | `'01'`           |
+| `icon`          | `string \| object`          | `undefined`      |
+| `hasIconCircle` | `boolean`                   | `undefined`      |
+| `variant`       | `TVerticalCardBadgeVariant` | `undefined`      |
+| `badgeVariant`  | `TVerticalCardBadgeVariant` | `'outside'`      |
 
 Slots: `badge`, `default`, `description`, `dots`, `icon`, `title`. Class/attribute handling: `useMergedUnoAttrs`.
 
-#### VertCardBadge
+#### VerticalCardBadge
 
-[Source](./components/vert-card/VertCardBadge.vue)
+[Source](./components/vertical-card/VerticalCardBadge.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
-| `step` | `string \| number` | `undefined` |
-
-Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
-
-#### VertCardContent
-
-[Source](./components/vert-card/VertCardContent.vue)
-
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
+| Prop    | Type               | Declared default |
+| ------- | ------------------ | ---------------- |
+| `color` | `string`           | `undefined`      |
+| `step`  | `string \| number` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
-#### VertCardHeading
+#### VerticalCardContent
 
-[Source](./components/vert-card/VertCardHeading.vue)
+[Source](./components/vertical-card/VerticalCardContent.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
-| `hasDivider` | `boolean` | `true` |
-
-Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
-
-#### VertCardIcon
-
-[Source](./components/vert-card/VertCardIcon.vue)
-
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `icon` | `string \| object` | `undefined` |
-| `color` | `string` | `undefined` |
-| `lightColor` | `string` | `undefined` |
-| `size` | `number \| string` | `108` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
-#### VertCardTitle
+#### VerticalCardHeading
 
-[Source](./components/vert-card/VertCardTitle.vue)
+[Source](./components/vertical-card/VerticalCardHeading.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
-| `hasDivider` | `boolean` | `undefined` |
+| Prop         | Type      | Declared default |
+| ------------ | --------- | ---------------- |
+| `color`      | `string`  | `undefined`      |
+| `hasDivider` | `boolean` | `true`           |
+
+Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
+
+#### VerticalCardIcon
+
+[Source](./components/vertical-card/VerticalCardIcon.vue)
+
+| Prop         | Type               | Declared default |
+| ------------ | ------------------ | ---------------- |
+| `icon`       | `string \| object` | `undefined`      |
+| `color`      | `string`           | `undefined`      |
+| `lightColor` | `string`           | `undefined`      |
+| `size`       | `number \| string` | `108`            |
+
+Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
+
+#### VerticalCardTitle
+
+[Source](./components/vertical-card/VerticalCardTitle.vue)
+
+| Prop         | Type      | Declared default |
+| ------------ | --------- | ---------------- |
+| `color`      | `string`  | `undefined`      |
+| `hasDivider` | `boolean` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -419,20 +419,20 @@ Horizontal row with a chevron badge. Named badge/title/description slots overrid
 
 [Source](./components/chevron-card/ChevronCard.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `step` | `string \| number` | `'01'` |
-| `icon` | `string \| object` | `undefined` |
-| `color` | `string` | `'#f59e0b'` |
-| `width` | `number \| string` | `undefined` |
-| `cardBg` | `string` | `'#f5f5f7'` |
-| `height` | `number \| string` | `undefined` |
-| `textColor` | `string` | `undefined` |
-| `animation` | `boolean` | `true` |
-| `notchDepth` | `number` | `26` |
-| `titleColor` | `string` | `undefined` |
-| `chevronWidth` | `number` | `130` |
-| `borderRadius` | `number` | `18` |
+| Prop           | Type               | Declared default |
+| -------------- | ------------------ | ---------------- |
+| `step`         | `string \| number` | `'01'`           |
+| `icon`         | `string \| object` | `undefined`      |
+| `color`        | `string`           | `'#f59e0b'`      |
+| `width`        | `number \| string` | `undefined`      |
+| `cardBg`       | `string`           | `'#f5f5f7'`      |
+| `height`       | `number \| string` | `undefined`      |
+| `textColor`    | `string`           | `undefined`      |
+| `animation`    | `boolean`          | `true`           |
+| `notchDepth`   | `number`           | `26`             |
+| `titleColor`   | `string`           | `undefined`      |
+| `chevronWidth` | `number`           | `130`            |
+| `borderRadius` | `number`           | `18`             |
 
 Slots: `badge`, `default`, `description`, `title`. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -440,14 +440,14 @@ Slots: `badge`, `default`, `description`, `title`. Class/attribute handling: `us
 
 [Source](./components/chevron-card/ChevronCardBadge.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `step` | `string \| number` | `undefined` |
-| `icon` | `string \| object` | `undefined` |
-| `color` | `string` | `undefined` |
-| `width` | `number` | `130` |
-| `height` | `number \| string` | `undefined` |
-| `notchDepth` | `number` | `26` |
+| Prop         | Type               | Declared default |
+| ------------ | ------------------ | ---------------- |
+| `step`       | `string \| number` | `undefined`      |
+| `icon`       | `string \| object` | `undefined`      |
+| `color`      | `string`           | `undefined`      |
+| `width`      | `number`           | `130`            |
+| `height`     | `number \| string` | `undefined`      |
+| `notchDepth` | `number`           | `26`             |
 
 Slots: `default`, `icon`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -455,9 +455,9 @@ Slots: `default`, `icon`. Class/attribute handling: component-specific Vue fallt
 
 [Source](./components/chevron-card/ChevronCardContent.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -465,9 +465,9 @@ Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/t
 
 [Source](./components/chevron-card/ChevronCardHeading.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -479,21 +479,21 @@ Arrow diagram with layouts `2-left-1-right` (default), `1-left-2-right`, `2-left
 
 [Source](./components/arrow-triad/ArrowTriad.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `items` | `readonly IArrowTriadItem[]` | `undefined` |
-| `animation` | `boolean` | `true` |
-| `height` | `number \| string` | `undefined` |
-| `startDelay` | `number` | `undefined` |
-| `active` | `boolean` | `undefined` |
-| `triangleHead` | `boolean` | `true` |
-| `neckLine` | `boolean` | `true` |
-| `scale` | `number` | `undefined` |
-| `autoScale` | `boolean` | `true` |
-| `maxScale` | `number` | `undefined` |
-| `hidePagy` | `boolean` | `undefined` |
-| `layout` | `TArrowTriadLayout` | `'2-left-1-right'` |
-| `offsetX` | `number` | `undefined` |
+| Prop           | Type                         | Declared default   |
+| -------------- | ---------------------------- | ------------------ |
+| `items`        | `readonly IArrowTriadItem[]` | `undefined`        |
+| `animation`    | `boolean`                    | `true`             |
+| `height`       | `number \| string`           | `undefined`        |
+| `startDelay`   | `number`                     | `undefined`        |
+| `active`       | `boolean`                    | `undefined`        |
+| `triangleHead` | `boolean`                    | `true`             |
+| `neckLine`     | `boolean`                    | `true`             |
+| `scale`        | `number`                     | `undefined`        |
+| `autoScale`    | `boolean`                    | `true`             |
+| `maxScale`     | `number`                     | `undefined`        |
+| `hidePagy`     | `boolean`                    | `undefined`        |
+| `layout`       | `TArrowTriadLayout`          | `'2-left-1-right'` |
+| `offsetX`      | `number`                     | `undefined`        |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -501,17 +501,17 @@ Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
 [Source](./components/arrow-triad/ArrowTriadCallout.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `id` | `string \| number` | `undefined` |
-| `index` | `number` | `undefined` |
-| `icon` | `string \| object \| false` | `undefined` |
-| `color` | `string` | `undefined` |
-| `cardBg` | `string` | `undefined` |
-| `textColor` | `string` | `undefined` |
-| `titleColor` | `string` | `undefined` |
-| `title` | `string` | `undefined` |
-| `description` | `string` | `undefined` |
+| Prop          | Type                        | Declared default |
+| ------------- | --------------------------- | ---------------- |
+| `id`          | `string \| number`          | `undefined`      |
+| `index`       | `number`                    | `undefined`      |
+| `icon`        | `string \| object \| false` | `undefined`      |
+| `color`       | `string`                    | `undefined`      |
+| `cardBg`      | `string`                    | `undefined`      |
+| `textColor`   | `string`                    | `undefined`      |
+| `titleColor`  | `string`                    | `undefined`      |
+| `title`       | `string`                    | `undefined`      |
+| `description` | `string`                    | `undefined`      |
 
 Slots: `default`, `description`, `icon`, `title`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -519,9 +519,9 @@ Slots: `default`, `description`, `icon`, `title`. Class/attribute handling: comp
 
 [Source](./components/arrow-triad/ArrowTriadContent.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -529,9 +529,9 @@ Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/t
 
 [Source](./components/arrow-triad/ArrowTriadHeading.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -539,11 +539,11 @@ Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/t
 
 [Source](./components/arrow-triad/ArrowTriadIcon.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `size` | `number` | `32` |
-| `color` | `string` | `'#334155'` |
-| `icon` | `string \| object \| false` | `undefined` |
+| Prop    | Type                        | Declared default |
+| ------- | --------------------------- | ---------------- |
+| `size`  | `number`                    | `32`             |
+| `color` | `string`                    | `'#334155'`      |
+| `icon`  | `string \| object \| false` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -555,20 +555,20 @@ Four surrounding blocks ordered top-left, top-right, bottom-right, bottom-left. 
 
 [Source](./components/quad-hub/QuadHub.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `title` | `string` | `undefined` |
-| `items` | `readonly IQuadHubItem[]` | `undefined` |
-| `active` | `boolean` | `undefined` |
-| `height` | `number \| string` | `undefined` |
-| `arcRatio` | `number` | `0.55` |
-| `subtitle` | `string` | `undefined` |
-| `animation` | `boolean` | `true` |
-| `startDelay` | `number` | `undefined` |
-| `arcBorderRatio` | `number` | `0.8` |
-| `scale` | `number` | `undefined` |
-| `autoScale` | `boolean` | `true` |
-| `maxScale` | `number` | `undefined` |
+| Prop             | Type                      | Declared default |
+| ---------------- | ------------------------- | ---------------- |
+| `title`          | `string`                  | `undefined`      |
+| `items`          | `readonly IQuadHubItem[]` | `undefined`      |
+| `active`         | `boolean`                 | `undefined`      |
+| `height`         | `number \| string`        | `undefined`      |
+| `arcRatio`       | `number`                  | `0.55`           |
+| `subtitle`       | `string`                  | `undefined`      |
+| `animation`      | `boolean`                 | `true`           |
+| `startDelay`     | `number`                  | `undefined`      |
+| `arcBorderRatio` | `number`                  | `0.8`            |
+| `scale`          | `number`                  | `undefined`      |
+| `autoScale`      | `boolean`                 | `true`           |
+| `maxScale`       | `number`                  | `undefined`      |
 
 Slots: `default`, `hub`. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -576,16 +576,16 @@ Slots: `default`, `hub`. Class/attribute handling: `useMergedUnoAttrs`.
 
 [Source](./components/quad-hub/QuadHubCallout.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `id` | `string \| number` | `undefined` |
-| `icon` | `TQuadHubIcon` | `undefined` |
-| `color` | `string` | `undefined` |
-| `cardBg` | `string` | `undefined` |
-| `arcColor` | `string` | `undefined` |
-| `textColor` | `string` | `undefined` |
-| `titleColor` | `string` | `undefined` |
-| `arcBorderColor` | `string` | `undefined` |
+| Prop             | Type               | Declared default |
+| ---------------- | ------------------ | ---------------- |
+| `id`             | `string \| number` | `undefined`      |
+| `icon`           | `TQuadHubIcon`     | `undefined`      |
+| `color`          | `string`           | `undefined`      |
+| `cardBg`         | `string`           | `undefined`      |
+| `arcColor`       | `string`           | `undefined`      |
+| `textColor`      | `string`           | `undefined`      |
+| `titleColor`     | `string`           | `undefined`      |
+| `arcBorderColor` | `string`           | `undefined`      |
 
 Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -593,11 +593,11 @@ Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/t
 
 [Source](./components/quad-hub/QuadHubCenter.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `title` | `string` | `undefined` |
-| `radius` | `number` | `58` |
-| `subtitle` | `string` | `undefined` |
+| Prop       | Type     | Declared default |
+| ---------- | -------- | ---------------- |
+| `title`    | `string` | `undefined`      |
+| `radius`   | `number` | `58`             |
+| `subtitle` | `string` | `undefined`      |
 
 Slots: `default`, `subtitle`, `title`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -605,9 +605,9 @@ Slots: `default`, `subtitle`, `title`. Class/attribute handling: component-speci
 
 [Source](./components/quad-hub/QuadHubContent.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -615,9 +615,9 @@ Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/t
 
 [Source](./components/quad-hub/QuadHubHeading.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -625,11 +625,11 @@ Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/t
 
 [Source](./components/quad-hub/QuadHubIcon.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `size` | `number` | `34` |
-| `color` | `string` | `'#ffffff'` |
-| `icon` | `TQuadHubIcon` | `undefined` |
+| Prop    | Type           | Declared default |
+| ------- | -------------- | ---------------- |
+| `size`  | `number`       | `34`             |
+| `color` | `string`       | `'#ffffff'`      |
+| `icon`  | `TQuadHubIcon` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -641,22 +641,22 @@ Two colored semicircle hubs and surrounding comparison points. Compose root → 
 
 [Source](./components/arc-compare/ArcCompare.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `vsText` | `string` | `'Vs'` |
-| `vsSize` | `number` | `14` |
-| `count` | `number` | `undefined` |
-| `hubRadius` | `number` | `undefined` |
-| `arcRadius` | `number` | `undefined` |
-| `arcOffset` | `number` | `undefined` |
-| `animation` | `boolean` | `true` |
-| `height` | `number \| string` | `undefined` |
-| `startDelay` | `number` | `undefined` |
-| `active` | `boolean` | `undefined` |
-| `scale` | `number` | `undefined` |
-| `autoScale` | `boolean` | `true` |
-| `maxScale` | `number` | `undefined` |
-| `hidePagy` | `boolean` | `undefined` |
+| Prop         | Type               | Declared default |
+| ------------ | ------------------ | ---------------- |
+| `vsText`     | `string`           | `'Vs'`           |
+| `vsSize`     | `number`           | `14`             |
+| `count`      | `number`           | `undefined`      |
+| `hubRadius`  | `number`           | `undefined`      |
+| `arcRadius`  | `number`           | `undefined`      |
+| `arcOffset`  | `number`           | `undefined`      |
+| `animation`  | `boolean`          | `true`           |
+| `height`     | `number \| string` | `undefined`      |
+| `startDelay` | `number`           | `undefined`      |
+| `active`     | `boolean`          | `undefined`      |
+| `scale`      | `number`           | `undefined`      |
+| `autoScale`  | `boolean`          | `true`           |
+| `maxScale`   | `number`           | `undefined`      |
+| `hidePagy`   | `boolean`          | `undefined`      |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -664,11 +664,11 @@ Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
 [Source](./components/arc-compare/ArcCompareBadge.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `id` | `string \| number` | `undefined` |
-| `color` | `string` | `undefined` |
-| `size` | `number` | `52` |
+| Prop    | Type               | Declared default |
+| ------- | ------------------ | ---------------- |
+| `id`    | `string \| number` | `undefined`      |
+| `color` | `string`           | `undefined`      |
+| `size`  | `number`           | `52`             |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -676,16 +676,16 @@ Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
 [Source](./components/arc-compare/ArcCompareCallout.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `side` | `'left' \| 'right'` | `undefined` |
-| `index` | `number` | `undefined` |
-| `id` | `string \| number` | `undefined` |
-| `title` | `string` | `undefined` |
-| `description` | `string` | `undefined` |
-| `color` | `string` | `undefined` |
-| `textColor` | `string` | `undefined` |
-| `textGap` | `number` | `undefined` |
+| Prop          | Type                | Declared default |
+| ------------- | ------------------- | ---------------- |
+| `side`        | `'left' \| 'right'` | `undefined`      |
+| `index`       | `number`            | `undefined`      |
+| `id`          | `string \| number`  | `undefined`      |
+| `title`       | `string`            | `undefined`      |
+| `description` | `string`            | `undefined`      |
+| `color`       | `string`            | `undefined`      |
+| `textColor`   | `string`            | `undefined`      |
+| `textGap`     | `number`            | `undefined`      |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -693,9 +693,9 @@ Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
 [Source](./components/arc-compare/ArcCompareContent.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -711,9 +711,9 @@ Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
 [Source](./components/arc-compare/ArcCompareHeading.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -721,11 +721,11 @@ Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
 [Source](./components/arc-compare/ArcCompareLeft.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `'#e87a36'` |
-| `title` | `string` | `undefined` |
-| `count` | `number` | `undefined` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `'#e87a36'`      |
+| `title` | `string` | `undefined`      |
+| `count` | `number` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -733,11 +733,11 @@ Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
 [Source](./components/arc-compare/ArcCompareRight.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `'#208b9e'` |
-| `title` | `string` | `undefined` |
-| `count` | `number` | `undefined` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `'#208b9e'`      |
+| `title` | `string` | `undefined`      |
+| `count` | `number` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -745,9 +745,9 @@ Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
 [Source](./components/arc-compare/ArcCompareTitle.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -759,15 +759,15 @@ Curved arrow process with dedicated placements for 2, 3, and 4 callouts. Count p
 
 [Source](./components/arc-arrow-process/ArcArrowProcess.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `items` | `readonly IArcArrowProcessItem[]` | `undefined` |
-| `count` | `number` | `undefined` |
-| `animation` | `boolean` | `true` |
-| `height` | `number \| string` | `370` |
-| `startDelay` | `number` | `undefined` |
-| `active` | `boolean` | `undefined` |
-| `rotationOffset` | `number` | `undefined` |
+| Prop             | Type                              | Declared default |
+| ---------------- | --------------------------------- | ---------------- |
+| `items`          | `readonly IArcArrowProcessItem[]` | `undefined`      |
+| `count`          | `number`                          | `undefined`      |
+| `animation`      | `boolean`                         | `true`           |
+| `height`         | `number \| string`                | `370`            |
+| `startDelay`     | `number`                          | `undefined`      |
+| `active`         | `boolean`                         | `undefined`      |
+| `rotationOffset` | `number`                          | `undefined`      |
 
 Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
@@ -775,19 +775,19 @@ Slots: `default`. Class/attribute handling: `useMergedUnoAttrs`.
 
 [Source](./components/arc-arrow-process/ArcArrowProcessArrow.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `'#6fa3b5'` |
-| `gradientEnd` | `string` | `'#8cb8c8'` |
-| `stroke` | `string` | `'#ffffff'` |
-| `strokeWidth` | `number` | `2.5` |
-| `width` | `number \| string` | `undefined` |
-| `height` | `number \| string` | `undefined` |
-| `rotation` | `number` | `0` |
-| `standalone` | `boolean` | `undefined` |
-| `path` | `string` | `undefined` |
-| `viewBox` | `string` | `undefined` |
-| `originY` | `number` | `-220` |
+| Prop          | Type               | Declared default |
+| ------------- | ------------------ | ---------------- |
+| `color`       | `string`           | `'#6fa3b5'`      |
+| `gradientEnd` | `string`           | `'#8cb8c8'`      |
+| `stroke`      | `string`           | `'#ffffff'`      |
+| `strokeWidth` | `number`           | `2.5`            |
+| `width`       | `number \| string` | `undefined`      |
+| `height`      | `number \| string` | `undefined`      |
+| `rotation`    | `number`           | `0`              |
+| `standalone`  | `boolean`          | `undefined`      |
+| `path`        | `string`           | `undefined`      |
+| `viewBox`     | `string`           | `undefined`      |
+| `originY`     | `number`           | `-220`           |
 
 Slots: none. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -795,15 +795,15 @@ Slots: none. Class/attribute handling: component-specific Vue fallthrough/templa
 
 [Source](./components/arc-arrow-process/ArcArrowProcessCallout.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `id` | `string \| number` | `undefined` |
-| `index` | `number` | `undefined` |
-| `icon` | `string \| object \| false` | `undefined` |
-| `color` | `string` | `undefined` |
-| `textColor` | `string` | `undefined` |
-| `title` | `string` | `undefined` |
-| `description` | `string` | `undefined` |
+| Prop          | Type                        | Declared default |
+| ------------- | --------------------------- | ---------------- |
+| `id`          | `string \| number`          | `undefined`      |
+| `index`       | `number`                    | `undefined`      |
+| `icon`        | `string \| object \| false` | `undefined`      |
+| `color`       | `string`                    | `undefined`      |
+| `textColor`   | `string`                    | `undefined`      |
+| `title`       | `string`                    | `undefined`      |
+| `description` | `string`                    | `undefined`      |
 
 Slots: `default`, `description`, `icon`, `title`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -811,9 +811,9 @@ Slots: `default`, `description`, `icon`, `title`. Class/attribute handling: comp
 
 [Source](./components/arc-arrow-process/ArcArrowProcessContent.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -821,9 +821,9 @@ Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/t
 
 [Source](./components/arc-arrow-process/ArcArrowProcessHeading.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `color` | `string` | `undefined` |
+| Prop    | Type     | Declared default |
+| ------- | -------- | ---------------- |
+| `color` | `string` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
@@ -831,29 +831,29 @@ Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/t
 
 [Source](./components/arc-arrow-process/ArcArrowProcessIcon.vue)
 
-| Prop | Type | Declared default |
-| --- | --- | --- |
-| `size` | `number` | `36` |
-| `color` | `string` | `'#888d94'` |
-| `icon` | `string \| object \| false` | `undefined` |
+| Prop    | Type                        | Declared default |
+| ------- | --------------------------- | ---------------- |
+| `size`  | `number`                    | `36`             |
+| `color` | `string`                    | `'#888d94'`      |
+| `icon`  | `string \| object \| false` | `undefined`      |
 
 Slots: `default`. Class/attribute handling: component-specific Vue fallthrough/template behavior.
 
 ## Item data contracts
 
 These types are available through the corresponding `utils/<family>/index.ts`.
-All fields below are optional except `IHexTriadItem.title`.
+All fields below are optional except `IHexagonTriadItem.title`.
 
-| Type | Fields |
-| --- | --- |
-| `IHexTriadItem` | `id: string \| number`; **`title: string` required**; `description`, `color`, `depthColor`, `lightColor`: string |
-| `IArrowTriadItem` | `id: string \| number`; `icon: string \| object \| false`; `color`, `depthColor`, `title`, `description`, `cardBg`, `textColor`, `titleColor`: string |
-| `IQuadHubItem` | `id: string \| number`; `icon: TQuadHubIcon` (`string \| object \| boolean`); `color`, `cardBg`, `arcColor`, `textColor`, `titleColor`, `arcBorderColor`: string; `arcRatio`, `arcBorderRatio`: number |
-| `IArcCompareItem` | `id: string \| number`; `title`, `description`, `color`, `textColor`: string; utility input, not a root prop |
-| `IArcArrowProcessItem` | `id: string \| number`; `icon: string \| object \| false`; `color`, `gradientEnd`, `title`, `description`, `titleColor`, `textColor`: string |
+| Type                   | Fields                                                                                                                                                                                                 |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `IHexagonTriadItem`    | `id: string \| number`; **`title: string` required**; `description`, `color`, `depthColor`, `lightColor`: string                                                                                       |
+| `IArrowTriadItem`      | `id: string \| number`; `icon: string \| object \| false`; `color`, `depthColor`, `title`, `description`, `cardBg`, `textColor`, `titleColor`: string                                                  |
+| `IQuadHubItem`         | `id: string \| number`; `icon: TQuadHubIcon` (`string \| object \| boolean`); `color`, `cardBg`, `arcColor`, `textColor`, `titleColor`, `arcBorderColor`: string; `arcRatio`, `arcBorderRatio`: number |
+| `IArcCompareItem`      | `id: string \| number`; `title`, `description`, `color`, `textColor`: string; utility input, not a root prop                                                                                           |
+| `IArcArrowProcessItem` | `id: string \| number`; `icon: string \| object \| false`; `color`, `gradientEnd`, `title`, `description`, `titleColor`, `textColor`: string                                                           |
 
 Exact default item records and resolution behavior:
-[hex triad](./utils/hexTriad/resolveHexTriadItems.ts),
+[hex triad](./utils/hexTriad/resolveHexagonTriadItems.ts),
 [arrow triad](./utils/arrowTriad/resolveArrowTriadItems.ts),
 [quad hub](./utils/quadHub/resolveQuadHubItems.ts),
 [arc compare](./utils/arcCompare/resolveArcCompareItems.ts),
@@ -861,13 +861,13 @@ Exact default item records and resolution behavior:
 
 ## Layout inventory
 
-| Layout | Props and defaults | Slot and behavior |
-| --- | --- | --- |
-| [arc-toc](./layouts/core/arc-toc.vue) | `maxItems: number \| string = 7`; `maxDepth: number \| string = 1`; `indexed: boolean = false` | Default heading slot, fallback “Table of Contents”. Reads top-level navigation TOC, up to seven items; draws measured connectors and links to slide/presenter routes. CSS hides non-h1 content in the heading area. **`maxDepth` is declared but unused.** |
-| [bg-center](./layouts/core/bg-center.vue) | `background = ''` (no explicit runtime type); `indexed: boolean = false`; `dim: boolean = true` | Centers default content; background passed to Slidev `handleBackground`. Optional two-digit index from the current slide's top-level TOC position; absent when slide is not in that TOC. |
-| [table-of-contents](./layouts/core/table-of-contents.vue) | `maxDepth: number \| string = 1` | Default heading slot, fallback “Table of Contents”; renders Slidev `Toc` with maxDepth. |
-| [shifting-intro](./layouts/shifting-heading/shifting-intro.vue) | None | Extracts first immediate h1 from default content. Centers heading at click 0; first click moves it to the corner and reveals body. Remaps implicit v-click steps after that reveal. Provides `SLIDEV_LAYOUT_SHIFTING_INTRO`. |
-| [thanks](./layouts/thanks/thanks.vue) | None | Renders `ThanksContent` with its default animation; no content slot and no declared animation prop. |
+| Layout                                                          | Props and defaults                                                                              | Slot and behavior                                                                                                                                                                                                                                          |
+| --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [arc-toc](./layouts/core/arc-toc.vue)                           | `maxItems: number \| string = 7`; `maxDepth: number \| string = 1`; `indexed: boolean = false`  | Default heading slot, fallback “Table of Contents”. Reads top-level navigation TOC, up to seven items; draws measured connectors and links to slide/presenter routes. CSS hides non-h1 content in the heading area. **`maxDepth` is declared but unused.** |
+| [bg-center](./layouts/core/bg-center.vue)                       | `background = ''` (no explicit runtime type); `indexed: boolean = false`; `dim: boolean = true` | Centers default content; background passed to Slidev `handleBackground`. Optional two-digit index from the current slide's top-level TOC position; absent when slide is not in that TOC.                                                                   |
+| [table-of-contents](./layouts/core/table-of-contents.vue)       | `maxDepth: number \| string = 1`                                                                | Default heading slot, fallback “Table of Contents”; renders Slidev `Toc` with maxDepth.                                                                                                                                                                    |
+| [shifting-intro](./layouts/shifting-heading/shifting-intro.vue) | None                                                                                            | Extracts first immediate h1 from default content. Centers heading at click 0; first click moves it to the corner and reveals body. Remaps implicit v-click steps after that reveal. Provides `SLIDEV_LAYOUT_SHIFTING_INTRO`.                               |
+| [thanks](./layouts/thanks/thanks.vue)                           | None                                                                                            | Renders `SquareThanks` with its default animation; forwards default slot for custom text or headings with fallback “Thank You<br>for your attention!”.                                                                                                     |
 
 All five layouts use `useMergedUnoAttrs`. The standard TOC and arc TOC are separate
 layouts with different rendering and depth behavior.
@@ -877,21 +877,21 @@ layouts with different rendering and depth behavior.
 The following shipped modules can be direct-import dependencies even though they
 are not slide components. Preserve paths or provide migration mappings if moved.
 
-| Module | Current role |
-| --- | --- |
-| [mergeUno](./utils/mergeUno/index.ts) | `mergeUno(...values)` and `createUnoClassMerger(options?)`, plus exported class/merger/conflict types. Resolves class conflicts. |
-| [useMergedUnoAttrs](./utils/useMergedUnoAttrs.ts) | Merges default classes with attrs.class and forwards remaining attributes. |
-| [useDiagramAutoScale](./utils/useDiagramAutoScale.ts) | Measures slide/parent space and pagination clearance; exposes scale, container height, and updateScale. |
-| [shiftingHeading](./utils/shiftingHeading/collectShiftingIntroNodes.ts) | `collectShiftingIntroNodes`: title/body extraction and implicit click remapping. |
-| [tableOfContents](./utils/tableOfContents/index.ts) | Item count, marker placement, arc/connector paths, article widths and alignment. |
-| [hexTriad](./utils/hexTriad/index.ts) | Geometry, context keys/types, default items and resolver. |
-| [arrowTriad](./utils/arrowTriad/index.ts) | Geometry, layout/context types, context keys and item resolvers. |
-| [quadHub](./utils/quadHub/index.ts) | Geometry/color helpers, context keys/types and item resolvers. |
-| [arcCompare](./utils/arcCompare/index.ts) | Geometry, side/callout contexts, defaults and side item resolver. |
-| [arcArrowProcess](./utils/arcArrowProcess/index.ts) | Arrow path geometry, contexts, defaults and item resolvers. |
-| [horizCard](./utils/horizCard/index.ts) | Card geometry/color helpers and context. |
-| [vertCard](./utils/vertCard/index.ts) | Card geometry/color helpers, context and badge variant type. |
-| [chevronCard](./utils/chevronCard/index.ts) | Badge geometry and context. |
+| Module                                                                  | Current role                                                                                                                     |
+| ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| [mergeUno](./utils/merge-uno/index.ts)                                  | `mergeUno(...values)` and `createUnoClassMerger(options?)`, plus exported class/merger/conflict types. Resolves class conflicts. |
+| [useMergedUnoAttrs](./utils/useMergedUnoAttrs.ts)                       | Merges default classes with attrs.class and forwards remaining attributes.                                                       |
+| [useDiagramAutoScale](./utils/useDiagramAutoScale.ts)                   | Measures slide/parent space and pagination clearance; exposes scale, container height, and updateScale.                          |
+| [shiftingHeading](./utils/shiftingHeading/collectShiftingIntroNodes.ts) | `collectShiftingIntroNodes`: title/body extraction and implicit click remapping.                                                 |
+| [tableOfContents](./utils/tableOfContents/index.ts)                     | Item count, marker placement, arc/connector paths, article widths and alignment.                                                 |
+| [hexTriad](./utils/hexTriad/index.ts)                                   | Geometry, context keys/types, default items and resolver.                                                                        |
+| [arrowTriad](./utils/arrowTriad/index.ts)                               | Geometry, layout/context types, context keys and item resolvers.                                                                 |
+| [quadHub](./utils/quadHub/index.ts)                                     | Geometry/color helpers, context keys/types and item resolvers.                                                                   |
+| [arcCompare](./utils/arcCompare/index.ts)                               | Geometry, side/callout contexts, defaults and side item resolver.                                                                |
+| [arcArrowProcess](./utils/arcArrowProcess/index.ts)                     | Arrow path geometry, contexts, defaults and item resolvers.                                                                      |
+| [horizCard](./utils/horizCard/index.ts)                                 | Card geometry/color helpers and context.                                                                                         |
+| [vertCard](./utils/vertCard/index.ts)                                   | Card geometry/color helpers, context and badge variant type.                                                                     |
+| [chevronCard](./utils/chevronCard/index.ts)                             | Badge geometry and context.                                                                                                      |
 
 ## Existing composition examples
 
@@ -899,27 +899,27 @@ These examples illustrate the old API to compare with future migration examples.
 The preview decks linked above contain more complete slide setups.
 
 ```vue
-<HorizCard step="01" title="Discovery" description="Explore ideas." color="#2563eb">
+<HorizontalCard step="01" title="Discovery" description="Explore ideas." color="#2563eb">
   <template #icon><div class="i-carbon-search text-4xl" /></template>
-</HorizCard>
+</HorizontalCard>
 
-<VertCard :has-divider="false" badge-variant="outside">
-  <VertCardTitle>Discovery</VertCardTitle>
-  <VertCardContent>Explore ideas.</VertCardContent>
-</VertCard>
+<VerticalCard :has-divider="false" badge-variant="outside">
+  <VerticalCardTitle>Discovery</VerticalCardTitle>
+  <VerticalCardContent>Explore ideas.</VerticalCardContent>
+</VerticalCard>
 
 <ChevronCard step="01">
   <ChevronCardHeading>Discovery</ChevronCardHeading>
   <ChevronCardContent>Explore ideas.</ChevronCardContent>
 </ChevronCard>
 
-<HexTriad :animation="false">
-  <HexTriadCallout>
-    <HexTriadBadge>01</HexTriadBadge>
-    <HexTriadHeading>Discovery</HexTriadHeading>
-    <HexTriadContent>Explore ideas.</HexTriadContent>
-  </HexTriadCallout>
-</HexTriad>
+<HexagonTriad :animation="false">
+  <HexagonTriadCallout>
+    <HexagonTriadBadge>01</HexagonTriadBadge>
+    <HexagonTriadHeading>Discovery</HexagonTriadHeading>
+    <HexagonTriadContent>Explore ideas.</HexagonTriadContent>
+  </HexagonTriadCallout>
+</HexagonTriad>
 
 <ArrowTriad layout="1-left" :animation="false">
   <ArrowTriadCallout title="Discovery" description="Explore ideas." />
@@ -943,7 +943,7 @@ The preview decks linked above contain more complete slide setups.
 </ArcArrowProcess>
 ```
 
-For `HexTriad`, `ArrowTriad`, and `ArcArrowProcess`, a supplied default slot replaces
+For `HexagonTriad`, `ArrowTriad`, and `ArcArrowProcess`, a supplied default slot replaces
 generated fallback callouts. `QuadHub` renders only explicitly supplied callouts.
 Examples with one callout intentionally supply only one, even if the root graphic
 has more segments.
@@ -964,35 +964,35 @@ has more segments.
 
 ## Migration notes
 
-### QuadHub → RectOrbitTetrad
+### QuadHub → RectangleOrbitTetrad
 
-All `QuadHub*` components are renamed to `RectOrbitTetrad*`. The API (props, slots,
+All `QuadHub*` components are renamed to `RectangleOrbitTetrad*`. The API (props, slots,
 behavior) is unchanged; this is a name-only migration. Search-and-replace in slide
 markup, imports, and CSS selectors.
 
-| Before (baseline) | After |
-| --- | --- |
-| `QuadHub` | `RectOrbitTetrad` |
-| `QuadHubCallout` | `RectOrbitTetradCallout` |
-| `QuadHubCenter` | `RectOrbitTetradCenter` |
-| `QuadHubContent` | `RectOrbitTetradContent` |
-| `QuadHubHeading` | `RectOrbitTetradHeading` |
-| `QuadHubIcon` | `RectOrbitTetradIcon` |
+| Before (baseline) | After                         |
+| ----------------- | ----------------------------- |
+| `QuadHub`         | `RectangleOrbitTetrad`        |
+| `QuadHubCallout`  | `RectangleOrbitTetradCallout` |
+| `QuadHubCenter`   | `RectangleOrbitTetradCenter`  |
+| `QuadHubContent`  | `RectangleOrbitTetradContent` |
+| `QuadHubHeading`  | `RectangleOrbitTetradHeading` |
+| `QuadHubIcon`     | `RectangleOrbitTetradIcon`    |
 
 Supporting modules and types follow the same rename:
 
-| Before (baseline) | After |
-| --- | --- |
-| `utils/quadHub/` | `utils/rectOrbitTetrad/` |
-| `resolveQuadHubItems` | `resolveRectOrbitTetradItems` |
-| `createQuadHubGeometry` | `createRectOrbitTetradGeometry` |
-| `IQuadHubItem` | `IRectOrbitTetradItem` |
-| `IQuadHubRegistration` | `IRectOrbitTetradRegistration` |
-| `IResolvedQuadHubItem` | `IResolvedRectOrbitTetradItem` |
-| `QUAD_HUB_ROOT_KEY` | `RECT_ORBIT_TETRAD_ROOT_KEY` |
-| `TQuadHubIcon` | `TRectOrbitTetradIcon` |
+| Before (baseline)       | After                                |
+| ----------------------- | ------------------------------------ |
+| `utils/quadHub/`        | `utils/rectOrbitTetrad/`             |
+| `resolveQuadHubItems`   | `resolveRectangleOrbitTetradItems`   |
+| `createQuadHubGeometry` | `createRectangleOrbitTetradGeometry` |
+| `IQuadHubItem`          | `IRectangleOrbitTetradItem`          |
+| `IQuadHubRegistration`  | `IRectangleOrbitTetradRegistration`  |
+| `IResolvedQuadHubItem`  | `IResolvedRectangleOrbitTetradItem`  |
+| `QUAD_HUB_ROOT_KEY`     | `RECT_ORBIT_TETRAD_ROOT_KEY`         |
+| `TQuadHubIcon`          | `TRectangleOrbitTetradIcon`          |
 
-CSS class prefix: `.alpha-quad-hub` → `.alpha-rect-orbit-tetrad`.
+CSS class prefix: `.alpha-quad-hub` → `.alpha-rectangle-orbit-tetrad`.
 
 #### Before
 
@@ -1008,46 +1008,46 @@ CSS class prefix: `.alpha-quad-hub` → `.alpha-rect-orbit-tetrad`.
 #### After
 
 ```vue
-<RectOrbitTetrad title="Plan" :animation="false">
-  <RectOrbitTetradCallout icon="user">
-    <RectOrbitTetradHeading>Discovery</RectOrbitTetradHeading>
-    <RectOrbitTetradContent>Explore ideas.</RectOrbitTetradContent>
-  </RectOrbitTetradCallout>
-</RectOrbitTetrad>
+<RectangleOrbitTetrad title="Plan" :animation="false">
+  <RectangleOrbitTetradCallout icon="user">
+    <RectangleOrbitTetradHeading>Discovery</RectangleOrbitTetradHeading>
+    <RectangleOrbitTetradContent>Explore ideas.</RectangleOrbitTetradContent>
+  </RectangleOrbitTetradCallout>
+</RectangleOrbitTetrad>
 ```
 
 ### ArcCompare → ArcComparison
 
 All `ArcCompare*` components are renamed to `ArcComparison*`. The component category folder is also renamed from `compare/` to `comparisons/`. The API (props, slots, behavior) is unchanged; this is a name-only migration. Search-and-replace in slide markup, imports, and CSS selectors.
 
-| Before (baseline) | After |
-| --- | --- |
-| `ArcCompare` | `ArcComparison` |
-| `ArcCompareBadge` | `ArcComparisonBadge` |
-| `ArcCompareCallout` | `ArcComparisonOrbit` |
-| `ArcCompareContent` | `ArcComparisonContent` |
+| Before (baseline)    | After                   |
+| -------------------- | ----------------------- |
+| `ArcCompare`         | `ArcComparison`         |
+| `ArcCompareBadge`    | `ArcComparisonBadge`    |
+| `ArcCompareCallout`  | `ArcComparisonOrbit`    |
+| `ArcCompareContent`  | `ArcComparisonContent`  |
 | `ArcCompareContents` | `ArcComparisonContents` |
-| `ArcCompareHeading` | `ArcComparisonHeading` |
-| `ArcCompareLeft` | `ArcComparisonLeft` |
-| `ArcCompareRight` | `ArcComparisonRight` |
-| `ArcCompareTitle` | `ArcComparisonTitle` |
+| `ArcCompareHeading`  | `ArcComparisonHeading`  |
+| `ArcCompareLeft`     | `ArcComparisonLeft`     |
+| `ArcCompareRight`    | `ArcComparisonRight`    |
+| `ArcCompareTitle`    | `ArcComparisonTitle`    |
 
 Supporting directory and utility exports follow the same rename:
 
-| Before (baseline) | After |
-| --- | --- |
+| Before (baseline)                 | After                                    |
+| --------------------------------- | ---------------------------------------- |
 | `components/compare/arc-compare/` | `components/comparisons/arc-comparison/` |
-| `utils/arcCompare/` | `utils/arcComparison/` |
-| `createArcCompareGeometry` | `createArcComparisonGeometry` |
-| `resolveArcCompareItems` | `resolveArcComparisonItems` |
-| `resolveArcCompareSideItems` | `resolveArcComparisonSideItems` |
-| `IArcCompareItem` | `IArcComparisonItem` |
-| `IResolvedArcCompareItem` | `IResolvedArcComparisonItem` |
-| `IArcCompareGeometry` | `IArcComparisonGeometry` |
-| `IArcCompareSideGeometry` | `IArcComparisonSideGeometry` |
-| `IArcComparePoint` | `IArcComparisonPoint` |
-| `ARC_COMPARE_ROOT_KEY` | `ARC_COMPARISON_ROOT_KEY` |
-| `ARC_COMPARE_SIDE_KEY` | `ARC_COMPARISON_SIDE_KEY` |
+| `utils/arcCompare/`               | `utils/arcComparison/`                   |
+| `createArcCompareGeometry`        | `createArcComparisonGeometry`            |
+| `resolveArcCompareItems`          | `resolveArcComparisonItems`              |
+| `resolveArcCompareSideItems`      | `resolveArcComparisonSideItems`          |
+| `IArcCompareItem`                 | `IArcComparisonItem`                     |
+| `IResolvedArcCompareItem`         | `IResolvedArcComparisonItem`             |
+| `IArcCompareGeometry`             | `IArcComparisonGeometry`                 |
+| `IArcCompareSideGeometry`         | `IArcComparisonSideGeometry`             |
+| `IArcComparePoint`                | `IArcComparisonPoint`                    |
+| `ARC_COMPARE_ROOT_KEY`            | `ARC_COMPARISON_ROOT_KEY`                |
+| `ARC_COMPARE_SIDE_KEY`            | `ARC_COMPARISON_SIDE_KEY`                |
 
 CSS class prefix: `.alpha-arc-compare` → `.alpha-arc-comparison`.
 
@@ -1109,25 +1109,25 @@ CSS class prefix: `.alpha-arc-compare` → `.alpha-arc-comparison`.
 
 `ComparisonTable*` components are renamed to `TableComparison*` to standardize naming across the comparisons group (`<Descriptor>Comparison`). The component category folder is also renamed from `compare/` to `comparisons/`. The API (props, slots, behavior) is unchanged; this is a name-only migration. Search-and-replace in slide markup, imports, and CSS selectors.
 
-| Before (baseline) | After |
-| --- | --- |
-| `ComparisonTable` | `TableComparison` |
-| `ComparisonTableCell` | `TableComparisonCell` |
-| `ComparisonTableCol` | `TableComparisonCol` |
-| `ComparisonTableCols` | `TableComparisonCols` |
-| `ComparisonTableRow` | `TableComparisonRow` |
-| `ComparisonTableRows` | `TableComparisonRows` |
+| Before (baseline)     | After                    |
+| --------------------- | ------------------------ |
+| `ComparisonTable`     | `TableComparison`        |
+| `ComparisonTableCell` | `TableComparisonCell`    |
+| `ComparisonTableCol`  | `TableComparisonColumn`  |
+| `ComparisonTableCols` | `TableComparisonColumns` |
+| `ComparisonTableRow`  | `TableComparisonRow`     |
+| `ComparisonTableRows` | `TableComparisonRows`    |
 
 Supporting directory and utility exports follow the same rename:
 
-| Before (baseline) | After |
-| --- | --- |
+| Before (baseline)                      | After                                      |
+| -------------------------------------- | ------------------------------------------ |
 | `components/compare/comparison-table/` | `components/comparisons/table-comparison/` |
-| `utils/comparisonTable/` | `utils/tableComparison/` |
-| `COMPARISON_TABLE_KEY` | `TABLE_COMPARISON_KEY` |
-| `COMPARISON_TABLE_COLS_KEY` | `TABLE_COMPARISON_COLS_KEY` |
-| `IComparisonTableContext` | `ITableComparisonContext` |
-| `IComparisonTableColsContext` | `ITableComparisonColsContext` |
+| `utils/comparisonTable/`               | `utils/tableComparison/`                   |
+| `COMPARISON_TABLE_KEY`                 | `TABLE_COMPARISON_KEY`                     |
+| `COMPARISON_TABLE_COLS_KEY`            | `TABLE_COMPARISON_COLS_KEY`                |
+| `IComparisonTableContext`              | `ITableComparisonContext`                  |
+| `IComparisonTableColsContext`          | `ITableComparisonColumnsContext`           |
 
 CSS class prefix: `.alpha-comparison-table` → `.alpha-table-comparison`.
 
@@ -1150,9 +1150,9 @@ CSS class prefix: `.alpha-comparison-table` → `.alpha-table-comparison`.
 
 ```vue
 <TableComparison>
-  <TableComparisonCols>
-    <TableComparisonCol color="#3b82f6">TypeScript</TableComparisonCol>
-  </TableComparisonCols>
+  <TableComparisonColumns>
+    <TableComparisonColumn color="#3b82f6">TypeScript</TableComparisonColumn>
+  </TableComparisonColumns>
   <TableComparisonRows>
     <ComparisonTableRow title="Type Safety">
       <TableComparisonCell>Strict tsconfig</TableComparisonCell>

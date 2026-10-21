@@ -25,10 +25,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs('alpha-date');
 </script>
 
 <template>
-  <div
-    v-bind="forwardedAttrs()"
-    :class="className()"
-  >
+  <p v-bind="forwardedAttrs()" :class="className()">
     Date: {{ formattedDate }}
-  </div>
+  </p>
 </template>

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue';
 
-import { ARROW_TRIAD_CALLOUT_KEY } from '../../../../utils/arrowTriad';
+import { ARROW_TRIAD_CALLOUT_KEY } from '../../../../utils/facets/triad/arrow-triad';
+import { useMergedUnoAttrs } from '../../../../utils/useMergedUnoAttrs';
 
 defineOptions({
+  inheritAttrs: false,
   name: 'ArrowTriadContent',
 });
 
@@ -18,21 +20,24 @@ const props = withDefaults(defineProps<IArrowTriadContentProps>(), {
 const calloutContext = inject(ARROW_TRIAD_CALLOUT_KEY, undefined);
 
 const contentColor = computed(() => {
-  return props.color ?? calloutContext?.item.value.textColor ?? '#64748b';
+  return props.color ?? calloutContext?.item.value.textColor ?? undefined;
 });
+
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-arrow-triad-content font-sans leading-normal text-center font-normal text-(--alpha-arrow-triad-content) select-none',
+);
 </script>
 
 <template>
-  <div
-    class="alpha-arrow-triad-content text-[1rem] leading-[1.5] text-center font-normal select-none"
-    :style="{
-      color: contentColor,
-      fontFamily:
-        'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif',
-    }"
+  <p
+    v-bind="forwardedAttrs()"
+    :class="className()"
+    :style="
+      contentColor && !contentColor.includes('--alpha-arrow-triad-content')
+        ? { '--alpha-arrow-triad-content': contentColor }
+        : undefined
+    "
   >
-    <slot>
-      {{ calloutContext?.item.value.description }}
-    </slot>
-  </div>
+    <slot />
+  </p>
 </template>

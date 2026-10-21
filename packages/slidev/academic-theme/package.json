@@ -18,6 +18,7 @@
     "setup",
     "slide-bottom.vue",
     "style.css",
+    "uno.config.ts",
     "README.md"
   ],
   "publishConfig": {
@@ -49,8 +50,12 @@
     "@slidev/client": ">=52.18.0",
     "vue": "^3.5.40"
   },
+  "dependencies": {
+    "@alphacifer/slidev-core-theme": "workspace:^"
+  },
   "devDependencies": {
     "@slidev/cli": "52.19.0",
-    "@slidev/client": "52.19.0"
+    "@slidev/client": "52.19.0",
+    "@types/node": "25.9.0"
   }
 }

@@ -24,7 +24,7 @@ layout: section
 ---
 
 # Part II: Empirical Evaluation
-## Benchmark Results & Ablation Studies
+#### Benchmark Results & Ablation Studies
 ```
 
 ---

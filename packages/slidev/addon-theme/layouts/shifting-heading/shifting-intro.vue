@@ -11,7 +11,7 @@ import {
   watchEffect,
 } from 'vue';
 
-import { collectShiftingIntroNodes } from '../../utils/shiftingHeading/collectShiftingIntroNodes';
+import { collectShiftingIntroNodes } from '../../utils/layouts/shifting-heading/collectShiftingIntroNodes';
 import { useMergedUnoAttrs } from '../../utils/useMergedUnoAttrs';
 
 defineOptions({
@@ -65,10 +65,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
 </script>
 
 <template>
-  <div
-    v-bind="forwardedAttrs()"
-    :class="className()"
-  >
+  <div v-bind="forwardedAttrs()" :class="className()">
     <component
       :is="nodes.title"
       v-if="nodes.title"
@@ -82,10 +79,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     >
       <component :is="nodes.title" />
     </TransitionHeading>
-    <div
-      v-click
-      class="hidden"
-    />
+    <div v-click class="hidden" />
     <div
       :class="[
         $clicks > 0 ? 'opacity-100' : 'opacity-0',
@@ -98,10 +92,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
           :is="content.node"
           v-click="nodes.clickRef.get(content.key)"
         />
-        <component
-          v-else
-          :is="content.node"
-        />
+        <component v-else :is="content.node" />
       </template>
     </div>
   </div>

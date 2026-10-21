@@ -3,9 +3,6 @@
     <div class="alpha-academic-section__content">
       <slot />
     </div>
-    <div
-      aria-hidden="true"
-      class="alpha-academic-section__rule"
-    />
+    <div aria-hidden="true" class="alpha-academic-section__rule" />
   </main>
 </template>

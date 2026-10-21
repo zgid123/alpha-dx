@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { useMergedUnoAttrs } from '../../../../utils/useMergedUnoAttrs';
 import GearTriadIcon from './GearTriadIcon.vue';
 
 defineOptions({
+  inheritAttrs: false,
   name: 'GearTriadCenter',
 });
 
@@ -16,16 +18,19 @@ const props = withDefaults(defineProps<IGearTriadCenterProps>(), {
   icon: 'gear',
   iconSize: 42,
 });
+
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-gear-triad-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 rounded-full flex items-center justify-center bg-linear-145 from-(--alpha-gear-triad-center-bg-start) to-(--alpha-gear-triad-center-bg-end) shadow-(--alpha-gear-triad-center-shadow) pointer-events-auto select-none',
+);
 </script>
 
 <template>
   <div
-    class="alpha-gear-triad-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 rounded-full flex items-center justify-center pointer-events-auto select-none"
+    v-bind="forwardedAttrs()"
+    :class="className()"
     :style="{
       width: `${props.radius * 2}px`,
       height: `${props.radius * 2}px`,
-      background: 'linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%)',
-      boxShadow: '0 6px 20px -2px rgba(0, 0, 0, 0.22), 0 2px 6px -1px rgba(0, 0, 0, 0.12)',
     }"
   >
     <slot>
@@ -33,7 +38,7 @@ const props = withDefaults(defineProps<IGearTriadCenterProps>(), {
         v-if="props.icon"
         :icon="props.icon"
         :size="props.iconSize"
-        color="#0f172a"
+        color="var(--alpha-gear-triad-center-icon)"
         :stroke-width="1.75"
       />
     </slot>

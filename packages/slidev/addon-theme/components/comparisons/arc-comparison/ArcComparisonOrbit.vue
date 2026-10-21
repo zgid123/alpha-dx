@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 import ArcOrbitCallout from '../../core/arc-orbit/ArcOrbitCallout.vue';
 
 defineOptions({
@@ -10,8 +11,6 @@ export interface IArcComparisonOrbitProps {
   readonly side?: 'left' | 'right';
   readonly index?: number;
   readonly id?: string | number;
-  readonly title?: string;
-  readonly description?: string;
   readonly color?: string;
   readonly textColor?: string;
   readonly textGap?: number;
@@ -21,27 +20,29 @@ const props = withDefaults(defineProps<IArcComparisonOrbitProps>(), {
   side: undefined,
   index: undefined,
   id: undefined,
-  title: undefined,
-  description: undefined,
   color: undefined,
   textColor: undefined,
   textGap: undefined,
 });
+
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-arc-comparison-orbit',
+);
 </script>
 
 <template>
   <ArcOrbitCallout
     v-if="$slots.default"
-    v-bind="{ ...props, ...$attrs }"
+    v-bind="{ ...props, ...forwardedAttrs() }"
     :position="props.side"
-    class="alpha-arc-comparison-orbit"
+    :class="className()"
   >
     <slot />
   </ArcOrbitCallout>
   <ArcOrbitCallout
     v-else
-    v-bind="{ ...props, ...$attrs }"
+    v-bind="{ ...props, ...forwardedAttrs() }"
     :position="props.side"
-    class="alpha-arc-comparison-orbit"
+    :class="className()"
   />
 </template>

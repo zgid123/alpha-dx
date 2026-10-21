@@ -1,58 +1,43 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue';
 
-import { GEAR_TRIAD_CONTENTS_KEY } from '../../../../utils/gearTriad';
+import { GEAR_TRIAD_CALLOUT_KEY } from '../../../../utils/facets/triad/gear-triad';
+import { useMergedUnoAttrs } from '../../../../utils/useMergedUnoAttrs';
 
 defineOptions({
+  inheritAttrs: false,
   name: 'GearTriadContent',
 });
 
 export interface IGearTriadContentProps {
-  readonly step?: string | number;
-  readonly option?: number;
+  readonly color?: string;
 }
 
 const props = withDefaults(defineProps<IGearTriadContentProps>(), {
-  step: undefined,
-  option: undefined,
+  color: undefined,
 });
 
-const contentsContext = inject(GEAR_TRIAD_CONTENTS_KEY, undefined);
+const calloutContext = inject(GEAR_TRIAD_CALLOUT_KEY, undefined);
 
-const registration = contentsContext
-  ? contentsContext.registerContent(props.option)
-  : undefined;
-
-const isVisible = computed(() => {
-  if (props.option !== undefined && contentsContext) {
-    return props.option === contentsContext.activeOptionIndex.value + 1;
-  }
-  return true;
+const contentColor = computed(() => {
+  return props.color ?? calloutContext?.item.value.textColor ?? undefined;
 });
 
-const resolvedStep = computed(() => {
-  if (props.step !== undefined) {
-    if (typeof props.step === 'number') {
-      return String(props.step).padStart(2, '0');
-    }
-    return String(props.step);
-  }
-
-  const idx = (registration?.index ?? 0) + 1;
-  return String(idx).padStart(2, '0');
-});
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-gear-triad-content font-sans leading-[1.45] font-normal text-(--alpha-gear-triad-content) select-none',
+);
 </script>
 
 <template>
-  <div
-    v-if="isVisible"
-    class="alpha-gear-triad-content flex items-start gap-4 select-none"
+  <p
+    v-bind="forwardedAttrs()"
+    :class="className()"
+    :style="
+      contentColor && !contentColor.includes('--alpha-gear-triad-content')
+        ? { '--alpha-gear-triad-content': contentColor }
+        : undefined
+    "
   >
-    <span class="alpha-gear-triad-content__step font-bold text-2xl text-slate-700 w-10 flex-shrink-0 leading-tight font-sans tracking-tight">
-      {{ resolvedStep }}
-    </span>
-    <div class="alpha-gear-triad-content__body flex-1 text-[0.92rem] text-slate-600 font-normal font-sans leading-[1.45]">
-      <slot />
-    </div>
-  </div>
+    <slot />
+  </p>
 </template>

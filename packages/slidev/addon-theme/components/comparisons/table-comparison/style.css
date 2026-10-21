@@ -1,0 +1,15 @@
+/* Color defaults shared by this component family. */
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-table-comparison-cell: var(--alpha-foreground-primary, #475569);
+    --alpha-table-comparison-cell-bg: #d6e5ef;
+    --alpha-table-comparison-col: #ffffff;
+    --alpha-table-comparison-col-1-background: #354f82;
+    --alpha-table-comparison-col-2-background: #5b8bb3;
+    --alpha-table-comparison-col-3-background: #00a8a8;
+    --alpha-table-comparison-col-4-background: #00b884;
+    --alpha-table-comparison-col-5-background: #00875a;
+    --alpha-table-comparison-row: #ffffff;
+    --alpha-table-comparison-row-bg: #2e8b9a;
+  }
+}

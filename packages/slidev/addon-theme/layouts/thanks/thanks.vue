@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import SquareThanks from '../../components/core/thanks/SquareThanks.vue';
 import { useMergedUnoAttrs } from '../../utils/useMergedUnoAttrs';
 
 defineOptions({
@@ -11,10 +12,9 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
 </script>
 
 <template>
-  <div
-    v-bind="forwardedAttrs()"
-    :class="className()"
-  >
-    <ThanksContent />
+  <div v-bind="forwardedAttrs()" :class="className()">
+    <SquareThanks>
+      <slot />
+    </SquareThanks>
   </div>
 </template>

@@ -14,7 +14,7 @@ withDefaults(defineProps<IQnAProps>(), {
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-qna flex items-center gap-8 text-8xl font-bold color-[#2b90b6]',
+  'alpha-qna flex items-center gap-8 text-8xl font-bold color-[var(--alpha-qna-color)]',
 );
 </script>
 

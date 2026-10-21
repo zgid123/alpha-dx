@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ThanksContent from '@alphacifer/slidev-addon-theme/components/core/thanks/ThanksContent.vue';
+import SquareThanks from '@alphacifer/slidev-addon-theme/components/core/thanks/SquareThanks.vue';
 import { ref } from 'vue';
 
 import SlidevMockup from '../common/SlidevMockup.vue';
@@ -23,15 +23,11 @@ function replay() {
 
 <template>
   <SlidevMockup :theme="props.theme">
-    <ThanksContent :key="renderKey" :animation="animation" />
+    <SquareThanks :key="renderKey" :animation="animation" />
 
     <template #controls>
       <div class="slidev-mockup__control-group">
-        <button
-          type="button"
-          class="slidev-mockup__btn active"
-          @click="replay"
-        >
+        <button type="button" class="slidev-mockup__btn active" @click="replay">
           ↻ Replay
         </button>
       </div>

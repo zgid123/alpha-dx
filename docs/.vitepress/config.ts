@@ -1,66 +1,176 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
+import coreUnoConfig from '@alphacifer/slidev-core-theme/uno';
 import { presetWind3 } from 'unocss';
 import UnoCSS from 'unocss/vite';
 import { defineConfig } from 'vitepress';
+
+const slidevCoreThemeStylePath = fileURLToPath(
+  new URL('../../packages/slidev/core-theme/style.css', import.meta.url),
+);
+
+function inlineSlidevCssImports(
+  code: string,
+  importerFilePath: string,
+  watchFile?: (filePath: string) => void,
+): string {
+  return code.replace(
+    /@import\s+['"]([^'"]+)['"]\s*;/g,
+    (_match: string, specifier: string): string => {
+      const resolvedPath =
+        specifier === '@alphacifer/slidev-core-theme/style.css'
+          ? slidevCoreThemeStylePath
+          : path.resolve(path.dirname(importerFilePath), specifier);
+      watchFile?.(resolvedPath);
+      const importedCode = fs.readFileSync(resolvedPath, 'utf8');
+
+      return inlineSlidevCssImports(importedCode, resolvedPath, watchFile);
+    },
+  );
+}
+
+function splitTopLevelSelectors(selectorsStr: string): string[] {
+  const result: string[] = [];
+  let current = '';
+  let parenDepth = 0;
+  let bracketDepth = 0;
+
+  for (let i = 0; i < selectorsStr.length; i++) {
+    const char = selectorsStr[i];
+
+    if (char === '(') {
+      parenDepth++;
+    } else if (char === ')') {
+      parenDepth = Math.max(0, parenDepth - 1);
+    } else if (char === '[') {
+      bracketDepth++;
+    } else if (char === ']') {
+      bracketDepth = Math.max(0, bracketDepth - 1);
+    }
+
+    if (char === ',' && parenDepth === 0 && bracketDepth === 0) {
+      const trimmed = current.trim();
+
+      if (trimmed) {
+        result.push(trimmed);
+      }
+
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+
+  const trimmed = current.trim();
+  if (trimmed) {
+    result.push(trimmed);
+  }
+
+  return result;
+}
+
+function scopeCssRules(
+  code: string,
+  scopeSelector: (cleanSelector: string) => string,
+): string {
+  return code.replace(
+    /([^{}]+)\{([^{}]+)\}/g,
+    (match: string, rawSelectorsStr: string, declarations: string): string => {
+      const commentMatch = rawSelectorsStr.match(/^(\s*\/\*[\s\S]*?\*\/\s*)+/);
+      const leadingComments = commentMatch ? commentMatch[0] : '';
+      const selectorsStr = rawSelectorsStr.slice(leadingComments.length).trim();
+      if (!selectorsStr) {
+        return match;
+      }
+
+      const selectors = splitTopLevelSelectors(selectorsStr);
+
+      const scopedSelectors = selectors.map((sel: string) => {
+        const cleanSel = sel.replace(/\/\*[\s\S]*?\*\//g, '').trim();
+
+        return scopeSelector(cleanSel);
+      });
+
+      return `${leadingComments}${scopedSelectors.join(',\n')} {${declarations}}`;
+    },
+  );
+}
 
 function isolateAcademicThemePlugin() {
   return {
     name: 'isolate-academic-theme',
     enforce: 'pre' as const,
-    transform(code: string, id: string): { code: string; map: null } | null {
-      if (!id.includes('academic-theme/style.css')) {
+    transform(
+      this: { addWatchFile?: (id: string) => void },
+      code: string,
+      id: string,
+    ): { code: string; map: null } | null {
+      const cleanId = id.split('?')[0] ?? id;
+      const watchFile = (filePath: string) => {
+        this.addWatchFile?.(filePath);
+      };
+
+      if (cleanId.endsWith('/vp-doc.css')) {
+        return {
+          code: `@layer __vitepress_base {\n${code}\n}`,
+          map: null,
+        };
+      }
+
+      if (cleanId.includes('addon-theme/style.css')) {
+        const inlinedCode = inlineSlidevCssImports(code, cleanId, watchFile);
+        const scopedCode = scopeCssRules(inlinedCode, (cleanSel: string) => {
+          if (cleanSel === ':root') {
+            return '.slidev-page';
+          }
+
+          if (cleanSel === 'html.dark' || cleanSel === '.dark') {
+            return '.slidev-page.dark';
+          }
+
+          return cleanSel;
+        });
+
+        return {
+          code: scopedCode,
+          map: null,
+        };
+      }
+
+      if (!cleanId.includes('academic-theme/style.css')) {
         return null;
       }
-      const scopedCode = code.replace(
-        /([^{}]+)\{([^{}]+)\}/g,
-        (
-          match: string,
-          rawSelectorsStr: string,
-          declarations: string,
-        ): string => {
-          const commentMatch = rawSelectorsStr.match(
-            /^(\s*\/\*[\s\S]*?\*\/\s*)+/,
-          );
-          const leadingComments = commentMatch ? commentMatch[0] : '';
-          const selectorsStr = rawSelectorsStr
-            .slice(leadingComments.length)
-            .trim();
-          if (!selectorsStr) return match;
 
-          const selectors = selectorsStr
-            .split(',')
-            .map((s: string) => s.trim())
-            .filter(Boolean);
+      const inlinedCode = inlineSlidevCssImports(code, cleanId, watchFile);
+      const scopedCode = scopeCssRules(inlinedCode, (cleanSel: string) => {
+        if (cleanSel === ':root') {
+          return '.slidev-theme-academic';
+        }
 
-          const scopedSelectors = selectors.map((sel: string) => {
-            const cleanSel = sel.replace(/\/\*[\s\S]*?\*\//g, '').trim();
-            if (cleanSel === ':root') {
-              return '.slidev-theme-academic';
-            }
-            if (cleanSel === 'html.dark' || cleanSel === '.dark') {
-              return 'html.dark .slidev-theme-academic, .dark .slidev-theme-academic, .slidev-theme-academic.dark';
-            }
-            if (
-              cleanSel.startsWith('html.dark ') ||
-              cleanSel.startsWith('.dark ')
-            ) {
-              const rest = cleanSel.replace(/^(html\.dark|\.dark)\s+/, '');
-              if (rest.startsWith('.slidev-page')) {
-                const pageRest = rest.replace(/^\.slidev-page/, '');
-                return `html.dark .slidev-theme-academic.slidev-page${pageRest}, html.dark .slidev-theme-academic ${rest}, .dark .slidev-theme-academic.slidev-page${pageRest}, .dark .slidev-theme-academic ${rest}`;
-              }
-              return `html.dark .slidev-theme-academic ${rest}, .dark .slidev-theme-academic ${rest}`;
-            }
-            if (cleanSel.startsWith('.slidev-page')) {
-              const rest = cleanSel.replace(/^\.slidev-page/, '');
-              return `.slidev-theme-academic.slidev-page${rest}, .slidev-theme-academic ${cleanSel}`;
-            }
-            return `.slidev-theme-academic ${cleanSel}`;
-          });
+        if (cleanSel === 'html.dark' || cleanSel === '.dark') {
+          return '.slidev-theme-academic.dark';
+        }
 
-          return `${leadingComments}${scopedSelectors.join(',\n')} {${declarations}}`;
-        },
-      );
+        if (
+          cleanSel.startsWith('html.dark ') ||
+          cleanSel.startsWith('.dark ')
+        ) {
+          const rest = cleanSel.replace(/^(html\.dark|\.dark)\s+/, '');
+          if (rest.startsWith('.slidev-page')) {
+            const pageRest = rest.replace(/^\.slidev-page/, '');
+            return `html.dark .slidev-theme-academic.slidev-page${pageRest}, html.dark .slidev-theme-academic ${rest}, .dark .slidev-theme-academic.slidev-page${pageRest}, .dark .slidev-theme-academic ${rest}`;
+          }
+          return `html.dark .slidev-theme-academic ${rest}, .dark .slidev-theme-academic ${rest}`;
+        }
+
+        if (cleanSel.startsWith('.slidev-page')) {
+          const rest = cleanSel.replace(/^\.slidev-page/, '');
+          return `.slidev-theme-academic.slidev-page${rest}, .slidev-theme-academic ${cleanSel}`;
+        }
+
+        return `.slidev-theme-academic ${cleanSel}`;
+      });
 
       return {
         code: scopedCode,
@@ -84,6 +194,7 @@ export default defineConfig({
     plugins: [
       isolateAcademicThemePlugin(),
       UnoCSS({
+        rules: coreUnoConfig.rules,
         presets: [
           presetWind3({
             preflight: false,
@@ -410,10 +521,6 @@ export default defineConfig({
                   link: '/slidev/addon/layouts/shifting-intro',
                 },
                 {
-                  text: 'Table of Contents',
-                  link: '/slidev/addon/layouts/table-of-contents',
-                },
-                {
                   text: 'Thanks',
                   link: '/slidev/addon/layouts/thanks',
                 },
@@ -585,10 +692,6 @@ export default defineConfig({
                   link: '/slidev/academic-theme/layouts/section',
                 },
                 {
-                  text: 'End',
-                  link: '/slidev/academic-theme/layouts/end',
-                },
-                {
                   text: 'Arc TOC',
                   link: '/slidev/academic-theme/layouts/arc-toc',
                 },
@@ -599,10 +702,6 @@ export default defineConfig({
                 {
                   text: 'Shifting Intro',
                   link: '/slidev/academic-theme/layouts/shifting-intro',
-                },
-                {
-                  text: 'Table of Contents',
-                  link: '/slidev/academic-theme/layouts/table-of-contents',
                 },
                 {
                   text: 'Thanks',

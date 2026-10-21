@@ -4,7 +4,7 @@ import { computed, inject } from 'vue';
 import {
   ARC_ORBIT_CALLOUT_KEY,
   DEFAULT_ARC_ORBIT_COLOR,
-} from '../../../utils/arcOrbit';
+} from '../../../utils/core/arc-orbit';
 import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 
 defineOptions({
@@ -43,24 +43,22 @@ const badgeStyle = computed(() => {
   return {
     width: `${props.size}px`,
     height: `${props.size}px`,
-    backgroundColor: badgeColor.value,
-    fontSize: `${Math.round(props.size * 0.42)}px`,
-    fontFamily:
-      'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    ...(badgeColor.value !== DEFAULT_ARC_ORBIT_COLOR
+      ? { '--alpha-arc-orbit-accent': badgeColor.value }
+      : {}),
+    ...(props.size !== 52
+      ? { fontSize: `${Math.round(props.size * 0.42)}px` }
+      : {}),
   };
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-arc-orbit-badge rounded-full flex items-center justify-center font-bold text-white shadow-md select-none flex-shrink-0 transition-transform duration-300',
+  'alpha-arc-orbit-badge rounded-full flex items-center justify-center font-sans font-bold text-[22px] bg-(--alpha-arc-orbit-accent) text-(--alpha-arc-orbit-badge) shadow-md select-none shrink-0 transition-transform duration-300',
 );
 </script>
 
 <template>
-  <div
-    v-bind="forwardedAttrs()"
-    :class="className()"
-    :style="badgeStyle"
-  >
+  <div v-bind="forwardedAttrs()" :class="className()" :style="badgeStyle">
     <slot>{{ badgeId }}</slot>
   </div>
 </template>

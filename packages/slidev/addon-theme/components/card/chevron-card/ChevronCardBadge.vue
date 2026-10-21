@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue';
 
-import { CHEVRON_CARD_KEY } from '../../../utils/chevronCard';
+import { CHEVRON_CARD_KEY } from '../../../utils/card/chevron-card';
+import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 
 defineOptions({
   name: 'ChevronCardBadge',
+  inheritAttrs: false,
 });
 
 export interface IChevronCardBadgeProps {
@@ -27,18 +29,23 @@ const props = withDefaults(defineProps<IChevronCardBadgeProps>(), {
 
 const cardContext = inject(CHEVRON_CARD_KEY, undefined);
 
-const resolvedColor = computed(() => {
-  return props.color ?? cardContext?.color.value ?? '#f59e0b';
+const customColor = computed(() => {
+  return props.color ?? cardContext?.color.value;
 });
 
 const resolvedStep = computed(() => {
   return props.step ?? cardContext?.step.value ?? '01';
 });
+
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-chevron-card-badge relative select-none shrink-0 flex items-center justify-center bg-(--alpha-chevron-card-badge-bg) text-(--alpha-chevron-card-badge-foreground)',
+);
 </script>
 
 <template>
   <div
-    class="alpha-chevron-card-badge relative select-none flex-shrink-0 flex items-center justify-center text-white"
+    v-bind="forwardedAttrs()"
+    :class="className()"
     :style="{
       width: `${props.width}px`,
       height: props.height
@@ -46,7 +53,7 @@ const resolvedStep = computed(() => {
           ? `${props.height}px`
           : props.height
         : '100%',
-      backgroundColor: resolvedColor,
+      '--alpha-chevron-card-badge-bg': customColor,
       clipPath: `polygon(0% 0%, calc(100% - ${props.notchDepth}px) 0%, 100% 50%, calc(100% - ${props.notchDepth}px) 100%, 0% 100%, ${props.notchDepth}px 50%)`,
     }"
   >
@@ -55,16 +62,15 @@ const resolvedStep = computed(() => {
         <component
           :is="props.icon"
           v-if="typeof props.icon === 'object'"
-          class="w-8 h-8 text-white"
+          class="w-8 h-8"
         />
         <span
           v-else-if="typeof props.icon === 'string'"
-          :class="[props.icon, 'text-3xl text-white inline-block']"
+          :class="[props.icon, 'text-3xl inline-block']"
         />
         <span
           v-else
           class="font-extrabold text-[32px] tracking-tight font-sans select-none"
-          style="font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;"
         >
           {{ resolvedStep }}
         </span>

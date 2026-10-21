@@ -48,8 +48,6 @@ A minimal content slide without a title heading, maximizing canvas space while r
 - Retains footer slide numbers
 
 ---
-layout: end
----
 
 # Thank you
 

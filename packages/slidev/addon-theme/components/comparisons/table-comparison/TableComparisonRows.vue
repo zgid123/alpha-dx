@@ -12,10 +12,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
 </script>
 
 <template>
-  <tbody
-    v-bind="forwardedAttrs()"
-    :class="className()"
-  >
+  <tbody v-bind="forwardedAttrs()" :class="className()">
     <slot />
   </tbody>
 </template>

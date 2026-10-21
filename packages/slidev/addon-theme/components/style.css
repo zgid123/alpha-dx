@@ -1,0 +1,35 @@
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-pyramid-accent: #3b82f6;
+    --alpha-pyramid-highlight: #ffffff;
+  }
+}
+
+.alpha-interaction-control {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  color: transparent;
+  appearance: none;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+}
+
+.alpha-interaction-control:disabled {
+  cursor: default;
+}
+
+.alpha-interaction-control:focus-visible {
+  outline: 0.2rem solid var(--alpha-foreground-accent, #0284c7);
+  outline-offset: -0.3rem;
+  background: color-mix(
+    in srgb,
+    var(--alpha-foreground-accent, #0284c7) 20%,
+    transparent
+  );
+}

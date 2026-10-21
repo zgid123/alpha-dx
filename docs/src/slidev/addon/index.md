@@ -34,7 +34,7 @@ All components exported by the addon are automatically available in your slides 
 - [**Reflected Title**](./components/core/reflected-title.md): Title with an inverted pseudo-element reflection.
 - [**Q & A**](./components/core/qna.md): Animated "Q & A" title sequence.
 - [**Transition Heading**](./components/core/transition-heading.md): Shifting heading coordinating opening and revealed states (`TransitionHeading`).
-- [**Thanks**](./components/core/thanks.md): Closing artwork composition with decorative squares (`ThanksContent`).
+- [**Thanks**](./components/core/thanks.md): Closing artwork composition with decorative squares (`SquareThanks`).
 - [**Arc Orbit**](./components/core/arc-orbit.md): Edge-anchored semicircular hub with radial orbiting callout nodes (`ArcOrbit`).
 
 ### Facets
@@ -42,11 +42,11 @@ All components exported by the addon are automatically available in your slides 
 #### Triad
 
 - [**Arrow Triad**](./components/facets/triad/arrow-triad.md): Three-way curved arrow infographic (`ArrowTriad`).
-- [**Hex Triad**](./components/facets/triad/hex-triad.md): 3-item interlocking hexagonal diagram (`HexTriad`).
+- [**Hexagon Triad**](./components/facets/triad/hex-triad.md): 3-item interlocking hexagonal diagram (`HexagonTriad`).
 
 #### Tetrad
 
-- [**Rect Orbit Tetrad**](./components/facets/tetrad/rect-orbit-tetrad.md): 4-part concentric quadrant infographic with center hub (`RectOrbitTetrad`).
+- [**Rectangle Orbit Tetrad**](./components/facets/tetrad/rect-orbit-tetrad.md): 4-part concentric quadrant infographic with center hub (`RectangleOrbitTetrad`).
 
 ### Process
 
@@ -59,8 +59,8 @@ All components exported by the addon are automatically available in your slides 
 
 ### Cards
 
-- [**Horizontal Card**](./components/card/horiz-card.md): Step-based horizontal cards with accent corner blobs and badges (`HorizCard`).
-- [**Vertical Card**](./components/card/vert-card.md): Vertical cards with corner stripes and flexible badge variants (`VertCard`).
+- [**Horizontal Card**](./components/card/horiz-card.md): Step-based horizontal cards with accent corner blobs and badges (`HorizontalCard`).
+- [**Vertical Card**](./components/card/vert-card.md): Vertical cards with corner stripes and flexible badge variants (`VerticalCard`).
 - [**Chevron Card**](./components/card/chevron-card.md): Chevron-shaped cards with custom badge and notch depth (`ChevronCard`).
 
 ---
@@ -70,7 +70,6 @@ All components exported by the addon are automatically available in your slides 
 - [**Arc TOC**](./layouts/arc-toc.md): Circular arc table of contents with measured connectors and section markers (`arc-toc`).
 - [**Background Center**](./layouts/bg-center.md): Full-slide centered background layout with dimming and index badge (`bg-center`).
 - [**Shifting Intro**](./layouts/shifting-intro.md): Interactive hero title that shifts to the header on first click (`shifting-intro`).
-- [**Table of Contents**](./layouts/table-of-contents.md): Standard table of contents with configurable heading depth (`table-of-contents`).
 - [**Thanks**](./layouts/thanks.md): Concluding slide with animated geometric squares and artwork (`thanks`).
 
 ---

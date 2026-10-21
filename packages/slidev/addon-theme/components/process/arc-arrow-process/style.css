@@ -1,0 +1,20 @@
+/* Color defaults shared by this component family. */
+@layer alpha-theme-tokens {
+  :root {
+    --alpha-arc-arrow-process-content: var(--alpha-foreground-primary, #475569);
+    --alpha-arc-arrow-process-arrow: #6fa3b5;
+    --alpha-arc-arrow-process-arrow-gradient-end: #8cb8c8;
+    --alpha-arc-arrow-process-arrow-shadow: #000000;
+    --alpha-arc-arrow-process-arrow-stroke: #ffffff;
+    --alpha-arc-arrow-process-heading: var(--alpha-foreground-primary, #1e293b);
+    --alpha-arc-arrow-process-icon: #888d94;
+    --alpha-arc-arrow-process-item-1-color: #a0a5aa;
+    --alpha-arc-arrow-process-item-1-gradient-end: #8e959f;
+    --alpha-arc-arrow-process-item-2-color: #2c485d;
+    --alpha-arc-arrow-process-item-2-gradient-end: #334e68;
+    --alpha-arc-arrow-process-item-3-color: #6fa3b5;
+    --alpha-arc-arrow-process-item-3-gradient-end: #7fb0c0;
+    --alpha-arc-arrow-process-item-4-color: #d6284d;
+    --alpha-arc-arrow-process-item-4-gradient-end: #e63964;
+  }
+}

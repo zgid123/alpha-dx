@@ -24,16 +24,6 @@ Creates a large heading with a soft reflected copy below it.
 ```
 
 ---
-layout: table-of-contents
-maxDepth: 1
-hideInToc: true
----
-
-# Table Of Contents
-
-Lists every level-one heading in the deck. Set `maxDepth` to include deeper headings.
-
----
 layout: arc-toc
 maxDepth: 1
 maxItems: 1
@@ -142,7 +132,7 @@ Displays a quotation with optional attribution and customizable title classes.
   <Quote
     text="Reusable slides should feel native to every deck."
     author="Alpha"
-    title-class="!text-3xl"
+    title-class="text-3xl!"
   />
 </div>
 
@@ -234,12 +224,12 @@ An outlined decorative square designed for the animated closing composition.
 
 ---
 
-# ThanksContent
+# SquareThanks
 
 Composes the complete “Thank you” artwork and optionally animates its elements.
 
 <div class="relative mt-6 h-72 overflow-hidden rounded-xl bg-slate-900/70">
-  <ThanksContent :animation="false" />
+  <SquareThanks :animation="false" />
 </div>
 
 <div class="mt-5 text-sm">
@@ -247,7 +237,7 @@ Composes the complete “Thank you” artwork and optionally animates its elemen
 </div>
 
 ```vue
-<ThanksContent :animation="false" />
+<SquareThanks :animation="false" />
 ```
 
 ---
@@ -282,7 +272,7 @@ The first heading begins in the center. Advance once to shift it upward and reve
 ---
 
 <script setup lang="ts">
-import { mergeUno } from './utils/mergeUno'
+import { mergeUno } from './utils/merge-uno'
 
 const mergedUno = mergeUno('top-20 text-red-500', 'top-10 text-cyan-400')
 </script>
@@ -304,7 +294,7 @@ mergeUno('top-20 text-red-500', 'top-10 text-cyan-400')
 ---
 
 <script setup lang="ts">
-import { createUnoClassMerger } from './utils/mergeUno'
+import { createUnoClassMerger } from './utils/merge-uno'
 
 const mergeThemeClasses = createUnoClassMerger({
   resolveConflictKeys({ utility }) {
@@ -337,266 +327,297 @@ const mergeThemeClasses = createUnoClassMerger({
 
 ---
 
-# HexTriad
+# HexagonTriad
 
 3-part interlocking hexagon diagram for comparing key pillars, concepts, or steps.
 
 <div class="mt-4 flex items-center justify-center rounded-xl bg-slate-900/40 p-4">
-  <HexTriad>
-    <HexTriadCallout>
-      <HexTriadBadge>01</HexTriadBadge>
-      <HexTriadHeading>Performance</HexTriadHeading>
-      <HexTriadContent>Fast builds, instant feedback, and zero-overhead runtime.</HexTriadContent>
-    </HexTriadCallout>
-    <HexTriadCallout>
-      <HexTriadBadge>02</HexTriadBadge>
-      <HexTriadHeading>Reliability</HexTriadHeading>
-      <HexTriadContent>Strict type safety paired with deterministic test suites.</HexTriadContent>
-    </HexTriadCallout>
-    <HexTriadCallout>
-      <HexTriadBadge>03</HexTriadBadge>
-      <HexTriadHeading>Scalability</HexTriadHeading>
-      <HexTriadContent>Seamless growth across packages, tools, and workflows.</HexTriadContent>
-    </HexTriadCallout>
-  </HexTriad>
+  <HexagonTriad>
+    <HexagonTriadCallout>
+      <HexagonTriadBadge>01</HexagonTriadBadge>
+      <HexagonTriadHeading>Performance</HexagonTriadHeading>
+      <HexagonTriadContent>Fast builds, instant feedback, and zero-overhead runtime.</HexagonTriadContent>
+    </HexagonTriadCallout>
+    <HexagonTriadCallout>
+      <HexagonTriadBadge>02</HexagonTriadBadge>
+      <HexagonTriadHeading>Reliability</HexagonTriadHeading>
+      <HexagonTriadContent>Strict type safety paired with deterministic test suites.</HexagonTriadContent>
+    </HexagonTriadCallout>
+    <HexagonTriadCallout>
+      <HexagonTriadBadge>03</HexagonTriadBadge>
+      <HexagonTriadHeading>Scalability</HexagonTriadHeading>
+      <HexagonTriadContent>Seamless growth across packages, tools, and workflows.</HexagonTriadContent>
+    </HexagonTriadCallout>
+  </HexagonTriad>
 </div>
 
 <div class="mt-4 text-sm">
-  <code>items?: IHexTriadItem[]</code> · <code>title?: string</code> · <code>subtitle?: string</code>
+  <code>animation?: boolean</code> · <code>startDelay?: number</code> · <code>active?: boolean</code>
 </div>
 
 ```vue
-<HexTriad>
-  <HexTriadCallout>
-    <HexTriadBadge>01</HexTriadBadge>
-    <HexTriadHeading>Performance</HexTriadHeading>
-    <HexTriadContent>Fast builds, instant feedback, and zero-overhead runtime.</HexTriadContent>
-  </HexTriadCallout>
-  <HexTriadCallout>
-    <HexTriadBadge>02</HexTriadBadge>
-    <HexTriadHeading>Reliability</HexTriadHeading>
-    <HexTriadContent>Strict type safety paired with deterministic test suites.</HexTriadContent>
-  </HexTriadCallout>
-  <HexTriadCallout>
-    <HexTriadBadge>03</HexTriadBadge>
-    <HexTriadHeading>Scalability</HexTriadHeading>
-    <HexTriadContent>Seamless growth across packages, tools, and workflows.</HexTriadContent>
-  </HexTriadCallout>
-</HexTriad>
+<HexagonTriad>
+  <HexagonTriadCallout>
+    <HexagonTriadBadge>01</HexagonTriadBadge>
+    <HexagonTriadHeading>Performance</HexagonTriadHeading>
+    <HexagonTriadContent>Fast builds, instant feedback, and zero-overhead runtime.</HexagonTriadContent>
+  </HexagonTriadCallout>
+  <HexagonTriadCallout>
+    <HexagonTriadBadge>02</HexagonTriadBadge>
+    <HexagonTriadHeading>Reliability</HexagonTriadHeading>
+    <HexagonTriadContent>Strict type safety paired with deterministic test suites.</HexagonTriadContent>
+  </HexagonTriadCallout>
+  <HexagonTriadCallout>
+    <HexagonTriadBadge>03</HexagonTriadBadge>
+    <HexagonTriadHeading>Scalability</HexagonTriadHeading>
+    <HexagonTriadContent>Seamless growth across packages, tools, and workflows.</HexagonTriadContent>
+  </HexagonTriadCallout>
+</HexagonTriad>
 ```
 
 ---
 
-# HorizCard
+# HorizontalCard
 
 Card component with step ribbon badge, chamfered corner with organic accent blob, and optional icon.
 
 <div class="mt-8 flex items-center justify-center gap-8">
-  <HorizCard
+  <HorizontalCard
     step="01"
-    title="Lorem Ipsum"
-    description="Lorem ipsum dolor sit amet, nibh est. A magna maecenas, quam magna nec quis, lorem nunc. Suspendisse viverra sodales mauris, cras pharetra proin egestas."
+    title="Discovery"
     icon="default"
-  />
-  <HorizCard
+  >
+    <HorizontalCardContent>Explore the problem and define user needs.</HorizontalCardContent>
+  </HorizontalCard>
+  <HorizontalCard
     step="02"
-    title="Clean Layout"
-    description="When an icon is omitted, the card body automatically adapts to provide a balanced, spacious text layout."
+    title="Delivery"
     color="#2563eb"
-  />
+  >
+    <HorizontalCardContent>Ship a focused solution and learn from feedback.</HorizontalCardContent>
+  </HorizontalCard>
 </div>
 
 ---
 
-# VertCard
+# VerticalCard
 
 Vertical card component with step ribbon badge, top-right diagonal stripes, organic bottom-left accent blob, and optional icon.
 
 <div class="mt-4 flex items-center justify-center gap-8 scale-85">
-  <VertCard
+  <VerticalCard
     step="01"
     icon="default"
     variant="outside"
   >
-    <VertCardTitle>Outside Badge</VertCardTitle>
-    <VertCardContent>
+    <template #title>Outside Badge</template>
+    <VerticalCardContent>
       Default 'outside' variant showing the ribbon step badge anchored to the outer left border.
-    </VertCardContent>
-  </VertCard>
-  <VertCard
+    </VerticalCardContent>
+  </VerticalCard>
+  <VerticalCard
     variant="none"
     color="#e76832"
-    text-color="var(--alpha-academic-primary)"
+    text-color="var(--alpha-foreground-primary)"
     :dots="false"
   >
-    <VertCardTitle>Sự cố có thể lan rộng</VertCardTitle>
-    <VertCardContent>
+    <template #title>Sự cố có thể lan rộng</template>
+    <VerticalCardContent>
       Một lỗ hổng trong CSDL có thể dẫn đến việc dữ liệu của hàng loạt người dùng bị rò rỉ hoặc truy cập trái phép cùng lúc.
-    </VertCardContent>
-  </VertCard>
-  <VertCard
+    </VerticalCardContent>
+  </VerticalCard>
+  <VerticalCard
     step="03"
     color="#2563eb"
   >
-    <VertCardTitle>Clean Layout</VertCardTitle>
-    <VertCardContent>
+    <template #title>Clean Layout</template>
+    <VerticalCardContent>
       When an icon is omitted, the vertical card body automatically adapts to provide a balanced, spacious text layout.
-    </VertCardContent>
-  </VertCard>
+    </VerticalCardContent>
+  </VerticalCard>
 </div>
 
 ---
 
-# RectOrbitTetrad
+# RectangleOrbitTetrad
 
 4-part circular hub infographic with concentric quadrant blocks, optional icons, and symmetrical callouts.
 
 <div class="mt-4 flex items-center justify-center">
-  <RectOrbitTetrad>
-    <RectOrbitTetradCallout>
-      <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
-      <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
-    </RectOrbitTetradCallout>
-    <RectOrbitTetradCallout>
-      <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
-      <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
-    </RectOrbitTetradCallout>
-    <RectOrbitTetradCallout>
-      <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
-      <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
-    </RectOrbitTetradCallout>
-    <RectOrbitTetradCallout>
-      <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
-      <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
-    </RectOrbitTetradCallout>
-  </RectOrbitTetrad>
+  <RectangleOrbitTetrad>
+    <template #center>
+      <RectangleOrbitTetradCenter title="Four Pillars">
+        <template #content>System Design</template>
+      </RectangleOrbitTetradCenter>
+    </template>
+    <RectangleOrbitTetradCallout>
+      <RectangleOrbitTetradHeading>Strategy</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>Set clear goals and a measurable roadmap.</RectangleOrbitTetradContent>
+    </RectangleOrbitTetradCallout>
+    <RectangleOrbitTetradCallout>
+      <RectangleOrbitTetradHeading>Execution</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>Build in small steps with fast feedback.</RectangleOrbitTetradContent>
+    </RectangleOrbitTetradCallout>
+    <RectangleOrbitTetradCallout>
+      <RectangleOrbitTetradHeading>Security</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>Protect data throughout the system lifecycle.</RectangleOrbitTetradContent>
+    </RectangleOrbitTetradCallout>
+    <RectangleOrbitTetradCallout>
+      <RectangleOrbitTetradHeading>Scale</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>Grow capacity as demand and usage increase.</RectangleOrbitTetradContent>
+    </RectangleOrbitTetradCallout>
+  </RectangleOrbitTetrad>
 </div>
 
 <div class="mt-2 text-sm">
-  <code>title?: string</code> · <code>subtitle?: string</code> · <code>height?: number | string</code> · <code>animation?: boolean</code>
+  <code>animation?: boolean</code> · <code>autoScale?: boolean</code>
 </div>
 
 ```vue
-<RectOrbitTetrad title="4 Parts" subtitle="Infographics">
-  <RectOrbitTetradCallout>
-    <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
-    <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
-  </RectOrbitTetradCallout>
-  <RectOrbitTetradCallout>
-    <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
-    <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
-  </RectOrbitTetradCallout>
-  <RectOrbitTetradCallout>
-    <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
-    <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
-  </RectOrbitTetradCallout>
-  <RectOrbitTetradCallout>
-    <RectOrbitTetradHeading>Add Text Here</RectOrbitTetradHeading>
-    <RectOrbitTetradContent>Lorem ipsum dolor sit amet consectetuer est adipis elit. Maecenas porttitor congue massa.</RectOrbitTetradContent>
-  </RectOrbitTetradCallout>
-</RectOrbitTetrad>
+<RectangleOrbitTetrad>
+  <template #center>
+    <RectangleOrbitTetradCenter title="4 Parts">
+      <template #content>Infographics</template>
+    </RectangleOrbitTetradCenter>
+  </template>
+
+  <RectangleOrbitTetradCallout>
+      <RectangleOrbitTetradHeading>Strategy</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>Set clear goals and a measurable roadmap.</RectangleOrbitTetradContent>
+  </RectangleOrbitTetradCallout>
+  <RectangleOrbitTetradCallout>
+      <RectangleOrbitTetradHeading>Execution</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>Build in small steps with fast feedback.</RectangleOrbitTetradContent>
+  </RectangleOrbitTetradCallout>
+  <RectangleOrbitTetradCallout>
+      <RectangleOrbitTetradHeading>Security</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>Protect data throughout the system lifecycle.</RectangleOrbitTetradContent>
+  </RectangleOrbitTetradCallout>
+  <RectangleOrbitTetradCallout>
+      <RectangleOrbitTetradHeading>Scale</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>Grow capacity as demand and usage increase.</RectangleOrbitTetradContent>
+  </RectangleOrbitTetradCallout>
+</RectangleOrbitTetrad>
 ```
 
 ---
 
-# RectOrbitTetrad — Optional Icons & Custom Slots
+# RectangleOrbitTetrad — Optional Icons & Custom Slots
 
-Icons inside each quadrant square are optional. Pass `:icon="false"` to `<RectOrbitTetradCallout>` to omit them.
+Icons inside each quadrant square are optional. Pass `:icon="false"` to `<RectangleOrbitTetradCallout>` to omit them.
 
 <div class="mt-4 flex items-center justify-center">
-  <RectOrbitTetrad
-    title="Clean"
-    subtitle="Without Icons"
+  <RectangleOrbitTetrad
   >
-    <RectOrbitTetradCallout :icon="false">
-      <RectOrbitTetradHeading>Strategy</RectOrbitTetradHeading>
-      <RectOrbitTetradContent>Clear roadmap and measurable quarterly milestones.</RectOrbitTetradContent>
-    </RectOrbitTetradCallout>
-    <RectOrbitTetradCallout :icon="false">
-      <RectOrbitTetradHeading>Execution</RectOrbitTetradHeading>
-      <RectOrbitTetradContent>Fast feedback loops and automated deployment pipelines.</RectOrbitTetradContent>
-    </RectOrbitTetradCallout>
-    <RectOrbitTetradCallout :icon="false">
-      <RectOrbitTetradHeading>Security</RectOrbitTetradHeading>
-      <RectOrbitTetradContent>End-to-end encryption and continuous posture checks.</RectOrbitTetradContent>
-    </RectOrbitTetradCallout>
-    <RectOrbitTetradCallout :icon="false">
-      <RectOrbitTetradHeading>Scale</RectOrbitTetradHeading>
-      <RectOrbitTetradContent>Distributed edge caching with zero-downtime rollouts.</RectOrbitTetradContent>
-    </RectOrbitTetradCallout>
-  </RectOrbitTetrad>
+  <template #center>
+    <RectangleOrbitTetradCenter title="Clean">
+      <template #content>Without Icons</template>
+    </RectangleOrbitTetradCenter>
+  </template>
+
+    <RectangleOrbitTetradCallout :icon="false">
+      <RectangleOrbitTetradHeading>Strategy</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>Clear roadmap and measurable quarterly milestones.</RectangleOrbitTetradContent>
+    </RectangleOrbitTetradCallout>
+    <RectangleOrbitTetradCallout :icon="false">
+      <RectangleOrbitTetradHeading>Execution</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>Fast feedback loops and automated deployment pipelines.</RectangleOrbitTetradContent>
+    </RectangleOrbitTetradCallout>
+    <RectangleOrbitTetradCallout :icon="false">
+      <RectangleOrbitTetradHeading>Security</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>End-to-end encryption and continuous posture checks.</RectangleOrbitTetradContent>
+    </RectangleOrbitTetradCallout>
+    <RectangleOrbitTetradCallout :icon="false">
+      <RectangleOrbitTetradHeading>Scale</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>Distributed edge caching with zero-downtime rollouts.</RectangleOrbitTetradContent>
+    </RectangleOrbitTetradCallout>
+  </RectangleOrbitTetrad>
 </div>
 
 ```vue
-<RectOrbitTetrad
-  title="Clean"
-  subtitle="Without Icons"
+<RectangleOrbitTetrad
 >
-  <RectOrbitTetradCallout :icon="false">
-    <RectOrbitTetradHeading>Strategy</RectOrbitTetradHeading>
-    <RectOrbitTetradContent>Clear roadmap and measurable quarterly milestones.</RectOrbitTetradContent>
-  </RectOrbitTetradCallout>
-  <RectOrbitTetradCallout :icon="false">
-    <RectOrbitTetradHeading>Execution</RectOrbitTetradHeading>
-    <RectOrbitTetradContent>Fast feedback loops and automated deployment pipelines.</RectOrbitTetradContent>
-  </RectOrbitTetradCallout>
-  <RectOrbitTetradCallout :icon="false">
-    <RectOrbitTetradHeading>Security</RectOrbitTetradHeading>
-    <RectOrbitTetradContent>End-to-end encryption and continuous posture checks.</RectOrbitTetradContent>
-  </RectOrbitTetradCallout>
-  <RectOrbitTetradCallout :icon="false">
-    <RectOrbitTetradHeading>Scale</RectOrbitTetradHeading>
-    <RectOrbitTetradContent>Distributed edge caching with zero-downtime rollouts.</RectOrbitTetradContent>
-  </RectOrbitTetradCallout>
-</RectOrbitTetrad>
+  <template #center>
+    <RectangleOrbitTetradCenter title="Clean">
+      <template #content>Without Icons</template>
+    </RectangleOrbitTetradCenter>
+  </template>
+
+  <RectangleOrbitTetradCallout :icon="false">
+    <RectangleOrbitTetradHeading>Strategy</RectangleOrbitTetradHeading>
+    <RectangleOrbitTetradContent>Clear roadmap and measurable quarterly milestones.</RectangleOrbitTetradContent>
+  </RectangleOrbitTetradCallout>
+  <RectangleOrbitTetradCallout :icon="false">
+    <RectangleOrbitTetradHeading>Execution</RectangleOrbitTetradHeading>
+    <RectangleOrbitTetradContent>Fast feedback loops and automated deployment pipelines.</RectangleOrbitTetradContent>
+  </RectangleOrbitTetradCallout>
+  <RectangleOrbitTetradCallout :icon="false">
+    <RectangleOrbitTetradHeading>Security</RectangleOrbitTetradHeading>
+    <RectangleOrbitTetradContent>End-to-end encryption and continuous posture checks.</RectangleOrbitTetradContent>
+  </RectangleOrbitTetradCallout>
+  <RectangleOrbitTetradCallout :icon="false">
+    <RectangleOrbitTetradHeading>Scale</RectangleOrbitTetradHeading>
+    <RectangleOrbitTetradContent>Distributed edge caching with zero-downtime rollouts.</RectangleOrbitTetradContent>
+  </RectangleOrbitTetradCallout>
+</RectangleOrbitTetrad>
 ```
 
 ---
 
-# RectOrbitTetrad — Composition & Icons
+# RectangleOrbitTetrad — Composition & Icons
 
-Configure custom colors and UnoCSS icons directly on `<RectOrbitTetradCallout color="..." icon="...">`.
+Configure custom colors and UnoCSS icons directly on `<RectangleOrbitTetradCallout color="..." icon="...">`.
 
 <div class="mt-4 flex items-center justify-center">
-  <RectOrbitTetrad title="4 mối đe dọa DBMS">
-    <RectOrbitTetradCallout color="#f29e4b" icon="i-lucide-terminal-square">
-      <RectOrbitTetradHeading>SQL Injection · C/I</RectOrbitTetradHeading>
-      <RectOrbitTetradContent>Input độc hại thay đổi câu SQL, dẫn đến đọc hoặc sửa dữ liệu trái phép.</RectOrbitTetradContent>
-    </RectOrbitTetradCallout>
-    <RectOrbitTetradCallout color="#a4cb81" icon="i-lucide-user-round-search">
-      <RectOrbitTetradHeading>Insider Threat · C</RectOrbitTetradHeading>
-      <RectOrbitTetradContent>Người nội bộ lạm dụng quyền hợp lệ để xem dữ liệu ngoài nhu cầu công việc.</RectOrbitTetradContent>
-    </RectOrbitTetradCallout>
-    <RectOrbitTetradCallout color="#62b6a8" icon="i-lucide-key-round">
-      <RectOrbitTetradHeading>Privilege Abuse · C/I</RectOrbitTetradHeading>
-      <RectOrbitTetradContent>Quyền được cấp rộng hơn nhiệm vụ, làm tăng thiệt hại khi xảy ra sai sót hoặc chiếm đoạt.</RectOrbitTetradContent>
-    </RectOrbitTetradCallout>
-    <RectOrbitTetradCallout color="#e9717a" icon="i-lucide-file-lock-2">
-      <RectOrbitTetradHeading>Ransomware · I/A</RectOrbitTetradHeading>
-      <RectOrbitTetradContent>Dữ liệu bị mã hóa hoặc phá hoại, khiến dịch vụ không thể tiếp tục hoạt động.</RectOrbitTetradContent>
-    </RectOrbitTetradCallout>
-  </RectOrbitTetrad>
+  <RectangleOrbitTetrad>
+  <template #center>
+    <RectangleOrbitTetradCenter title="4 mối đe dọa DBMS">
+    </RectangleOrbitTetradCenter>
+  </template>
+
+    <RectangleOrbitTetradCallout color="#f29e4b" icon="i-lucide-terminal-square">
+      <RectangleOrbitTetradHeading>SQL Injection · C/I</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>Input độc hại thay đổi câu SQL, dẫn đến đọc hoặc sửa dữ liệu trái phép.</RectangleOrbitTetradContent>
+    </RectangleOrbitTetradCallout>
+    <RectangleOrbitTetradCallout color="#a4cb81" icon="i-lucide-user-round-search">
+      <RectangleOrbitTetradHeading>Insider Threat · C</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>Người nội bộ lạm dụng quyền hợp lệ để xem dữ liệu ngoài nhu cầu công việc.</RectangleOrbitTetradContent>
+    </RectangleOrbitTetradCallout>
+    <RectangleOrbitTetradCallout color="#62b6a8" icon="i-lucide-key-round">
+      <RectangleOrbitTetradHeading>Privilege Abuse · C/I</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>Quyền được cấp rộng hơn nhiệm vụ, làm tăng thiệt hại khi xảy ra sai sót hoặc chiếm đoạt.</RectangleOrbitTetradContent>
+    </RectangleOrbitTetradCallout>
+    <RectangleOrbitTetradCallout color="#e9717a" icon="i-lucide-file-lock-2">
+      <RectangleOrbitTetradHeading>Ransomware · I/A</RectangleOrbitTetradHeading>
+      <RectangleOrbitTetradContent>Dữ liệu bị mã hóa hoặc phá hoại, khiến dịch vụ không thể tiếp tục hoạt động.</RectangleOrbitTetradContent>
+    </RectangleOrbitTetradCallout>
+  </RectangleOrbitTetrad>
 </div>
 
 ```vue
-<RectOrbitTetrad title="4 mối đe dọa DBMS">
-  <RectOrbitTetradCallout color="#f29e4b" icon="i-lucide-terminal-square">
-    <RectOrbitTetradHeading>SQL Injection · C/I</RectOrbitTetradHeading>
-    <RectOrbitTetradContent>Input độc hại thay đổi câu SQL, dẫn đến đọc hoặc sửa dữ liệu trái phép.</RectOrbitTetradContent>
-  </RectOrbitTetradCallout>
-  <RectOrbitTetradCallout color="#a4cb81" icon="i-lucide-user-round-search">
-    <RectOrbitTetradHeading>Insider Threat · C</RectOrbitTetradHeading>
-    <RectOrbitTetradContent>Người nội bộ lạm dụng quyền hợp lệ để xem dữ liệu ngoài nhu cầu công việc.</RectOrbitTetradContent>
-  </RectOrbitTetradCallout>
-  <RectOrbitTetradCallout color="#62b6a8" icon="i-lucide-key-round">
-    <RectOrbitTetradHeading>Privilege Abuse · C/I</RectOrbitTetradHeading>
-    <RectOrbitTetradContent>Quyền được cấp rộng hơn nhiệm vụ, làm tăng thiệt hại khi xảy ra sai sót hoặc chiếm đoạt.</RectOrbitTetradContent>
-  </RectOrbitTetradCallout>
-  <RectOrbitTetradCallout color="#e9717a" icon="i-lucide-file-lock-2">
-    <RectOrbitTetradHeading>Ransomware · I/A</RectOrbitTetradHeading>
-    <RectOrbitTetradContent>Dữ liệu bị mã hóa hoặc phá hoại, khiến dịch vụ không thể tiếp tục hoạt động.</RectOrbitTetradContent>
-  </RectOrbitTetradCallout>
-</RectOrbitTetrad>
+<RectangleOrbitTetrad>
+  <template #center>
+    <RectangleOrbitTetradCenter title="4 mối đe dọa DBMS">
+    </RectangleOrbitTetradCenter>
+  </template>
+
+  <RectangleOrbitTetradCallout color="#f29e4b" icon="i-lucide-terminal-square">
+    <RectangleOrbitTetradHeading>SQL Injection · C/I</RectangleOrbitTetradHeading>
+    <RectangleOrbitTetradContent>Input độc hại thay đổi câu SQL, dẫn đến đọc hoặc sửa dữ liệu trái phép.</RectangleOrbitTetradContent>
+  </RectangleOrbitTetradCallout>
+  <RectangleOrbitTetradCallout color="#a4cb81" icon="i-lucide-user-round-search">
+    <RectangleOrbitTetradHeading>Insider Threat · C</RectangleOrbitTetradHeading>
+    <RectangleOrbitTetradContent>Người nội bộ lạm dụng quyền hợp lệ để xem dữ liệu ngoài nhu cầu công việc.</RectangleOrbitTetradContent>
+  </RectangleOrbitTetradCallout>
+  <RectangleOrbitTetradCallout color="#62b6a8" icon="i-lucide-key-round">
+    <RectangleOrbitTetradHeading>Privilege Abuse · C/I</RectangleOrbitTetradHeading>
+    <RectangleOrbitTetradContent>Quyền được cấp rộng hơn nhiệm vụ, làm tăng thiệt hại khi xảy ra sai sót hoặc chiếm đoạt.</RectangleOrbitTetradContent>
+  </RectangleOrbitTetradCallout>
+  <RectangleOrbitTetradCallout color="#e9717a" icon="i-lucide-file-lock-2">
+    <RectangleOrbitTetradHeading>Ransomware · I/A</RectangleOrbitTetradHeading>
+    <RectangleOrbitTetradContent>Dữ liệu bị mã hóa hoặc phá hoại, khiến dịch vụ không thể tiếp tục hoạt động.</RectangleOrbitTetradContent>
+  </RectangleOrbitTetradCallout>
+</RectangleOrbitTetrad>
 ```
 
 ---
@@ -607,18 +628,18 @@ Horizontal process step card with an indented chevron badge on the left and roun
 
 <div class="mt-8 flex flex-col items-center justify-center gap-4">
   <ChevronCard step="01">
-    <ChevronCardHeading>Placeholder Text</ChevronCardHeading>
+    <template #title>Discovery & Research</template>
     <ChevronCardContent>
-      This is a sample text. You simply add your own text and description here. This text is fully editable.
+      Understand user needs, constraints, and the opportunity to improve.
     </ChevronCardContent>
   </ChevronCard>
 </div>
 
 ```vue
 <ChevronCard step="01" color="#f59e0b">
-  <ChevronCardHeading>Placeholder Text</ChevronCardHeading>
+  <template #title>Discovery & Research</template>
   <ChevronCardContent>
-    This is a sample text. You simply add your own text and description here. This text is fully editable.
+    Understand user needs, constraints, and the opportunity to improve.
   </ChevronCardContent>
 </ChevronCard>
 ```
@@ -631,25 +652,25 @@ Stack multiple cards to build sequential process steps with custom colors and sl
 
 <div class="mt-4 grid grid-cols-2 gap-4">
   <ChevronCard step="01" color="#f59e0b">
-    <ChevronCardHeading>Discovery & Research</ChevronCardHeading>
+    <template #title>Discovery & Research</template>
     <ChevronCardContent>
       Analyze requirements, user journeys, and core architectural assumptions.
     </ChevronCardContent>
   </ChevronCard>
   <ChevronCard step="02" color="#10b981">
-    <ChevronCardHeading>Design & Prototype</ChevronCardHeading>
+    <template #title>Design & Prototype</template>
     <ChevronCardContent>
       Build high-fidelity wireframes, interactive UI widgets, and API contracts.
     </ChevronCardContent>
   </ChevronCard>
   <ChevronCard step="03" color="#06b6d4">
-    <ChevronCardHeading>Build & Verification</ChevronCardHeading>
+    <template #title>Build & Verification</template>
     <ChevronCardContent>
       Implement type-safe components with automated testing and lint enforcement.
     </ChevronCardContent>
   </ChevronCard>
   <ChevronCard step="04" color="#f43f5e">
-    <ChevronCardHeading>Deploy & Scale</ChevronCardHeading>
+    <template #title>Deploy & Scale</template>
     <ChevronCardContent>
       Roll out continuous delivery pipelines with distributed edge monitoring.
     </ChevronCardContent>
@@ -664,21 +685,21 @@ Three-way curved arrow infographic with concentric dashed guide lines and three 
 
 <ArrowTriad>
   <ArrowTriadCallout>
-    <ArrowTriadHeading>Title Text Here</ArrowTriadHeading>
+    <ArrowTriadHeading>Discover</ArrowTriadHeading>
     <ArrowTriadContent>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      Identify the user need and agree on a clear problem statement.
     </ArrowTriadContent>
   </ArrowTriadCallout>
   <ArrowTriadCallout>
-    <ArrowTriadHeading>Title Text Here</ArrowTriadHeading>
+    <ArrowTriadHeading>Build</ArrowTriadHeading>
     <ArrowTriadContent>
-      Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo cupidatat non proident, sunt
+      Turn the plan into a focused solution and test it with users.
     </ArrowTriadContent>
   </ArrowTriadCallout>
   <ArrowTriadCallout>
-    <ArrowTriadHeading>Title Text Here</ArrowTriadHeading>
+    <ArrowTriadHeading>Learn</ArrowTriadHeading>
     <ArrowTriadContent>
-      Magna aliqua ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      Review the results and improve the next iteration.
     </ArrowTriadContent>
   </ArrowTriadCallout>
 </ArrowTriad>
@@ -692,21 +713,21 @@ Three-way mechanical cogwheel diagram with 3D folded petals, central floating hu
 <GearTriad>
   <GearTriadCallout>
     <GearTriadHeading>Option 1</GearTriadHeading>
-    <GearTriadDescription>
-      There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
-    </GearTriadDescription>
+    <GearTriadContent>
+      Define the problem and formulate testable questions.
+    </GearTriadContent>
   </GearTriadCallout>
   <GearTriadCallout>
     <GearTriadHeading>Option 2</GearTriadHeading>
-    <GearTriadDescription>
-      There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
-    </GearTriadDescription>
+    <GearTriadContent>
+      Run controlled experiments and collect reliable measurements.
+    </GearTriadContent>
   </GearTriadCallout>
   <GearTriadCallout>
     <GearTriadHeading>Option 3</GearTriadHeading>
-    <GearTriadDescription>
-      There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
-    </GearTriadDescription>
+    <GearTriadContent>
+      Review the findings and publish reproducible results.
+    </GearTriadContent>
   </GearTriadCallout>
 </GearTriad>
 
@@ -728,27 +749,27 @@ U-shaped curved process flow with interlocking chevron arrows and outline callou
 
 <ArcArrowProcess :count="4">
   <ArcArrowProcessCallout>
-    <ArcArrowProcessHeading>Heading Here</ArcArrowProcessHeading>
+    <ArcArrowProcessHeading>Discover</ArcArrowProcessHeading>
     <ArcArrowProcessContent>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+      Gather user needs and define the problem.
     </ArcArrowProcessContent>
   </ArcArrowProcessCallout>
   <ArcArrowProcessCallout>
-    <ArcArrowProcessHeading>Heading Here</ArcArrowProcessHeading>
+    <ArcArrowProcessHeading>Plan</ArcArrowProcessHeading>
     <ArcArrowProcessContent>
-      Sed do eiusmod tempor incididunt ut labore et lorem ipsum dolor sit amet, consectetur adipiscing elit,.
+      Set a direction, scope, and delivery milestones.
     </ArcArrowProcessContent>
   </ArcArrowProcessCallout>
   <ArcArrowProcessCallout>
-    <ArcArrowProcessHeading>Heading Here</ArcArrowProcessHeading>
+    <ArcArrowProcessHeading>Build</ArcArrowProcessHeading>
     <ArcArrowProcessContent>
-      Tempor incididunt ut laborelorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod et .
+      Implement the solution and verify its behavior.
     </ArcArrowProcessContent>
   </ArcArrowProcessCallout>
   <ArcArrowProcessCallout>
-    <ArcArrowProcessHeading>Heading Here</ArcArrowProcessHeading>
+    <ArcArrowProcessHeading>Deliver</ArcArrowProcessHeading>
     <ArcArrowProcessContent>
-      Eiusmod tempor incididunt ut labore lorem ipsum dolor sit amet, cons ect etur adipiscing elit, sed .
+      Ship the result and learn from real usage.
     </ArcArrowProcessContent>
   </ArcArrowProcessCallout>
 </ArcArrowProcess>
@@ -813,12 +834,12 @@ Opposing curved comparison diagram with edge project hubs, numbered arc nodes, a
 
 # ArcComparison (Compound Structure)
 
-Customizable opposing comparison using `ArcComparisonLeft`, `ArcComparisonRight`, `ArcComparisonTitle`, and `ArcComparisonContents`.
+Customizable opposing comparison using `ArcComparisonLeft`, `ArcComparisonRight`, and composed `ArcComparisonOrbit` callouts.
 
 <ArcComparison>
   <ArcComparisonLeft color="#ea580c">
-    <ArcComparisonTitle>Traditional<br />Monolith</ArcComparisonTitle>
-    <ArcComparisonContents>
+    <template #title>Traditional<br />Monolith</template>
+
       <ArcComparisonOrbit>
         <ArcComparisonBadge>01</ArcComparisonBadge>
         <ArcComparisonHeading>Coupled State</ArcComparisonHeading>
@@ -840,12 +861,12 @@ Customizable opposing comparison using `ArcComparisonLeft`, `ArcComparisonRight`
           Unchecked memory leaks or crashes can bring down the entire system.
         </ArcComparisonContent>
       </ArcComparisonOrbit>
-    </ArcComparisonContents>
+
   </ArcComparisonLeft>
 
   <ArcComparisonRight color="#0284c7">
-    <ArcComparisonTitle>Distributed<br />Microservices</ArcComparisonTitle>
-    <ArcComparisonContents>
+    <template #title>Distributed<br />Microservices</template>
+
       <ArcComparisonOrbit>
         <ArcComparisonBadge>01</ArcComparisonBadge>
         <ArcComparisonHeading>Bounded Context</ArcComparisonHeading>
@@ -867,7 +888,7 @@ Customizable opposing comparison using `ArcComparisonLeft`, `ArcComparisonRight`
           Failures remain localized without cascading across service domains.
         </ArcComparisonContent>
       </ArcComparisonOrbit>
-    </ArcComparisonContents>
+
   </ArcComparisonRight>
 </ArcComparison>
 
@@ -899,27 +920,29 @@ Multi-column comparison matrix with distinct column themes and row labels.
 
 # TableComparison (Compound Structure)
 
-Customizable multi-criteria comparison matrix using `TableComparisonCols`, `TableComparisonCol`, `TableComparisonRows`, `TableComparisonRow`, and `TableComparisonCell`.
+Customizable multi-criteria comparison matrix using `TableComparisonColumns`, `TableComparisonColumn`, `TableComparisonRows`, `TableComparisonRow`, and `TableComparisonCell`.
 
 <TableComparison>
-  <TableComparisonCols>
-    <TableComparisonCol color="#ff0000">
+  <TableComparisonColumns>
+    <TableComparisonColumn color="#ff0000">
       Column 1
-    </TableComparisonCol>
-    <TableComparisonCol color="#00ff00">
+    </TableComparisonColumn>
+    <TableComparisonColumn color="#00ff00">
       Column 2
-    </TableComparisonCol>
-    <TableComparisonCol color="#0000ff">
+    </TableComparisonColumn>
+    <TableComparisonColumn color="#0000ff">
       Column 3
-    </TableComparisonCol>
-  </TableComparisonCols>
+    </TableComparisonColumn>
+  </TableComparisonColumns>
   <TableComparisonRows>
-    <TableComparisonRow title="Row 1">
+    <TableComparisonRow>
+      <template #heading>Row 1</template>
       <TableComparisonCell>Row 1, Cell 1</TableComparisonCell>
       <TableComparisonCell>Row 1, Cell 2</TableComparisonCell>
       <TableComparisonCell>Row 1, Cell 3</TableComparisonCell>
     </TableComparisonRow>
-    <TableComparisonRow title="Row 2">
+    <TableComparisonRow>
+      <template #heading>Row 2</template>
       <TableComparisonCell>Row 2, Cell 1</TableComparisonCell>
       <TableComparisonCell>Row 2, Cell 2</TableComparisonCell>
       <TableComparisonCell>Row 2, Cell 3</TableComparisonCell>
@@ -936,33 +959,33 @@ Customizable multi-criteria comparison matrix using `TableComparisonCols`, `Tabl
 <div class="w-full flex items-center justify-center py-4">
   <CircularPyramid>
     <CircularPyramidStack>
-      <CircularPyramidStackTitle>
+      <CircularPyramidStackHeading>
         01 Strategy
-      </CircularPyramidStackTitle>
+      </CircularPyramidStackHeading>
       <CircularPyramidStackContent>
         Define clear technical north stars, design systems, and cross-team alignment.
       </CircularPyramidStackContent>
     </CircularPyramidStack>
     <CircularPyramidStack>
-      <CircularPyramidStackTitle>
+      <CircularPyramidStackHeading>
         02 Architecture
-      </CircularPyramidStackTitle>
+      </CircularPyramidStackHeading>
       <CircularPyramidStackContent>
         Establish domain boundaries, type safety contracts, and scalable infrastructure.
       </CircularPyramidStackContent>
     </CircularPyramidStack>
     <CircularPyramidStack>
-      <CircularPyramidStackTitle>
+      <CircularPyramidStackHeading>
         03 Implementation
-      </CircularPyramidStackTitle>
+      </CircularPyramidStackHeading>
       <CircularPyramidStackContent>
         Build high-performance components with smooth motion and responsive layout.
       </CircularPyramidStackContent>
     </CircularPyramidStack>
     <CircularPyramidStack>
-      <CircularPyramidStackTitle>
+      <CircularPyramidStackHeading>
         04 Verification
-      </CircularPyramidStackTitle>
+      </CircularPyramidStackHeading>
       <CircularPyramidStackContent>
         Validate behavior with rigorous unit suites, formatting, and live slide builds.
       </CircularPyramidStackContent>
@@ -989,33 +1012,33 @@ Supports 1 to 6 circular layers with interactive layer activation and custom the
 <div class="w-full flex items-center justify-center py-4">
   <SquarePyramid>
     <SquarePyramidStack>
-      <SquarePyramidStackTitle>
+      <SquarePyramidStackHeading>
         01 Strategy
-      </SquarePyramidStackTitle>
+      </SquarePyramidStackHeading>
       <SquarePyramidStackContent>
         Define clear technical north stars, design systems, and cross-team alignment.
       </SquarePyramidStackContent>
     </SquarePyramidStack>
     <SquarePyramidStack>
-      <SquarePyramidStackTitle>
+      <SquarePyramidStackHeading>
         02 Architecture
-      </SquarePyramidStackTitle>
+      </SquarePyramidStackHeading>
       <SquarePyramidStackContent>
         Establish domain boundaries, type safety contracts, and scalable infrastructure.
       </SquarePyramidStackContent>
     </SquarePyramidStack>
     <SquarePyramidStack>
-      <SquarePyramidStackTitle>
+      <SquarePyramidStackHeading>
         03 Implementation
-      </SquarePyramidStackTitle>
+      </SquarePyramidStackHeading>
       <SquarePyramidStackContent>
         Build high-performance components with smooth motion and responsive layout.
       </SquarePyramidStackContent>
     </SquarePyramidStack>
     <SquarePyramidStack>
-      <SquarePyramidStackTitle>
+      <SquarePyramidStackHeading>
         04 Verification
-      </SquarePyramidStackTitle>
+      </SquarePyramidStackHeading>
       <SquarePyramidStackContent>
         Validate behavior with rigorous unit suites, formatting, and live slide builds.
       </SquarePyramidStackContent>
@@ -1035,50 +1058,41 @@ Supports 1 to 6 isometric square slabs with interactive layer activation matchin
 
 ---
 
-# ArcDiD (Compound Defense-in-Depth)
+# ArcDefenseInDepth (Compound Defense-in-Depth)
 
 Concentric semicircular security defense-in-depth shield layers with customizable titles and radial control parts.
 
 <div class="w-full flex items-center justify-center">
-  <ArcDiD>
-    <ArcDiDLayer>
-      <ArcDiDLayerTitle>Physical
-controls</ArcDiDLayerTitle>
-      <ArcDiDLayerParts>
-        <ArcDiDLayerPart>Access to servers</ArcDiDLayerPart>
-        <ArcDiDLayerPart>Infrastructure</ArcDiDLayerPart>
-      </ArcDiDLayerParts>
-    </ArcDiDLayer>
-    <ArcDiDLayer>
-      <ArcDiDLayerTitle>Administrative
-controls</ArcDiDLayerTitle>
-      <ArcDiDLayerParts>
-        <ArcDiDLayerPart>Data-sharing<br />policy</ArcDiDLayerPart>
-        <ArcDiDLayerPart>Approved destinations</ArcDiDLayerPart>
-        <ArcDiDLayerPart>Staff procedures</ArcDiDLayerPart>
-      </ArcDiDLayerParts>
-    </ArcDiDLayer>
-    <ArcDiDLayer>
-      <ArcDiDLayerTitle>Technical
-controls</ArcDiDLayerTitle>
-      <ArcDiDLayerParts>
-        <ArcDiDLayerPart :span="22">Authentication</ArcDiDLayerPart>
-        <ArcDiDLayerSector :span="46" rotate="tangent">
-          <ArcDiDLayerPart position="top">Access control</ArcDiDLayerPart>
-          <ArcDiDLayerPart position="bottom">Encryption</ArcDiDLayerPart>
-        </ArcDiDLayerSector>
-        <ArcDiDLayerSector>
-          <ArcDiDLayerPart position="top">DDM</ArcDiDLayerPart>
-          <ArcDiDLayerPart position="bottom">DLP</ArcDiDLayerPart>
-        </ArcDiDLayerSector>
-        <ArcDiDLayerPart>Audit</ArcDiDLayerPart>
-      </ArcDiDLayerParts>
-    </ArcDiDLayer>
-  </ArcDiD>
+  <ArcDefenseInDepth>
+    <ArcDefenseInDepthLayer>
+      <ArcDefenseInDepthLayerHeading>Physical<br />controls</ArcDefenseInDepthLayerHeading>
+      <ArcDefenseInDepthLayerPart>Access to servers</ArcDefenseInDepthLayerPart>
+      <ArcDefenseInDepthLayerPart>Infrastructure</ArcDefenseInDepthLayerPart>
+    </ArcDefenseInDepthLayer>
+    <ArcDefenseInDepthLayer>
+      <ArcDefenseInDepthLayerHeading>Administrative<br />controls</ArcDefenseInDepthLayerHeading>
+      <ArcDefenseInDepthLayerPart>Data-sharing<br />policy</ArcDefenseInDepthLayerPart>
+      <ArcDefenseInDepthLayerPart>Approved destinations</ArcDefenseInDepthLayerPart>
+      <ArcDefenseInDepthLayerPart>Staff procedures</ArcDefenseInDepthLayerPart>
+    </ArcDefenseInDepthLayer>
+    <ArcDefenseInDepthLayer>
+      <ArcDefenseInDepthLayerHeading>Technical<br />controls</ArcDefenseInDepthLayerHeading>
+      <ArcDefenseInDepthLayerPart :span="22">Authentication</ArcDefenseInDepthLayerPart>
+      <ArcDefenseInDepthLayerSector :span="46" rotate="tangent">
+        <ArcDefenseInDepthLayerPart position="top">Access control</ArcDefenseInDepthLayerPart>
+        <ArcDefenseInDepthLayerPart position="bottom">Encryption</ArcDefenseInDepthLayerPart>
+      </ArcDefenseInDepthLayerSector>
+      <ArcDefenseInDepthLayerSector>
+        <ArcDefenseInDepthLayerPart position="top">DDM</ArcDefenseInDepthLayerPart>
+        <ArcDefenseInDepthLayerPart position="bottom">DLP</ArcDefenseInDepthLayerPart>
+      </ArcDefenseInDepthLayerSector>
+      <ArcDefenseInDepthLayerPart>Audit</ArcDefenseInDepthLayerPart>
+    </ArcDefenseInDepthLayer>
+  </ArcDefenseInDepth>
 </div>
 
 ---
 layout: thanks
 ---
 
-<!-- The thanks layout renders the animated ThanksContent composition. -->
+<!-- The thanks layout renders the animated SquareThanks composition. -->

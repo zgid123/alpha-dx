@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import TableComparison from '@alphacifer/slidev-addon-theme/components/comparisons/table-comparison/TableComparison.vue';
 import TableComparisonCell from '@alphacifer/slidev-addon-theme/components/comparisons/table-comparison/TableComparisonCell.vue';
-import TableComparisonCol from '@alphacifer/slidev-addon-theme/components/comparisons/table-comparison/TableComparisonCol.vue';
-import TableComparisonCols from '@alphacifer/slidev-addon-theme/components/comparisons/table-comparison/TableComparisonCols.vue';
+import TableComparisonColumn from '@alphacifer/slidev-addon-theme/components/comparisons/table-comparison/TableComparisonColumn.vue';
+import TableComparisonColumns from '@alphacifer/slidev-addon-theme/components/comparisons/table-comparison/TableComparisonColumns.vue';
 import TableComparisonRow from '@alphacifer/slidev-addon-theme/components/comparisons/table-comparison/TableComparisonRow.vue';
 import TableComparisonRows from '@alphacifer/slidev-addon-theme/components/comparisons/table-comparison/TableComparisonRows.vue';
 import { ref } from 'vue';
@@ -23,33 +23,40 @@ const mode = ref<'default' | 'custom'>('custom');
 
 <template>
   <SlidevMockup :theme="props.theme">
-    <TableComparison v-if="mode === 'default'" />
-
     <!-- Academic Ablation Matrix -->
-    <TableComparison v-else-if="props.theme === 'academic'">
-      <TableComparisonCols>
-        <TableComparisonCol color="#0ea5e9">
+    <TableComparison v-if="props.theme === 'academic'">
+      <TableComparisonColumns>
+        <TableComparisonColumn
+          :color="mode === 'custom' ? '#0ea5e9' : undefined"
+        >
           Baseline Model
-        </TableComparisonCol>
-        <TableComparisonCol color="#10b981">
+        </TableComparisonColumn>
+        <TableComparisonColumn
+          :color="mode === 'custom' ? '#10b981' : undefined"
+        >
           Proposed Model
-        </TableComparisonCol>
-        <TableComparisonCol color="#f59e0b">
+        </TableComparisonColumn>
+        <TableComparisonColumn
+          :color="mode === 'custom' ? '#f59e0b' : undefined"
+        >
           Ablated Variant
-        </TableComparisonCol>
-      </TableComparisonCols>
+        </TableComparisonColumn>
+      </TableComparisonColumns>
       <TableComparisonRows>
-        <TableComparisonRow title="Accuracy">
+        <TableComparisonRow>
+          <template #heading>Accuracy</template>
           <TableComparisonCell>82.4%</TableComparisonCell>
           <TableComparisonCell>94.1%</TableComparisonCell>
           <TableComparisonCell>88.7%</TableComparisonCell>
         </TableComparisonRow>
-        <TableComparisonRow title="Latency">
+        <TableComparisonRow>
+          <template #heading>Latency</template>
           <TableComparisonCell>120 ms</TableComparisonCell>
           <TableComparisonCell>28 ms</TableComparisonCell>
           <TableComparisonCell>45 ms</TableComparisonCell>
         </TableComparisonRow>
-        <TableComparisonRow title="Parameters">
+        <TableComparisonRow>
+          <template #heading>Parameters</template>
           <TableComparisonCell>110M</TableComparisonCell>
           <TableComparisonCell>25M</TableComparisonCell>
           <TableComparisonCell>25M</TableComparisonCell>
@@ -59,29 +66,38 @@ const mode = ref<'default' | 'custom'>('custom');
 
     <!-- Standard Architecture Matrix -->
     <TableComparison v-else>
-      <TableComparisonCols>
-        <TableComparisonCol color="#3b82f6">
+      <TableComparisonColumns>
+        <TableComparisonColumn
+          :color="mode === 'custom' ? '#3b82f6' : undefined"
+        >
           TypeScript Skill
-        </TableComparisonCol>
-        <TableComparisonCol color="#10b981">
+        </TableComparisonColumn>
+        <TableComparisonColumn
+          :color="mode === 'custom' ? '#10b981' : undefined"
+        >
           Testing Skill
-        </TableComparisonCol>
-        <TableComparisonCol color="#f59e0b">
+        </TableComparisonColumn>
+        <TableComparisonColumn
+          :color="mode === 'custom' ? '#f59e0b' : undefined"
+        >
           Slidev Addon
-        </TableComparisonCol>
-      </TableComparisonCols>
+        </TableComparisonColumn>
+      </TableComparisonColumns>
       <TableComparisonRows>
-        <TableComparisonRow title="Type Safety">
+        <TableComparisonRow>
+          <template #heading>Type Safety</template>
           <TableComparisonCell>Strict tsconfig</TableComparisonCell>
           <TableComparisonCell>Deterministic types</TableComparisonCell>
           <TableComparisonCell>Props contracts</TableComparisonCell>
         </TableComparisonRow>
-        <TableComparisonRow title="Tooling">
+        <TableComparisonRow>
+          <template #heading>Tooling</template>
           <TableComparisonCell>Biome & TS</TableComparisonCell>
           <TableComparisonCell>Vitest suites</TableComparisonCell>
           <TableComparisonCell>UnoCSS & Slidev</TableComparisonCell>
         </TableComparisonRow>
-        <TableComparisonRow title="Outputs">
+        <TableComparisonRow>
+          <template #heading>Outputs</template>
           <TableComparisonCell>Clean ESM modules</TableComparisonCell>
           <TableComparisonCell>Coverage reports</TableComparisonCell>
           <TableComparisonCell>Interactive decks</TableComparisonCell>
@@ -91,20 +107,20 @@ const mode = ref<'default' | 'custom'>('custom');
 
     <template #controls>
       <div class="slidev-mockup__control-group">
-        <span class="slidev-mockup__label">Preset:</span>
-        <button
-          type="button"
-          :class="['slidev-mockup__btn', { active: mode === 'custom' }]"
-          @click="mode = 'custom'"
-        >
-          {{ props.theme === 'academic' ? 'Ablation Matrix' : 'Custom Architecture Matrix' }}
-        </button>
+        <span class="slidev-mockup__label">Palette:</span>
         <button
           type="button"
           :class="['slidev-mockup__btn', { active: mode === 'default' }]"
           @click="mode = 'default'"
         >
-          Default Mockup
+          Theme Default
+        </button>
+        <button
+          type="button"
+          :class="['slidev-mockup__btn', { active: mode === 'custom' }]"
+          @click="mode = 'custom'"
+        >
+          Custom Colors
         </button>
       </div>
     </template>

@@ -24,16 +24,6 @@ Creates a large heading with a soft reflected copy below it.
 ```
 
 ---
-layout: table-of-contents
-maxDepth: 1
-hideInToc: true
----
-
-# Table Of Contents
-
-Lists every level-one heading in the deck. Set `maxDepth` to include deeper headings.
-
----
 layout: arc-toc
 maxDepth: 1
 maxItems: 1
@@ -142,7 +132,7 @@ Displays a quotation with optional attribution and customizable title classes.
   <Quote
     text="Reusable slides should feel native to every deck."
     author="Alpha"
-    title-class="!text-3xl"
+    title-class="text-3xl!"
   />
 </div>
 
@@ -234,12 +224,12 @@ An outlined decorative square designed for the animated closing composition.
 
 ---
 
-# ThanksContent
+# SquareThanks
 
 Composes the complete “Thank you” artwork and optionally animates its elements.
 
 <div class="relative mt-6 h-72 overflow-hidden rounded-xl bg-slate-900/70">
-  <ThanksContent :animation="false" />
+  <SquareThanks :animation="false" />
 </div>
 
 <div class="mt-5 text-sm">
@@ -247,7 +237,7 @@ Composes the complete “Thank you” artwork and optionally animates its elemen
 </div>
 
 ```vue
-<ThanksContent :animation="false" />
+<SquareThanks :animation="false" />
 ```
 
 ---
@@ -282,7 +272,7 @@ The first heading begins in the center. Advance once to shift it upward and reve
 ---
 
 <script setup lang="ts">
-import { mergeUno } from './utils/mergeUno'
+import { mergeUno } from './utils/merge-uno'
 
 const mergedUno = mergeUno('top-20 text-red-500', 'top-10 text-cyan-400')
 </script>
@@ -304,7 +294,7 @@ mergeUno('top-20 text-red-500', 'top-10 text-cyan-400')
 ---
 
 <script setup lang="ts">
-import { createUnoClassMerger } from './utils/mergeUno'
+import { createUnoClassMerger } from './utils/merge-uno'
 
 const mergeThemeClasses = createUnoClassMerger({
   resolveConflictKeys({ utility }) {
@@ -337,56 +327,56 @@ const mergeThemeClasses = createUnoClassMerger({
 
 ---
 
-# HexTriad
+# HexagonTriad
 
 3-part interlocking hexagon diagram for comparing key pillars, concepts, or steps.
 
 <div class="mt-4 flex items-center justify-center rounded-xl bg-slate-900/40 p-4">
-  <HexTriad>
-    <HexTriadCallout>
-      <HexTriadBadge>01</HexTriadBadge>
-      <HexTriadHeading>Performance</HexTriadHeading>
-      <HexTriadContent>Fast builds, instant feedback, and zero-overhead runtime.</HexTriadContent>
-    </HexTriadCallout>
-    <HexTriadCallout>
-      <HexTriadBadge>02</HexTriadBadge>
-      <HexTriadHeading>Reliability</HexTriadHeading>
-      <HexTriadContent>Strict type safety paired with deterministic test suites.</HexTriadContent>
-    </HexTriadCallout>
-    <HexTriadCallout>
-      <HexTriadBadge>03</HexTriadBadge>
-      <HexTriadHeading>Scalability</HexTriadHeading>
-      <HexTriadContent>Seamless growth across packages, tools, and workflows.</HexTriadContent>
-    </HexTriadCallout>
-  </HexTriad>
+  <HexagonTriad>
+    <HexagonTriadCallout>
+      <HexagonTriadBadge>01</HexagonTriadBadge>
+      <HexagonTriadHeading>Performance</HexagonTriadHeading>
+      <HexagonTriadContent>Fast builds, instant feedback, and zero-overhead runtime.</HexagonTriadContent>
+    </HexagonTriadCallout>
+    <HexagonTriadCallout>
+      <HexagonTriadBadge>02</HexagonTriadBadge>
+      <HexagonTriadHeading>Reliability</HexagonTriadHeading>
+      <HexagonTriadContent>Strict type safety paired with deterministic test suites.</HexagonTriadContent>
+    </HexagonTriadCallout>
+    <HexagonTriadCallout>
+      <HexagonTriadBadge>03</HexagonTriadBadge>
+      <HexagonTriadHeading>Scalability</HexagonTriadHeading>
+      <HexagonTriadContent>Seamless growth across packages, tools, and workflows.</HexagonTriadContent>
+    </HexagonTriadCallout>
+  </HexagonTriad>
 </div>
 
 <div class="mt-4 text-sm">
-  <code>items?: IHexTriadItem[]</code> · <code>title?: string</code> · <code>subtitle?: string</code>
+  <code>animation?: boolean</code> · <code>startDelay?: number</code> · <code>active?: boolean</code>
 </div>
 
 ```vue
-<HexTriad>
-  <HexTriadCallout>
-    <HexTriadBadge>01</HexTriadBadge>
-    <HexTriadHeading>Performance</HexTriadHeading>
-    <HexTriadContent>Fast builds, instant feedback, and zero-overhead runtime.</HexTriadContent>
-  </HexTriadCallout>
-  <HexTriadCallout>
-    <HexTriadBadge>02</HexTriadBadge>
-    <HexTriadHeading>Reliability</HexTriadHeading>
-    <HexTriadContent>Strict type safety paired with deterministic test suites.</HexTriadContent>
-  </HexTriadCallout>
-  <HexTriadCallout>
-    <HexTriadBadge>03</HexTriadBadge>
-    <HexTriadHeading>Scalability</HexTriadHeading>
-    <HexTriadContent>Seamless growth across packages, tools, and workflows.</HexTriadContent>
-  </HexTriadCallout>
-</HexTriad>
+<HexagonTriad>
+  <HexagonTriadCallout>
+    <HexagonTriadBadge>01</HexagonTriadBadge>
+    <HexagonTriadHeading>Performance</HexagonTriadHeading>
+    <HexagonTriadContent>Fast builds, instant feedback, and zero-overhead runtime.</HexagonTriadContent>
+  </HexagonTriadCallout>
+  <HexagonTriadCallout>
+    <HexagonTriadBadge>02</HexagonTriadBadge>
+    <HexagonTriadHeading>Reliability</HexagonTriadHeading>
+    <HexagonTriadContent>Strict type safety paired with deterministic test suites.</HexagonTriadContent>
+  </HexagonTriadCallout>
+  <HexagonTriadCallout>
+    <HexagonTriadBadge>03</HexagonTriadBadge>
+    <HexagonTriadHeading>Scalability</HexagonTriadHeading>
+    <HexagonTriadContent>Seamless growth across packages, tools, and workflows.</HexagonTriadContent>
+  </HexagonTriadCallout>
+</HexagonTriad>
 ```
 
 ---
 layout: thanks
 ---
 
-<!-- The thanks layout renders the animated ThanksContent composition. -->
+<!-- The thanks layout renders the animated SquareThanks composition. -->

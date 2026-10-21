@@ -6,7 +6,7 @@ The `arc-toc` layout renders a circular arc table of contents with measured bezi
 
 Circular arc table of contents with measured bezier connectors, color-coded section markers, and optional index numbers.
 
-**When to use**: When you want a visually distinctive agenda slide with an arc-shaped layout instead of a plain list. Supports up to 7 sections. For a simpler text-based TOC, use the `table-of-contents` layout instead.
+**When to use**: When you want a visually distinctive agenda slide with an arc-shaped layout. Supports up to 7 sections.
 
 ## Presentation Preview
 

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 
-import type { TGearTriadIcon } from '../../../../utils/gearTriad';
+import type { TGearTriadIcon } from '../../../../utils/facets/triad/gear-triad';
+import { useMergedUnoAttrs } from '../../../../utils/useMergedUnoAttrs';
 
 defineOptions({
+  inheritAttrs: false,
   name: 'GearTriadIcon',
 });
 
@@ -16,7 +18,7 @@ export interface IGearTriadIconProps {
 
 const props = withDefaults(defineProps<IGearTriadIconProps>(), {
   size: 32,
-  color: '#0f172a',
+  color: undefined,
   strokeWidth: 2,
   icon: undefined,
 });
@@ -27,6 +29,7 @@ const shouldRender = computed((): boolean => {
   if (props.icon === false) {
     return false;
   }
+
   return Boolean(props.icon || slots.default);
 });
 
@@ -37,16 +40,21 @@ const isStringIcon = computed((): boolean => {
 const isComponentIcon = computed((): boolean => {
   return typeof props.icon === 'object' && props.icon !== null;
 });
+
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-gear-triad-icon flex items-center justify-center text-(--alpha-gear-triad-icon) pointer-events-none select-none',
+);
 </script>
 
 <template>
   <div
     v-if="shouldRender"
-    class="alpha-gear-triad-icon flex items-center justify-center pointer-events-none select-none"
+    v-bind="forwardedAttrs()"
+    :class="className()"
     :style="{
-      color: props.color,
       width: `${props.size}px`,
       height: `${props.size}px`,
+      ...(props.color ? { '--alpha-gear-triad-icon': props.color } : {}),
     }"
   >
     <slot>
@@ -54,17 +62,15 @@ const isComponentIcon = computed((): boolean => {
       <component
         :is="props.icon"
         v-if="isComponentIcon"
-        class="w-full h-full"
-        :style="{ color: props.color }"
+        class="w-full h-full text-current"
       />
 
       <!-- UnoCSS / Iconify class name (e.g. i-lucide-file-text) -->
       <span
         v-else-if="isStringIcon && (props.icon as string).includes('-')"
         :class="props.icon"
-        class="inline-block"
+        class="inline-block text-current"
         :style="{
-          color: props.color,
           width: `${props.size}px`,
           height: `${props.size}px`,
           fontSize: `${props.size}px`,
@@ -73,6 +79,7 @@ const isComponentIcon = computed((): boolean => {
 
       <!-- 01 Document with folded corner and lines (Option 1) -->
       <svg
+        aria-hidden="true"
         v-else-if="
           props.icon === 'document' ||
           props.icon === 'file' ||
@@ -95,6 +102,7 @@ const isComponentIcon = computed((): boolean => {
 
       <!-- 02 Shield with star (Option 2) -->
       <svg
+        aria-hidden="true"
         v-else-if="props.icon === 'shield' || props.icon === 'shield-star'"
         viewBox="0 0 24 24"
         fill="none"
@@ -113,6 +121,7 @@ const isComponentIcon = computed((): boolean => {
 
       <!-- 03 Archive box with files poking out (Option 3) -->
       <svg
+        aria-hidden="true"
         v-else-if="
           props.icon === 'archive' ||
           props.icon === 'box' ||
@@ -133,11 +142,15 @@ const isComponentIcon = computed((): boolean => {
         <!-- Center handle slot -->
         <line x1="10" y1="15" x2="14" y2="15" />
         <!-- Folders / papers peeking out top -->
-        <path d="M7 7V4a1 1 0 0 1 1-1h4l2 2h3a1 1 0 0 1 1 1v1" stroke-width="1.5" />
+        <path
+          d="M7 7V4a1 1 0 0 1 1-1h4l2 2h3a1 1 0 0 1 1 1v1"
+          stroke-width="1.5"
+        />
       </svg>
 
       <!-- 04 Center Gear with 6 teeth and 3-spoke inner steering (Center Hub) -->
       <svg
+        aria-hidden="true"
         v-else-if="props.icon === 'gear' || props.icon === 'settings' || props.icon === 'cog'"
         viewBox="0 0 24 24"
         fill="none"

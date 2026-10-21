@@ -1,9 +1,7 @@
 import type { ComputedRef, InjectionKey, Ref } from 'vue';
 
-import type { IPyramidPalette, IPyramidRegistration } from '../shared';
+import type { IPyramidPalette } from '../shared';
 import type { ISquareLayerGeometry, ISquarePyramidGeometry } from './types';
-
-export interface ISquarePyramidRegistration extends IPyramidRegistration {}
 
 export interface ISquarePyramidRootContext {
   readonly count: ComputedRef<number>;
@@ -15,7 +13,6 @@ export interface ISquarePyramidRootContext {
   readonly interactive: ComputedRef<boolean>;
   readonly titleWidthPx: ComputedRef<number>;
   readonly contentWidthPx: ComputedRef<number>;
-  readonly contentRightOffsetPx: ComputedRef<number>;
   readonly registerStack: (
     id?: symbol,
     color?: ComputedRef<string | undefined>,

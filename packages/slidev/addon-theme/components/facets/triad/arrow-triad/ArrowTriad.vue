@@ -6,20 +6,17 @@ import {
   onBeforeUpdate,
   provide,
   ref,
-  useSlots,
 } from 'vue';
 
 import {
   ARROW_TRIAD_ROOT_KEY,
   createArrowTriadGeometry,
   getDefaultArrowTriadItem,
-  type IArrowTriadItem,
   resolveArrowTriadItems,
   type TArrowTriadLayout,
-} from '../../../../utils/arrowTriad';
+} from '../../../../utils/facets/triad/arrow-triad';
 import { useDiagramAutoScale } from '../../../../utils/useDiagramAutoScale';
 import { useMergedUnoAttrs } from '../../../../utils/useMergedUnoAttrs';
-import ArrowTriadCallout from './ArrowTriadCallout.vue';
 
 defineOptions({
   name: 'ArrowTriad',
@@ -27,7 +24,6 @@ defineOptions({
 });
 
 export interface IArrowTriadProps {
-  readonly items?: readonly IArrowTriadItem[];
   readonly animation?: boolean;
   readonly height?: number | string;
   readonly startDelay?: number;
@@ -43,7 +39,6 @@ export interface IArrowTriadProps {
 }
 
 const props = withDefaults(defineProps<IArrowTriadProps>(), {
-  items: undefined,
   animation: true,
   height: undefined,
   startDelay: undefined,
@@ -57,8 +52,6 @@ const props = withDefaults(defineProps<IArrowTriadProps>(), {
   layout: '2-left-1-right',
   offsetX: undefined,
 });
-
-const slots = useSlots();
 
 const shiftingIntro = inject<
   | {
@@ -97,7 +90,7 @@ const resolvedStartDelay = computed(() => {
 });
 
 const resolvedItems = computed(() => {
-  return resolveArrowTriadItems(props.items);
+  return resolveArrowTriadItems();
 });
 
 let calloutCounter = 0;
@@ -197,14 +190,12 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     :data-hide-pagy="props.hidePagy ? '' : undefined"
     :style="{
       height: resolvedHeightStyle,
-      fontFamily:
-        'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif',
-      '--arrow-triad-start-delay': `${resolvedStartDelay}ms`,
+      '--alpha-arrow-triad-start-delay': `${resolvedStartDelay}ms`,
     }"
   >
     <!-- Relative stage container -->
     <div
-      class="alpha-arrow-triad__stage relative w-full h-full min-h-[350px] max-w-[900px] flex items-center justify-center overflow-visible"
+      class="alpha-arrow-triad__stage relative w-full h-full min-h-87.5 max-w-225 flex items-center justify-center overflow-visible"
       :style="{
         transform: stageTransform,
         transformOrigin: 'center center',
@@ -212,138 +203,137 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     >
       <!-- Central SVG graphic: 3 curved arrows + concentric dashed arcs -->
       <div
-        class="alpha-arrow-triad__center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[362px] pointer-events-none"
+        class="alpha-arrow-triad__center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-90.5 pointer-events-none"
       >
         <svg
+          aria-hidden="true"
           class="w-full h-full overflow-visible"
           :viewBox="`0 0 ${geo.viewBoxWidth} ${geo.viewBoxHeight}`"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g :transform="is2Left ? `translate(${geo.viewBoxWidth}, 0) scale(-1, 1)` : undefined">
+          <g
+            :transform="is2Left ? `translate(${geo.viewBoxWidth}, 0) scale(-1, 1)` : undefined"
+          >
             <!-- Dashed Guide Arcs -->
             <g
               class="alpha-arrow-triad__dashed"
               :class="{ 'alpha-arrow-triad--animated': isAnimated }"
               fill="none"
-              stroke="#94a3b8"
+              stroke="var(--alpha-arrow-triad-connector-stroke)"
               stroke-width="1.8"
               stroke-dasharray="4 4"
               opacity="0.8"
             >
+              <path v-for="(d, idx) in geo.dashedArcs" :key="idx" :d="d" />
+            </g>
+            <!-- Arrow 0: Yellow Arrow (Top-Right) -->
+            <g
+              class="alpha-arrow-triad__branch alpha-arrow-triad__branch--yellow"
+              :class="{ 'alpha-arrow-triad--animated': isAnimated }"
+            >
               <path
-                v-for="(d, idx) in geo.dashedArcs"
-                :key="idx"
-                :d="d"
+                :d="props.triangleHead ? geo.yellowArrow.stemPath : geo.yellowArrow.path"
+                :fill="resolvedItems[0].color"
+              />
+              <polygon
+                v-if="props.triangleHead"
+                :points="geo.yellowArrow.outerHeadPoints"
+                :fill="resolvedItems[0].color"
+                :stroke="resolvedItems[0].depthColor"
+                stroke-width="4"
+                stroke-linejoin="round"
+              />
+              <path
+                v-else-if="props.neckLine"
+                :d="geo.yellowArrow.neckLine"
+                fill="none"
+                :stroke="resolvedItems[0].depthColor"
+                stroke-width="4"
+                stroke-linecap="round"
               />
             </g>
-          <!-- Arrow 0: Yellow Arrow (Top-Right) -->
-          <g
-            class="alpha-arrow-triad__branch alpha-arrow-triad__branch--yellow"
-            :class="{ 'alpha-arrow-triad--animated': isAnimated }"
-          >
-            <path
-              :d="props.triangleHead ? geo.yellowArrow.stemPath : geo.yellowArrow.path"
-              :fill="resolvedItems[0].color"
-            />
-            <polygon
-              v-if="props.triangleHead"
-              :points="geo.yellowArrow.outerHeadPoints"
-              :fill="resolvedItems[0].color"
-              :stroke="resolvedItems[0].depthColor"
-              stroke-width="4"
-              stroke-linejoin="round"
-            />
-            <path
-              v-else-if="props.neckLine"
-              :d="geo.yellowArrow.neckLine"
-              fill="none"
-              :stroke="resolvedItems[0].depthColor"
-              stroke-width="4"
-              stroke-linecap="round"
-            />
+            <!-- Arrow 1: Green Arrow (Bottom-Right) -->
+            <g
+              class="alpha-arrow-triad__branch alpha-arrow-triad__branch--green"
+              :class="{ 'alpha-arrow-triad--animated': isAnimated }"
+            >
+              <path
+                :d="props.triangleHead ? geo.greenArrow.stemPath : geo.greenArrow.path"
+                :fill="resolvedItems[1].color"
+              />
+              <polygon
+                v-if="props.triangleHead"
+                :points="geo.greenArrow.outerHeadPoints"
+                :fill="resolvedItems[1].color"
+                :stroke="resolvedItems[1].depthColor"
+                stroke-width="4"
+                stroke-linejoin="round"
+              />
+              <path
+                v-else-if="props.neckLine"
+                :d="geo.greenArrow.neckLine"
+                fill="none"
+                :stroke="resolvedItems[1].depthColor"
+                stroke-width="4"
+                stroke-linecap="round"
+              />
+            </g>
+            <!-- Arrow 2: Blue Arrow (Left) -->
+            <g
+              class="alpha-arrow-triad__branch alpha-arrow-triad__branch--blue"
+              :class="{ 'alpha-arrow-triad--animated': isAnimated }"
+            >
+              <path
+                :d="props.triangleHead ? geo.blueArrow.stemPath : geo.blueArrow.path"
+                :fill="resolvedItems[2].color"
+              />
+              <polygon
+                v-if="props.triangleHead"
+                :points="geo.blueArrow.outerHeadPoints"
+                :fill="resolvedItems[2].color"
+                :stroke="resolvedItems[2].depthColor"
+                stroke-width="4"
+                stroke-linejoin="round"
+              />
+              <path
+                v-else-if="props.neckLine"
+                :d="geo.blueArrow.neckLine"
+                fill="none"
+                :stroke="resolvedItems[2].depthColor"
+                stroke-width="4"
+                stroke-linecap="round"
+              />
+            </g>
           </g>
-          <!-- Arrow 1: Green Arrow (Bottom-Right) -->
-          <g
-            class="alpha-arrow-triad__branch alpha-arrow-triad__branch--green"
-            :class="{ 'alpha-arrow-triad--animated': isAnimated }"
-          >
-            <path
-              :d="props.triangleHead ? geo.greenArrow.stemPath : geo.greenArrow.path"
-              :fill="resolvedItems[1].color"
-            />
-            <polygon
-              v-if="props.triangleHead"
-              :points="geo.greenArrow.outerHeadPoints"
-              :fill="resolvedItems[1].color"
-              :stroke="resolvedItems[1].depthColor"
-              stroke-width="4"
-              stroke-linejoin="round"
-            />
-            <path
-              v-else-if="props.neckLine"
-              :d="geo.greenArrow.neckLine"
-              fill="none"
-              :stroke="resolvedItems[1].depthColor"
-              stroke-width="4"
-              stroke-linecap="round"
-            />
-          </g>
-          <!-- Arrow 2: Blue Arrow (Left) -->
-          <g
-            class="alpha-arrow-triad__branch alpha-arrow-triad__branch--blue"
-            :class="{ 'alpha-arrow-triad--animated': isAnimated }"
-          >
-            <path
-              :d="props.triangleHead ? geo.blueArrow.stemPath : geo.blueArrow.path"
-              :fill="resolvedItems[2].color"
-            />
-            <polygon
-              v-if="props.triangleHead"
-              :points="geo.blueArrow.outerHeadPoints"
-              :fill="resolvedItems[2].color"
-              :stroke="resolvedItems[2].depthColor"
-              stroke-width="4"
-              stroke-linejoin="round"
-            />
-            <path
-              v-else-if="props.neckLine"
-              :d="geo.blueArrow.neckLine"
-              fill="none"
-              :stroke="resolvedItems[2].depthColor"
-              stroke-width="4"
-              stroke-linecap="round"
-            />
-          </g>
-        </g>
-      </svg>
+        </svg>
+      </div>
+      <!-- Callout Cards -->
+      <slot />
     </div>
-    <!-- Callout Cards -->
-    <slot>
-      <ArrowTriadCallout :index="0" />
-      <ArrowTriadCallout :index="1" />
-      <ArrowTriadCallout :index="2" />
-    </slot>
   </div>
-</div>
 </template>
 
 <style scoped>
 .alpha-arrow-triad--animated.alpha-arrow-triad__dashed {
-  animation: arrow-triad-dashed-fade 500ms ease-out calc(var(--arrow-triad-start-delay, 0ms) + 100ms) both;
+  animation: arrow-triad-dashed-fade 500ms ease-out
+    calc(var(--alpha-arrow-triad-start-delay, 0ms) + 100ms) both;
 }
 
 .alpha-arrow-triad--animated.alpha-arrow-triad__branch--yellow {
-  animation: arrow-triad-branch-pop 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arrow-triad-start-delay, 0ms) + 50ms) both;
+  animation: arrow-triad-branch-pop 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--alpha-arrow-triad-start-delay, 0ms) + 50ms) both;
   transform-origin: 349px 319px;
 }
 
 .alpha-arrow-triad--animated.alpha-arrow-triad__branch--green {
-  animation: arrow-triad-branch-pop 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arrow-triad-start-delay, 0ms) + 120ms) both;
+  animation: arrow-triad-branch-pop 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--alpha-arrow-triad-start-delay, 0ms) + 120ms) both;
   transform-origin: 349px 319px;
 }
 
 .alpha-arrow-triad--animated.alpha-arrow-triad__branch--blue {
-  animation: arrow-triad-branch-pop 450ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--arrow-triad-start-delay, 0ms) + 190ms) both;
+  animation: arrow-triad-branch-pop 450ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--alpha-arrow-triad-start-delay, 0ms) + 190ms) both;
   transform-origin: 349px 319px;
 }
 

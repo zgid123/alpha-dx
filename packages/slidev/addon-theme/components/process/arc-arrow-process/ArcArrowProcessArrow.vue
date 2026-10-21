@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-import { DEFAULT_ARC_ARROW_PATH } from '../../../utils/arcArrowProcess';
+import { DEFAULT_ARC_ARROW_PATH } from '../../../utils/process/arc-arrow-process';
+import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
 
 defineOptions({
   name: 'ArcArrowProcessArrow',
+  inheritAttrs: false,
 });
 
 export interface IArcArrowProcessArrowProps {
@@ -22,9 +24,9 @@ export interface IArcArrowProcessArrowProps {
 }
 
 const props = withDefaults(defineProps<IArcArrowProcessArrowProps>(), {
-  color: '#6fa3b5',
-  gradientEnd: '#8cb8c8',
-  stroke: '#ffffff',
+  color: 'var(--alpha-arc-arrow-process-arrow)',
+  gradientEnd: 'var(--alpha-arc-arrow-process-arrow-gradient-end)',
+  stroke: 'var(--alpha-arc-arrow-process-arrow-stroke)',
   strokeWidth: 2.5,
   width: undefined,
   height: undefined,
@@ -76,50 +78,47 @@ const resolvedHeight = computed(() => {
 
   return isStandalone.value ? '215px' : '100%';
 });
+
+const { className, forwardedAttrs } = useMergedUnoAttrs(
+  'alpha-arc-arrow-process-arrow inline-flex items-center justify-center select-none',
+);
 </script>
 
 <template>
   <div
-    class="alpha-arc-arrow-process-arrow inline-flex items-center justify-center select-none"
+    v-bind="forwardedAttrs()"
+    :class="className()"
     :style="{
       width: resolvedWidth,
       height: resolvedHeight,
     }"
   >
     <svg
+      aria-hidden="true"
       class="w-full h-full overflow-visible"
       :viewBox="resolvedViewBox"
       preserveAspectRatio="xMidYMin meet"
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <filter
-          :id="shadowId"
-          x="-30%"
-          y="-30%"
-          width="160%"
-          height="160%"
-        >
+        <filter :id="shadowId" x="-30%" y="-30%" width="160%" height="160%">
           <feDropShadow
             dx="0"
             dy="5"
             stdDeviation="5"
             flood-opacity="0.22"
-            flood-color="#000000"
+            flood-color="var(--alpha-arc-arrow-process-arrow-shadow)"
           />
         </filter>
-        <linearGradient
-          :id="gradId"
-          x1="0%"
-          y1="100%"
-          x2="100%"
-          y2="0%"
-        >
+        <linearGradient :id="gradId" x1="0%" y1="100%" x2="100%" y2="0%">
           <stop offset="0%" :stop-color="props.color" />
           <stop offset="100%" :stop-color="props.gradientEnd ?? props.color" />
         </linearGradient>
       </defs>
-      <g v-if="!isStandalone" :transform="`translate(500, ${props.originY}) rotate(${props.rotation})`">
+      <g
+        v-if="!isStandalone"
+        :transform="`translate(500, ${props.originY}) rotate(${props.rotation})`"
+      >
         <path
           :d="resolvedPath"
           :fill="`url(#${gradId})`"
