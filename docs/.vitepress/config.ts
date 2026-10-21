@@ -1,10 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
-import coreUnoConfig from '@alphacifer/slidev-core-theme/uno';
 import { presetWind3 } from 'unocss';
 import UnoCSS from 'unocss/vite';
 import { defineConfig } from 'vitepress';
+
+import coreUnoConfig from '../../packages/slidev/core-theme/src/uno';
 
 const slidevCoreThemeStylePath = fileURLToPath(
   new URL('../../packages/slidev/core-theme/style.css', import.meta.url),
@@ -212,6 +213,25 @@ export default defineConfig({
     ],
     resolve: {
       alias: [
+        {
+          find: '@alphacifer/slidev-core-theme/uno',
+          replacement: fileURLToPath(
+            new URL(
+              '../../packages/slidev/core-theme/src/uno.ts',
+              import.meta.url,
+            ),
+          ),
+        },
+        {
+          find: '@alphacifer/slidev-core-theme/style.css',
+          replacement: slidevCoreThemeStylePath,
+        },
+        {
+          find: '@alphacifer/slidev-core-theme',
+          replacement: fileURLToPath(
+            new URL('../../packages/slidev/core-theme/src', import.meta.url),
+          ),
+        },
         {
           find: '@alphacifer/slidev-addon-theme',
           replacement: fileURLToPath(
