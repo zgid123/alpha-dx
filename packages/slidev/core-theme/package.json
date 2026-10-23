@@ -1,6 +1,6 @@
 {
   "name": "@alphacifer/slidev-core-theme",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Shared color tokens and typography for Alpha Slidev themes",
   "type": "module",
   "exports": {
