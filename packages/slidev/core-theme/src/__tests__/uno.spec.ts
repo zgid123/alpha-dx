@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
-import unoConfig from '@alphacifer/slidev-core-theme/uno';
 import { createGenerator, presetWind3 } from 'unocss';
 
 import pkg from '../../package.json';
+import unoConfig from '../uno';
 
 describe('core theme', () => {
   it('publishes the stylesheet and UnoCSS entry points', () => {
