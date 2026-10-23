@@ -84,8 +84,8 @@ overrides such as `--alpha-square-pyramid-stack-1-color` and
 
 ## Core
 
-- Components: `Date`, `QnA`, `Quote`, `ReflectedTitle`, `Speaker`
-- Layouts: `arc-toc`, `bg-center`
+- Components: `Date`, `MetaList`, `QnA`, `Quote`, `ReflectedTitle`, `Speaker`
+- Layouts: `arc-toc`, `bg-center`, `references`
 
 ## Shifting heading
 

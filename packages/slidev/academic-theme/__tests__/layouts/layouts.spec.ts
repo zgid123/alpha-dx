@@ -85,6 +85,25 @@ describe('academic-theme', () => {
           'color: var(--alpha-foreground-secondary, #475569);',
         );
       });
+
+      it('hides pagination on cover, toc, background center, and thanks slides', () => {
+        const stylePath = path.resolve(__dirname, '../../style.css');
+        const content = fs.readFileSync(stylePath, 'utf8');
+
+        expect(content).toContain(
+          '.slidev-page:has(.alpha-thanks) .alpha-academic-pagy',
+        );
+      });
+
+      it('resets margins and inherits colors for thanks layout headings and paragraphs', () => {
+        const stylePath = path.resolve(__dirname, '../../style.css');
+        const content = fs.readFileSync(stylePath, 'utf8');
+
+        expect(content).toContain(
+          '.slidev-page .slidev-layout.alpha-thanks h1',
+        );
+        expect(content).toContain('color: inherit;');
+      });
     });
   });
 

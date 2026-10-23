@@ -165,6 +165,33 @@ Anchors speaker or team attribution and a formatted date at the bottom of a slid
 ```
 
 ---
+
+# MetaList
+
+Renders semantic key-value metadata pairs such as course details, supervisor, or project info.
+
+<MetaList
+  class="mt-6"
+  :items="[
+    { label: 'Course', value: 'Data Science & Analytics' },
+    { label: 'Supervisor', value: 'Prof. Alan Turing' },
+  ]"
+/>
+
+<div class="mt-8 text-sm">
+  <code>items: IMetaListItem[]</code> · <code>separator?: string</code>
+</div>
+
+```vue
+<MetaList
+  :items="[
+    { label: 'Course', value: 'Data Science & Analytics' },
+    { label: 'Supervisor', value: 'Prof. Alan Turing' },
+  ]"
+/>
+```
+
+---
 clicks: 1
 ---
 
@@ -1090,6 +1117,47 @@ Concentric semicircular security defense-in-depth shield layers with customizabl
     </ArcDefenseInDepthLayer>
   </ArcDefenseInDepth>
 </div>
+
+---
+layout: references
+hideInToc: true
+columns: 2
+references:
+  - authors: Alneyadi et al.
+    year: 2016
+    title: A survey on data leakage prevention systems
+    url: https://doi.org/10.1016/j.jnca.2016.01.008
+  - authors: Liu et al.
+    year: 2015
+    title: Privacy-Preserving Scanning of Big Content for Sensitive Data Exposure with MapReduce
+    url: https://vtechworks.lib.vt.edu/items/2652b4c0-305d-4b03-b463-e16d1cd8ad4e
+  - authors: Shapira et al.
+    year: 2013
+    title: Content-based data leakage detection using extended fingerprinting
+    url: https://arxiv.org/abs/1302.2028
+  - authors: Ahmed et al.
+    year: 2021
+    title: Automated detection of unstructured context-dependent sensitive information using deep learning
+    url: https://doi.org/10.1016/j.iot.2021.100444
+  - authors: Schwab et al.
+    year: 2021
+    title: Performance Evaluation of Policy-Based SQL Query Classification for Data-Privacy Compliance
+    url: https://doi.org/10.1007/s13222-021-00385-9
+  - authors: Herrera Montano et al.
+    year: 2022
+    title: Survey of Techniques on Data Leakage Protection and Methods to address the Insider threat
+    url: https://doi.org/10.1007/s10586-022-03668-2
+  - authors: De Renzis et al.
+    year: 2024
+    title: Exploiting Large Language Models to Train Automatic Detectors of Sensitive Data
+    url: https://research.unipd.it/handle/11577/3524608
+  - authors: Qawara & Alhindi
+    year: 2026
+    title: Detecting Context-Dependent Sensitive Data in Unstructured Text
+    url: https://doi.org/10.3390/info17070663
+---
+
+# References
 
 ---
 layout: thanks

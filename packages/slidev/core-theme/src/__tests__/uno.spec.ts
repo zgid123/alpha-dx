@@ -34,12 +34,12 @@ describe('core theme', () => {
     expect(style).toContain('--alpha-stroke-primary: #cbd5e1;');
     expect(style).toContain('--alpha-stroke-primary: #475569;');
     expect(style).toContain('--alpha-font-size-cover: 3.75rem;');
-    expect(style).toContain('--alpha-font-size-h1: 2.5rem;');
-    expect(style).toContain('--alpha-font-size-h2: 2rem;');
-    expect(style).toContain('--alpha-font-size-h3: 1.625rem;');
+    expect(style).toContain('--alpha-font-size-h1: 2.25rem;');
+    expect(style).toContain('--alpha-font-size-h2: 1.875rem;');
+    expect(style).toContain('--alpha-font-size-h3: 1.5rem;');
     expect(style).toContain('--alpha-font-size-h4: 1.25rem;');
-    expect(style).toContain('--alpha-font-size-h5: 1rem;');
-    expect(style).toContain('--alpha-font-size-h6: 0.875rem;');
+    expect(style).toContain('--alpha-font-size-h5: 1.125rem;');
+    expect(style).toContain('--alpha-font-size-h6: 1rem;');
     expect(style).toContain('--alpha-font-size-base: 1rem;');
     expect(style).toContain('--alpha-font-size-small: 0.875rem;');
     expect(style).toContain(

@@ -10,12 +10,12 @@
 
     --alpha-font-size-cover: 3.75rem;
 
-    --alpha-font-size-h1: 2.5rem;
-    --alpha-font-size-h2: 2rem;
-    --alpha-font-size-h3: 1.625rem;
+    --alpha-font-size-h1: 2.25rem;
+    --alpha-font-size-h2: 1.875rem;
+    --alpha-font-size-h3: 1.5rem;
     --alpha-font-size-h4: 1.25rem;
-    --alpha-font-size-h5: 1rem;
-    --alpha-font-size-h6: 0.875rem;
+    --alpha-font-size-h5: 1.125rem;
+    --alpha-font-size-h6: 1rem;
     --alpha-font-size-base: 1rem;
     --alpha-font-size-small: 0.875rem;
   }
@@ -66,7 +66,7 @@
     [class*='text-['][class*='em]'],
     [class*='text-['][class*='%]']
   ) {
-  font-size: var(--alpha-font-size-h1, 2.5rem);
+  font-size: var(--alpha-font-size-h1, 2.25rem);
 }
 
 .slidev-page
@@ -114,7 +114,7 @@
     [class*='text-['][class*='em]'],
     [class*='text-['][class*='%]']
   ) {
-  font-size: var(--alpha-font-size-h2, 2rem);
+  font-size: var(--alpha-font-size-h2, 1.875rem);
 }
 
 .slidev-page
@@ -138,7 +138,7 @@
     [class*='text-['][class*='em]'],
     [class*='text-['][class*='%]']
   ) {
-  font-size: var(--alpha-font-size-h3, 1.625rem);
+  font-size: var(--alpha-font-size-h3, 1.5rem);
 }
 
 .slidev-page
@@ -186,7 +186,7 @@
     [class*='text-['][class*='em]'],
     [class*='text-['][class*='%]']
   ) {
-  font-size: var(--alpha-font-size-h5, 1rem);
+  font-size: var(--alpha-font-size-h5, 1.125rem);
 }
 
 .slidev-page
@@ -210,7 +210,7 @@
     [class*='text-['][class*='em]'],
     [class*='text-['][class*='%]']
   ) {
-  font-size: var(--alpha-font-size-h6, 0.875rem);
+  font-size: var(--alpha-font-size-h6, 1rem);
 }
 
 .slidev-page .slidev-layout small {

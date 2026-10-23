@@ -313,6 +313,25 @@ describe('semantic theme colors', () => {
     }
   });
 
+  it('contains zero @layer directives in Vue components and layouts', () => {
+    const vueFiles = [
+      ...collectFiles(join(addonRootDir, 'components'), (f) =>
+        f.endsWith('.vue'),
+      ),
+      ...collectFiles(join(addonRootDir, 'layouts'), (f) => f.endsWith('.vue')),
+    ];
+
+    const violations: string[] = [];
+    for (const file of vueFiles) {
+      const content = readFileSync(file, 'utf8');
+      if (content.includes('@layer')) {
+        violations.push(relative(addonRootDir, file));
+      }
+    }
+
+    expect(violations).toEqual([]);
+  });
+
   it('contains no hardcoded hex or rgb/hsl color values in components, layouts, or utils outside style.css', () => {
     const colorConverterFiles = new Set([
       'utils/colors.ts',

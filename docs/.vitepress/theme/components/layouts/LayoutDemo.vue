@@ -7,6 +7,7 @@ import Speaker from '@alphacifer/slidev-addon-theme/components/core/Speaker.vue'
 import ArcToc from '@alphacifer/slidev-addon-theme/layouts/core/arc-toc.vue';
 import BgCenter from '@alphacifer/slidev-addon-theme/layouts/core/bg-center.vue';
 import ShiftingIntro from '@alphacifer/slidev-addon-theme/layouts/shifting-heading/shifting-intro.vue';
+import References from '@alphacifer/slidev-addon-theme/layouts/core/references.vue';
 import Thanks from '@alphacifer/slidev-addon-theme/layouts/thanks/thanks.vue';
 import { onMounted, onUnmounted, ref } from 'vue';
 
@@ -21,6 +22,7 @@ export type TLayout =
   | 'bg-center'
   | 'shifting-intro'
   | 'arc-toc'
+  | 'references'
   | 'thanks';
 
 const props = withDefaults(
@@ -86,6 +88,62 @@ const canonicalTocTree = canonicalContent.sections.map((sec, idx) => ({
   path: `#${idx + 1}`,
   children: [],
 }));
+
+const canonicalReferences = [
+  {
+    authors: 'Alneyadi et al.',
+    year: 2016,
+    title: 'A survey on data leakage prevention systems',
+    url: 'https://doi.org/10.1016/j.jnca.2016.01.008',
+  },
+  {
+    authors: 'Liu et al.',
+    year: 2015,
+    title:
+      'Privacy-Preserving Scanning of Big Content for Sensitive Data Exposure with MapReduce',
+    url: 'https://vtechworks.lib.vt.edu/items/2652b4c0-305d-4b03-b463-e16d1cd8ad4e',
+  },
+  {
+    authors: 'Shapira et al.',
+    year: 2013,
+    title: 'Content-based data leakage detection using extended fingerprinting',
+    url: 'https://arxiv.org/abs/1302.2028',
+  },
+  {
+    authors: 'Ahmed et al.',
+    year: 2021,
+    title:
+      'Automated detection of unstructured context-dependent sensitive information using deep learning',
+    url: 'https://doi.org/10.1016/j.iot.2021.100444',
+  },
+  {
+    authors: 'Schwab et al.',
+    year: 2021,
+    title:
+      'Performance Evaluation of Policy-Based SQL Query Classification for Data-Privacy Compliance',
+    url: 'https://doi.org/10.1007/s13222-021-00385-9',
+  },
+  {
+    authors: 'Herrera Montano et al.',
+    year: 2022,
+    title:
+      'Survey of Techniques on Data Leakage Protection and Methods to address the Insider threat',
+    url: 'https://doi.org/10.1007/s10586-022-03668-2',
+  },
+  {
+    authors: 'De Renzis et al.',
+    year: 2024,
+    title:
+      'Exploiting Large Language Models to Train Automatic Detectors of Sensitive Data',
+    url: 'https://research.unipd.it/handle/11577/3524608',
+  },
+  {
+    authors: 'Qawara & Alhindi',
+    year: 2026,
+    title: 'Detecting Context-Dependent Sensitive Data in Unstructured Text',
+    url: 'https://doi.org/10.3390/info17070663',
+  },
+];
 
 // Interactive state controls
 const selectedCount = ref(props.initialItems);
@@ -198,6 +256,14 @@ onUnmounted(() => {
         v-else-if="props.layout === 'thanks'"
         :key="`thanks-${thanksKey}`"
       />
+
+      <!-- References Layout directly from Addon Theme -->
+      <References
+        v-else-if="props.layout === 'references'"
+        :references="canonicalReferences"
+      >
+        <h1>References</h1>
+      </References>
 
       <!-- Academic Theme Cover Layout directly from Academic Theme -->
       <AcademicCover v-else-if="props.layout === 'cover'">

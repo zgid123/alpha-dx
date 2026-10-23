@@ -160,15 +160,13 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
   }
 }
 
-@layer alpha-theme-tokens {
-  .alpha-table-comparison :deep(tr) {
-    background-color: transparent;
-    border: none;
-  }
+.alpha-table-comparison :deep(tr) {
+  background-color: transparent;
+  border: none;
+}
 
-  .alpha-table-comparison :deep(th),
-  .alpha-table-comparison :deep(td) {
-    border: none;
-  }
+.alpha-table-comparison :deep(th),
+.alpha-table-comparison :deep(td) {
+  border: none;
 }
 </style>
