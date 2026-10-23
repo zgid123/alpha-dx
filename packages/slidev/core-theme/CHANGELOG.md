@@ -1,5 +1,13 @@
 # @alphacifer/slidev-core-theme
 
+## 0.0.3
+
+### Patch Changes
+
+- [#198](https://github.com/zgid123/alpha-dx/pull/198) [`2606aab`](https://github.com/zgid123/alpha-dx/commit/2606aab817a9e05022de1d0a12a2f19f1796ef12) Thanks [@zgid123](https://github.com/zgid123)! - fix styles
+
+- [#200](https://github.com/zgid123/alpha-dx/pull/200) [`3f2c8c8`](https://github.com/zgid123/alpha-dx/commit/3f2c8c88b5dc5c6257303d35e3bba2ff8a91de74) Thanks [@zgid123](https://github.com/zgid123)! - fix styles
+
 ## 0.0.2
 
 ### Patch Changes
