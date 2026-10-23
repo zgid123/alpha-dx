@@ -366,6 +366,10 @@ export default defineConfig({
               link: '/slidev/',
             },
             {
+              text: 'Design System',
+              link: '/slidev/design-system',
+            },
+            {
               text: 'Addon Theme',
               link: '/slidev/addon/',
             },
@@ -380,6 +384,10 @@ export default defineConfig({
         {
           text: 'Overview',
           link: '/slidev/',
+        },
+        {
+          text: 'Design System',
+          link: '/slidev/design-system',
         },
         {
           text: 'Addon',
@@ -563,6 +571,10 @@ export default defineConfig({
             {
               text: 'Overview',
               link: '/slidev/academic-theme/',
+            },
+            {
+              text: 'Design System',
+              link: '/slidev/academic-theme/design-system',
             },
             {
               text: 'Components',

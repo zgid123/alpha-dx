@@ -34,6 +34,17 @@ addons:
 
 ---
 
+## Design System
+
+The Academic Theme features a dedicated design system built upon [`@alphacifer/slidev-core-theme`](/slidev/design-system):
+- **Scholarly Accent Palette**: Sky-600 in light mode and calm Emerald-400 (`#34d399`) in dark mode.
+- **Lecture Code Blocks**: High-contrast light syntax highlighting in dark mode for lecture hall projectors.
+- **Academic Typography**: Centered cover titles, medium subtitle hierarchy, and tabular slide pagination.
+
+[Explore the Academic Theme Design System &rarr;](/slidev/academic-theme/design-system)
+
+---
+
 ## Layouts
 
 The theme includes five academic layouts:
@@ -109,6 +120,17 @@ does not require it.
 - [**Horizontal Card**](./components/card/horiz-card.md): Step-based horizontal cards with accent corner blobs and badges (`HorizontalCard`).
 - [**Vertical Card**](./components/card/vert-card.md): Vertical cards with corner accents and flexible badge variants (`VerticalCard`).
 - [**Chevron Card**](./components/card/chevron-card.md): Horizontal chevron-accented cards with flexible badges (`ChevronCard`).
+
+---
+
+## Design System
+
+The Academic Theme features a dedicated design system built upon [`@alphacifer/slidev-core-theme`](/slidev/design-system):
+- **Scholarly Accent Palette**: Sky-600 in light mode and calm Emerald-400 (`#34d399`) in dark mode.
+- **Lecture Code Blocks**: High-contrast light syntax highlighting in dark mode for lecture hall projectors.
+- **Academic Typography**: Centered cover titles, medium subtitle hierarchy, and tabular slide pagination.
+
+[Explore the Academic Theme Design System &rarr;](/slidev/academic-theme/design-system)
 
 ---
 
