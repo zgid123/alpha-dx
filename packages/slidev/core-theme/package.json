@@ -28,7 +28,6 @@
   "license": "MIT",
   "scripts": {
     "build": "tsdown",
-    "pretest": "pnpm build",
     "test": "vitest run --globals",
     "prepack": "pnpm build"
   },
