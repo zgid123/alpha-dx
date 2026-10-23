@@ -23,6 +23,10 @@ describe('SquareThanks components and thanks layout', () => {
     __dirname,
     '../../../../components/core/thanks/style.css',
   );
+  const thanksOutlineSquarePath = path.resolve(
+    __dirname,
+    '../../../../components/core/thanks/ThanksOutlineSquare.vue',
+  );
 
   const squareThanksSource = fs.readFileSync(squareThanksPath, 'utf8');
   const squareThanksContentSource = fs.readFileSync(
@@ -31,6 +35,10 @@ describe('SquareThanks components and thanks layout', () => {
   );
   const thanksLayoutSource = fs.readFileSync(thanksLayoutPath, 'utf8');
   const thanksStyleSource = fs.readFileSync(thanksStylePath, 'utf8');
+  const thanksOutlineSquareSource = fs.readFileSync(
+    thanksOutlineSquarePath,
+    'utf8',
+  );
 
   const { descriptor: squareThanksDescriptor } = parse(squareThanksSource);
   const { descriptor: squareThanksContentDescriptor } = parse(
@@ -88,11 +96,26 @@ describe('SquareThanks components and thanks layout', () => {
       expect(template).toContain('<slot />');
     });
 
-    it('resets nested heading and paragraph styles to inherit container typography', () => {
+    it('resets nested heading and paragraph styles to inherit container typography without layer degradation', () => {
       const styles = squareThanksContentDescriptor.styles[0]?.content ?? '';
       expect(styles).toContain('.alpha-square-thanks-content :deep(h1)');
       expect(styles).toContain('font-size: inherit;');
       expect(styles).toContain('margin: 0;');
+      expect(styles).not.toContain('@layer');
+    });
+
+    it('references semantic color token in class definition', () => {
+      expect(squareThanksContentSource).toContain(
+        'text-(--alpha-square-thanks-content)',
+      );
+    });
+  });
+
+  describe('ThanksOutlineSquare', () => {
+    it('references semantic stroke token for outline borders', () => {
+      expect(thanksOutlineSquareSource).toContain(
+        'border-(--alpha-thanks-outline-stroke)',
+      );
     });
   });
 

@@ -13,7 +13,7 @@ const style = computed(() => handleBackground(background));
 
 <template>
   <main
-    class="slidev-layout alpha-academic-cover grid place-items-center text-center h-full w-full"
+    class="slidev-layout alpha-academic-cover grid place-items-center h-full w-full"
     :style="style"
   >
     <div class="alpha-academic-cover__content w-full">

@@ -62,17 +62,19 @@ html.dark .alpha-bg-center {
   place-items: center;
   width: 100%;
   height: 100%;
-  text-align: center;
 }
 
 .alpha-academic-cover__content,
-.slidev-page .slidev-layout.alpha-academic-cover .alpha-academic-cover__content {
+.slidev-page
+  .slidev-layout.alpha-academic-cover
+  .alpha-academic-cover__content {
   width: 100%;
-  text-align: center;
 }
 
 .slidev-page .slidev-layout.alpha-academic-cover h1,
-.slidev-page .slidev-layout.alpha-academic-cover h2 {
+.slidev-page .slidev-layout.alpha-academic-cover h2,
+.slidev-page .slidev-layout.alpha-academic-cover h3,
+.slidev-page .slidev-layout.alpha-academic-cover h4 {
   text-align: center;
 }
 
@@ -103,9 +105,19 @@ html.dark .alpha-bg-center {
 .slidev-page .slidev-layout.alpha-academic-cover h2:not([class]) {
   margin-top: 0.75rem;
   margin-bottom: 2rem;
-  font-size: var(--alpha-font-size-h2, 2rem);
+  font-size: var(--alpha-font-size-h2, 1.875rem);
   font-weight: 500;
   color: var(--alpha-foreground-secondary, #475569);
+  text-align: center;
+}
+
+.slidev-page .slidev-layout.alpha-academic-cover h3:not([class]) {
+  margin-top: 0.75rem;
+  margin-bottom: 2rem;
+  font-size: var(--alpha-font-size-h3, 1.5rem);
+  font-weight: 500;
+  color: var(--alpha-foreground-secondary, #475569);
+  text-align: center;
 }
 
 .slidev-page .slidev-layout.alpha-academic-cover h4:not([class]) {
@@ -114,6 +126,7 @@ html.dark .alpha-bg-center {
   font-size: var(--alpha-font-size-h4, 1.25rem);
   font-weight: 500;
   color: var(--alpha-foreground-secondary, #475569);
+  text-align: center;
 }
 
 .slidev-page .slidev-layout.alpha-academic-section h4:not([class]) {
@@ -133,18 +146,33 @@ html.dark .alpha-bg-center {
   font-size: 1.2rem;
   font-weight: bold;
   font-variant-numeric: tabular-nums;
-  color: var(--alpha-academic-page-number-text, var(--alpha-foreground-primary));
+  color: var(
+    --alpha-academic-page-number-text,
+    var(--alpha-foreground-primary)
+  );
 }
 
+.slidev-page:has(.alpha-thanks) .alpha-academic-pagy,
 .slidev-page:has(.alpha-academic-cover) .alpha-academic-pagy,
 .slidev-page:has(.alpha-arc-toc) .alpha-academic-pagy,
 .slidev-page:has(.alpha-bg-center) .alpha-academic-pagy {
   display: none;
 }
 
+.slidev-page .slidev-layout.alpha-thanks h1,
+.slidev-page .slidev-layout.alpha-thanks h2,
+.slidev-page .slidev-layout.alpha-thanks h3,
+.slidev-page .slidev-layout.alpha-thanks h4,
+.slidev-page .slidev-layout.alpha-thanks h5,
+.slidev-page .slidev-layout.alpha-thanks h6,
+.slidev-page .slidev-layout.alpha-thanks p {
+  margin: 0;
+  color: inherit;
+}
+
 .alpha-arc-toc.slidev-layout .alpha-arc-toc__heading,
 .alpha-arc-toc.slidev-layout .alpha-arc-toc__heading h1 {
-  font-size: var(--alpha-font-size-h1, 2.5rem);
+  font-size: var(--alpha-font-size-h1, 2.25rem);
 }
 
 .slidev-page .alpha-arc-toc.slidev-layout .alpha-arc-toc__item > a {

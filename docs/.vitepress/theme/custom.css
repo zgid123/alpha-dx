@@ -366,7 +366,7 @@ html.dark .vp-doc pre.shiki span {
 .slidev-page .slidev-layout.shifting-intro-layout > h1.op-0 {
   padding: 0;
   margin: 0 0 0.5rem 0;
-  font-size: var(--alpha-font-size-h1, 2.5rem);
+  font-size: var(--alpha-font-size-h1, 2.25rem);
   font-weight: bold;
   line-height: 1.2;
   border: none;

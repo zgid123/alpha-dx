@@ -15,3 +15,33 @@
     --alpha-bg-center-text: var(--alpha-foreground-accent, #fff);
   }
 }
+
+.slidev-page .slidev-layout.alpha-references ul:not([class*='alpha-references__list']) {
+  columns: 2;
+  column-gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin-top: 0.75rem;
+}
+
+.slidev-page .slidev-layout.alpha-references ul:not([class*='alpha-references__list']) > li {
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.375;
+  break-inside: avoid;
+}
+
+.slidev-page .slidev-layout.alpha-references ul:not([class*='alpha-references__list']) {
+  columns: 2;
+  column-gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin-top: 0.75rem;
+}
+
+.slidev-page .slidev-layout.alpha-references ul:not([class*='alpha-references__list']) > li {
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.375;
+  break-inside: avoid;
+}

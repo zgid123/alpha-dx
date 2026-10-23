@@ -68,22 +68,20 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
 </template>
 
 <style scoped>
-@layer alpha-theme-tokens {
-  .alpha-square-thanks-content :deep(h1),
-  .alpha-square-thanks-content :deep(h2),
-  .alpha-square-thanks-content :deep(h3),
-  .alpha-square-thanks-content :deep(h4),
-  .alpha-square-thanks-content :deep(h5),
-  .alpha-square-thanks-content :deep(h6),
-  .alpha-square-thanks-content :deep(p),
-  .alpha-square-thanks-content :deep(div) {
-    margin: 0;
-    padding: 0;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-    color: inherit;
-  }
+.alpha-square-thanks-content :deep(h1),
+.alpha-square-thanks-content :deep(h2),
+.alpha-square-thanks-content :deep(h3),
+.alpha-square-thanks-content :deep(h4),
+.alpha-square-thanks-content :deep(h5),
+.alpha-square-thanks-content :deep(h6),
+.alpha-square-thanks-content :deep(p),
+.alpha-square-thanks-content :deep(div) {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
 }
 </style>

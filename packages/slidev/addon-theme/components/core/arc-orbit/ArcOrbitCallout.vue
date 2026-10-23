@@ -321,17 +321,15 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
 </template>
 
 <style scoped>
-@layer alpha-theme-tokens {
-  .alpha-arc-orbit-callout :deep(p),
-  .alpha-arc-orbit-callout :deep(h1),
-  .alpha-arc-orbit-callout :deep(h2),
-  .alpha-arc-orbit-callout :deep(h3),
-  .alpha-arc-orbit-callout :deep(h4),
-  .alpha-arc-orbit-callout :deep(h5),
-  .alpha-arc-orbit-callout :deep(h6) {
-    margin: 0;
-    padding: 0;
-  }
+.alpha-arc-orbit-callout :deep(p),
+.alpha-arc-orbit-callout :deep(h1),
+.alpha-arc-orbit-callout :deep(h2),
+.alpha-arc-orbit-callout :deep(h3),
+.alpha-arc-orbit-callout :deep(h4),
+.alpha-arc-orbit-callout :deep(h5),
+.alpha-arc-orbit-callout :deep(h6) {
+  margin: 0;
+  padding: 0;
 }
 
 .alpha-arc-orbit-callout--animated.alpha-arc-orbit-callout--left-0 {

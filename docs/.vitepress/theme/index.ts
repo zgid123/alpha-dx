@@ -5,6 +5,7 @@ import HorizontalCardIcon from '@alphacifer/slidev-addon-theme/components/card/h
 import VerticalCardBadge from '@alphacifer/slidev-addon-theme/components/card/vertical-card/VerticalCardBadge.vue';
 import VerticalCardIcon from '@alphacifer/slidev-addon-theme/components/card/vertical-card/VerticalCardIcon.vue';
 import DateComponent from '@alphacifer/slidev-addon-theme/components/core/Date.vue';
+import MetaList from '@alphacifer/slidev-addon-theme/components/core/MetaList.vue';
 import TransitionHeading from '@alphacifer/slidev-addon-theme/components/core/TransitionHeading.vue';
 import SquareThanks from '@alphacifer/slidev-addon-theme/components/core/thanks/SquareThanks.vue';
 import ThanksOutlineSquare from '@alphacifer/slidev-addon-theme/components/core/thanks/ThanksOutlineSquare.vue';
@@ -45,6 +46,7 @@ import TableComparisonDemo from './components/comparisons/TableComparisonDemo.vu
 // Core
 import ArcOrbitDemo from './components/core/ArcOrbitDemo.vue';
 import DateDemo from './components/core/DateDemo.vue';
+import MetaListDemo from './components/core/MetaListDemo.vue';
 import QnADemo from './components/core/QnADemo.vue';
 import QuoteDemo from './components/core/QuoteDemo.vue';
 import ReflectedTitleDemo from './components/core/ReflectedTitleDemo.vue';
@@ -78,6 +80,7 @@ export default {
 
     // Core Components
     app.component('Date', DateComponent);
+    app.component('MetaList', MetaList);
     app.component('TransitionHeading', TransitionHeading);
     app.component('SquareThanks', SquareThanks);
 
@@ -99,6 +102,7 @@ export default {
     // Core Demos
     app.component('ArcOrbitDemo', ArcOrbitDemo);
     app.component('SpeakerDemo', SpeakerDemo);
+    app.component('MetaListDemo', MetaListDemo);
     app.component('DateDemo', DateDemo);
     app.component('QuoteDemo', QuoteDemo);
     app.component('ReflectedTitleDemo', ReflectedTitleDemo);

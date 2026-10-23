@@ -401,6 +401,10 @@ export default defineConfig({
                       link: '/slidev/addon/components/core/speaker',
                     },
                     {
+                      text: 'MetaList',
+                      link: '/slidev/addon/components/core/meta-list',
+                    },
+                    {
                       text: 'Date',
                       link: '/slidev/addon/components/core/date',
                     },
@@ -541,6 +545,10 @@ export default defineConfig({
                   link: '/slidev/addon/layouts/shifting-intro',
                 },
                 {
+                  text: 'References',
+                  link: '/slidev/addon/layouts/references',
+                },
+                {
                   text: 'Thanks',
                   link: '/slidev/addon/layouts/thanks',
                 },
@@ -566,6 +574,10 @@ export default defineConfig({
                     {
                       text: 'Speaker',
                       link: '/slidev/academic-theme/components/core/speaker',
+                    },
+                    {
+                      text: 'MetaList',
+                      link: '/slidev/academic-theme/components/core/meta-list',
                     },
                     {
                       text: 'Date',
@@ -722,6 +734,10 @@ export default defineConfig({
                 {
                   text: 'Shifting Intro',
                   link: '/slidev/academic-theme/layouts/shifting-intro',
+                },
+                {
+                  text: 'References',
+                  link: '/slidev/academic-theme/layouts/references',
                 },
                 {
                   text: 'Thanks',
