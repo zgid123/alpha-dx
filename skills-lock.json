@@ -11,13 +11,13 @@
       "source": "zgid123/skills",
       "sourceType": "github",
       "skillPath": "skills/testing/SKILL.md",
-      "computedHash": "37d07a193bfce8f05c54350c3f519132ab36cad38337db176e00950e44cdca32"
+      "computedHash": "b11b60d27a20e57882e2d6d85074fdb5311cb1fd3a0d98bc82e2c75b7c825e60"
     },
     "typescript": {
       "source": "zgid123/skills",
       "sourceType": "github",
       "skillPath": "skills/typescript/SKILL.md",
-      "computedHash": "7b6e3812b011f9b7f02885120c9c7eab0fd055b163943a9122530c5ee2fcb7a5"
+      "computedHash": "226580a3c477c540e806c6954350038fdbde91e4938355b3dddc7aa57d7cf5b2"
     }
   }
 }
