@@ -82,7 +82,44 @@ describe('academic-theme', () => {
           '.slidev-page .slidev-layout.alpha-academic-section h4:not([class])',
         );
         expect(content).toContain(
-          'color: var(--alpha-foreground-secondary, #475569);',
+          'color: var(--alpha-foreground-secondary, inherit);',
+        );
+      });
+
+      it('enforces cover layout h1 to 3.75rem (60px) with high specificity', () => {
+        const stylePath = path.resolve(__dirname, '../../style.css');
+        const content = fs.readFileSync(stylePath, 'utf8');
+
+        expect(content).toContain('.slidev-page .slidev-layout.alpha-cover h1');
+        expect(content).toContain(
+          '.slidev-page .slidev-layout.alpha-academic-cover h1',
+        );
+        expect(content).toContain(
+          'font-size: var(--alpha-font-size-cover, 3.75rem);',
+        );
+      });
+
+      it('ensures cover subtitles adapt for high contrast on image/dark backgrounds', () => {
+        const stylePath = path.resolve(__dirname, '../../style.css');
+        const content = fs.readFileSync(stylePath, 'utf8');
+
+        expect(content).toContain(
+          ".slidev-page .slidev-layout.alpha-cover[style*='background'] h3:not([class])",
+        );
+        expect(content).toContain(
+          ".slidev-layout.alpha-academic-cover[style*='background']",
+        );
+        expect(content).toContain('opacity: 0.85;');
+      });
+
+      it('arranges cover content with flex gap and resets heading margins to 0', () => {
+        const stylePath = path.resolve(__dirname, '../../style.css');
+        const content = fs.readFileSync(stylePath, 'utf8');
+
+        expect(content).toContain('display: flex;');
+        expect(content).toContain('flex-direction: column;');
+        expect(content).toContain(
+          'gap: var(--alpha-academic-cover-gap, 0.75rem);',
         );
       });
 
@@ -92,6 +129,16 @@ describe('academic-theme', () => {
 
         expect(content).toContain(
           '.slidev-page:has(.alpha-thanks) .alpha-academic-pagy',
+        );
+      });
+
+      it('styles bg-center index with academic cover accent color', () => {
+        const stylePath = path.resolve(__dirname, '../../style.css');
+        const content = fs.readFileSync(stylePath, 'utf8');
+
+        expect(content).toContain('.alpha-bg-center .alpha-bg-center__index');
+        expect(content).toContain(
+          'color: var(--alpha-academic-cover-title, var(--alpha-foreground-accent));',
         );
       });
 
@@ -125,6 +172,19 @@ describe('academic-theme', () => {
         const content = fs.readFileSync(blankPath, 'utf8');
 
         expect(content).toContain('alpha-academic-blank');
+        expect(content).toContain('handleBackground');
+      });
+
+      it('defines alpha-cover and alpha-academic-cover in cover.vue template', () => {
+        const coverPath = path.resolve(__dirname, '../../layouts/cover.vue');
+        const content = fs.readFileSync(coverPath, 'utf8');
+
+        expect(content).toContain(
+          'slidev-layout alpha-cover alpha-academic-cover',
+        );
+        expect(content).toContain(
+          'alpha-academic-cover__content flex flex-col items-center gap-3 w-full',
+        );
         expect(content).toContain('handleBackground');
       });
     });

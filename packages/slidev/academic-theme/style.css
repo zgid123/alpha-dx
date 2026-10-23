@@ -65,10 +65,18 @@ html.dark .alpha-bg-center {
 }
 
 .alpha-academic-cover__content,
-.slidev-page
-  .slidev-layout.alpha-academic-cover
-  .alpha-academic-cover__content {
+.slidev-page .slidev-layout.alpha-cover .alpha-academic-cover__content,
+.slidev-page .slidev-layout.alpha-academic-cover .alpha-academic-cover__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--alpha-academic-cover-gap, 0.75rem);
+  align-items: center;
   width: 100%;
+}
+
+.slidev-page .slidev-layout.alpha-cover :is(h1, h2, h3, h4),
+.slidev-page .slidev-layout.alpha-academic-cover :is(h1, h2, h3, h4) {
+  margin: 0;
 }
 
 .slidev-page .slidev-layout.alpha-academic-cover h1,
@@ -83,7 +91,7 @@ html.dark .alpha-bg-center {
   height: 100%;
 }
 
-.slidev-page .slidev-layout h1:not([class]) {
+.slidev-page .slidev-layout:not(.alpha-cover, .alpha-academic-cover) h1:not([class]) {
   margin-bottom: 0.5rem;
   font-weight: bold;
   color: var(--alpha-academic-heading-text, var(--alpha-foreground-primary));
@@ -92,40 +100,41 @@ html.dark .alpha-bg-center {
 .slidev-page .slidev-layout h4:not([class]) {
   font-size: var(--alpha-font-size-h4, 1.25rem);
   font-weight: 500;
-  color: var(--alpha-foreground-secondary, #475569);
+  color: var(--alpha-foreground-secondary, inherit);
 }
 
-.slidev-page .slidev-layout.alpha-academic-cover h1:not([class]) {
+.slidev-page .slidev-layout.alpha-cover h1,
+.slidev-page .slidev-layout.alpha-academic-cover h1 {
   margin: 0;
   font-size: var(--alpha-font-size-cover, 3.75rem);
   font-weight: bold;
   color: var(--alpha-academic-cover-title, var(--alpha-foreground-accent));
 }
 
+.slidev-page .slidev-layout.alpha-cover h2:not([class]),
 .slidev-page .slidev-layout.alpha-academic-cover h2:not([class]) {
-  margin-top: 0.75rem;
-  margin-bottom: 2rem;
+  margin: 0;
   font-size: var(--alpha-font-size-h2, 1.875rem);
   font-weight: 500;
-  color: var(--alpha-foreground-secondary, #475569);
+  color: var(--alpha-foreground-secondary, inherit);
   text-align: center;
 }
 
+.slidev-page .slidev-layout.alpha-cover h3:not([class]),
 .slidev-page .slidev-layout.alpha-academic-cover h3:not([class]) {
-  margin-top: 0.75rem;
-  margin-bottom: 2rem;
+  margin: 0;
   font-size: var(--alpha-font-size-h3, 1.5rem);
   font-weight: 500;
-  color: var(--alpha-foreground-secondary, #475569);
+  color: var(--alpha-foreground-secondary, inherit);
   text-align: center;
 }
 
+.slidev-page .slidev-layout.alpha-cover h4:not([class]),
 .slidev-page .slidev-layout.alpha-academic-cover h4:not([class]) {
-  margin-top: 0.75rem;
-  margin-bottom: 2rem;
+  margin: 0;
   font-size: var(--alpha-font-size-h4, 1.25rem);
   font-weight: 500;
-  color: var(--alpha-foreground-secondary, #475569);
+  color: var(--alpha-foreground-secondary, inherit);
   text-align: center;
 }
 
@@ -133,7 +142,30 @@ html.dark .alpha-bg-center {
   margin-top: 0.5rem;
   font-size: var(--alpha-font-size-h4, 1.25rem);
   font-weight: 500;
-  color: var(--alpha-foreground-secondary, #475569);
+  color: var(--alpha-foreground-secondary, inherit);
+}
+
+/* Ensure subtitles on dark/image-background covers remain clearly visible */
+.slidev-page .slidev-layout.alpha-cover[style*='background'] h2:not([class]),
+.slidev-page .slidev-layout.alpha-cover[style*='background'] h3:not([class]),
+.slidev-page .slidev-layout.alpha-cover[style*='background'] h4:not([class]),
+.slidev-page .slidev-layout.alpha-academic-cover[style*='background'] h2:not([class]),
+.slidev-page .slidev-layout.alpha-academic-cover[style*='background'] h3:not([class]),
+.slidev-page .slidev-layout.alpha-academic-cover[style*='background'] h4:not([class]),
+.slidev-page .slidev-layout.alpha-cover[style*='color: white'] h2:not([class]),
+.slidev-page .slidev-layout.alpha-cover[style*='color: white'] h3:not([class]),
+.slidev-page .slidev-layout.alpha-cover[style*='color: white'] h4:not([class]),
+.slidev-page .slidev-layout.alpha-academic-cover[style*='color: white'] h2:not([class]),
+.slidev-page .slidev-layout.alpha-academic-cover[style*='color: white'] h3:not([class]),
+.slidev-page .slidev-layout.alpha-academic-cover[style*='color: white'] h4:not([class]),
+.dark .slidev-page .slidev-layout.alpha-cover h2:not([class]),
+.dark .slidev-page .slidev-layout.alpha-cover h3:not([class]),
+.dark .slidev-page .slidev-layout.alpha-cover h4:not([class]),
+.dark .slidev-page .slidev-layout.alpha-academic-cover h2:not([class]),
+.dark .slidev-page .slidev-layout.alpha-academic-cover h3:not([class]),
+.dark .slidev-page .slidev-layout.alpha-academic-cover h4:not([class]) {
+  color: inherit;
+  opacity: 0.85;
 }
 
 .alpha-academic-pagy {
@@ -146,10 +178,7 @@ html.dark .alpha-bg-center {
   font-size: 1.2rem;
   font-weight: bold;
   font-variant-numeric: tabular-nums;
-  color: var(
-    --alpha-academic-page-number-text,
-    var(--alpha-foreground-primary)
-  );
+  color: var(--alpha-academic-page-number-text, var(--alpha-foreground-primary));
 }
 
 .slidev-page:has(.alpha-thanks) .alpha-academic-pagy,
@@ -157,6 +186,10 @@ html.dark .alpha-bg-center {
 .slidev-page:has(.alpha-arc-toc) .alpha-academic-pagy,
 .slidev-page:has(.alpha-bg-center) .alpha-academic-pagy {
   display: none;
+}
+
+.alpha-bg-center .alpha-bg-center__index {
+  color: var(--alpha-academic-cover-title, var(--alpha-foreground-accent));
 }
 
 .slidev-page .slidev-layout.alpha-thanks h1,

@@ -46,6 +46,7 @@ import TableComparisonDemo from './components/comparisons/TableComparisonDemo.vu
 // Core
 import ArcOrbitDemo from './components/core/ArcOrbitDemo.vue';
 import DateDemo from './components/core/DateDemo.vue';
+import DesignSystemDemo from './components/core/DesignSystemDemo.vue';
 import MetaListDemo from './components/core/MetaListDemo.vue';
 import QnADemo from './components/core/QnADemo.vue';
 import QuoteDemo from './components/core/QuoteDemo.vue';
@@ -100,6 +101,7 @@ export default {
     app.component('LayoutDemo', LayoutDemo);
 
     // Core Demos
+    app.component('DesignSystemDemo', DesignSystemDemo);
     app.component('ArcOrbitDemo', ArcOrbitDemo);
     app.component('SpeakerDemo', SpeakerDemo);
     app.component('MetaListDemo', MetaListDemo);

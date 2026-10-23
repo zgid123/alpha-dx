@@ -171,6 +171,9 @@ pnpm add -D eslint @alphacifer/eslint typescript-eslint
 
 ## Slidev Presentations
 
+### [@alphacifer/slidev-core-theme](/slidev/design-system)
+Shared color tokens, typography defaults, UnoCSS utilities, and cascade layer foundations for Alpha Slidev themes.
+
 ### [@alphacifer/slidev-addon-theme](/slidev/addon/)
 Reusable Slidev addon providing interactive infographics, layouts, and cards.
 

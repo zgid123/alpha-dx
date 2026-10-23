@@ -18,7 +18,7 @@ const { background, indexed, dim } = defineProps({
   },
   dim: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 
@@ -51,7 +51,7 @@ const tocIndex = computed(() => {
       class="alpha-bg-center__indexed-content flex flex-col items-center gap-2"
     >
       <span
-        class="alpha-bg-center__index text-5xl font-extrabold leading-none text-(--alpha-bg-center-text) opacity-50 tracking-tighter"
+        class="alpha-bg-center__index text-5xl font-extrabold leading-none text-(--alpha-bg-center-text) tracking-tighter"
         >{{
           tocIndex
         }}</span
