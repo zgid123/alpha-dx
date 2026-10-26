@@ -28,3 +28,11 @@
 .alpha-thanks-square:not([class*='bg-']) {
   background-image: linear-gradient(to bottom right, var(--alpha-thanks-square-start), var(--alpha-thanks-square-end));
 }
+
+.alpha-thanks-outline-square {
+  border-color: var(--alpha-thanks-outline-stroke);
+}
+
+.alpha-square-thanks-content {
+  color: var(--alpha-square-thanks-content);
+}

@@ -30,7 +30,6 @@ export interface IArcArrowProcessCalloutProps {
   readonly index?: number;
   readonly color?: string;
   readonly textColor?: string;
-  readonly titleColor?: string;
 }
 
 const props = withDefaults(defineProps<IArcArrowProcessCalloutProps>(), {
@@ -38,7 +37,6 @@ const props = withDefaults(defineProps<IArcArrowProcessCalloutProps>(), {
   index: undefined,
   color: undefined,
   textColor: undefined,
-  titleColor: undefined,
 });
 
 interface INamedComponent {
@@ -88,7 +86,6 @@ const activeItem = computed<IResolvedArcArrowProcessItem>(() => {
     id: props.id,
     color: props.color,
     textColor: props.textColor,
-    titleColor: props.titleColor,
   };
 
   return resolveSingleArcArrowProcessItem(
@@ -187,11 +184,11 @@ const positionStyle = computed(() => {
     switch (resolvedIndex.value) {
       case 0: {
         // Left descending arrow (lowered to flank)
-        return 'left: 30px; top: 165px; width: 270px;';
+        return 'left: 8px; top: 140px; width: 260px;';
       }
       case 1: {
         // Right ascending arrow (lowered to flank)
-        return 'right: 30px; top: 165px; width: 270px;';
+        return 'right: 8px; top: 140px; width: 260px;';
       }
       default: {
         return '';
@@ -203,15 +200,15 @@ const positionStyle = computed(() => {
     switch (resolvedIndex.value) {
       case 0: {
         // Left descending arrow (lowered to bottom-left flank)
-        return 'left: 20px; top: 180px; width: 230px;';
+        return 'left: 0px; top: 108px; width: 225px;';
       }
       case 1: {
         // Bottom center trough
-        return 'left: calc(50% - 120px); top: 250px; width: 240px;';
+        return 'left: calc(50% - 130px); bottom: 8px; width: 260px;';
       }
       case 2: {
         // Right ascending arrow (lowered to bottom-right flank)
-        return 'right: 20px; top: 180px; width: 230px;';
+        return 'right: 0px; top: 108px; width: 225px;';
       }
       default: {
         return '';
@@ -223,19 +220,19 @@ const positionStyle = computed(() => {
   switch (resolvedIndex.value) {
     case 0: {
       // Top-Left (left of arrow 1)
-      return 'left: 8px; top: 20px; width: 245px;';
+      return 'left: 0px; top: 56px; width: 205px;';
     }
     case 1: {
       // Bottom-Left (under arrow 2)
-      return 'left: 175px; top: 250px; width: 240px;';
+      return 'left: 110px; top: 205px; width: 255px;';
     }
     case 2: {
       // Bottom-Right (under arrow 3)
-      return 'left: 575px; top: 250px; width: 240px;';
+      return 'right: 110px; top: 205px; width: 255px;';
     }
     case 3: {
       // Top-Right (right of arrow 4)
-      return 'right: 8px; top: 20px; width: 245px;';
+      return 'right: 0px; top: 56px; width: 205px;';
     }
     default: {
       return '';
@@ -251,8 +248,15 @@ const hasIcon = computed(() => {
   return Boolean(iconNode.value);
 });
 
+const isRightAligned = computed(() => {
+  return (
+    resolvedCount.value === 4 &&
+    (resolvedIndex.value === 0 || resolvedIndex.value === 1)
+  );
+});
+
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-arc-arrow-process-callout absolute flex items-start justify-between gap-3 text-left font-sans z-10 transition-all duration-300 pointer-events-auto select-none',
+  'alpha-arc-arrow-process-callout absolute flex items-start justify-between gap-3 font-sans z-10 transition-all duration-300 pointer-events-auto select-none',
 );
 </script>
 
@@ -263,13 +267,19 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     :class="
       className([
         `alpha-arc-arrow-process-callout--${resolvedIndex}`,
+        isRightAligned ? 'text-right' : 'text-left',
         { 'alpha-arc-arrow-process-callout--animated': animation },
       ])
     "
     :style="positionStyle"
   >
     <!-- Text Column (Heading + Description) -->
-    <div class="flex-1 flex flex-col items-start min-w-0">
+    <div
+      :class="[
+        'flex-1 flex flex-col min-w-0',
+        isRightAligned ? 'items-end' : 'items-start',
+      ]"
+    >
       <component :is="headingNode" v-if="headingNode" />
       <component :is="contentNode" v-if="contentNode" />
       <!-- Other slotted nodes -->

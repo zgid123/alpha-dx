@@ -56,16 +56,19 @@ function registerPart(
   partDataRef?: ComputedRef<IArcDefenseInDepthPartItem | undefined>,
 ) {
   const pToken = token ?? Symbol();
+
   if (!registeredPartTokens.value.includes(pToken)) {
     registeredPartTokens.value = [...registeredPartTokens.value, pToken];
   }
 
   let stopWatch: (() => void) | undefined;
+
   if (partDataRef) {
     stopWatch = watch(
       partDataRef,
       (val) => {
         const nextMap = new Map(registeredPartData.value);
+
         if (val) {
           nextMap.set(pToken, val);
         } else {
@@ -102,16 +105,18 @@ const registeredPartsList = computed<IArcDefenseInDepthPartItem[]>(() => {
 
 const sectorToken = Symbol();
 const sectorRegistrationData = computed<IArcDefenseInDepthRegisteredSectorData>(
-  () => ({
-    parts: registeredPartsList.value,
-    split: props.split,
-    angle: props.angle,
-    span: props.span,
-    color: props.color,
-    index: props.index !== undefined ? Number(props.index) : undefined,
-    rotate: props.rotate,
-    skew: props.skew,
-  }),
+  () => {
+    return {
+      parts: registeredPartsList.value,
+      split: props.split,
+      angle: props.angle,
+      span: props.span,
+      color: props.color,
+      index: props.index !== undefined ? Number(props.index) : undefined,
+      rotate: props.rotate,
+      skew: props.skew,
+    };
+  },
 );
 
 const registration = layerContext?.registerSector(

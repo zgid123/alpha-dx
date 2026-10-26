@@ -7,3 +7,7 @@
     --alpha-reflected-title-color: var(--alpha-foreground-primary, #a5f3fc);
   }
 }
+
+.alpha-reflected-title {
+  color: var(--alpha-reflected-title-color);
+}

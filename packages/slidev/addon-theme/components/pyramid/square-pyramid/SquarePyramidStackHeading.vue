@@ -62,12 +62,14 @@ const stackColor = computed(() => {
   );
 });
 
-const { className, forwardedAttrs } = useMergedUnoAttrs(() => [
-  'alpha-square-pyramid-stack-heading__pill flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold tracking-tight leading-tight transition-all duration-300 border shrink-0',
-  isActive.value
-    ? 'bg-(--alpha-square-pyramid-stack-heading-border-active) text-(--alpha-square-pyramid-stack-heading-active)'
-    : 'bg-(--alpha-square-pyramid-stack-heading-border) text-(--alpha-square-pyramid-stack-heading)',
-]);
+const { className, forwardedAttrs } = useMergedUnoAttrs(() => {
+  return [
+    'alpha-square-pyramid-stack-heading__pill flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold tracking-tight leading-tight transition-all duration-300 border shrink-0',
+    isActive.value
+      ? 'bg-(--alpha-square-pyramid-stack-heading-border-active) text-(--alpha-square-pyramid-stack-heading-active)'
+      : 'bg-(--alpha-square-pyramid-stack-heading-border) text-(--alpha-square-pyramid-stack-heading)',
+  ];
+});
 </script>
 
 <template>
@@ -95,6 +97,12 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(() => [
         maxWidth: 'calc(100% - 30px)',
         width: 'fit-content',
         boxSizing: 'border-box',
+        backgroundColor: isActive
+          ? 'var(--alpha-square-pyramid-stack-heading-border-active)'
+          : 'var(--alpha-square-pyramid-stack-heading-border)',
+        color: isActive
+          ? 'var(--alpha-square-pyramid-stack-heading-active)'
+          : 'var(--alpha-square-pyramid-stack-heading)',
         borderColor: stackColor,
         boxShadow: isActive
           ? `0 4px 14px color-mix(in srgb, ${stackColor} 15%, transparent)`
@@ -103,9 +111,10 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(() => [
     >
       <!-- Circular Step Indicator -->
       <div
-        class="w-5.5 h-5.5 rounded-full flex items-center justify-center text-[10px] font-bold tracking-tight text-(--alpha-square-pyramid-stack-heading-number) transition-all duration-300 shrink-0"
+        class="alpha-square-pyramid-stack-heading__number w-5.5 h-5.5 rounded-full flex items-center justify-center text-[10px] font-bold tracking-tight text-(--alpha-square-pyramid-stack-heading-number) transition-all duration-300 shrink-0"
         :style="{
           backgroundColor: stackColor,
+          color: 'var(--alpha-square-pyramid-stack-heading-number)',
         }"
       >
         <slot name="step">{{ resolvedStep }}</slot>
@@ -150,6 +159,10 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(() => [
 <style scoped>
 .alpha-square-pyramid-stack-heading {
   box-sizing: border-box;
+}
+
+:where(.alpha-square-pyramid-stack-heading__number) {
+  color: var(--alpha-square-pyramid-stack-heading-number);
 }
 
 .alpha-square-pyramid-stack-heading--active

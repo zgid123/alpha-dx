@@ -10,6 +10,11 @@ export interface IArcComparisonRootContext {
   readonly as?: ComputedRef<'layout' | null | undefined>;
   readonly isMoved?: ComputedRef<boolean>;
   readonly edgeOffset?: ComputedRef<number>;
+  readonly hubTitleFontSize?: ComputedRef<number>;
+  readonly setSideHubTitleFontSize?: (
+    side: 'left' | 'right',
+    fontSize: number,
+  ) => void;
 }
 
 export interface IArcComparisonSideContext {

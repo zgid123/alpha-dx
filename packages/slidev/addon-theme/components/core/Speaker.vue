@@ -16,7 +16,9 @@ const props = defineProps({
   team: {
     type: Array as PropType<string[]>,
     required: false,
-    default: () => [],
+    default: () => {
+      return [];
+    },
   },
   date: {
     type: String,
@@ -24,10 +26,12 @@ const props = defineProps({
   },
 });
 
-const { className, forwardedAttrs } = useMergedUnoAttrs(() => [
-  'alpha-speaker flex absolute bottom-3.75 right-7.5 flex-col text-left',
-  props.team.length ? 'gap-2' : undefined,
-]);
+const { className, forwardedAttrs } = useMergedUnoAttrs(() => {
+  return [
+    'alpha-speaker flex absolute bottom-3.75 right-7.5 flex-col text-left',
+    props.team.length ? 'gap-2' : undefined,
+  ];
+});
 </script>
 
 <template>

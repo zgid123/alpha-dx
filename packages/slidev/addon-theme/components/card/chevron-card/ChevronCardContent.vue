@@ -39,3 +39,9 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     <slot />
   </p>
 </template>
+
+<style scoped>
+:where(.alpha-chevron-card-content) {
+  color: var(--alpha-chevron-card-content);
+}
+</style>

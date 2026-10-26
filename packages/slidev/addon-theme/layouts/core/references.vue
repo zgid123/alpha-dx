@@ -18,7 +18,9 @@ export interface IReferenceItem {
 const props = defineProps({
   references: {
     type: Array as PropType<IReferenceItem[]>,
-    default: () => [],
+    default: () => {
+      return [];
+    },
   },
   columns: {
     type: [Number, String],
@@ -30,14 +32,21 @@ const props = defineProps({
   },
 });
 
-const style = computed(() =>
-  props.background ? handleBackground(props.background) : undefined,
-);
+const style = computed(() => {
+  return props.background ? handleBackground(props.background) : undefined;
+});
 
 const columnClass = computed(() => {
   const cols = Number(props.columns) || 2;
-  if (cols === 1) return 'columns-1';
-  if (cols === 3) return 'columns-3';
+
+  if (cols === 1) {
+    return 'columns-1';
+  }
+
+  if (cols === 3) {
+    return 'columns-3';
+  }
+
   return 'columns-2';
 });
 

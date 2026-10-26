@@ -55,12 +55,21 @@ describe('ArcDefenseInDepth composed components', () => {
   it('composes each layer from a Heading and direct part or sector children', () => {
     const layer = readComponent('ArcDefenseInDepthLayer.vue');
     const heading = readComponent('ArcDefenseInDepthLayerHeading.vue');
+    const part = readComponent('ArcDefenseInDepthLayerPart.vue');
     const layerScript = layer.scriptSetup?.content ?? '';
 
     expect(layerScript).not.toContain('readonly title?:');
+    expect(layerScript).toContain('rotate: data.rotate');
+    expect(layerScript).toContain('skew: data.skew');
     expect(layer.template?.content).toContain('<slot />');
     expect(heading.scriptSetup?.content).not.toContain('readonly title?:');
+    expect(heading.scriptSetup?.content).toContain(
+      'var(--alpha-arc-defense-in-depth-layer-heading)',
+    );
     expect(heading.template?.content).toContain('<slot />');
+    expect(part.template?.content).toContain(
+      'var(--alpha-arc-defense-in-depth-part)',
+    );
     expect(compile(layer, 'ArcDefenseInDepthLayer.vue').errors).toEqual([]);
     expect(
       compile(heading, 'ArcDefenseInDepthLayerHeading.vue').errors,

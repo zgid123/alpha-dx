@@ -69,7 +69,7 @@ export interface ICreateArcComparisonGeometryOptions {
 export function createArcComparisonGeometry(
   options: ICreateArcComparisonGeometryOptions = {},
 ): IArcComparisonGeometry {
-  const viewBoxWidth = options.viewBoxWidth ?? 1000;
+  const viewBoxWidth = options.viewBoxWidth ?? 1_000;
   const viewBoxHeight = options.viewBoxHeight ?? 480;
   const hubRadius = options.hubRadius ?? 135;
   const arcRadius = options.arcRadius ?? 235;

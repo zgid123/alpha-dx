@@ -1,9 +1,8 @@
 .turbo
 __tests__
-samples
-academic-slides.md
 biome.json
 CHANGELOG.md
+demo
 README.md
 slides.md
 tsconfig.json

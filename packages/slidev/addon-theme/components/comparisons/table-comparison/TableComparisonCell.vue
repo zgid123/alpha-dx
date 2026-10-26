@@ -68,6 +68,8 @@ const resolvedAlignClasses = computed(() => {
 
 const cellStyle = computed(() => {
   return {
+    backgroundColor: resolvedBg.value,
+    color: resolvedTextColor.value,
     ...(!resolvedBg.value.includes('--alpha-table-comparison-cell-bg')
       ? { '--alpha-table-comparison-cell-bg': resolvedBg.value }
       : {}),
@@ -88,3 +90,10 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(() => {
     <slot />
   </td>
 </template>
+
+<style scoped>
+:where(.alpha-table-comparison-cell) {
+  background-color: var(--alpha-table-comparison-cell-bg);
+  color: var(--alpha-table-comparison-cell);
+}
+</style>

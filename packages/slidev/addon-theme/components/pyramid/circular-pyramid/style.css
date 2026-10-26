@@ -24,3 +24,27 @@
     --alpha-circular-pyramid-stack-heading-number: #fff;
   }
 }
+
+.alpha-circular-pyramid-stack-heading--default .alpha-circular-pyramid-stack-heading__pill {
+  color: var(--alpha-circular-pyramid-stack-heading);
+  background-color: var(--alpha-circular-pyramid-stack-heading-border);
+}
+
+.alpha-circular-pyramid-stack-heading--active .alpha-circular-pyramid-stack-heading__pill {
+  color: var(--alpha-circular-pyramid-stack-heading-active);
+  background-color: var(--alpha-circular-pyramid-stack-heading-border-active);
+}
+
+.alpha-circular-pyramid-stack-heading__number {
+  color: var(--alpha-circular-pyramid-stack-heading-number);
+}
+
+.alpha-circular-pyramid-stack-content--default {
+  color: var(--alpha-circular-pyramid-stack-content);
+  background-color: var(--alpha-circular-pyramid-stack-content-border);
+}
+
+.alpha-circular-pyramid-stack-content--active {
+  color: var(--alpha-circular-pyramid-stack-content-active);
+  background-color: var(--alpha-circular-pyramid-stack-content-border-active);
+}

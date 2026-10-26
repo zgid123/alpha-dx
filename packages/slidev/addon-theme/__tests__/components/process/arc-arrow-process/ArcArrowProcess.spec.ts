@@ -40,6 +40,45 @@ describe('ArcArrowProcess callout typography components', () => {
       expect(source).not.toContain('m-0 mb-1.5');
       expect(source).not.toContain('text-[1.25rem]');
     });
+
+    it('binds headingStyle with direct color and heading variable matching callout item color', () => {
+      const { template, source } = (() => {
+        const { descriptor, source } = readComponent(
+          'ArcArrowProcessHeading.vue',
+        );
+
+        return {
+          template: descriptor.template?.content ?? '',
+          source,
+        };
+      })();
+
+      expect(template).toContain(':style="headingStyle"');
+      expect(source).toContain('color: headingColor.value');
+      expect(source).toContain(
+        "'--alpha-arc-arrow-process-heading': headingColor.value",
+      );
+    });
+  });
+
+  describe('ArcArrowProcessCallout', () => {
+    it('right-aligns the first and second callouts in the 4-arrow layout', () => {
+      const { descriptor, source } = readComponent(
+        'ArcArrowProcessCallout.vue',
+      );
+      const template = descriptor.template?.content ?? '';
+
+      expect(source).toContain('resolvedCount.value === 4');
+      expect(source).toContain(
+        'resolvedIndex.value === 0 || resolvedIndex.value === 1',
+      );
+      expect(template).toContain("isRightAligned ? 'text-right' : 'text-left'");
+      expect(template).toContain(
+        "isRightAligned ? 'items-end' : 'items-start'",
+      );
+      expect(source).toContain('left: 110px; top: 205px; width: 255px;');
+      expect(source).toContain('right: 110px; top: 205px; width: 255px;');
+    });
   });
 
   describe('ArcArrowProcessContent', () => {
@@ -59,6 +98,7 @@ describe('ArcArrowProcess callout typography components', () => {
       expect(template).toContain('</p>');
       expect(template).not.toMatch(/<div\b/);
       expect(source).toContain('alpha-arc-arrow-process-content');
+      expect(source).toContain('line-clamp-4');
       expect(source).not.toContain('m-0');
       expect(source).not.toContain('text-[1rem]');
     });

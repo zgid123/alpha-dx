@@ -7,6 +7,7 @@ import {
   inject,
   provide,
   ref,
+  useId,
   useSlots,
   isVNode,
   watch,
@@ -171,8 +172,8 @@ const geo = computed(() => {
   });
 });
 
-let clipInstanceCounter = 0;
-const clipId = `alpha-arc-orbit-clip-${++clipInstanceCounter}`;
+const uid = useId();
+const clipId = `alpha-arc-orbit-clip-${uid}`;
 
 const registeredCalloutIds = ref<symbol[]>([]);
 
@@ -222,7 +223,9 @@ provide(ARC_ORBIT_ROOT_KEY, {
   registerCallout,
   unregisterCallout,
   edgeOffset: computed(() => props.edgeOffset ?? 30),
-  items: computed(() => []),
+  items: computed(() => {
+    return [];
+  }),
 });
 
 const { resolvedScale, containerHeight } = useDiagramAutoScale({
@@ -292,9 +295,8 @@ function handleClick(event: MouseEvent): void {
     aria-label="Arc orbit diagram"
     v-bind="forwardedAttrs()"
     :class="[
-      className(),
+      className(props.position === 'right' ? 'items-end' : 'items-start'),
       `alpha-arc-orbit--${props.position}`,
-      props.position === 'right' ? 'items-end' : 'items-start',
     ]"
     :data-position="props.position"
     :style="{

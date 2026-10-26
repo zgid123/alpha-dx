@@ -6,7 +6,6 @@
   "scripts": {
     "test": "vitest run --globals",
     "dev": "slidev slides.md --open",
-    "dev:academic": "slidev academic-slides.md --open",
     "preview:build": "slidev build slides.md"
   },
   "keywords": [

@@ -279,9 +279,9 @@ const resolvedLayers = computed<IArcDefenseInDepthLayerItem[]>(() => {
   return result;
 });
 
-const palette = computed(() =>
-  resolveArcDefenseInDepthPalette(props.color, resolvedCount.value),
-);
+const palette = computed(() => {
+  return resolveArcDefenseInDepthPalette(props.color, resolvedCount.value);
+});
 
 function getLayerColor(index: number): string {
   if (index >= 0 && index < registeredLayerTokens.value.length) {

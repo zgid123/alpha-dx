@@ -1,0 +1,4 @@
+---
+layout: thanks
+hideInToc: true
+---

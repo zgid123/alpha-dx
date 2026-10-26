@@ -65,7 +65,7 @@ addons:
 | :----------- | :----------------- | :---------- | :------: | :------------------------------------------------------------------------------------ |
 | `count`      | `number`           | `undefined` |    No    | Number of chevron arrow stages (`2`, `3`, or `4`). Inferred from callouts if omitted. |
 | `animation`  | `boolean`          | `true`      |    No    | Enables entrance sequence animation.                                                  |
-| `height`     | `number \| string` | `370`       |    No    | Diagram height in pixels (minimum `340px`).                                           |
+| `height`     | `number \| string` | `380`       |    No    | Diagram height in pixels (minimum `340px`).                                           |
 | `startDelay` | `number`           | `undefined` |    No    | Animation delay in milliseconds.                                                      |
 
 ---
@@ -84,15 +84,14 @@ addons:
 - **Rendered HTML Tag:** `<div>`
 - **Role:** Individual process stage callout block positioning heading, description text, and outline icon.
 
-| Prop           | Type               | Default     | Required | Description                              |
-| :------------- | :----------------- | :---------- | :------: | :--------------------------------------- |
-| `index`        | `number`           | `undefined` |    No    | Stage index (0 to 3).                    |
-| `color`        | `string`           | `undefined` |    No    | Accent color override.                   |
-| `textColor`    | `string`           | `undefined` |    No    | Body text color override.                |
-| `headingColor` | `string`           | `undefined` |    No    | Heading title color override.            |
-| `title`        | `string`           | `undefined` |    No    | Stage title text.                        |
-| `description`  | `string`           | `undefined` |    No    | Stage description text.                  |
-| `icon`         | `string \| object` | `undefined` |    No    | Stage icon component or icon class name. |
+| Prop        | Type               | Default     | Required | Description                              |
+| :---------- | :----------------- | :---------- | :------: | :--------------------------------------- |
+| `index`     | `number`           | `undefined` |    No    | Stage index (0 to 3).                    |
+| `color`     | `string`           | `undefined` |    No    | Accent color override.                   |
+| `textColor` | `string`           | `undefined` |    No    | Body text color override.                |
+| `title`     | `string`           | `undefined` |    No    | Stage title text.                        |
+| `description` | `string`         | `undefined` |    No    | Stage description text.                  |
+| `icon`      | `string \| object` | `undefined` |    No    | Stage icon component or icon class name. |
 
 ### `ArcArrowProcessHeading`
 
@@ -144,7 +143,8 @@ addons:
 | `standalone`  | `boolean`          | `undefined` |    No    | Forces standalone viewBox and layout if true.              |
 | `path`        | `string`           | `undefined` |    No    | SVG path for the chevron.                                  |
 | `viewBox`     | `string`           | `undefined` |    No    | Custom viewBox string.                                     |
-| `originY`     | `number`           | `-220`      |    No    | Pivot point Y-coordinate for rotation when not standalone. |
+| `originX`     | `number`           | `780`       |    No    | Pivot point X-coordinate for rotation when not standalone. |
+| `originY`     | `number`           | `-130`      |    No    | Pivot point Y-coordinate for rotation when not standalone. |
 
 ---
 

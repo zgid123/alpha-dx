@@ -58,16 +58,19 @@ function registerSector(
   >,
 ) {
   const sToken = token ?? Symbol();
+
   if (!registeredSectorTokens.value.includes(sToken)) {
     registeredSectorTokens.value = [...registeredSectorTokens.value, sToken];
   }
 
   let stopWatch: (() => void) | undefined;
+
   if (sectorDataRef) {
     stopWatch = watch(
       sectorDataRef,
       (val) => {
         const nextMap = new Map(registeredSectorData.value);
+
         if (val) {
           nextMap.set(sToken, val);
         } else {
@@ -76,7 +79,9 @@ function registerSector(
 
         registeredSectorData.value = nextMap;
       },
-      { immediate: true },
+      {
+        immediate: true,
+      },
     );
   }
 
@@ -105,6 +110,7 @@ function registerPart(
     IArcDefenseInDepthRegisteredSectorData | undefined
   >(() => {
     const pData = partDataRef?.value;
+
     if (!pData) {
       return undefined;
     }
@@ -115,25 +121,31 @@ function registerPart(
       angle: pData.angle,
       span: pData.span,
       color: pData.color,
+      rotate: pData.rotate,
+      skew: pData.skew,
     };
   });
+
   return registerSector(pToken, sectorDataRef);
 }
 
 const registeredSectorsList = computed<IArcDefenseInDepthSectorItem[]>(() => {
   return registeredSectorTokens.value
     .map((token) => registeredSectorData.value.get(token))
-    .filter(
-      (item): item is IArcDefenseInDepthRegisteredSectorData =>
-        item !== undefined,
-    )
-    .map((data) => ({
-      parts: data.parts ?? [],
-      split: data.split,
-      angle: data.angle,
-      span: data.span,
-      color: data.color,
-    }));
+    .filter((item): item is IArcDefenseInDepthRegisteredSectorData => {
+      return item !== undefined;
+    })
+    .map((data) => {
+      return {
+        parts: data.parts ?? [],
+        split: data.split,
+        angle: data.angle,
+        span: data.span,
+        color: data.color,
+        rotate: data.rotate,
+        skew: data.skew,
+      };
+    });
 });
 
 const registeredPartsList = computed<IArcDefenseInDepthPartItem[]>(() => {
@@ -144,13 +156,15 @@ const registeredPartsList = computed<IArcDefenseInDepthPartItem[]>(() => {
 
 const layerToken = Symbol();
 const layerRegistrationData = computed<IArcDefenseInDepthRegisteredLayerData>(
-  () => ({
-    title: currentTitle.value,
-    color: props.color,
-    sectors: registeredSectorsList.value,
-    parts: registeredPartsList.value,
-    index: props.index !== undefined ? Number(props.index) : undefined,
-  }),
+  () => {
+    return {
+      title: currentTitle.value,
+      color: props.color,
+      sectors: registeredSectorsList.value,
+      parts: registeredPartsList.value,
+      index: props.index !== undefined ? Number(props.index) : undefined,
+    };
+  },
 );
 
 const registration = rootContext?.registerLayer(

@@ -254,7 +254,7 @@ export function useDiagramAutoScale(
       targetScale = Math.min(targetScale, maxScaleProp);
     }
 
-    targetScale = Math.round(targetScale * 1000) / 1000;
+    targetScale = Math.round(targetScale * 1_000) / 1_000;
 
     if (Math.abs(targetScale - autoScaleValue.value) > 0.005) {
       autoScaleValue.value = targetScale;

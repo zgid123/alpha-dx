@@ -25,3 +25,15 @@
     --alpha-arc-comparison-vs-bg: #f1f5f9;
   }
 }
+
+.alpha-arc-comparison-badge {
+  color: var(--alpha-arc-comparison-badge);
+}
+
+.alpha-arc-comparison-heading {
+  color: var(--alpha-arc-comparison-heading);
+}
+
+.alpha-arc-comparison-content {
+  color: var(--alpha-arc-comparison-content);
+}

@@ -181,6 +181,36 @@ describe('ArcComparison component', () => {
           "rootContext?.as?.value !== 'layout' || rootContext?.isMoved?.value",
         );
       });
+
+      it('computes synchronized dynamic hub title font size across both left and right sides when centered and resets to 18px when moved', () => {
+        const script = descriptor.scriptSetup?.content ?? '';
+
+        expect(script).toContain('resolveSharedArcComparisonHubTitleFontSize');
+        expect(script).toContain('hubTitleFontSize: sharedHubTitleFontSize');
+        expect(script).toContain('setSideHubTitleFontSize');
+        expect(leftContent).toContain('useArcComparisonHubTitleFontSize');
+        expect(leftContent).toContain(
+          'sharedFontSize: rootContext?.hubTitleFontSize',
+        );
+        expect(leftContent).toContain(
+          "rootContext?.setSideHubTitleFontSize?.('left', size)",
+        );
+        expect(leftContent).toMatch(
+          /fontSize:\s*`\$\{titleFontSize\.value\}px`/,
+        );
+        expect(leftContent).toContain('alpha-arc-comparison__hub-title-text');
+        expect(rightContent).toContain('useArcComparisonHubTitleFontSize');
+        expect(rightContent).toContain(
+          'sharedFontSize: rootContext?.hubTitleFontSize',
+        );
+        expect(rightContent).toContain(
+          "rootContext?.setSideHubTitleFontSize?.('right', size)",
+        );
+        expect(rightContent).toMatch(
+          /fontSize:\s*`\$\{titleFontSize\.value\}px`/,
+        );
+        expect(rightContent).toContain('alpha-arc-comparison__hub-title-text');
+      });
     });
   });
 

@@ -1,9 +1,7 @@
 /* Color defaults shared by this component family. */
 @layer alpha-theme-tokens {
   :root {
-    --alpha-arc-defense-in-depth-active-glow: drop-shadow(
-        0 0 14px rgba(255, 255, 255, 0.85)
-      )
+    --alpha-arc-defense-in-depth-active-glow: drop-shadow(0 0 14px rgba(255, 255, 255, 0.85))
       drop-shadow(0 0 6px rgba(56, 189, 248, 0.8)) brightness(1.2);
     --alpha-arc-defense-in-depth-active-stroke: #ffffff;
     --alpha-arc-defense-in-depth-center-fill: #ffffff;
@@ -11,9 +9,7 @@
     --alpha-arc-defense-in-depth-layer-2-color: #0ea5e9;
     --alpha-arc-defense-in-depth-layer-3-color: #0284c7;
     --alpha-arc-defense-in-depth-layer-accent: #0ea5e9;
-    --alpha-arc-defense-in-depth-layer-glow: drop-shadow(
-      0 0 12px rgba(14, 165, 233, 0.45)
-    );
+    --alpha-arc-defense-in-depth-layer-glow: drop-shadow(0 0 12px rgba(14, 165, 233, 0.45));
     --alpha-arc-defense-in-depth-layer-heading: #ffffff;
     --alpha-arc-defense-in-depth-part: #ffffff;
     --alpha-arc-defense-in-depth-part-active: #ffffff;
@@ -31,8 +27,21 @@
     --alpha-arc-defense-in-depth-part-dot-idle-edge: #94a3b8;
     --alpha-arc-defense-in-depth-part-glow: #38bdf8;
     --alpha-arc-defense-in-depth-part-ring: #ffffff;
-    --alpha-arc-defense-in-depth-part-shadow:
-      0 2px 5px rgba(0, 0, 0, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    --alpha-arc-defense-in-depth-part-shadow: 0 2px 5px rgba(0, 0, 0, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.8);
     --alpha-arc-defense-in-depth-stroke: #ffffff;
   }
+}
+
+.alpha-arc-defense-in-depth__layer-title {
+  color: var(--alpha-arc-defense-in-depth-layer-heading, #ffffff);
+}
+
+.alpha-arc-defense-in-depth__part,
+.alpha-arc-defense-in-depth__part-label {
+  color: var(--alpha-arc-defense-in-depth-part, #ffffff);
+}
+
+.alpha-arc-defense-in-depth__part--active,
+.alpha-arc-defense-in-depth__part--active .alpha-arc-defense-in-depth__part-label {
+  color: var(--alpha-arc-defense-in-depth-part-active, #ffffff);
 }

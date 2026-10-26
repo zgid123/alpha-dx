@@ -24,7 +24,7 @@ const contentColor = computed(() => {
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-arc-arrow-process-content font-sans leading-[1.45] font-normal text-(--alpha-arc-arrow-process-content) select-none',
+  'alpha-arc-arrow-process-content font-sans leading-[1.45] font-normal text-(--alpha-arc-arrow-process-content) select-none line-clamp-4',
 );
 </script>
 

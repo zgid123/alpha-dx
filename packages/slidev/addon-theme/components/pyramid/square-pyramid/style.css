@@ -14,35 +14,43 @@
     --alpha-square-pyramid-stack-5-color: #14b8a6;
     --alpha-square-pyramid-stack-6-color: #f59e0b;
 
-    --alpha-square-pyramid-stack-content: var(
-      --alpha-foreground-primary,
-      #475569
-    );
+    --alpha-square-pyramid-stack-content: var(--alpha-foreground-primary, #475569);
     --alpha-square-pyramid-stack-content-accent: #3b82f6;
     --alpha-square-pyramid-stack-content-active: #0f172a;
     --alpha-square-pyramid-stack-content-border: rgba(255, 255, 255, 0.85);
-    --alpha-square-pyramid-stack-content-border-active: rgba(
-      255,
-      255,
-      255,
-      0.95
-    );
+    --alpha-square-pyramid-stack-content-border-active: rgba(255, 255, 255, 0.95);
 
     --alpha-square-pyramid-highlight: #ffffff;
 
-    --alpha-square-pyramid-stack-heading: var(
-      --alpha-foreground-primary,
-      #334155
-    );
+    --alpha-square-pyramid-stack-heading: var(--alpha-foreground-primary, #334155);
     --alpha-square-pyramid-stack-heading-accent: #3b82f6;
     --alpha-square-pyramid-stack-heading-active: #0f172a;
     --alpha-square-pyramid-stack-heading-border: rgba(255, 255, 255, 0.85);
-    --alpha-square-pyramid-stack-heading-border-active: rgba(
-      255,
-      255,
-      255,
-      0.95
-    );
+    --alpha-square-pyramid-stack-heading-border-active: rgba(255, 255, 255, 0.95);
     --alpha-square-pyramid-stack-heading-number: #ffffff;
   }
+}
+
+.alpha-square-pyramid-stack-heading--default .alpha-square-pyramid-stack-heading__pill {
+  color: var(--alpha-square-pyramid-stack-heading);
+  background-color: var(--alpha-square-pyramid-stack-heading-border);
+}
+
+.alpha-square-pyramid-stack-heading--active .alpha-square-pyramid-stack-heading__pill {
+  color: var(--alpha-square-pyramid-stack-heading-active);
+  background-color: var(--alpha-square-pyramid-stack-heading-border-active);
+}
+
+.alpha-square-pyramid-stack-heading__number {
+  color: var(--alpha-square-pyramid-stack-heading-number);
+}
+
+.alpha-square-pyramid-stack-content--default {
+  color: var(--alpha-square-pyramid-stack-content);
+  background-color: var(--alpha-square-pyramid-stack-content-border);
+}
+
+.alpha-square-pyramid-stack-content--active {
+  color: var(--alpha-square-pyramid-stack-content-active);
+  background-color: var(--alpha-square-pyramid-stack-content-border-active);
 }

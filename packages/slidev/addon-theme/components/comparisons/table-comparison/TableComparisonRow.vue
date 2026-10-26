@@ -58,6 +58,8 @@ const resolvedPadding = computed(() => {
 
 const headerStyle = computed(() => {
   return {
+    backgroundColor: resolvedBg.value,
+    color: resolvedTextColor.value,
     ...(!resolvedBg.value.includes('--alpha-table-comparison-row-bg')
       ? { '--alpha-table-comparison-row-bg': resolvedBg.value }
       : {}),
@@ -86,3 +88,10 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     <slot />
   </tr>
 </template>
+
+<style scoped>
+:where(.alpha-table-comparison-row-title) {
+  background-color: var(--alpha-table-comparison-row-bg);
+  color: var(--alpha-table-comparison-row);
+}
+</style>

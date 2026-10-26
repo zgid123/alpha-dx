@@ -20,3 +20,7 @@
     --alpha-hexagon-triad-item-3-light: #8da4e2;
   }
 }
+
+.alpha-hexagon-triad-content {
+  color: var(--alpha-hexagon-triad-content);
+}

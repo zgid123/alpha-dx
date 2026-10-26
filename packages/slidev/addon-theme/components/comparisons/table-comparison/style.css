@@ -13,3 +13,18 @@
     --alpha-table-comparison-row-bg: #2e8b9a;
   }
 }
+
+.alpha-table-comparison-col {
+  color: var(--alpha-table-comparison-col);
+  background-color: var(--alpha-table-comparison-col-1-background);
+}
+
+.alpha-table-comparison-row-title {
+  color: var(--alpha-table-comparison-row);
+  background-color: var(--alpha-table-comparison-row-bg);
+}
+
+.alpha-table-comparison-cell {
+  color: var(--alpha-table-comparison-cell);
+  background-color: var(--alpha-table-comparison-cell-bg);
+}

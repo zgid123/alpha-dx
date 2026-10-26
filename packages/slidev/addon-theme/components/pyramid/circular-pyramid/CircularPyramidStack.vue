@@ -82,15 +82,15 @@ const defaultNodes = computed(() => {
 });
 
 const slottedTitle = computed(() => {
-  return defaultNodes.value.find((node) =>
-    hasComponentName(node.type, 'CircularPyramidStackHeading'),
-  );
+  return defaultNodes.value.find((node) => {
+    return hasComponentName(node.type, 'CircularPyramidStackHeading');
+  });
 });
 
 const slottedContent = computed(() => {
-  return defaultNodes.value.find((node) =>
-    hasComponentName(node.type, 'CircularPyramidStackContent'),
-  );
+  return defaultNodes.value.find((node) => {
+    return hasComponentName(node.type, 'CircularPyramidStackContent');
+  });
 });
 
 const stackToken = Symbol();

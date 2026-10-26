@@ -13,9 +13,13 @@ import {
 } from 'vue';
 
 import {
+  ARC_COMPARISON_HUB_INNER_CLEARANCE_PX,
+  ARC_COMPARISON_HUB_OUTER_PADDING_PX,
   ARC_COMPARISON_ROOT_KEY,
   ARC_COMPARISON_SIDE_KEY,
+  calculateArcComparisonHubAvailableWidth,
   DEFAULT_RIGHT_COLOR,
+  useArcComparisonHubTitleFontSize,
 } from '../../../utils/comparisons/arc-comparison';
 import {
   ARC_ORBIT_ROOT_KEY,
@@ -131,7 +135,9 @@ provide(ARC_ORBIT_ROOT_KEY, {
   registerCallout,
   unregisterCallout,
   edgeOffset: computed(() => rootContext?.edgeOffset?.value ?? 30),
-  items: computed(() => []),
+  items: computed(() => {
+    return [];
+  }),
 });
 
 function isSignificantNode(node: VNode): boolean {
@@ -170,27 +176,60 @@ const defaultNodes = computed(() => {
   return flattenVNodes(slots.default());
 });
 
+const titleTextRef = ref<HTMLElement | null>(null);
+
+const isInCenter = computed(() => {
+  const isLayout = rootContext?.as?.value === 'layout';
+  const isMoved = rootContext?.isMoved?.value ?? false;
+
+  return isLayout && !isMoved;
+});
+
+const availableTitleWidth = computed(() => {
+  const hubR = rootContext?.geo.value.right.hubRadius ?? 170;
+  const vsR = rootContext?.geo.value.vsRadius ?? 26;
+
+  return calculateArcComparisonHubAvailableWidth({
+    hubRadius: hubR,
+    vsRadius: vsR,
+  });
+});
+
+const { fontSize: titleFontSize } = useArcComparisonHubTitleFontSize({
+  titleTextRef,
+  availableWidth: availableTitleWidth,
+  inCenter: isInCenter,
+  sharedFontSize: rootContext?.hubTitleFontSize,
+  onFontSizeChange: (size: number) => {
+    rootContext?.setSideHubTitleFontSize?.('right', size);
+  },
+});
+
 const hubStyle = computed(() => {
   const hubR = rootContext?.geo.value.right.hubRadius ?? 170;
+  const vsR = rootContext?.geo.value.vsRadius ?? 26;
   const centerY = rootContext?.geo.value.centerY ?? 240;
   const isLayout = rootContext?.as?.value === 'layout';
   const isMoved = rootContext?.isMoved?.value ?? false;
   const centerX = rootContext?.geo.value.centerX ?? 500;
-  const viewBoxWidth = rootContext?.geo.value.viewBoxWidth ?? 1000;
+  const viewBoxWidth = rootContext?.geo.value.viewBoxWidth ?? 1_000;
   const edgeOffset = rootContext?.edgeOffset?.value ?? 30;
   const inCenter = isLayout && !isMoved;
   const targetLeft = inCenter
     ? `${centerX}px`
     : `${viewBoxWidth - hubR - edgeOffset}px`;
   const targetWidth = inCenter ? `${hubR}px` : `${edgeOffset + hubR}px`;
+  const innerPadding = `${vsR + ARC_COMPARISON_HUB_INNER_CLEARANCE_PX}px`;
+  const outerPadding = `${ARC_COMPARISON_HUB_OUTER_PADDING_PX}px`;
 
   return {
     top: `${centerY - hubR}px`,
     left: targetLeft,
     width: targetWidth,
     height: `${hubR * 2}px`,
-    paddingLeft: inCenter ? '28px' : undefined,
-    paddingRight: inCenter ? '8px' : undefined,
+    paddingLeft: inCenter ? innerPadding : undefined,
+    paddingRight: inCenter ? outerPadding : undefined,
+    fontSize: `${titleFontSize.value}px`,
     transition: 'all 700ms cubic-bezier(0.16, 1, 0.3, 1)',
   };
 });
@@ -218,9 +257,16 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
       class="alpha-arc-comparison__hub-title alpha-arc-comparison__hub-title--right absolute flex items-center justify-center z-10 pointer-events-auto font-sans font-bold text-center px-2 leading-tight select-none tracking-tight whitespace-pre-line text-[18px] text-(--alpha-arc-comparison-right-title)"
       :style="hubStyle"
     >
-      <slot v-if="$slots.title" name="title" />
-      <component :is="props.title" v-else-if="isVNode(props.title)" />
-      <span v-else-if="typeof props.title === 'string'">{{ props.title }}</span>
+      <span
+        ref="titleTextRef"
+        class="alpha-arc-comparison__hub-title-text max-w-full"
+      >
+        <slot v-if="$slots.title" name="title" />
+        <component :is="props.title" v-else-if="isVNode(props.title)" />
+        <span v-else-if="typeof props.title === 'string'">{{
+          props.title
+        }}</span>
+      </span>
     </h3>
     <!-- Contents & Callouts -->
     <div

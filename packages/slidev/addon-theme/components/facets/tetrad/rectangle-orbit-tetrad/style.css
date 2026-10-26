@@ -20,3 +20,24 @@
     );
   }
 }
+
+.alpha-rectangle-orbit-tetrad-center {
+  background-color: var(--alpha-rectangle-orbit-tetrad-center-bg);
+  box-shadow: var(--alpha-rectangle-orbit-tetrad-center-shadow);
+}
+
+.alpha-rectangle-orbit-tetrad-center h4 {
+  color: var(--alpha-rectangle-orbit-tetrad-title);
+}
+
+.alpha-rectangle-orbit-tetrad-center p {
+  color: var(--alpha-rectangle-orbit-tetrad-center-content);
+}
+
+.alpha-rectangle-orbit-tetrad-content {
+  color: var(--alpha-rectangle-orbit-tetrad-content);
+}
+
+.alpha-rectangle-orbit-tetrad-callout {
+  background-color: var(--alpha-rectangle-orbit-tetrad-card-bg);
+}
