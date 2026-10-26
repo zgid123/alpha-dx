@@ -1,5 +1,13 @@
 # @alphacifer/slidev-academic-theme
 
+## 0.0.6
+
+### Patch Changes
+
+- [#201](https://github.com/zgid123/alpha-dx/pull/201) [`3621899`](https://github.com/zgid123/alpha-dx/commit/36218995cc297610c1d2a6ee8e0dffbca1c44d61) Thanks [@zgid123](https://github.com/zgid123)! - fix styling for components
+- Updated dependencies [[`3621899`](https://github.com/zgid123/alpha-dx/commit/36218995cc297610c1d2a6ee8e0dffbca1c44d61)]:
+  - @alphacifer/slidev-core-theme@0.0.4
+
 ## 0.0.5
 
 ### Patch Changes
