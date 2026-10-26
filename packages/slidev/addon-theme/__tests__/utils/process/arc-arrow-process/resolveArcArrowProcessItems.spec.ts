@@ -1,19 +1,25 @@
 import { resolveSingleArcArrowProcessItem } from '../../../../utils/process/arc-arrow-process/resolveArcArrowProcessItems';
 
 describe('resolveSingleArcArrowProcessItem', () => {
-  it('keeps the heading foreground default when the accent color changes', () => {
-    const item = resolveSingleArcArrowProcessItem({ color: '#ea580c' });
+  it('resolves the arrow color from default items', () => {
+    const item0 = resolveSingleArcArrowProcessItem(undefined, 0, 4);
 
-    expect(item.color).toBe('#ea580c');
-    expect(item.titleColor).toBe('var(--alpha-arc-arrow-process-heading)');
-  });
+    expect(item0.color).toBe('var(--alpha-arc-arrow-process-item-1-color)');
 
-  it('uses an explicit heading color override', () => {
-    const item = resolveSingleArcArrowProcessItem({
+    const customColorItem = resolveSingleArcArrowProcessItem({
       color: '#ea580c',
-      titleColor: '#0f172a',
     });
 
-    expect(item.titleColor).toBe('#0f172a');
+    expect(customColorItem.color).toBe('#ea580c');
+  });
+
+  it('preserves custom id and text color overrides', () => {
+    const item = resolveSingleArcArrowProcessItem({
+      id: 'custom-01',
+      textColor: '#0f172a',
+    });
+
+    expect(item.id).toBe('custom-01');
+    expect(item.textColor).toBe('#0f172a');
   });
 });

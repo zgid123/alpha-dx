@@ -18,3 +18,11 @@
     --alpha-arc-arrow-process-item-4-gradient-end: #e63964;
   }
 }
+
+.alpha-arc-arrow-process-content {
+  color: var(--alpha-arc-arrow-process-content);
+}
+
+.alpha-arc-arrow-process-icon {
+  color: var(--alpha-arc-arrow-process-icon);
+}

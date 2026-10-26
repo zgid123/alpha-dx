@@ -53,6 +53,8 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
           ? `${props.height}px`
           : props.height
         : '100%',
+      backgroundColor: customColor,
+      color: 'var(--alpha-chevron-card-badge-foreground)',
       '--alpha-chevron-card-badge-bg': customColor,
       clipPath: `polygon(0% 0%, calc(100% - ${props.notchDepth}px) 0%, 100% 50%, calc(100% - ${props.notchDepth}px) 100%, 0% 100%, ${props.notchDepth}px 50%)`,
     }"
@@ -78,3 +80,10 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     </slot>
   </div>
 </template>
+
+<style scoped>
+:where(.alpha-chevron-card-badge) {
+  background-color: var(--alpha-chevron-card-badge-bg);
+  color: var(--alpha-chevron-card-badge-foreground);
+}
+</style>

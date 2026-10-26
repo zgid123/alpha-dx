@@ -54,6 +54,7 @@
     "@alphacifer/slidev-core-theme": "workspace:^"
   },
   "devDependencies": {
+    "@alphacifer/slidev-addon-theme": "workspace:^",
     "@slidev/cli": "52.19.0",
     "@slidev/client": "52.19.0",
     "@types/node": "25.9.0"

@@ -16,7 +16,9 @@ const props = defineProps({
   items: {
     type: Array as PropType<IMetaListItem[]>,
     required: false,
-    default: () => [],
+    default: () => {
+      return [];
+    },
   },
   separator: {
     type: String,
@@ -26,25 +28,23 @@ const props = defineProps({
 });
 
 const { className, forwardedAttrs } = useMergedUnoAttrs(
-  'alpha-meta-list flex flex-col gap-2 text-left text-xl',
+  'alpha-meta-list flex absolute bottom-3.75 left-7.5 flex-col text-left',
 );
 </script>
 
 <template>
-  <dl v-bind="forwardedAttrs()" :class="className()">
+  <div v-bind="forwardedAttrs()" :class="className()">
     <slot>
-      <div
+      <p
         v-for="(item, index) in props.items"
         :key="`${item.label}-${index}`"
         class="alpha-meta-list__item"
       >
-        <dt class="alpha-meta-list__label inline font-medium">
-          {{ item.label }}{{ props.separator }}
-        </dt>
-        <dd class="alpha-meta-list__value inline m-0">
-          {{ item.value }}
-        </dd>
-      </div>
+        <span class="alpha-meta-list__label"
+          >{{ item.label }}{{ props.separator }}</span
+        >
+        <span class="alpha-meta-list__value">{{ item.value }}</span>
+      </p>
     </slot>
-  </dl>
+  </div>
 </template>

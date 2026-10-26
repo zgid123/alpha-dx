@@ -18,3 +18,20 @@
     --alpha-arc-orbit-hub-fill: #1e293bcc;
   }
 }
+
+.alpha-arc-orbit-badge {
+  color: var(--alpha-arc-orbit-badge);
+  background-color: var(--alpha-arc-orbit-accent);
+}
+
+.alpha-arc-orbit__hub-title {
+  color: var(--alpha-arc-orbit-title);
+}
+
+.alpha-arc-orbit-heading {
+  color: var(--alpha-arc-orbit-heading);
+}
+
+.alpha-arc-orbit-content {
+  color: var(--alpha-arc-orbit-content);
+}

@@ -35,21 +35,23 @@ describe('MetaList component', () => {
     expect(script).toContain('IMetaListItem');
   });
 
-  it('uses inheritAttrs: false and useMergedUnoAttrs with default typography', () => {
+  it('uses inheritAttrs: false and useMergedUnoAttrs matching Speaker anchoring and typography', () => {
     const script = descriptor.scriptSetup?.content ?? '';
     expect(script).toContain('inheritAttrs: false');
     expect(script).toContain('useMergedUnoAttrs');
     expect(script).toContain('alpha-meta-list');
-    expect(script).toContain('text-xl');
+    expect(script).toContain('absolute bottom-3.75 left-7.5');
+    expect(script).not.toContain('text-xl');
   });
 
-  it('renders a description list with semantic dt and dd elements', () => {
+  it('renders paragraph items matching Speaker layout and typography', () => {
     const template = descriptor.template?.content ?? '';
     expect(template).toContain(
-      '<dl v-bind="forwardedAttrs()" :class="className()">',
+      '<div v-bind="forwardedAttrs()" :class="className()">',
     );
-    expect(template).toContain('<dt class="alpha-meta-list__label');
-    expect(template).toContain('<dd class="alpha-meta-list__value');
+    expect(template).toContain('class="alpha-meta-list__item"');
+    expect(template).toContain('<span class="alpha-meta-list__label"');
+    expect(template).toContain('<span class="alpha-meta-list__value"');
     expect(template).toContain('<slot>');
   });
 });

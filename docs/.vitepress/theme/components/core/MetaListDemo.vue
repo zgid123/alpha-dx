@@ -22,15 +22,13 @@ const value2 = ref('Prof. Alan Turing');
 
 <template>
   <SlidevMockup :theme="props.theme">
-    <div class="h-full flex items-center justify-center p-8">
-      <MetaList
-        :separator="separator"
-        :items="[
-          { label: label1, value: value1 },
-          { label: label2, value: value2 },
-        ]"
-      />
-    </div>
+    <MetaList
+      :separator="separator"
+      :items="[
+        { label: label1, value: value1 },
+        { label: label2, value: value2 },
+      ]"
+    />
 
     <template #controls>
       <div class="slidev-mockup__control-group">

@@ -253,6 +253,82 @@ export function createDecorativeArcs(
   return [];
 }
 
+interface ICalculateHorizontalSectorClearanceParams {
+  readonly partRadius: number;
+  readonly partAngle: number;
+  readonly innerRadius: number;
+  readonly outerRadius: number;
+  readonly startAngle: number;
+  readonly endAngle: number;
+  readonly halfHeight: number;
+}
+
+function calculateHorizontalSectorClearance({
+  partRadius,
+  partAngle,
+  innerRadius,
+  outerRadius,
+  startAngle,
+  endAngle,
+  halfHeight,
+}: ICalculateHorizontalSectorClearanceParams): number {
+  const angleRad = (partAngle * Math.PI) / 180;
+  const u0 = partRadius * Math.cos(angleRad);
+  const v0 = partRadius * Math.sin(angleRad);
+
+  const highAngle = Math.max(startAngle, endAngle);
+  const lowAngle = Math.min(startAngle, endAngle);
+  const cotHigh =
+    highAngle >= 179.5
+      ? Number.NEGATIVE_INFINITY
+      : 1 / Math.tan((highAngle * Math.PI) / 180);
+  const cotLow =
+    lowAngle <= 0.5
+      ? Number.POSITIVE_INFINITY
+      : 1 / Math.tan((lowAngle * Math.PI) / 180);
+
+  const sampleHeights = [
+    Math.max(2, v0 - halfHeight),
+    Math.max(2, v0),
+    Math.max(2, Math.min(outerRadius - 2, v0 + halfHeight)),
+  ];
+
+  let minHalfWidth = Number.POSITIVE_INFINITY;
+
+  for (const v of sampleHeights) {
+    const dxOut = Math.sqrt(Math.max(0, outerRadius ** 2 - v ** 2));
+    const dxIn = Math.sqrt(Math.max(0, innerRadius ** 2 - v ** 2));
+
+    let uMin: number;
+    let uMax: number;
+
+    if (highAngle > 90 && lowAngle < 90) {
+      uMin = Math.max(-dxOut, v * cotHigh);
+      uMax = Math.min(dxOut, v * cotLow);
+    } else if (partAngle >= 90) {
+      uMin = Math.max(-dxOut, v * cotHigh);
+      uMax = Math.min(-dxIn, v * cotLow);
+    } else {
+      uMin = Math.max(dxIn, v * cotHigh);
+      uMax = Math.min(dxOut, v * cotLow);
+    }
+
+    const leftClearance = u0 - uMin;
+    const rightClearance = uMax - u0;
+    const halfWidthAtV = Math.min(leftClearance, rightClearance);
+
+    if (halfWidthAtV < minHalfWidth) {
+      minHalfWidth = halfWidthAtV;
+    }
+  }
+
+  if (!Number.isFinite(minHalfWidth) || minHalfWidth <= 0) {
+    return 0;
+  }
+
+  return 2 * minHalfWidth;
+}
+
 export function createArcDefenseInDepthGeometry(
   options: ICreateArcDefenseInDepthOptions = {},
 ): IArcDefenseInDepthGeometry {
@@ -505,10 +581,35 @@ export function createArcDefenseInDepthGeometry(
           }
 
           const isOrientedAlongArc = rotationAngle !== undefined;
-          const defaultMaxContentWidth =
-            numParts > 1 && !isOrientedAlongArc
-              ? Math.max(75, Math.min(105, Math.round(partArcLength * 0.75)))
-              : Math.max(105, Math.min(180, Math.round(partArcLength * 0.92)));
+          const effectiveInnerRadius = isSplit ? trackInner : rIn;
+          const effectiveOuterRadius = isSplit ? trackOuter : rOut;
+          const horizontalClearance = isOrientedAlongArc
+            ? 0
+            : calculateHorizontalSectorClearance({
+                partRadius,
+                partAngle,
+                innerRadius: effectiveInnerRadius,
+                outerRadius: effectiveOuterRadius,
+                startAngle: pStart,
+                endAngle: pEnd,
+                halfHeight: numParts > 1 ? 10 : 14,
+              });
+          const clearanceBound =
+            horizontalClearance > 0
+              ? Math.round(horizontalClearance * (numParts > 1 ? 0.88 : 0.86))
+              : Math.round(partArcLength * (numParts > 1 ? 0.75 : 0.88));
+          const radialBound = Math.round(layerThickness * 0.9);
+          const defaultMaxContentWidth = isOrientedAlongArc
+            ? Math.max(68, Math.min(160, Math.round(partArcLength * 0.85)))
+            : numParts > 1
+              ? Math.max(
+                  56,
+                  Math.min(96, Math.min(clearanceBound, radialBound)),
+                )
+              : Math.max(
+                  68,
+                  Math.min(105, Math.min(clearanceBound, radialBound)),
+                );
           const maxContentWidth =
             partItem.maxWidth !== undefined
               ? typeof partItem.maxWidth === 'number'

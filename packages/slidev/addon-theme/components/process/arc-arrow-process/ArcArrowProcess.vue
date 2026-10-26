@@ -39,7 +39,7 @@ export interface IArcArrowProcessProps {
 const props = withDefaults(defineProps<IArcArrowProcessProps>(), {
   count: undefined,
   animation: true,
-  height: 370,
+  height: 380,
   startDelay: undefined,
   active: undefined,
   rotationOffset: undefined,
@@ -168,9 +168,9 @@ const slottedCalloutProps = computed(() => {
     return [];
   }
 
-  const nodes = flattenVNodes(slots.default()).filter((node) =>
-    hasComponentName(node.type, 'ArcArrowProcessCallout'),
-  );
+  const nodes = flattenVNodes(slots.default()).filter((node) => {
+    return hasComponentName(node.type, 'ArcArrowProcessCallout');
+  });
 
   return nodes.map((node, idx) => {
     const rawProps = node.props;
@@ -257,6 +257,10 @@ const resolvedHeightStyle = computed(() => {
   return typeof props.height === 'number' ? `${props.height}px` : props.height;
 });
 
+const geoViewBox = computed(() => {
+  return `0 ${geo.value.viewBoxMinY} ${geo.value.viewBoxWidth} ${geo.value.viewBoxHeight}`;
+});
+
 const { className, forwardedAttrs } = useMergedUnoAttrs(
   'alpha-arc-arrow-process w-full min-h-[340px] flex items-start justify-center select-none font-sans relative',
 );
@@ -269,6 +273,8 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     :style="{
       height: resolvedHeightStyle,
       '--arc-arrow-start-delay': `${resolvedStartDelay}ms`,
+      '--arc-arrow-cx': `${geo.cx}px`,
+      '--arc-arrow-cy': `${geo.cy}px`,
     }"
   >
     <!-- Relative stage container -->
@@ -289,10 +295,12 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
           ]"
           :color="getArrowColor(idx)"
           :gradient-end="getArrowGradientEnd(idx)"
+          :origin-x="geo.cx"
           :origin-y="geo.cy"
           :path="arrow.path"
           :rotation="arrow.rotation"
           :standalone="false"
+          :view-box="geoViewBox"
         />
       </div>
       <!-- Callout Cards -->
@@ -305,25 +313,25 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
 .alpha-arc-arrow-process--animated.alpha-arc-arrow-process__arrow--0 {
   animation: arc-arrow-pop 450ms cubic-bezier(0.16, 1, 0.3, 1)
     calc(var(--arc-arrow-start-delay, 0ms) + 50ms) both;
-  transform-origin: 500px -220px;
+  transform-origin: var(--arc-arrow-cx, 780px) var(--arc-arrow-cy, -130px);
 }
 
 .alpha-arc-arrow-process--animated.alpha-arc-arrow-process__arrow--1 {
   animation: arc-arrow-pop 450ms cubic-bezier(0.16, 1, 0.3, 1)
     calc(var(--arc-arrow-start-delay, 0ms) + 130ms) both;
-  transform-origin: 500px -220px;
+  transform-origin: var(--arc-arrow-cx, 780px) var(--arc-arrow-cy, -130px);
 }
 
 .alpha-arc-arrow-process--animated.alpha-arc-arrow-process__arrow--2 {
   animation: arc-arrow-pop 450ms cubic-bezier(0.16, 1, 0.3, 1)
     calc(var(--arc-arrow-start-delay, 0ms) + 210ms) both;
-  transform-origin: 500px -220px;
+  transform-origin: var(--arc-arrow-cx, 780px) var(--arc-arrow-cy, -130px);
 }
 
 .alpha-arc-arrow-process--animated.alpha-arc-arrow-process__arrow--3 {
   animation: arc-arrow-pop 450ms cubic-bezier(0.16, 1, 0.3, 1)
     calc(var(--arc-arrow-start-delay, 0ms) + 290ms) both;
-  transform-origin: 500px -220px;
+  transform-origin: var(--arc-arrow-cx, 780px) var(--arc-arrow-cy, -130px);
 }
 
 @keyframes arc-arrow-pop {

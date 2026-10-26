@@ -260,12 +260,12 @@ describe('semantic theme colors', () => {
     ]);
 
     const sourceFiles = [
-      ...collectFiles(join(addonRootDir, 'components'), (f) =>
-        /\.(?:vue|ts|css)$/.test(f),
-      ),
-      ...collectFiles(join(addonRootDir, 'layouts'), (f) =>
-        /\.(?:vue|ts|css)$/.test(f),
-      ),
+      ...collectFiles(join(addonRootDir, 'components'), (f) => {
+        return /\.(?:vue|ts|css)$/.test(f);
+      }),
+      ...collectFiles(join(addonRootDir, 'layouts'), (f) => {
+        return /\.(?:vue|ts|css)$/.test(f);
+      }),
       ...collectFiles(join(addonRootDir, 'utils'), (f) => /\.ts$/.test(f)),
     ];
 
@@ -294,12 +294,12 @@ describe('semantic theme colors', () => {
 
   it('wraps all token declarations in style.css files inside @layer alpha-theme-tokens', () => {
     const styleFiles = [
-      ...collectFiles(join(addonRootDir, 'components'), (f) =>
-        f.endsWith('style.css'),
-      ),
-      ...collectFiles(join(addonRootDir, 'layouts'), (f) =>
-        f.endsWith('style.css'),
-      ),
+      ...collectFiles(join(addonRootDir, 'components'), (f) => {
+        return f.endsWith('style.css');
+      }),
+      ...collectFiles(join(addonRootDir, 'layouts'), (f) => {
+        return f.endsWith('style.css');
+      }),
     ];
 
     for (const file of styleFiles) {
@@ -315,9 +315,9 @@ describe('semantic theme colors', () => {
 
   it('contains zero @layer directives in Vue components and layouts', () => {
     const vueFiles = [
-      ...collectFiles(join(addonRootDir, 'components'), (f) =>
-        f.endsWith('.vue'),
-      ),
+      ...collectFiles(join(addonRootDir, 'components'), (f) => {
+        return f.endsWith('.vue');
+      }),
       ...collectFiles(join(addonRootDir, 'layouts'), (f) => f.endsWith('.vue')),
     ];
 
@@ -340,18 +340,18 @@ describe('semantic theme colors', () => {
     ]);
 
     const codeFiles = [
-      ...collectFiles(join(addonRootDir, 'components'), (f) =>
-        /\.(?:vue|ts)$/.test(f),
-      ),
-      ...collectFiles(join(addonRootDir, 'layouts'), (f) =>
-        /\.(?:vue|ts)$/.test(f),
-      ),
-      ...collectFiles(
-        join(addonRootDir, 'utils'),
-        (f) =>
+      ...collectFiles(join(addonRootDir, 'components'), (f) => {
+        return /\.(?:vue|ts)$/.test(f);
+      }),
+      ...collectFiles(join(addonRootDir, 'layouts'), (f) => {
+        return /\.(?:vue|ts)$/.test(f);
+      }),
+      ...collectFiles(join(addonRootDir, 'utils'), (f) => {
+        return (
           f.endsWith('.ts') &&
-          !colorConverterFiles.has(relative(addonRootDir, f)),
-      ),
+          !colorConverterFiles.has(relative(addonRootDir, f))
+        );
+      }),
     ];
 
     const violations: string[] = [];
@@ -379,12 +379,12 @@ describe('semantic theme colors', () => {
 
   it('contains zero !important declarations or UnoCSS ! important modifiers in components and layouts', () => {
     const files = [
-      ...collectFiles(join(addonRootDir, 'components'), (f) =>
-        /\.(?:vue|css)$/.test(f),
-      ),
-      ...collectFiles(join(addonRootDir, 'layouts'), (f) =>
-        /\.(?:vue|css)$/.test(f),
-      ),
+      ...collectFiles(join(addonRootDir, 'components'), (f) => {
+        return /\.(?:vue|css)$/.test(f);
+      }),
+      ...collectFiles(join(addonRootDir, 'layouts'), (f) => {
+        return /\.(?:vue|css)$/.test(f);
+      }),
     ];
 
     const violations: string[] = [];
@@ -401,9 +401,9 @@ describe('semantic theme colors', () => {
 
   it('applies useMergedUnoAttrs across all single-root Vue components and layouts', () => {
     const vueFiles = [
-      ...collectFiles(join(addonRootDir, 'components'), (f) =>
-        f.endsWith('.vue'),
-      ),
+      ...collectFiles(join(addonRootDir, 'components'), (f) => {
+        return f.endsWith('.vue');
+      }),
       ...collectFiles(join(addonRootDir, 'layouts'), (f) => f.endsWith('.vue')),
     ];
 

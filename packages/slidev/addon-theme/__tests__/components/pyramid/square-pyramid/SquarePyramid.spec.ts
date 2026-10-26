@@ -183,6 +183,7 @@ describe('SquarePyramid compound components', () => {
       const script = titleDesc.scriptSetup?.content ?? '';
 
       expect(template).toContain('alpha-square-pyramid-stack-heading__pill');
+      expect(template).toContain('alpha-square-pyramid-stack-heading__number');
       expect(template).toContain(
         'alpha-square-pyramid-stack-heading__connector',
       );
@@ -191,11 +192,17 @@ describe('SquarePyramid compound components', () => {
       expect(script).toContain('stackColor');
       expect(template).toContain('borderColor: stackColor');
       expect(template).toContain('backgroundColor: stackColor');
+      expect(template).toContain(
+        "color: 'var(--alpha-square-pyramid-stack-heading-number)'",
+      );
     });
 
     it('declares sequenced animations for dot pop, line draw, and pill entrance', () => {
       const style = titleDesc.styles[0]?.content ?? '';
 
+      expect(style).toContain(
+        ':where(.alpha-square-pyramid-stack-heading__number)',
+      );
       expect(style).toContain('@keyframes alpha-pyramid-title-dot-pop');
       expect(style).toContain('@keyframes alpha-pyramid-title-line-draw');
       expect(style).toContain('@keyframes alpha-pyramid-title-pill-in');

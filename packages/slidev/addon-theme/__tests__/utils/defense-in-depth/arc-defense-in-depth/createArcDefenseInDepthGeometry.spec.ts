@@ -229,7 +229,7 @@ describe('defenseInDepth/arcDid utilities', () => {
 
       it('respects custom viewBox, center, radii, and layer count', () => {
         const geo = createArcDefenseInDepthGeometry({
-          viewBoxWidth: 1000,
+          viewBoxWidth: 1_000,
           viewBoxHeight: 600,
           cx: 500,
           cy: 550,
@@ -239,7 +239,7 @@ describe('defenseInDepth/arcDid utilities', () => {
           gap: 10,
         });
 
-        expect(geo.viewBoxWidth).toBe(1000);
+        expect(geo.viewBoxWidth).toBe(1_000);
         expect(geo.viewBoxHeight).toBe(600);
         expect(geo.cx).toBe(500);
         expect(geo.cy).toBe(550);
@@ -569,6 +569,66 @@ describe('defenseInDepth/arcDid utilities', () => {
         expect(sector?.parts[0]?.rotationAngle).toBeDefined();
         expect(sector?.parts[1]?.rotate).toBe('tangent');
         expect(sector?.parts[1]?.rotationAngle).toBeDefined();
+      });
+
+      it('constrains horizontal maxContentWidth to stay within curved sector boundaries', () => {
+        const geo = createArcDefenseInDepthGeometry({
+          layers: [
+            {
+              title: 'Physical\ncontrols',
+              parts: [
+                'Data center biometric access',
+                'Hardware security modules',
+              ],
+            },
+            {
+              title: 'Administrative\ncontrols',
+              parts: [
+                'Data retention policy',
+                'Least-privilege audits',
+                'Staff credential review',
+              ],
+            },
+            {
+              title: 'Technical\ncontrols',
+              sectors: [
+                {
+                  span: 22,
+                  parts: ['Zero-trust Auth'],
+                },
+                {
+                  span: 46,
+                  rotate: 'tangent',
+                  parts: [
+                    { label: 'mTLS Network', position: 'top' },
+                    { label: 'KMS Encryption', position: 'bottom' },
+                  ],
+                },
+                {
+                  parts: [
+                    { label: 'DDM Masking', position: 'top' },
+                    { label: 'Egress DLP', position: 'bottom' },
+                  ],
+                },
+                {
+                  parts: ['Audit Trail'],
+                },
+              ],
+            },
+          ],
+        });
+
+        const outerParts = geo.layers[0]?.parts ?? [];
+        const middleParts = geo.layers[1]?.parts ?? [];
+        const innerParts = geo.layers[2]?.parts ?? [];
+
+        expect(outerParts[0]?.maxContentWidth).toBeLessThanOrEqual(105);
+        expect(outerParts[1]?.maxContentWidth).toBeLessThanOrEqual(105);
+        expect(middleParts[0]?.maxContentWidth).toBeLessThanOrEqual(100);
+        expect(middleParts[1]?.maxContentWidth).toBeLessThanOrEqual(105);
+        expect(middleParts[2]?.maxContentWidth).toBeLessThanOrEqual(105);
+        expect(innerParts[0]?.maxContentWidth).toBeLessThanOrEqual(75);
+        expect(innerParts[1]?.maxContentWidth).toBeGreaterThan(105);
       });
     });
   });

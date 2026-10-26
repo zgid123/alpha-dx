@@ -193,8 +193,12 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     </div>
     <!-- Content Body Layer -->
     <div
-      class="flex-1 min-w-0 flex flex-col justify-center py-4 pr-6 bg-(--alpha-chevron-card-bg)"
+      class="alpha-chevron-card__body flex-1 min-w-0 flex flex-col justify-center py-4 pr-6 bg-(--alpha-chevron-card-bg)"
       :style="{
+        backgroundColor:
+          props.cardBg !== 'var(--alpha-chevron-card-bg)'
+            ? resolvedCardBg
+            : 'var(--alpha-chevron-card-bg)',
         '--alpha-chevron-card-bg':
           props.cardBg !== 'var(--alpha-chevron-card-bg)'
             ? resolvedCardBg
@@ -232,6 +236,14 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
 </template>
 
 <style scoped>
+:where(.alpha-chevron-card__body) {
+  background-color: var(--alpha-chevron-card-bg);
+}
+
+:where(.alpha-chevron-card-title) {
+  color: var(--alpha-chevron-card-title);
+}
+
 .alpha-chevron-card--animated {
   animation: chevron-card-fade-in 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }

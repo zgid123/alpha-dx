@@ -8,6 +8,7 @@ import {
   provide,
   type Ref,
   ref,
+  useId,
   useSlots,
   type VNode,
   watch,
@@ -16,6 +17,8 @@ import {
 import {
   ARC_COMPARISON_ROOT_KEY,
   createArcComparisonGeometry,
+  DEFAULT_ARC_COMPARISON_HUB_TITLE_FONT_SIZE,
+  resolveSharedArcComparisonHubTitleFontSize,
 } from '../../../utils/comparisons/arc-comparison';
 import { useDiagramAutoScale } from '../../../utils/useDiagramAutoScale';
 import { useMergedUnoAttrs } from '../../../utils/useMergedUnoAttrs';
@@ -168,7 +171,7 @@ const resolvedCount = computed(() => {
 
 const geo = computed(() => {
   return createArcComparisonGeometry({
-    viewBoxWidth: 1000,
+    viewBoxWidth: 1_000,
     viewBoxHeight: 480,
     hubRadius: props.hubRadius,
     arcRadius: props.arcRadius,
@@ -178,14 +181,10 @@ const geo = computed(() => {
   });
 });
 
-let clipInstanceCounter = 0;
-const clipId = `alpha-arc-canvas-clip-${++clipInstanceCounter}`;
-
-let vsGradientInstanceCounter = 0;
-const vsGradientId = `alpha-arc-vs-gradient-${++vsGradientInstanceCounter}`;
-
-let vsTextGradientInstanceCounter = 0;
-const vsTextGradientId = `alpha-arc-vs-text-gradient-${++vsTextGradientInstanceCounter}`;
+const uid = useId();
+const clipId = `alpha-arc-canvas-clip-${uid}`;
+const vsGradientId = `alpha-arc-vs-gradient-${uid}`;
+const vsTextGradientId = `alpha-arc-vs-text-gradient-${uid}`;
 
 const internalMoved = ref(false);
 
@@ -413,6 +412,32 @@ const vsTextStops = computed(() => {
   return stops;
 });
 
+const leftHubTitleFontSize = ref<number>(
+  DEFAULT_ARC_COMPARISON_HUB_TITLE_FONT_SIZE,
+);
+const rightHubTitleFontSize = ref<number>(
+  DEFAULT_ARC_COMPARISON_HUB_TITLE_FONT_SIZE,
+);
+
+function setSideHubTitleFontSize(
+  side: 'left' | 'right',
+  fontSize: number,
+): void {
+  if (side === 'left') {
+    leftHubTitleFontSize.value = fontSize;
+  } else {
+    rightHubTitleFontSize.value = fontSize;
+  }
+}
+
+const sharedHubTitleFontSize = computed((): number => {
+  return resolveSharedArcComparisonHubTitleFontSize({
+    leftFontSize: leftHubTitleFontSize.value,
+    rightFontSize: rightHubTitleFontSize.value,
+    inCenter: props.as === 'layout' && !isMoved.value,
+  });
+});
+
 provide(ARC_COMPARISON_ROOT_KEY, {
   animation: isAnimated,
   startDelay: resolvedStartDelay,
@@ -421,11 +446,13 @@ provide(ARC_COMPARISON_ROOT_KEY, {
   as: computed(() => props.as),
   isMoved,
   edgeOffset: resolvedEdgeOffset,
+  hubTitleFontSize: sharedHubTitleFontSize,
+  setSideHubTitleFontSize,
 });
 
 const { resolvedScale, containerHeight } = useDiagramAutoScale({
   rootRef,
-  baseWidth: 1000,
+  baseWidth: 1_000,
   baseHeight: 480,
   scale: () => props.scale,
   autoScale: () => props.autoScale,

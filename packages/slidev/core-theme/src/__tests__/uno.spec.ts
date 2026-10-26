@@ -79,6 +79,10 @@ describe('core theme', () => {
         'bg-(--alpha-background,#ffffff)',
         'border-(--alpha-border,#ffffff)',
         'ring-(--alpha-ring,#ffffff)',
+        'text---alpha-text-ug',
+        'bg---alpha-background-ug',
+        'border---alpha-border-ug',
+        'ring---alpha-ring-ug',
         'text-(--alpha-text,#ffffff)!',
         'wrap-break-word',
         'bg-linear-to-br',
@@ -86,13 +90,17 @@ describe('core theme', () => {
       { preflights: false },
     );
 
-    expect(result.matched).toHaveLength(7);
+    expect(result.matched).toHaveLength(11);
     expect(result.css).toContain('color:var(--alpha-text,#ffffff)');
     expect(result.css).toContain(
       'background-color:var(--alpha-background,#ffffff)',
     );
     expect(result.css).toContain('border-color:var(--alpha-border,#ffffff)');
     expect(result.css).toContain('--un-ring-color:var(--alpha-ring,#ffffff)');
+    expect(result.css).toContain('color:var(--alpha-text-ug)');
+    expect(result.css).toContain('background-color:var(--alpha-background-ug)');
+    expect(result.css).toContain('border-color:var(--alpha-border-ug)');
+    expect(result.css).toContain('--un-ring-color:var(--alpha-ring-ug)');
     expect(result.css).toContain('overflow-wrap:break-word');
     expect(result.css).toContain(
       'background-image:linear-gradient(var(--un-gradient))',

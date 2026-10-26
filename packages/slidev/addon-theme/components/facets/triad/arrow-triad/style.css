@@ -13,3 +13,11 @@
     --alpha-arrow-triad-item-3-depth: #41719c;
   }
 }
+
+.alpha-arrow-triad-content {
+  color: var(--alpha-arrow-triad-content);
+}
+
+.alpha-arrow-triad-icon {
+  color: var(--alpha-arrow-triad-icon);
+}

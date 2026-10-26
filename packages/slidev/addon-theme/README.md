@@ -358,14 +358,6 @@ pnpm --filter @alphacifer/slidev-addon-theme dev
 The default preview deck is defined in `slides.md` and loads this package
 locally as a Slidev addon with the Seriph theme.
 
-Run the same preview content with the sibling Alpha Academic theme:
-
-```bash
-pnpm --filter @alphacifer/slidev-addon-theme dev:academic
-```
-
-The academic preview deck is defined in `academic-slides.md`.
-
 The preview deck includes rendered arc TOC examples for every supported item
 count from one through seven.
 

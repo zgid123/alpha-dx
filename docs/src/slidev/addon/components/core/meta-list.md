@@ -1,12 +1,12 @@
 # MetaList
 
-Renders semantic key-value metadata pairs such as course details, supervisor, or project information.
+Anchors semantic key-value metadata pairs such as course details, supervisor, or project information at the bottom-left of a slide.
 
 ## Purpose
 
-Provides a clean, semantic `<dl>` description list to display metadata pairs (e.g., subject name, supervisor/instructor, project phase).
+Provides a clean metadata list to display key-value pairs (e.g., subject name, supervisor/instructor, project phase). Anchors to the bottom-left of the slide canvas by default (`bottom-3.75 left-7.5`), matching `<Speaker>` on the bottom-right in position, typography, and line formatting.
 
-**When to use**: On title, cover, or overview slides where you need to display structured label-value pairs such as course title and supervising lecturer.
+**When to use**: On title, cover, or overview slides where you need to display structured label-value pairs such as course title and supervising lecturer on the bottom-left.
 
 ## Presentation Preview
 
@@ -16,7 +16,7 @@ Provides a clean, semantic `<dl>` description list to display metadata pairs (e.
 
 ## Usage Examples
 
-### Basic Usage
+### Basic Usage (Bottom-Left Anchored)
 
 ```vue
 <MetaList
@@ -25,6 +25,20 @@ Provides a clean, semantic `<dl>` description list to display metadata pairs (e.
     { label: 'Supervisor', value: 'Prof. Alan Turing' },
   ]"
 />
+```
+
+### Paired with Speaker on Cover Slide
+
+```vue
+<!-- Course details anchor to bottom-left, Speaker anchors to bottom-right -->
+<MetaList
+  :items="[
+    { label: 'Môn học', value: 'Khoa học phân tích dữ liệu' },
+    { label: 'GVHD', value: 'TS. Nguyễn Trần Minh Thư' },
+  ]"
+/>
+
+<Speaker author="Alpha" date="2026-10-24" />
 ```
 
 ### Custom Separator
@@ -43,10 +57,10 @@ Provides a clean, semantic `<dl>` description list to display metadata pairs (e.
 
 ```vue
 <MetaList>
-  <div class="alpha-meta-list__item">
-    <dt class="alpha-meta-list__label inline font-medium">Topic: </dt>
-    <dd class="alpha-meta-list__value inline">Machine Learning</dd>
-  </div>
+  <p class="alpha-meta-list__item">
+    <span class="alpha-meta-list__label">Topic: </span>
+    <span class="alpha-meta-list__value">Machine Learning</span>
+  </p>
 </MetaList>
 ```
 
@@ -57,8 +71,8 @@ Provides a clean, semantic `<dl>` description list to display metadata pairs (e.
 ### `MetaList`
 
 - **Rendered Class:** `.alpha-meta-list`
-- **Rendered HTML Tag:** `<dl>`
-- **Role:** Semantic metadata key-value list container.
+- **Rendered HTML Tag:** `<div>`
+- **Role:** Metadata key-value list container anchored at the bottom-left corner of a slide, styled to match `<Speaker>`.
 
 | Prop | Type | Default | Required | Description |
 | :--- | :--- | :--- | :---: | :--- |
@@ -71,7 +85,7 @@ Provides a clean, semantic `<dl>` description list to display metadata pairs (e.
 
 ### 1. Typography & Styling
 
-`MetaList` defaults to `text-xl` (20px) and inherits the slide's primary text color. You can easily override the typography by passing any UnoCSS classes:
+`MetaList` matches the typography and line height of `<Speaker>`, inheriting the slide's default base font size (`1rem` / 16px) and text color with regular font weight for both labels and values. You can easily override the typography or spacing by passing any UnoCSS classes:
 
 ```vue
 <MetaList
@@ -79,7 +93,7 @@ Provides a clean, semantic `<dl>` description list to display metadata pairs (e.
     { label: 'Course', value: 'Data Science & Analytics' },
     { label: 'Supervisor', value: 'Prof. Alan Turing' },
   ]"
-  class="gap-3 text-lg"
+  class="gap-1 text-sm opacity-90"
 />
 ```
 
@@ -89,20 +103,19 @@ Provides a clean, semantic `<dl>` description list to display metadata pairs (e.
 
 ```html
 <!-- <MetaList> (Root container) -->
-<dl class="alpha-meta-list flex flex-col gap-2 text-left text-xl">
-  <div class="alpha-meta-list__item">
-    <dt class="alpha-meta-list__label inline font-medium">Course: </dt>
-    <dd class="alpha-meta-list__value inline m-0">Data Science & Analytics</dd>
-  </div>
-</dl>
+<div class="alpha-meta-list flex absolute bottom-3.75 left-7.5 flex-col text-left">
+  <p class="alpha-meta-list__item">
+    <span class="alpha-meta-list__label">Course: </span>
+    <span class="alpha-meta-list__value">Data Science & Analytics</span>
+  </p>
+</div>
 ```
 
 #### Class Reference Table
 
 | Component | Target Element | Rendered Class | Purpose & Description |
 | :--- | :--- | :--- | :--- |
-| `<MetaList>` | Root container | `.alpha-meta-list` | Container description list `<dl>`. |
-| `<MetaList>` | Item wrapper | `.alpha-meta-list__item` | Wrapper `<div>` for each label/value pair. |
-| `<MetaList>` | Label element | `.alpha-meta-list__label` | Definition term `<dt>` for the label. |
-| `<MetaList>` | Value element | `.alpha-meta-list__value` | Definition description `<dd>` for the value. |
-
+| `<MetaList>` | Root container | `.alpha-meta-list` | Container `<div>` anchored at slide bottom-left (`bottom-3.75 left-7.5`). |
+| `<MetaList>` | Item paragraph | `.alpha-meta-list__item` | Paragraph element `<p>` for each metadata pair. |
+| `<MetaList>` | Label element | `.alpha-meta-list__label` | Span element `<span>` for the metadata label. |
+| `<MetaList>` | Value element | `.alpha-meta-list__value` | Span element `<span>` for the metadata value. |

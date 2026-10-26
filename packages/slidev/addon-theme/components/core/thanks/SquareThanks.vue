@@ -23,13 +23,14 @@ const hasExplicitContent = computed(() => {
   }
 
   const nodes = slots.default();
-  return nodes.some(
-    (node) =>
+  return nodes.some((node) => {
+    return (
       typeof node.type === 'object' &&
       node.type !== null &&
       'name' in node.type &&
-      node.type.name === 'SquareThanksContent',
-  );
+      node.type.name === 'SquareThanksContent'
+    );
+  });
 });
 
 const begin = {
@@ -183,7 +184,7 @@ const getMotionProps = ({
       initial: {
         ...begin,
         x: 0,
-        y: 1000,
+        y: 1_000,
       },
       enter: {
         ...final,
@@ -202,7 +203,7 @@ const getMotionProps = ({
     v-bind="getMotionProps({
       initial: {
         ...begin,
-        x: 1000,
+        x: 1_000,
         y: 200,
       },
       enter: {

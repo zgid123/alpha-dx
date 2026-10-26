@@ -1,5 +1,6 @@
 .turbo
 __tests__
 biome.json
+demo
 slides.md
 tsconfig.json

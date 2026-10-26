@@ -24,3 +24,19 @@
     --alpha-gear-triad-valley: #11455c;
   }
 }
+
+.alpha-gear-triad-content {
+  color: var(--alpha-gear-triad-content);
+}
+
+.alpha-gear-triad-detail {
+  color: var(--alpha-gear-triad-detail);
+}
+
+.alpha-gear-triad-details__content {
+  color: var(--alpha-gear-triad-details-content);
+}
+
+.alpha-gear-triad-icon {
+  color: var(--alpha-gear-triad-icon);
+}

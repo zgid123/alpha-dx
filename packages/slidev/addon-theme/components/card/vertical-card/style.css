@@ -17,3 +17,26 @@
     --alpha-vertical-card-stripe-light: color-mix(in srgb, var(--alpha-vertical-card-accent) 45%, transparent);
   }
 }
+
+.alpha-vertical-card {
+  background-color: var(--alpha-vertical-card-bg);
+  border-color: var(--alpha-vertical-card-accent);
+}
+
+.alpha-vertical-card-title {
+  color: var(--alpha-vertical-card-title);
+}
+
+.alpha-vertical-card__divider > div {
+  background-color: var(--alpha-vertical-card-title);
+}
+
+.alpha-vertical-card-content {
+  color: var(--alpha-vertical-card-content);
+}
+
+.alpha-vertical-card-icon {
+  color: var(--alpha-vertical-card-icon);
+  background-color: var(--alpha-vertical-card-icon-bg);
+  border-color: var(--alpha-vertical-card-icon);
+}

@@ -20,6 +20,7 @@ export interface IArcArrowProcessArrowProps {
   readonly standalone?: boolean;
   readonly path?: string;
   readonly viewBox?: string;
+  readonly originX?: number;
   readonly originY?: number;
 }
 
@@ -34,7 +35,8 @@ const props = withDefaults(defineProps<IArcArrowProcessArrowProps>(), {
   standalone: undefined,
   path: undefined,
   viewBox: undefined,
-  originY: -220,
+  originX: 780,
+  originY: -130,
 });
 
 const uid = Math.random().toString(36).slice(2, 8);
@@ -58,7 +60,7 @@ const resolvedViewBox = computed(() => {
     return props.viewBox;
   }
 
-  return isStandalone.value ? '-125 335 310 150' : '0 -30 1000 370';
+  return isStandalone.value ? '-125 335 310 150' : '0 -35 1560 665';
 });
 
 const resolvedWidth = computed(() => {
@@ -117,7 +119,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
       </defs>
       <g
         v-if="!isStandalone"
-        :transform="`translate(500, ${props.originY}) rotate(${props.rotation})`"
+        :transform="`translate(${props.originX}, ${props.originY}) rotate(${props.rotation})`"
       >
         <path
           :d="resolvedPath"

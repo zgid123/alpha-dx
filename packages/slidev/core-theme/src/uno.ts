@@ -5,32 +5,40 @@ type TCanonicalRule = [
 
 const rules: TCanonicalRule[] = [
   [
-    /^text-\((--[^)]+)\)$/,
-    ([, value]) => {
+    /^text-(?:\((--[^)]+)\)|(--[^\s)]+))$/,
+    ([, parenValue, bareValue]) => {
+      const value = parenValue ?? bareValue;
+
       return {
         color: `var(${value})`,
       };
     },
   ],
   [
-    /^bg-\((--[^)]+)\)$/,
-    ([, value]) => {
+    /^bg-(?:\((--[^)]+)\)|(--[^\s)]+))$/,
+    ([, parenValue, bareValue]) => {
+      const value = parenValue ?? bareValue;
+
       return {
         'background-color': `var(${value})`,
       };
     },
   ],
   [
-    /^border-\((--[^)]+)\)$/,
-    ([, value]) => {
+    /^border-(?:\((--[^)]+)\)|(--[^\s)]+))$/,
+    ([, parenValue, bareValue]) => {
+      const value = parenValue ?? bareValue;
+
       return {
         'border-color': `var(${value})`,
       };
     },
   ],
   [
-    /^ring-\((--[^)]+)\)$/,
-    ([, value]) => {
+    /^ring-(?:\((--[^)]+)\)|(--[^\s)]+))$/,
+    ([, parenValue, bareValue]) => {
+      const value = parenValue ?? bareValue;
+
       return {
         '--un-ring-color': `var(${value})`,
       };

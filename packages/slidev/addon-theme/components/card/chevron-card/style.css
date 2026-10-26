@@ -5,8 +5,25 @@
     /* Resolved from the component accent or props unless overridden. */
     --alpha-chevron-card-badge-bg: var(--alpha-chevron-card-accent);
     --alpha-chevron-card-badge-foreground: #ffffff;
-    --alpha-chevron-card-bg: #f5f5f7;
+    --alpha-chevron-card-bg: #e2e8f0;
     --alpha-chevron-card-content: var(--alpha-foreground-primary, #6b7280);
     --alpha-chevron-card-title: var(--alpha-foreground-primary, #4b5563);
   }
+}
+
+.alpha-chevron-card-badge {
+  color: var(--alpha-chevron-card-badge-foreground);
+  background-color: var(--alpha-chevron-card-badge-bg);
+}
+
+.alpha-chevron-card__body {
+  background-color: var(--alpha-chevron-card-bg);
+}
+
+.alpha-chevron-card-title {
+  color: var(--alpha-chevron-card-title);
+}
+
+.alpha-chevron-card-content {
+  color: var(--alpha-chevron-card-content);
 }

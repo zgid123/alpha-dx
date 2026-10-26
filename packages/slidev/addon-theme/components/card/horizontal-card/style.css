@@ -15,3 +15,16 @@
     --alpha-horizontal-card-icon-bg: color-mix(in srgb, var(--alpha-horizontal-card-accent) 16%, transparent);
   }
 }
+
+.alpha-horizontal-card-title {
+  color: var(--alpha-horizontal-card-title);
+}
+
+.alpha-horizontal-card-content {
+  color: var(--alpha-horizontal-card-content);
+}
+
+.alpha-horizontal-card-icon {
+  color: var(--alpha-horizontal-card-icon);
+  background-color: var(--alpha-horizontal-card-icon-bg);
+}

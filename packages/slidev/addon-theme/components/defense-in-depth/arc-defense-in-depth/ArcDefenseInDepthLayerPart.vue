@@ -96,20 +96,22 @@ const slottedLabel = computed<string>(() => {
 });
 
 const partToken = Symbol();
-const registrationData = computed<IArcDefenseInDepthPartItem>(() => ({
-  label: slottedLabel.value,
-  angle: props.angle,
-  radius: props.radius,
-  radialOffset: props.radialOffset,
-  color: props.color,
-  icon: props.icon,
-  span: props.span,
-  position: props.position,
-  maxWidth: props.maxWidth,
-  rotate: props.rotate,
-  skew: props.skew,
-  active: props.active,
-}));
+const registrationData = computed<IArcDefenseInDepthPartItem>(() => {
+  return {
+    label: slottedLabel.value,
+    angle: props.angle,
+    radius: props.radius,
+    radialOffset: props.radialOffset,
+    color: props.color,
+    icon: props.icon,
+    span: props.span,
+    position: props.position,
+    maxWidth: props.maxWidth,
+    rotate: props.rotate,
+    skew: props.skew,
+    active: props.active,
+  };
+});
 
 const registration = sectorContext
   ? sectorContext.registerPart(partToken, registrationData)
@@ -219,7 +221,7 @@ const maxContentWidth = computed(() => {
       ? Math.abs(partGeo.startAngle - partGeo.endAngle)
       : 35;
   const arcLength = geo.midRadius * (span * (Math.PI / 180));
-  return `${Math.max(100, Math.min(180, Math.round(arcLength * 0.92)))}px`;
+  return `${Math.max(68, Math.min(105, Math.round(arcLength * 0.85)))}px`;
 });
 
 const isSplitSector = computed(() => {
@@ -413,6 +415,9 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(() => {
       top: `${calculatedPosition.y}px`,
       transform: 'translate(-50%, -50%)',
       zIndex: isSelfActive ? 30 : 10,
+      color: isSelfActive
+        ? 'var(--alpha-arc-defense-in-depth-part-active)'
+        : props.color ?? 'var(--alpha-arc-defense-in-depth-part)',
       '--part-delay': `${animationDelay}ms`,
       ...(props.color
         ? { '--alpha-arc-defense-in-depth-part': props.color }
@@ -464,6 +469,9 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(() => {
         ]"
         :style="{
           maxWidth: maxContentWidth,
+          color: isSelfActive
+            ? 'var(--alpha-arc-defense-in-depth-part-active)'
+            : props.color ?? 'var(--alpha-arc-defense-in-depth-part)',
           textShadow: isSelfActive
             ? 'var(--alpha-arc-defense-in-depth-part-active-text-shadow)'
             : undefined,
@@ -476,6 +484,19 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(() => {
 </template>
 
 <style scoped>
+:where(.alpha-arc-defense-in-depth__part),
+:where(.alpha-arc-defense-in-depth__part-label) {
+  color: var(--alpha-arc-defense-in-depth-part);
+}
+
+:where(.alpha-arc-defense-in-depth__part--active),
+:where(
+  .alpha-arc-defense-in-depth__part--active
+    .alpha-arc-defense-in-depth__part-label
+) {
+  color: var(--alpha-arc-defense-in-depth-part-active);
+}
+
 .alpha-arc-defense-in-depth__part-label {
   word-break: normal;
   overflow-wrap: normal;

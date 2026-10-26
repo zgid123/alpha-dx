@@ -7,6 +7,7 @@ import {
   provide,
   type Ref,
   ref,
+  useId,
   useSlots,
   watch,
   type VNode,
@@ -66,6 +67,7 @@ const emit = defineEmits<{
 }>();
 
 const slots = useSlots();
+const uid = useId();
 
 const slidevClicks = inject<
   | {
@@ -329,26 +331,28 @@ const item0 = computed(() => resolvedItems.value[0]);
 const item1 = computed(() => resolvedItems.value[1]);
 const item2 = computed(() => resolvedItems.value[2]);
 
-const sectors = computed(() => [
-  {
-    name: 'pink',
-    rotation: 0,
-    item: item2.value,
-    iconPosition: geo.pinkSector.iconPosition,
-  },
-  {
-    name: 'cyan',
-    rotation: 120,
-    item: item0.value,
-    iconPosition: geo.cyanSector.iconPosition,
-  },
-  {
-    name: 'orange',
-    rotation: 240,
-    item: item1.value,
-    iconPosition: geo.orangeSector.iconPosition,
-  },
-]);
+const sectors = computed(() => {
+  return [
+    {
+      name: 'pink',
+      rotation: 0,
+      item: item2.value,
+      iconPosition: geo.pinkSector.iconPosition,
+    },
+    {
+      name: 'cyan',
+      rotation: 120,
+      item: item0.value,
+      iconPosition: geo.cyanSector.iconPosition,
+    },
+    {
+      name: 'orange',
+      rotation: 240,
+      item: item1.value,
+      iconPosition: geo.orangeSector.iconPosition,
+    },
+  ];
+});
 
 function getSectorFaceColor(sector: {
   name: string;
@@ -470,7 +474,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
             <defs>
               <!-- Elevation Drop Shadow for Gear Assembly -->
               <filter
-                id="alpha-gear-assembly-shadow"
+                :id="`alpha-gear-assembly-shadow-${uid}`"
                 x="-20%"
                 y="-20%"
                 width="140%"
@@ -494,7 +498,7 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
             </defs>
             <!-- Group containing all gear elements with overall elevation drop shadow -->
             <g
-              filter="url(#alpha-gear-assembly-shadow)"
+              :filter="`url(#alpha-gear-assembly-shadow-${uid})`"
               class="alpha-gear-triad__assembly origin-center"
             >
               <!-- LAYER 1: Inter-Sector Valley Shapes Between the 3 Petals (Reused for all 3 Places) -->

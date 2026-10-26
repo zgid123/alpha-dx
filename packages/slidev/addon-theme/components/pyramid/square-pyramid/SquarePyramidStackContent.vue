@@ -124,12 +124,14 @@ const stackColor = computed(() => {
   );
 });
 
-const { className, forwardedAttrs } = useMergedUnoAttrs(() => [
-  'alpha-square-pyramid-stack-content rounded-xl p-2 px-2.5 text-[10px] leading-snug transition-all duration-300 border select-none box-border shrink-0',
-  isActive.value
-    ? 'alpha-square-pyramid-stack-content--active bg-(--alpha-square-pyramid-stack-content-border-active) text-(--alpha-square-pyramid-stack-content-active)'
-    : 'alpha-square-pyramid-stack-content--default bg-(--alpha-square-pyramid-stack-content-border) text-(--alpha-square-pyramid-stack-content)',
-]);
+const { className, forwardedAttrs } = useMergedUnoAttrs(() => {
+  return [
+    'alpha-square-pyramid-stack-content rounded-xl p-2 px-2.5 text-[10px] leading-snug transition-all duration-300 border select-none box-border shrink-0',
+    isActive.value
+      ? 'alpha-square-pyramid-stack-content--active bg-(--alpha-square-pyramid-stack-content-border-active) text-(--alpha-square-pyramid-stack-content-active)'
+      : 'alpha-square-pyramid-stack-content--default bg-(--alpha-square-pyramid-stack-content-border) text-(--alpha-square-pyramid-stack-content)',
+  ];
+});
 </script>
 
 <template>
@@ -213,6 +215,12 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(() => [
         minWidth: `${contentWidth}px`,
         maxWidth: `${contentWidth}px`,
         boxSizing: 'border-box',
+        backgroundColor: isActive
+          ? 'var(--alpha-square-pyramid-stack-content-border-active)'
+          : 'var(--alpha-square-pyramid-stack-content-border)',
+        color: isActive
+          ? 'var(--alpha-square-pyramid-stack-content-active)'
+          : 'var(--alpha-square-pyramid-stack-content)',
         borderColor: stackColor,
         boxShadow: isActive
           ? `0 4px 14px color-mix(in srgb, ${stackColor} 15%, transparent)`

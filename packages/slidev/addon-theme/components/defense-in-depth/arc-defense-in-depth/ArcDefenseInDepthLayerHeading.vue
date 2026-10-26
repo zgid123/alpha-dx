@@ -68,8 +68,13 @@ const headingColor = computed(() => {
 const positionStyle = computed(() => {
   const geo = layerContext?.layerGeo.value;
   const colorVars = headingColor.value
-    ? { '--alpha-arc-defense-in-depth-layer-heading': headingColor.value }
-    : {};
+    ? {
+        color: headingColor.value,
+        '--alpha-arc-defense-in-depth-layer-heading': headingColor.value,
+      }
+    : {
+        color: 'var(--alpha-arc-defense-in-depth-layer-heading)',
+      };
 
   if (!geo) {
     return colorVars;
@@ -94,3 +99,9 @@ const { className, forwardedAttrs } = useMergedUnoAttrs(
     <slot />
   </div>
 </template>
+
+<style scoped>
+:where(.alpha-arc-defense-in-depth__layer-title) {
+  color: var(--alpha-arc-defense-in-depth-layer-heading);
+}
+</style>

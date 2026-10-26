@@ -6,7 +6,7 @@ describe('createArcComparisonGeometry', () => {
       it('returns 3 points configuration with default viewBox and center', () => {
         const geo = createArcComparisonGeometry();
 
-        expect(geo.viewBoxWidth).toBe(1000);
+        expect(geo.viewBoxWidth).toBe(1_000);
         expect(geo.viewBoxHeight).toBe(480);
         expect(geo.centerX).toBe(500);
         expect(geo.centerY).toBe(240);
@@ -44,7 +44,7 @@ describe('createArcComparisonGeometry', () => {
           expect(rightNode?.center.x).toBeDefined();
           expect(
             (leftNode?.center.x ?? 0) + (rightNode?.center.x ?? 0),
-          ).toBeCloseTo(1000, 1);
+          ).toBeCloseTo(1_000, 1);
           expect(leftNode?.center.y).toBe(rightNode?.center.y);
         }
       });
@@ -103,7 +103,7 @@ describe('createArcComparisonGeometry', () => {
     suite('when custom dimensions and radii are provided', () => {
       it('respects custom viewBox, hubRadius, and arcRadius', () => {
         const geo = createArcComparisonGeometry({
-          viewBoxWidth: 1200,
+          viewBoxWidth: 1_200,
           viewBoxHeight: 600,
           hubRadius: 160,
           arcRadius: 300,
@@ -111,7 +111,7 @@ describe('createArcComparisonGeometry', () => {
           vsRadius: 32,
         });
 
-        expect(geo.viewBoxWidth).toBe(1200);
+        expect(geo.viewBoxWidth).toBe(1_200);
         expect(geo.viewBoxHeight).toBe(600);
         expect(geo.centerX).toBe(600);
         expect(geo.centerY).toBe(300);

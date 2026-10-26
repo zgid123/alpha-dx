@@ -5,7 +5,6 @@ export interface IArcArrowProcessItem {
   readonly title?: string;
   readonly description?: string;
   readonly icon?: string | object | false;
-  readonly titleColor?: string;
   readonly textColor?: string;
 }
 
@@ -16,7 +15,6 @@ export interface IResolvedArcArrowProcessItem {
   readonly title: string;
   readonly description: string;
   readonly icon?: string | object | false;
-  readonly titleColor: string;
   readonly textColor: string;
 }
 
@@ -32,7 +30,6 @@ const DEFAULT_ARC_ARROW_PROCESS_ITEMS_4: readonly [
     gradientEnd: 'var(--alpha-arc-arrow-process-item-1-gradient-end)',
     title: '',
     description: '',
-    titleColor: 'var(--alpha-arc-arrow-process-heading)',
     textColor: 'var(--alpha-arc-arrow-process-content)',
   },
   {
@@ -41,7 +38,6 @@ const DEFAULT_ARC_ARROW_PROCESS_ITEMS_4: readonly [
     gradientEnd: 'var(--alpha-arc-arrow-process-item-2-gradient-end)',
     title: '',
     description: '',
-    titleColor: 'var(--alpha-arc-arrow-process-heading)',
     textColor: 'var(--alpha-arc-arrow-process-content)',
   },
   {
@@ -50,7 +46,6 @@ const DEFAULT_ARC_ARROW_PROCESS_ITEMS_4: readonly [
     gradientEnd: 'var(--alpha-arc-arrow-process-item-3-gradient-end)',
     title: '',
     description: '',
-    titleColor: 'var(--alpha-arc-arrow-process-heading)',
     textColor: 'var(--alpha-arc-arrow-process-content)',
   },
   {
@@ -59,7 +54,6 @@ const DEFAULT_ARC_ARROW_PROCESS_ITEMS_4: readonly [
     gradientEnd: 'var(--alpha-arc-arrow-process-item-4-gradient-end)',
     title: '',
     description: '',
-    titleColor: 'var(--alpha-arc-arrow-process-heading)',
     textColor: 'var(--alpha-arc-arrow-process-content)',
   },
 ];
@@ -75,7 +69,6 @@ const DEFAULT_ARC_ARROW_PROCESS_ITEMS_3: readonly [
     gradientEnd: 'var(--alpha-arc-arrow-process-item-1-gradient-end)',
     title: '',
     description: '',
-    titleColor: 'var(--alpha-arc-arrow-process-heading)',
     textColor: 'var(--alpha-arc-arrow-process-content)',
   },
   {
@@ -84,7 +77,6 @@ const DEFAULT_ARC_ARROW_PROCESS_ITEMS_3: readonly [
     gradientEnd: 'var(--alpha-arc-arrow-process-item-2-gradient-end)',
     title: '',
     description: '',
-    titleColor: 'var(--alpha-arc-arrow-process-heading)',
     textColor: 'var(--alpha-arc-arrow-process-content)',
   },
   {
@@ -93,7 +85,6 @@ const DEFAULT_ARC_ARROW_PROCESS_ITEMS_3: readonly [
     gradientEnd: 'var(--alpha-arc-arrow-process-item-4-gradient-end)',
     title: '',
     description: '',
-    titleColor: 'var(--alpha-arc-arrow-process-heading)',
     textColor: 'var(--alpha-arc-arrow-process-content)',
   },
 ];
@@ -108,7 +99,6 @@ const DEFAULT_ARC_ARROW_PROCESS_ITEMS_2: readonly [
     gradientEnd: 'var(--alpha-arc-arrow-process-item-2-gradient-end)',
     title: '',
     description: '',
-    titleColor: 'var(--alpha-arc-arrow-process-heading)',
     textColor: 'var(--alpha-arc-arrow-process-content)',
   },
   {
@@ -117,7 +107,6 @@ const DEFAULT_ARC_ARROW_PROCESS_ITEMS_2: readonly [
     gradientEnd: 'var(--alpha-arc-arrow-process-item-3-gradient-end)',
     title: '',
     description: '',
-    titleColor: 'var(--alpha-arc-arrow-process-heading)',
     textColor: 'var(--alpha-arc-arrow-process-content)',
   },
 ];
@@ -153,14 +142,15 @@ export function resolveSingleArcArrowProcessItem(
     return fallback;
   }
 
+  const color = item.color ?? fallback.color;
+
   return {
     id: item.id ?? fallback.id,
-    color: item.color ?? fallback.color,
+    color,
     gradientEnd: item.gradientEnd ?? fallback.gradientEnd,
     title: item.title ?? fallback.title,
     description: item.description ?? fallback.description,
     icon: item.icon !== undefined ? item.icon : fallback.icon,
-    titleColor: item.titleColor ?? fallback.titleColor,
     textColor: item.textColor ?? fallback.textColor,
   };
 }

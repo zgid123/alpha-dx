@@ -48,17 +48,29 @@ export const LONGER_MIDDLE_ARC_ARROW_PATH = [
   'Z',
 ].join(' ');
 
+function getDefaultRotationOffset(count: number): number {
+  if (count === 2) {
+    return 1.6;
+  }
+
+  if (count === 3) {
+    return 2.75;
+  }
+
+  return 3.35;
+}
+
 export function createArcArrowProcessGeometry(
   count = 4,
   rotationOffset?: number,
 ): IArcArrowProcessGeometry {
-  const viewBoxWidth = 1000;
-  const viewBoxHeight = 370;
-  const viewBoxMinY = -30;
-  const cx = 500;
-  const cy = -220;
+  const viewBoxWidth = 1_560;
+  const viewBoxHeight = 665;
+  const viewBoxMinY = -35;
+  const cx = 780;
+  const cy = -130;
   const step = 39;
-  const defaultOffset = count === 3 ? 5 : 0;
+  const defaultOffset = getDefaultRotationOffset(count);
   const offset = rotationOffset ?? defaultOffset;
 
   const arrows: IArcArrowProcessArrowPathData[] = [];

@@ -45,38 +45,38 @@ function flattenVNodes(nodes: VNode[]): VNode[] {
   return result;
 }
 
-const defaultNodes = computed(() =>
-  slots.default ? flattenVNodes(slots.default()) : [],
-);
-const headingNode = computed(() =>
-  defaultNodes.value.find((node) => {
+const defaultNodes = computed(() => {
+  return slots.default ? flattenVNodes(slots.default()) : [];
+});
+const headingNode = computed(() => {
+  return defaultNodes.value.find((node) => {
     const type = node.type as { name?: string; __name?: string };
 
     return (
       type?.name === 'GearTriadDetailsHeading' ||
       type?.__name === 'GearTriadDetailsHeading'
     );
-  }),
-);
-const descriptionNode = computed(() =>
-  defaultNodes.value.find((node) => {
+  });
+});
+const descriptionNode = computed(() => {
+  return defaultNodes.value.find((node) => {
     const type = node.type as { name?: string; __name?: string };
 
     return (
       type?.name === 'GearTriadDetailsContent' ||
       type?.__name === 'GearTriadDetailsContent'
     );
-  }),
-);
-const detailNodes = computed(() =>
-  defaultNodes.value.filter((node) => {
+  });
+});
+const detailNodes = computed(() => {
+  return defaultNodes.value.filter((node) => {
     const type = node.type as { name?: string; __name?: string };
 
     return !['GearTriadDetailsHeading', 'GearTriadDetailsContent'].includes(
       type?.name ?? type?.__name ?? '',
     );
-  }),
-);
+  });
+});
 const rootContext = inject(GEAR_TRIAD_ROOT_KEY, undefined);
 rootContext?.registerDetails();
 
