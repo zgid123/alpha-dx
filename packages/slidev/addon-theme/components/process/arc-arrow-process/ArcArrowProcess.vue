@@ -152,10 +152,18 @@ const registeredCalloutColors = ref<Record<number, string>>({});
 
 const setCalloutColor = (index: number, color: string | undefined) => {
   if (color === undefined) {
+    if (registeredCalloutColors.value[index] === undefined) {
+      return;
+    }
+
     const updated = { ...registeredCalloutColors.value };
     delete updated[index];
     registeredCalloutColors.value = updated;
   } else {
+    if (registeredCalloutColors.value[index] === color) {
+      return;
+    }
+
     registeredCalloutColors.value = {
       ...registeredCalloutColors.value,
       [index]: color,

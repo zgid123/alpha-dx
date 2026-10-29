@@ -19,6 +19,19 @@ function readComponent(fileName: string) {
 }
 
 describe('ArcArrowProcess callout typography components', () => {
+  describe('ArcArrowProcess', () => {
+    it('guards setCalloutColor against redundant mutations', () => {
+      const { source } = readComponent('ArcArrowProcess.vue');
+
+      expect(source).toContain(
+        'if (registeredCalloutColors.value[index] === color) {',
+      );
+      expect(source).toContain(
+        'if (registeredCalloutColors.value[index] === undefined) {',
+      );
+    });
+  });
+
   describe('ArcArrowProcessHeading', () => {
     it('renders a semantic h4 element with accessible slot content and reset margins', () => {
       const { descriptor, source } = readComponent(
@@ -62,6 +75,25 @@ describe('ArcArrowProcess callout typography components', () => {
   });
 
   describe('ArcArrowProcessCallout', () => {
+    it('elevates the middle trough callout closer to the arrow in the 3-arrow layout', () => {
+      const { source } = readComponent('ArcArrowProcessCallout.vue');
+
+      expect(source).toContain('resolvedCount.value === 3');
+      expect(source).toContain(
+        "return 'left: calc(50% - 130px); bottom: 40px; width: 260px;';",
+      );
+    });
+
+    it('uses non-recursive watch for callout color registration', () => {
+      const { source } = readComponent('ArcArrowProcessCallout.vue');
+
+      expect(source).not.toContain('watchEffect(');
+      expect(source).toContain('watch(');
+      expect(source).toContain(
+        'return [resolvedIndex.value, props.color] as const;',
+      );
+    });
+
     it('right-aligns the first and second callouts in the 4-arrow layout', () => {
       const { descriptor, source } = readComponent(
         'ArcArrowProcessCallout.vue',

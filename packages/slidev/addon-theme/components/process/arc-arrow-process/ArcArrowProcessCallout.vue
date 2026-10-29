@@ -7,7 +7,7 @@ import {
   provide,
   useSlots,
   type VNode,
-  watchEffect,
+  watch,
 } from 'vue';
 
 import {
@@ -102,11 +102,27 @@ const activeItem = computed<IResolvedArcArrowProcessItem>(() => {
   );
 });
 
-watchEffect(() => {
-  if (props.color !== undefined) {
-    rootContext?.setCalloutColor?.(resolvedIndex.value, props.color);
-  }
-});
+watch(
+  () => {
+    return [resolvedIndex.value, props.color] as const;
+  },
+  ([newIdx, newColor], oldVal) => {
+    const [oldIdx] = oldVal ?? [];
+
+    if (oldIdx !== undefined && oldIdx !== newIdx) {
+      rootContext?.setCalloutColor?.(oldIdx, undefined);
+    }
+
+    if (newColor !== undefined) {
+      rootContext?.setCalloutColor?.(newIdx, newColor);
+    } else if (oldIdx !== undefined) {
+      rootContext?.setCalloutColor?.(newIdx, undefined);
+    }
+  },
+  {
+    immediate: true,
+  },
+);
 
 onBeforeUnmount(() => {
   rootContext?.setCalloutColor?.(resolvedIndex.value, undefined);
@@ -203,8 +219,8 @@ const positionStyle = computed(() => {
         return 'left: 0px; top: 108px; width: 225px;';
       }
       case 1: {
-        // Bottom center trough
-        return 'left: calc(50% - 130px); bottom: 8px; width: 260px;';
+        // Bottom center trough (positioned higher toward the arrow)
+        return 'left: calc(50% - 130px); bottom: 40px; width: 260px;';
       }
       case 2: {
         // Right ascending arrow (lowered to bottom-right flank)
