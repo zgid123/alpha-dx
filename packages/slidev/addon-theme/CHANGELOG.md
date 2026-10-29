@@ -1,5 +1,11 @@
 # @alphacifer/slidev-addon-theme
 
+## 0.0.15
+
+### Patch Changes
+
+- [#203](https://github.com/zgid123/alpha-dx/pull/203) [`6498171`](https://github.com/zgid123/alpha-dx/commit/649817174eb8a2e1fa22fc614d8ab96232d33ff6) Thanks [@zgid123](https://github.com/zgid123)! - fix styling for arc arrow process component
+
 ## 0.0.14
 
 ### Patch Changes
