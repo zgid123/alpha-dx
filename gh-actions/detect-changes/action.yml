@@ -1,0 +1,84 @@
+name: Detect Changes
+
+description: Detect which parts of the repository changed since the base commit
+
+inputs:
+  base:
+    description: Commit to compare HEAD with. Empty or unknown marks all filters as changed.
+    required: false
+    default: ${{ github.event.pull_request.base.sha || github.event.before }}
+  filters:
+    description: Newline-separated "key = regex" rules. Keys starting with $ define reusable pattern variables.
+    required: true
+
+outputs:
+  changes:
+    description: JSON object mapping each filter key to true or false
+    value: ${{ steps.filter.outputs.changes }}
+
+runs:
+  using: composite
+  steps:
+    - name: List changed parts
+      id: filter
+      shell: bash
+      env:
+        BASE: ${{ inputs.base }}
+        FILTERS: ${{ inputs.filters }}
+      run: |
+        shopt -u patsub_replacement 2>/dev/null || true
+
+        # Without a usable base (a new branch, a force push, workflow_dispatch), test everything.
+        if [ -n "$BASE" ] && git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+          files=$(git diff --name-only "$BASE" HEAD)
+        else
+          files='*'
+        fi
+
+        changed() {
+          if [ "$files" = '*' ]; then
+            echo true
+          elif [ -n "$files" ] && grep -qE "$1" <<< "$files"; then
+            echo true
+          else
+            echo false
+          fi
+        }
+
+        var_names=()
+        var_values=()
+        json="{"
+        sep=""
+
+        while IFS= read -r line || [ -n "$line" ]; do
+          line="${line#"${line%%[![:space:]]*}"}"
+          line="${line%"${line##*[![:space:]]}"}"
+
+          if [ -z "$line" ] || [[ "$line" == \#* ]]; then
+            continue
+          fi
+
+          key="${line%%=*}"
+          pattern="${line#*=}"
+
+          key="${key#"${key%%[![:space:]]*}"}"
+          key="${key%"${key##*[![:space:]]}"}"
+          pattern="${pattern#"${pattern%%[![:space:]]*}"}"
+          pattern="${pattern%"${pattern##*[![:space:]]}"}"
+
+          for (( i=${#var_names[@]}-1; i>=0; i-- )); do
+            pattern="${pattern//${var_names[$i]}/${var_values[$i]}}"
+          done
+
+          if [[ "$key" == \$* ]]; then
+            var_names+=("$key")
+            var_values+=("($pattern)")
+          else
+            result=$(changed "$pattern")
+            json="${json}${sep}\"${key}\":${result}"
+            sep=","
+          fi
+        done <<< "$FILTERS"
+
+        json="${json}}"
+        echo "changes=${json}" >> "$GITHUB_OUTPUT"
