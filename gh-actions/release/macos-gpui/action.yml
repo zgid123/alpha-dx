@@ -1,0 +1,274 @@
+name: Release macOS (GPUI)
+
+description: Build arm64 and x64 GPUI macOS apps, sign them, pack DMGs and update archives, upload artifacts, and attach them to a GitHub Release
+
+inputs:
+  app-name:
+    description: Bundle and DMG display name (for example Remio)
+    required: true
+  package:
+    description: Cargo package name to build (-p <package>)
+    required: true
+  bundle-id:
+    description: Code signing bundle identifier (for example com.remio.app)
+    required: true
+  info-plist:
+    description: Path to Info.plist
+    required: true
+  icon:
+    description: Path to AppIcon.icns
+    required: true
+  binary-name:
+    description: Built binary filename under target/<target>/release (defaults to package)
+    required: false
+    default: ''
+  extra-resources:
+    description: Optional newline-separated resource paths to copy into Contents/Resources
+    required: false
+    default: ''
+  min-macos-version:
+    description: MACOSX_DEPLOYMENT_TARGET and otool -l minos check value (empty skips check)
+    required: false
+    default: '11.0'
+  version:
+    description: Optional version string for filenames (defaults to text after @ in tag)
+    required: false
+    default: ''
+  output-dir:
+    description: Directory where DMGs and update archives are written
+    required: false
+    default: target/release
+  build-env:
+    description: Optional newline-separated KEY=VALUE entries exported before cargo build
+    required: false
+    default: ''
+  tag:
+    description: GitHub Release tag (for example remio@0.2.0). Empty builds without attaching.
+    required: false
+    default: ''
+  github-token:
+    description: Token that can create releases and upload assets (required when tag is set)
+    required: false
+    default: ''
+  certificate:
+    description: Base64-encoded .p12 signing certificate (required when tag is set; empty signs ad hoc)
+    required: false
+    default: ''
+  certificate-password:
+    description: Password for the .p12 certificate
+    required: false
+    default: ''
+  hardened-runtime:
+    description: Enable hardened runtime and timestamp during codesign (true or false)
+    required: false
+    default: 'false'
+  toolchain:
+    description: Toolchain passed to preparation/rust (empty follows rust-toolchain.toml)
+    required: false
+    default: ''
+  cache-key:
+    description: Cache key passed to preparation/rust
+    required: false
+    default: release-macos
+  artifact-name:
+    description: Optional uploaded artifact name (defaults to <app-name>-macos)
+    required: false
+    default: ''
+
+outputs:
+  version:
+    description: Resolved release version (empty if neither version nor tag was provided)
+    value: ${{ steps.build.outputs.version }}
+  arm64-dmg:
+    description: Path to the Apple Silicon DMG
+    value: ${{ steps.build.outputs.arm64-dmg }}
+  x64-dmg:
+    description: Path to the Intel DMG
+    value: ${{ steps.build.outputs.x64-dmg }}
+  arm64-archive:
+    description: Path to the Apple Silicon update archive (.app.tar.gz)
+    value: ${{ steps.build.outputs.arm64-archive }}
+  x64-archive:
+    description: Path to the Intel update archive (.app.tar.gz)
+    value: ${{ steps.build.outputs.x64-archive }}
+
+runs:
+  using: composite
+  steps:
+    - name: Prepare Rust
+      uses: zgid123/alpha-dx/gh-actions/preparation/rust@main
+      with:
+        toolchain: ${{ inputs.toolchain }}
+        targets: aarch64-apple-darwin x86_64-apple-darwin
+        cache-key: ${{ inputs.cache-key }}
+
+    - name: Import signing certificate
+      if: inputs.certificate != '' || inputs.tag != ''
+      shell: bash
+      env:
+        CERTIFICATE: ${{ inputs.certificate }}
+        CERTIFICATE_PASSWORD: ${{ inputs.certificate-password }}
+      run: |
+        if [ -z "$CERTIFICATE" ]; then
+          echo "::error::A release needs the certificate secret; an ad hoc build would lose the Accessibility permission on update."
+          exit 1
+        fi
+
+        keychain="$RUNNER_TEMP/macos-signing.keychain-db"
+        keychain_password=$(openssl rand -hex 16)
+        echo "$CERTIFICATE" | base64 --decode > "$RUNNER_TEMP/macos-signing.p12"
+        security create-keychain -p "$keychain_password" "$keychain"
+        security set-keychain-settings "$keychain"
+        security unlock-keychain -p "$keychain_password" "$keychain"
+        # A pasted password secret may include trailing CR/LF.
+        password=$(printf '%s' "$CERTIFICATE_PASSWORD" | tr -d '\r\n')
+        security import "$RUNNER_TEMP/macos-signing.p12" -k "$keychain" -P "$password" -T /usr/bin/codesign
+        security set-key-partition-list -S apple-tool:,apple: -s -k "$keychain_password" "$keychain" > /dev/null
+        security list-keychains -d user -s "$keychain" $(security list-keychains -d user | tr -d '"')
+        rm -f "$RUNNER_TEMP/macos-signing.p12"
+
+        identity=$(security find-identity -p codesigning "$keychain" | grep -m1 -oE '[0-9A-F]{40}')
+        echo "SIGN_IDENTITY=$identity" >> "$GITHUB_ENV"
+        echo "SIGN_KEYCHAIN=$keychain" >> "$GITHUB_ENV"
+
+    - name: Build apps, DMGs, and update archives
+      id: build
+      shell: bash
+      env:
+        APP_NAME: ${{ inputs.app-name }}
+        PACKAGE: ${{ inputs.package }}
+        BINARY_NAME: ${{ inputs.binary-name }}
+        BUNDLE_ID: ${{ inputs.bundle-id }}
+        INFO_PLIST: ${{ inputs.info-plist }}
+        ICON: ${{ inputs.icon }}
+        EXTRA_RESOURCES: ${{ inputs.extra-resources }}
+        MIN_MACOS_VERSION: ${{ inputs.min-macos-version }}
+        VERSION_INPUT: ${{ inputs.version }}
+        OUTPUT_DIR: ${{ inputs.output-dir }}
+        BUILD_ENV: ${{ inputs.build-env }}
+        TAG: ${{ inputs.tag }}
+        HARDENED_RUNTIME: ${{ inputs.hardened-runtime }}
+      run: |
+        if [ -n "$MIN_MACOS_VERSION" ]; then
+          export MACOSX_DEPLOYMENT_TARGET="$MIN_MACOS_VERSION"
+        fi
+
+        if [ -n "$BUILD_ENV" ]; then
+          while IFS= read -r line; do
+            [ -n "$line" ] || continue
+            export "$line"
+          done <<< "$BUILD_ENV"
+        fi
+
+        version="$VERSION_INPUT"
+        if [ -z "$version" ] && [ -n "$TAG" ]; then
+          version="${TAG#*@}"
+        fi
+
+        if [ -n "$version" ]; then
+          prefix="${APP_NAME}-${version}-macos"
+        else
+          prefix="${APP_NAME}-macos"
+        fi
+
+        bin_name="${BINARY_NAME:-$PACKAGE}"
+        target_root="${CARGO_TARGET_DIR:-target}"
+        mkdir -p "$OUTPUT_DIR"
+
+        for arch in arm64 x64; do
+          case "$arch" in
+            arm64) rust_target=aarch64-apple-darwin ;;
+            x64) rust_target=x86_64-apple-darwin ;;
+          esac
+
+          cargo build --release -p "$PACKAGE" --target "$rust_target"
+
+          bundle_dir="$RUNNER_TEMP/bundle/$arch"
+          app="$bundle_dir/$APP_NAME.app"
+          rm -rf "$app"
+          mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
+          cp "$target_root/$rust_target/release/$bin_name" "$app/Contents/MacOS/$APP_NAME"
+          cp "$INFO_PLIST" "$app/Contents/Info.plist"
+          cp "$ICON" "$app/Contents/Resources/AppIcon.icns"
+
+          if [ -n "$EXTRA_RESOURCES" ]; then
+            while IFS= read -r resource; do
+              [ -n "$resource" ] || continue
+              cp -R "$resource" "$app/Contents/Resources/"
+            done <<< "$EXTRA_RESOURCES"
+          fi
+
+          set -- --force --sign "${SIGN_IDENTITY:--}" --identifier "$BUNDLE_ID"
+          if [ -n "${SIGN_KEYCHAIN:-}" ]; then
+            set -- "$@" --keychain "$SIGN_KEYCHAIN"
+          fi
+          if [ "$HARDENED_RUNTIME" = "true" ]; then
+            set -- "$@" --options runtime --timestamp
+          fi
+          codesign "$@" "$app"
+
+          if [ -n "$MIN_MACOS_VERSION" ]; then
+            otool -l "$app/Contents/MacOS/$APP_NAME" | grep -q "minos $MIN_MACOS_VERSION"
+          fi
+
+          dmg="$OUTPUT_DIR/${prefix}-${arch}.dmg"
+          archive="$OUTPUT_DIR/${prefix}-${arch}.app.tar.gz"
+          staging="$RUNNER_TEMP/dmg-staging-$arch"
+
+          rm -rf "$staging" "$dmg"
+          mkdir -p "$staging"
+          ditto "$app" "$staging/$APP_NAME.app"
+          ln -s /Applications "$staging/Applications"
+          hdiutil create -volname "$APP_NAME" -srcfolder "$staging" -fs HFS+ -format UDZO -ov "$dmg" > /dev/null
+          rm -rf "$staging"
+
+          # COPYFILE_DISABLE keeps macOS metadata files (._*) out of the archive.
+          COPYFILE_DISABLE=1 tar -czf "$archive" -C "$bundle_dir" "$APP_NAME.app"
+
+          echo "${arch}-dmg=${dmg}" >> "$GITHUB_OUTPUT"
+          echo "${arch}-archive=${archive}" >> "$GITHUB_OUTPUT"
+        done
+
+        echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifact-name || format('{0}-macos', inputs.app-name) }}
+        path: |
+          ${{ steps.build.outputs.arm64-dmg }}
+          ${{ steps.build.outputs.x64-dmg }}
+          ${{ steps.build.outputs.arm64-archive }}
+          ${{ steps.build.outputs.x64-archive }}
+
+    - name: Remove signing keychain
+      if: always() && env.SIGN_KEYCHAIN != ''
+      shell: bash
+      run: security delete-keychain "$SIGN_KEYCHAIN"
+
+    - name: Attach to release
+      if: inputs.tag != ''
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        TAG: ${{ inputs.tag }}
+        APP_NAME: ${{ inputs.app-name }}
+        VERSION: ${{ steps.build.outputs.version }}
+        ARM64_DMG: ${{ steps.build.outputs.arm64-dmg }}
+        X64_DMG: ${{ steps.build.outputs.x64-dmg }}
+        ARM64_ARCHIVE: ${{ steps.build.outputs.arm64-archive }}
+        X64_ARCHIVE: ${{ steps.build.outputs.x64-archive }}
+      run: |
+        if [ -z "$GH_TOKEN" ]; then
+          echo "::error::github-token is required when tag is set."
+          exit 1
+        fi
+
+        if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+          notes="${APP_NAME}${VERSION:+ $VERSION}"
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag --title "$TAG" --notes "$notes" \
+            || gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null
+        fi
+
+        gh release upload "$TAG" "$ARM64_DMG" "$X64_DMG" "$ARM64_ARCHIVE" "$X64_ARCHIVE" \
+          --repo "$GITHUB_REPOSITORY" --clobber

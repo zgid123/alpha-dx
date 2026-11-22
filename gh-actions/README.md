@@ -6,17 +6,21 @@ Shared composite GitHub Actions for Alpha's repositories. Reference any action f
 
 | Action | Path | Description |
 | --- | --- | --- |
-| `prepare-nodejs` | [`./prepare-nodejs/action.yml`](./prepare-nodejs/action.yml) | Set up pnpm, install Node.js with pnpm store caching, and install dependencies |
-| `prepare-rust` | [`./prepare-rust/action.yml`](./prepare-rust/action.yml) | Install the Rust toolchain, optional components/targets, and configure build caching |
-| `test-rust` | [`./test-rust/action.yml`](./test-rust/action.yml) | Check formatting, run clippy, and run tests for a Rust crate or workspace |
-| `deploy-app-landing-vitepress` | [`./deploy-app-landing-vitepress/action.yml`](./deploy-app-landing-vitepress/action.yml) | Download release manifests from R2, build a VitePress landing page, and deploy it to GitHub Pages |
-| `deploy-ec2-simple-node` | [`./deploy-ec2-simple-node/action.yml`](./deploy-ec2-simple-node/action.yml) | Build a Node.js Docker image, copy the archive to EC2 over SSH, and run the container |
-| `deploy-vercel-simple-frontend` | [`./deploy-vercel-simple-frontend/action.yml`](./deploy-vercel-simple-frontend/action.yml) | Prepare Node.js and pnpm, build workspace artifacts, and deploy a prebuilt frontend to Vercel |
+| `preparation/nodejs` | [`./preparation/nodejs/action.yml`](./preparation/nodejs/action.yml) | Set up pnpm, install Node.js with pnpm store caching, and install dependencies |
+| `preparation/rust` | [`./preparation/rust/action.yml`](./preparation/rust/action.yml) | Install the Rust toolchain, optional components/targets, and configure build caching |
+| `deployment/app-landing-vitepress` | [`./deployment/app-landing-vitepress/action.yml`](./deployment/app-landing-vitepress/action.yml) | Download release manifests from R2, build a VitePress landing page, and deploy it to GitHub Pages |
+| `deployment/cloudflare-workers-node` | [`./deployment/cloudflare-workers-node/action.yml`](./deployment/cloudflare-workers-node/action.yml) | Prepare Node.js and pnpm and deploy a Cloudflare Workers app via its pnpm deploy script |
+| `upload/r2` | [`./upload/r2/action.yml`](./upload/r2/action.yml) | Upload files to Cloudflare R2 via Wrangler and optionally remove obsolete keys |
+| `deployment/ec2-simple-node` | [`./deployment/ec2-simple-node/action.yml`](./deployment/ec2-simple-node/action.yml) | Build a Node.js Docker image, copy the archive to EC2 over SSH, and run the container |
+| `deployment/vercel-simple-frontend` | [`./deployment/vercel-simple-frontend/action.yml`](./deployment/vercel-simple-frontend/action.yml) | Prepare Node.js and pnpm, build workspace artifacts, and deploy a prebuilt frontend to Vercel |
+| `release/macos-gpui` | [`./release/macos-gpui/action.yml`](./release/macos-gpui/action.yml) | Build, sign, pack, upload, and release `arm64` + `x64` GPUI macOS apps |
+| `release/macos-swift` | [`./release/macos-swift/action.yml`](./release/macos-swift/action.yml) | Build, sign, pack, upload, and release `arm64` + `x64` Swift macOS apps |
+| `release/windows-rust-inno-setup` | [`./release/windows-rust-inno-setup/action.yml`](./release/windows-rust-inno-setup/action.yml) | Build a Windows app, compile its Inno Setup installer, upload, and attach to a GitHub Release |
 | `detect-changes` | [`./detect-changes/action.yml`](./detect-changes/action.yml) | Detect changed repository paths using customizable regex rules and output a JSON map |
 
 ---
 
-## `prepare-nodejs`
+## `preparation/nodejs`
 
 Sets up `pnpm` and Node.js with built-in pnpm store caching, then installs workspace dependencies.
 
@@ -39,12 +43,12 @@ steps:
     uses: actions/checkout@v6
 
   - name: Prepare Node.js and pnpm
-    uses: zgid123/alpha-dx/gh-actions/prepare-nodejs@main
+    uses: zgid123/alpha-dx/gh-actions/preparation/nodejs@main
 ```
 
 ---
 
-## `prepare-rust`
+## `preparation/rust`
 
 Sets up the Rust toolchain across macOS, Linux, and Windows (using `shell: bash`), installs optional components and compilation targets, and configures build caching for both GitHub-hosted and self-hosted runners.
 
@@ -87,7 +91,7 @@ steps:
     uses: actions/checkout@v6
 
   - name: Prepare Rust
-    uses: zgid123/alpha-dx/gh-actions/prepare-rust@main
+    uses: zgid123/alpha-dx/gh-actions/preparation/rust@main
     with:
       targets: aarch64-apple-darwin x86_64-apple-darwin
       cache-key: release-macos
@@ -101,7 +105,7 @@ steps:
     uses: actions/checkout@v6
 
   - name: Prepare Rust
-    uses: zgid123/alpha-dx/gh-actions/prepare-rust@main
+    uses: zgid123/alpha-dx/gh-actions/preparation/rust@main
     with:
       toolchain: stable
       components: clippy,rustfmt
@@ -110,77 +114,13 @@ steps:
 
 ---
 
-## `test-rust`
-
-Cross-platform Rust CI test action (macOS, Linux, and Windows via `shell: bash`) that checks formatting, runs Clippy with warnings denied, and runs the test suite for an entire workspace or a single package.
-
-### What It Does
-
-1. Runs `cargo fmt --all --check` (or `cargo fmt -p <package> --check` when `package` is set).
-2. Runs `cargo clippy --workspace --all-targets [clippy-args] -- -D warnings` (or `-p <package>`).
-3. Runs `cargo test --workspace [test-args]` (or `-p <package>`).
-
-### Prerequisites
-
-- Run `actions/checkout` before calling this action.
-- Run [`prepare-rust`](./prepare-rust/action.yml) (or ensure Rust with `clippy` and `rustfmt` components is already installed on the runner) before calling this action.
-
-### Inputs
-
-| Input | Required | Default | Description |
-| --- | --- | --- | --- |
-| `package` | No | `''` | Optional Cargo package name (`-p <package>`). Empty checks the full workspace |
-| `working-directory` | No | `'.'` | Directory containing `Cargo.toml` |
-| `clippy-args` | No | `''` | Extra flags passed to `cargo clippy` before `-- -D warnings` (for example `--all-features`) |
-| `test-args` | No | `''` | Extra flags passed to `cargo test` (for example `--all-features`) |
-
-### Usage
-
-Full workspace using `rust-toolchain.toml`:
-
-```yaml
-steps:
-  - name: Checkout
-    uses: actions/checkout@v6
-
-  - name: Prepare Rust
-    uses: zgid123/alpha-dx/gh-actions/prepare-rust@main
-    with:
-      cache-key: test-rust
-
-  - name: Test Rust
-    uses: zgid123/alpha-dx/gh-actions/test-rust@main
-```
-
-Single crate using an explicit `stable` toolchain:
-
-```yaml
-steps:
-  - name: Checkout
-    uses: actions/checkout@v6
-
-  - name: Prepare Rust
-    uses: zgid123/alpha-dx/gh-actions/prepare-rust@main
-    with:
-      toolchain: stable
-      components: clippy,rustfmt
-      cache-key: test-core
-
-  - name: Test Core
-    uses: zgid123/alpha-dx/gh-actions/test-rust@main
-    with:
-      package: typio-core
-```
-
----
-
-## `deploy-app-landing-vitepress`
+## `deployment/app-landing-vitepress`
 
 Downloads release manifests from Cloudflare R2, builds a VitePress app landing page, packs it with macOS-safe `tar` flags (`COPYFILE_DISABLE=1 tar -cf`), uploads the Pages artifact, and deploys via `actions/deploy-pages@v4`.
 
 ### What It Does
 
-1. Runs [`prepare-nodejs`](./prepare-nodejs/action.yml) (`zgid123/alpha-dx/gh-actions/prepare-nodejs@main`) to install `pnpm`, Node.js, and workspace dependencies.
+1. Runs [`preparation/nodejs`](./preparation/nodejs/action.yml) (`zgid123/alpha-dx/gh-actions/preparation/nodejs@main`) to install `pnpm`, Node.js, and workspace dependencies.
 2. Creates `$RUNNER_TEMP/releases`, exports its path in the environment variable named by `releases-dir-env`, and fetches `manifests/<platform>.json` from Cloudflare R2 via Wrangler (skipped gracefully when `cloudflare-api-token` is empty).
 3. Builds the VitePress site via `pnpm --filter <website-filter> build`.
 4. Packs `dist-path` into `$RUNNER_TEMP/artifact.tar` (works on both GNU and BSD/macOS `tar`).
@@ -232,7 +172,7 @@ jobs:
 
       - name: Deploy app landing page
         id: website
-        uses: zgid123/alpha-dx/gh-actions/deploy-app-landing-vitepress@main
+        uses: zgid123/alpha-dx/gh-actions/deployment/app-landing-vitepress@main
         with:
           bucket: remio
           releases-dir-env: REMIO_RELEASES_DIR
@@ -242,7 +182,103 @@ jobs:
 
 ---
 
-## `deploy-ec2-simple-node`
+## `deployment/cloudflare-workers-node`
+
+Prepares Node.js and `pnpm`, then deploys a Cloudflare Workers application via its `pnpm` `deploy` script.
+
+### What It Does
+
+1. Runs [`preparation/nodejs`](./preparation/nodejs/action.yml) to install `pnpm`, Node.js, and workspace dependencies.
+2. Verifies `cloudflare-api-token` and `cloudflare-account-id` are non-empty.
+3. Runs `pnpm --filter "$FILTER" run deploy` when `filter` is provided, or `pnpm run deploy` at the repository root otherwise.
+
+### Inputs
+
+| Input | Required | Default | Description |
+| --- | --- | --- | --- |
+| `cloudflare-api-token` | Yes | — | Cloudflare API token with Workers deploy permission |
+| `cloudflare-account-id` | Yes | — | Cloudflare account ID for the Worker |
+| `filter` | No | `''` | Optional pnpm workspace filter (for example `server`); empty runs at repo root |
+
+### Usage
+
+```yaml
+steps:
+  - name: Checkout
+    uses: actions/checkout@v6
+
+  - name: Deploy Worker
+    uses: zgid123/alpha-dx/gh-actions/deployment/cloudflare-workers-node@main
+    with:
+      filter: server
+      cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      cloudflare-account-id: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+```
+
+---
+
+## `upload/r2`
+
+Uploads prepared artifacts and manifests to a Cloudflare R2 bucket via Wrangler, uploading blobs first, inline manifest entries next, and removing obsolete keys last.
+
+### What It Does
+
+1. Skips gracefully with a notice when `cloudflare-api-token` is empty.
+2. Uploads every `<r2-key>\t<local-path>` entry listed in `uploads-file` (when provided).
+3. Uploads every `<r2-key>=<local-path>` entry listed in `files` (useful for uploading a manifest last or standalone files directly).
+4. Best-effort deletes each key listed in `delete-file` (logging a warning if deletion fails).
+
+### Prerequisites
+
+- Run `actions/checkout` and [`preparation/nodejs`](./preparation/nodejs/action.yml) before calling this action so `wrangler` is installed.
+
+### Inputs
+
+| Input | Required | Default | Description |
+| --- | --- | --- | --- |
+| `bucket` | Yes | — | Target Cloudflare R2 bucket name (for example `remio` or `typio`) |
+| `cloudflare-api-token` | No | `''` | Token with write access to the bucket (empty skips upload) |
+| `cloudflare-account-id` | No | `''` | Cloudflare account ID of the bucket |
+| `uploads-file` | No | `''` | TSV file (`<r2-key>\t<local-path>` per line) uploaded first |
+| `files` | No | `''` | Newline-separated `<r2-key>=<local-path>` entries uploaded after `uploads-file` |
+| `delete-file` | No | `''` | Path to a file listing obsolete R2 keys (one per line) to delete afterwards |
+| `wrangler-filter` | No | `'server'` | pnpm workspace filter providing `wrangler` (empty runs `pnpm exec wrangler`) |
+
+### Usage
+
+With a prepared TSV `uploads` file, a manifest uploaded last, and an `obsolete` cleanup list:
+
+```yaml
+steps:
+  - name: Upload to R2
+    uses: zgid123/alpha-dx/gh-actions/upload/r2@main
+    with:
+      bucket: remio
+      cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      cloudflare-account-id: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+      uploads-file: ${{ runner.temp }}/dict-out/uploads
+      files: manifests/dictionaries/en.json=${{ runner.temp }}/dict-out/en.json
+      delete-file: ${{ runner.temp }}/dict-out/obsolete
+```
+
+With inline `files` only:
+
+```yaml
+steps:
+  - name: Upload to R2
+    uses: zgid123/alpha-dx/gh-actions/upload/r2@main
+    with:
+      bucket: remio
+      cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      cloudflare-account-id: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+      files: |
+        macos/0.2.0/Remio.app.tar.gz=target/release/Remio.app.tar.gz
+        manifests/macos.json=dist/macos.json
+```
+
+---
+
+## `deployment/ec2-simple-node`
 
 Builds a Docker image for a Node.js service, transfers the compressed image archive to an EC2 host over SSH/SCP, replaces the running container, and prunes dangling images. Supports running as two separate jobs (`step: build` and `step: deploy`) via GitHub Actions artifacts, or in a single job (`step: all`).
 
@@ -290,7 +326,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Build Server
-        uses: zgid123/alpha-dx/gh-actions/deploy-ec2-simple-node@main
+        uses: zgid123/alpha-dx/gh-actions/deployment/ec2-simple-node@main
         with:
           step: build
           image-name: blog-server
@@ -304,7 +340,7 @@ jobs:
     needs: build
     steps:
       - name: Deploy Server to EC2
-        uses: zgid123/alpha-dx/gh-actions/deploy-ec2-simple-node@main
+        uses: zgid123/alpha-dx/gh-actions/deployment/ec2-simple-node@main
         with:
           step: deploy
           image-name: blog-server
@@ -316,13 +352,13 @@ jobs:
 
 ---
 
-## `deploy-vercel-simple-frontend`
+## `deployment/vercel-simple-frontend`
 
 Prepares Node.js and `pnpm`, builds the workspace and optional target package, pulls Vercel configuration, builds prebuilt Vercel artifacts, and deploys them to Vercel.
 
 ### What It Does
 
-1. Runs [`prepare-nodejs`](./prepare-nodejs/action.yml) (`zgid123/alpha-dx/gh-actions/prepare-nodejs@main`) to install `pnpm`, Node.js, and workspace dependencies.
+1. Runs [`preparation/nodejs`](./preparation/nodejs/action.yml) (`zgid123/alpha-dx/gh-actions/preparation/nodejs@main`) to install `pnpm`, Node.js, and workspace dependencies.
 2. Runs `pnpm build`, and when `filter` is provided, runs `pnpm --filter="<filter>" build`.
 3. Installs the Vercel CLI (`pnpm add -g vercel@latest`).
 4. Runs `vercel pull --yes --environment="<environment>"`.
@@ -351,12 +387,192 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Deploy CMS to Vercel
-        uses: zgid123/alpha-dx/gh-actions/deploy-vercel-simple-frontend@main
+        uses: zgid123/alpha-dx/gh-actions/deployment/vercel-simple-frontend@main
         with:
           filter: cms
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_BLOG_CMS_PROJECT_ID }}
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
+```
+
+---
+
+## `release/macos-gpui`
+
+Builds `arm64` and `x64` GPUI/Rust macOS `.app` bundles, optionally imports a `.p12` signing certificate into a temporary Keychain (and cleans it up on exit), verifies minimum macOS version with `otool -l`, packs `.dmg` and `.app.tar.gz` archives, uploads them as workflow artifacts, and attaches them to a GitHub Release when `tag` is provided.
+
+### What It Does
+
+1. Runs [`preparation/rust`](./preparation/rust/action.yml) with targets `aarch64-apple-darwin x86_64-apple-darwin`.
+2. When `certificate` or `tag` is set, imports the `.p12` certificate into `$RUNNER_TEMP/macos-signing.keychain-db` and deletes the keychain in `if: always()`.
+3. Compiles `-p <package>` for both architectures, bundles `<AppName>.app`, codesigns it, verifies `otool -l` `minos`, packs `.dmg` + `.app.tar.gz`, and writes artifact paths to outputs.
+4. Uploads the 4 files as a GitHub Actions artifact and, if `tag` is non-empty, creates (if missing) and uploads to the GitHub Release.
+
+### Inputs
+
+| Input | Required | Default | Description |
+| --- | --- | --- | --- |
+| `app-name` | Yes | — | Bundle and DMG display name (for example `Remio`) |
+| `package` | Yes | — | Cargo package name (`-p <package>`) |
+| `bundle-id` | Yes | — | Code signing bundle identifier (for example `com.remio.app`) |
+| `info-plist` | Yes | — | Path to `Info.plist` |
+| `icon` | Yes | — | Path to `AppIcon.icns` |
+| `binary-name` | No | `''` | Binary name in `target/<target>/release` (defaults to `package`) |
+| `extra-resources` | No | `''` | Newline-separated resource paths copied into `Contents/Resources/` |
+| `min-macos-version` | No | `'11.0'` | `MACOSX_DEPLOYMENT_TARGET` and `otool -l` `minos` check (`''` skips) |
+| `version` | No | `''` | Version in output filenames (defaults to text after `@` in `tag`) |
+| `output-dir` | No | `'target/release'` | Output directory for DMGs and `.app.tar.gz` archives |
+| `build-env` | No | `''` | Newline-separated `KEY=VALUE` entries exported before `cargo build` |
+| `tag` | No | `''` | GitHub Release tag (for example `remio@0.2.0`) |
+| `github-token` | No | `''` | Token for creating/attaching releases (required when `tag` is set) |
+| `certificate` | No | `''` | Base64 `.p12` certificate (required when `tag` is set; empty signs ad hoc) |
+| `certificate-password` | No | `''` | Password for `.p12` certificate |
+| `hardened-runtime` | No | `'false'` | Add `--options runtime --timestamp` to `codesign` |
+| `toolchain` | No | `''` | Toolchain passed to `preparation/rust` |
+| `cache-key` | No | `'release-macos'` | Cache key passed to `preparation/rust` |
+| `artifact-name` | No | `''` | Uploaded artifact name override (defaults to `<app-name>-macos`) |
+
+### Outputs
+
+`version`, `arm64-dmg`, `x64-dmg`, `arm64-archive`, `x64-archive`
+
+### Usage
+
+```yaml
+steps:
+  - name: Release macOS
+    id: macos
+    uses: zgid123/alpha-dx/gh-actions/release/macos-gpui@main
+    with:
+      app-name: Remio
+      package: remio
+      bundle-id: com.remio.app
+      info-plist: workspaces/remio/bundle/macos/Info.plist
+      icon: workspaces/remio/bundle/macos/AppIcon.icns
+      build-env: REMIO_UPDATE_SERVER=${{ vars.REMIO_UPDATE_SERVER }}
+      tag: ${{ needs.release.outputs.app-tag }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+      certificate: ${{ secrets.MACOS_CERTIFICATE }}
+      certificate-password: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
+```
+
+---
+
+## `release/macos-swift`
+
+Builds `arm64` and `x64` Swift macOS `.app` bundles (with optional Rust FFI pre-build), optionally updates bundled `Info.plist` entries via `PlistBuddy`, signs with a `.p12` certificate in a temporary Keychain, packs `.dmg` and `.app.tar.gz` archives, uploads workflow artifacts, and attaches them to a GitHub Release when `tag` is set.
+
+### What It Does
+
+1. When `rust-ffi-package` is set, runs [`preparation/rust`](./preparation/rust/action.yml) with targets `aarch64-apple-darwin x86_64-apple-darwin`.
+2. When `certificate` or `tag` is set, imports the `.p12` certificate into a temporary keychain and deletes it in `if: always()`.
+3. For each architecture (`arm64` and `x64`), optionally compiles `rust-ffi-package`, compiles Swift via `swift build -c release`, assembles `<AppName>.app`, updates `plist-entries`, codesigns, packs `.dmg` + `.app.tar.gz`, and writes artifact paths to outputs.
+4. Uploads artifacts and, if `tag` is non-empty, attaches them to the GitHub Release.
+
+### Inputs
+
+| Input | Required | Default | Description |
+| --- | --- | --- | --- |
+| `app-name` | Yes | — | Bundle and DMG display name (for example `Typio`) |
+| `swift-package-path` | Yes | — | Directory containing `Package.swift` |
+| `info-plist` | Yes | — | Path to `Info.plist` |
+| `icon` | Yes | — | Path to `AppIcon.icns` |
+| `product-name` | No | `''` | Swift executable name (defaults to `app-name`) |
+| `bundle-id` | No | `''` | Optional bundle identifier passed to `codesign --identifier` |
+| `extra-resources` | No | `''` | Newline-separated resource paths copied into `Contents/Resources/` |
+| `plist-entries` | No | `''` | Newline-separated `Key=Value` written into `Info.plist` via `PlistBuddy` when non-empty |
+| `rust-ffi-package` | No | `''` | Optional Cargo FFI crate (`-p <package>`) built before `swift build` |
+| `rust-ffi-target-env` | No | `''` | Env var name set to the active Rust target triple for `swift build` |
+| `rust-ffi-profile-env` | No | `''` | Env var name set to `release` for `swift build` |
+| `min-macos-version` | No | `''` | Optional `otool -l` `minos` check (`''` skips) |
+| `version` | No | `''` | Optional version string included in filenames |
+| `output-dir` | No | `'build'` | Output directory for DMGs and `.app.tar.gz` archives |
+| `build-env` | No | `''` | Newline-separated `KEY=VALUE` entries exported before building |
+| `tag` | No | `''` | GitHub Release tag (for example `typio-macos@0.1.0`) |
+| `github-token` | No | `''` | Token for creating/attaching releases (required when `tag` is set) |
+| `certificate` | No | `''` | Base64 `.p12` certificate (required when `tag` is set; empty signs ad hoc) |
+| `certificate-password` | No | `''` | Password for `.p12` certificate |
+| `hardened-runtime` | No | `'false'` | Add `--options runtime --timestamp` to `codesign` |
+| `toolchain` | No | `'stable'` | Toolchain passed to `preparation/rust` |
+| `cache-key` | No | `'release-macos'` | Cache key passed to `preparation/rust` |
+| `artifact-name` | No | `''` | Uploaded artifact name override (defaults to `<app-name>-macos`) |
+
+### Outputs
+
+`version`, `arm64-dmg`, `x64-dmg`, `arm64-archive`, `x64-archive`
+
+### Usage
+
+```yaml
+steps:
+  - name: Release macOS
+    id: macos
+    uses: zgid123/alpha-dx/gh-actions/release/macos-swift@main
+    with:
+      app-name: Typio
+      swift-package-path: workspaces/macos
+      info-plist: workspaces/macos/Resources/Info.plist
+      icon: workspaces/macos/Resources/AppIcon.icns
+      plist-entries: TypioUpdateServer=${{ vars.TYPIO_UPDATE_SERVER }}
+      rust-ffi-package: typio-ffi
+      rust-ffi-target-env: TYPIO_RUST_TARGET
+      rust-ffi-profile-env: TYPIO_RUST_PROFILE
+      output-dir: workspaces/macos/build
+      tag: ${{ needs.release.outputs.macos-tag }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+      certificate: ${{ secrets.MACOS_CERTIFICATE }}
+      certificate-password: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
+```
+
+---
+
+## `release/windows-rust-inno-setup`
+
+Builds a Windows executable (with Cargo and/or a custom PowerShell command), installs Inno Setup via Chocolatey if missing, compiles a `.iss` installer script, uploads the resulting `.exe` as a workflow artifact, and attaches it to a GitHub Release when `tag` is set.
+
+### What It Does
+
+1. When `package` is non-empty, runs [`preparation/rust`](./preparation/rust/action.yml) with `cache-key`.
+2. Installs Inno Setup (`choco install innosetup`) if `iscc` is not already available.
+3. Exports `build-env` variables and builds the app (`cargo build --release -p <package>` and/or `build-command`).
+4. Runs `ISCC.exe` on `iss-path`, locates `installer-path`, and writes `installer` and `version` outputs.
+5. Uploads the installer as a GitHub Actions artifact and, if `tag` is non-empty, creates (if missing) and uploads to the GitHub Release.
+
+### Inputs
+
+| Input | Required | Default | Description |
+| --- | --- | --- | --- |
+| `app-name` | Yes | — | Display name for artifacts and release notes (for example `Remio` or `Typio`) |
+| `iss-path` | Yes | — | Path to the Inno Setup `.iss` script |
+| `installer-path` | Yes | — | Exact path or glob matching the generated installer (for example `target/release/Remio-*-setup.exe`) |
+| `package` | No | `''` | Optional Cargo package name (`-p <package>`). Enables `preparation/rust` |
+| `build-command` | No | `''` | Optional custom PowerShell build command |
+| `build-env` | No | `''` | Newline-separated `KEY=VALUE` entries exported before building |
+| `tag` | No | `''` | GitHub Release tag (for example `remio@0.2.0`) |
+| `github-token` | No | `''` | Token for creating/attaching releases (required when `tag` is set) |
+| `toolchain` | No | `''` | Toolchain passed to `preparation/rust` (`''` follows `rust-toolchain.toml`) |
+| `cache-key` | No | `'release-windows'` | Cache key passed to `preparation/rust` |
+| `artifact-name` | No | `''` | Uploaded artifact name override (defaults to `<app-name>-windows`) |
+
+### Outputs
+
+`version`, `installer`
+
+### Usage
+
+```yaml
+steps:
+  - name: Release Windows
+    id: windows
+    uses: zgid123/alpha-dx/gh-actions/release/windows-rust-inno-setup@main
+    with:
+      app-name: Remio
+      package: remio
+      iss-path: workspaces/remio/bundle/windows/remio.iss
+      installer-path: target/release/Remio-*-setup.exe
+      build-env: REMIO_UPDATE_SERVER=${{ vars.REMIO_UPDATE_SERVER }}
+      tag: ${{ needs.release.outputs.app-tag }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ---
@@ -421,7 +637,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: zgid123/alpha-dx/gh-actions/prepare-nodejs@main
+      - uses: zgid123/alpha-dx/gh-actions/preparation/nodejs@main
       - run: pnpm --filter api test
 
   web:
@@ -431,7 +647,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: zgid123/alpha-dx/gh-actions/prepare-nodejs@main
+      - uses: zgid123/alpha-dx/gh-actions/preparation/nodejs@main
       - run: pnpm --filter web test
 
   docs:
@@ -441,6 +657,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: zgid123/alpha-dx/gh-actions/prepare-nodejs@main
+      - uses: zgid123/alpha-dx/gh-actions/preparation/nodejs@main
       - run: pnpm docs:build
 ```

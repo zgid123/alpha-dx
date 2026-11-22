@@ -1,0 +1,39 @@
+name: Deploy to Cloudflare Workers (Node.js)
+
+description: Prepare Node.js and pnpm and deploy a Cloudflare Workers app via its pnpm deploy script
+
+inputs:
+  cloudflare-api-token:
+    description: Cloudflare API token with Workers deploy permission
+    required: true
+  cloudflare-account-id:
+    description: Cloudflare account ID for the Worker
+    required: true
+  filter:
+    description: Optional pnpm workspace filter (for example server). Empty runs in the repository root.
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - name: Prepare Node.js and pnpm
+      uses: zgid123/alpha-dx/gh-actions/preparation/nodejs@main
+
+    - name: Deploy to Cloudflare Workers
+      shell: bash
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ inputs.cloudflare-api-token }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ inputs.cloudflare-account-id }}
+        FILTER: ${{ inputs.filter }}
+      run: |
+        if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+          echo "::error::Deploying needs cloudflare-api-token and cloudflare-account-id."
+          exit 1
+        fi
+
+        if [ -n "$FILTER" ]; then
+          pnpm --filter "$FILTER" run deploy
+        else
+          pnpm run deploy
+        fi

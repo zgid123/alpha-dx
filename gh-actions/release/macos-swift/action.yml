@@ -1,0 +1,317 @@
+name: Release macOS (Swift)
+
+description: Build arm64 and x64 Swift macOS apps (with optional Rust FFI), sign them, pack DMGs and update archives, upload artifacts, and attach them to a GitHub Release
+
+inputs:
+  app-name:
+    description: Bundle and DMG display name (for example Typio)
+    required: true
+  swift-package-path:
+    description: Path to the Swift package directory containing Package.swift
+    required: true
+  info-plist:
+    description: Path to Info.plist
+    required: true
+  icon:
+    description: Path to AppIcon.icns
+    required: true
+  product-name:
+    description: Swift executable product name (defaults to app-name)
+    required: false
+    default: ''
+  bundle-id:
+    description: Optional code signing bundle identifier (passed to codesign --identifier)
+    required: false
+    default: ''
+  extra-resources:
+    description: Optional newline-separated resource paths to copy into Contents/Resources
+    required: false
+    default: ''
+  plist-entries:
+    description: Optional newline-separated Key=Value entries written into Info.plist via PlistBuddy when Value is non-empty
+    required: false
+    default: ''
+  rust-ffi-package:
+    description: Optional Cargo FFI package built before Swift (-p <package>)
+    required: false
+    default: ''
+  rust-ffi-target-env:
+    description: Optional env var name set to the active Rust target triple when building Swift
+    required: false
+    default: ''
+  rust-ffi-profile-env:
+    description: Optional env var name set to release when building Swift
+    required: false
+    default: ''
+  min-macos-version:
+    description: Optional otool -l minos check value (empty skips check)
+    required: false
+    default: ''
+  version:
+    description: Optional version string included in filenames (empty omits version from filenames)
+    required: false
+    default: ''
+  output-dir:
+    description: Directory where DMGs and update archives are written
+    required: false
+    default: build
+  build-env:
+    description: Optional newline-separated KEY=VALUE entries exported before building
+    required: false
+    default: ''
+  tag:
+    description: GitHub Release tag (for example typio-macos@0.1.0). Empty builds without attaching.
+    required: false
+    default: ''
+  github-token:
+    description: Token that can create releases and upload assets (required when tag is set)
+    required: false
+    default: ''
+  certificate:
+    description: Base64-encoded .p12 signing certificate (required when tag is set; empty signs ad hoc)
+    required: false
+    default: ''
+  certificate-password:
+    description: Password for the .p12 certificate
+    required: false
+    default: ''
+  hardened-runtime:
+    description: Enable hardened runtime and timestamp during codesign (true or false)
+    required: false
+    default: 'false'
+  toolchain:
+    description: Toolchain passed to preparation/rust when rust-ffi-package is set
+    required: false
+    default: stable
+  cache-key:
+    description: Cache key passed to preparation/rust when rust-ffi-package is set
+    required: false
+    default: release-macos
+  artifact-name:
+    description: Optional uploaded artifact name (defaults to <app-name>-macos)
+    required: false
+    default: ''
+
+outputs:
+  version:
+    description: Resolved release version (from version input or text after @ in tag)
+    value: ${{ steps.build.outputs.version }}
+  arm64-dmg:
+    description: Path to the Apple Silicon DMG
+    value: ${{ steps.build.outputs.arm64-dmg }}
+  x64-dmg:
+    description: Path to the Intel DMG
+    value: ${{ steps.build.outputs.x64-dmg }}
+  arm64-archive:
+    description: Path to the Apple Silicon update archive (.app.tar.gz)
+    value: ${{ steps.build.outputs.arm64-archive }}
+  x64-archive:
+    description: Path to the Intel update archive (.app.tar.gz)
+    value: ${{ steps.build.outputs.x64-archive }}
+
+runs:
+  using: composite
+  steps:
+    - name: Prepare Rust
+      if: inputs.rust-ffi-package != ''
+      uses: zgid123/alpha-dx/gh-actions/preparation/rust@main
+      with:
+        toolchain: ${{ inputs.toolchain }}
+        targets: aarch64-apple-darwin x86_64-apple-darwin
+        cache-key: ${{ inputs.cache-key }}
+
+    - name: Import signing certificate
+      if: inputs.certificate != '' || inputs.tag != ''
+      shell: bash
+      env:
+        CERTIFICATE: ${{ inputs.certificate }}
+        CERTIFICATE_PASSWORD: ${{ inputs.certificate-password }}
+      run: |
+        if [ -z "$CERTIFICATE" ]; then
+          echo "::error::A release needs the certificate secret; an ad hoc build would lose the Accessibility permission on update."
+          exit 1
+        fi
+
+        keychain="$RUNNER_TEMP/macos-signing.keychain-db"
+        keychain_password=$(openssl rand -hex 16)
+        echo "$CERTIFICATE" | base64 --decode > "$RUNNER_TEMP/macos-signing.p12"
+        security create-keychain -p "$keychain_password" "$keychain"
+        security set-keychain-settings "$keychain"
+        security unlock-keychain -p "$keychain_password" "$keychain"
+        # A pasted password secret may include trailing CR/LF.
+        password=$(printf '%s' "$CERTIFICATE_PASSWORD" | tr -d '\r\n')
+        security import "$RUNNER_TEMP/macos-signing.p12" -k "$keychain" -P "$password" -T /usr/bin/codesign
+        security set-key-partition-list -S apple-tool:,apple: -s -k "$keychain_password" "$keychain" > /dev/null
+        security list-keychains -d user -s "$keychain" $(security list-keychains -d user | tr -d '"')
+        rm -f "$RUNNER_TEMP/macos-signing.p12"
+
+        identity=$(security find-identity -p codesigning "$keychain" | grep -m1 -oE '[0-9A-F]{40}')
+        echo "SIGN_IDENTITY=$identity" >> "$GITHUB_ENV"
+        echo "SIGN_KEYCHAIN=$keychain" >> "$GITHUB_ENV"
+
+    - name: Build apps, DMGs, and update archives
+      id: build
+      shell: bash
+      env:
+        APP_NAME: ${{ inputs.app-name }}
+        SWIFT_PACKAGE_PATH: ${{ inputs.swift-package-path }}
+        PRODUCT_NAME: ${{ inputs.product-name }}
+        BUNDLE_ID: ${{ inputs.bundle-id }}
+        INFO_PLIST: ${{ inputs.info-plist }}
+        ICON: ${{ inputs.icon }}
+        EXTRA_RESOURCES: ${{ inputs.extra-resources }}
+        PLIST_ENTRIES: ${{ inputs.plist-entries }}
+        RUST_FFI_PACKAGE: ${{ inputs.rust-ffi-package }}
+        RUST_FFI_TARGET_ENV: ${{ inputs.rust-ffi-target-env }}
+        RUST_FFI_PROFILE_ENV: ${{ inputs.rust-ffi-profile-env }}
+        MIN_MACOS_VERSION: ${{ inputs.min-macos-version }}
+        VERSION_INPUT: ${{ inputs.version }}
+        OUTPUT_DIR: ${{ inputs.output-dir }}
+        BUILD_ENV: ${{ inputs.build-env }}
+        TAG: ${{ inputs.tag }}
+        HARDENED_RUNTIME: ${{ inputs.hardened-runtime }}
+      run: |
+        if [ -n "$BUILD_ENV" ]; then
+          while IFS= read -r line; do
+            [ -n "$line" ] || continue
+            export "$line"
+          done <<< "$BUILD_ENV"
+        fi
+
+        if [ -n "$VERSION_INPUT" ]; then
+          prefix="${APP_NAME}-${VERSION_INPUT}-macos"
+        else
+          prefix="${APP_NAME}-macos"
+        fi
+
+        resolved_version="$VERSION_INPUT"
+        if [ -z "$resolved_version" ] && [ -n "$TAG" ]; then
+          resolved_version="${TAG#*@}"
+        fi
+
+        product="${PRODUCT_NAME:-$APP_NAME}"
+        mkdir -p "$OUTPUT_DIR"
+
+        for arch in arm64 x64; do
+          case "$arch" in
+            arm64) rust_target=aarch64-apple-darwin; swift_arch=arm64 ;;
+            x64) rust_target=x86_64-apple-darwin; swift_arch=x86_64 ;;
+          esac
+
+          if [ -n "$RUST_FFI_PACKAGE" ]; then
+            cargo build --release -p "$RUST_FFI_PACKAGE" --target "$rust_target"
+            if [ -n "$RUST_FFI_TARGET_ENV" ]; then
+              export "${RUST_FFI_TARGET_ENV}=${rust_target}"
+            fi
+            if [ -n "$RUST_FFI_PROFILE_ENV" ]; then
+              export "${RUST_FFI_PROFILE_ENV}=release"
+            fi
+          fi
+
+          swift build -c release --arch "$swift_arch" --package-path "$SWIFT_PACKAGE_PATH"
+          bin_dir=$(swift build -c release --arch "$swift_arch" --package-path "$SWIFT_PACKAGE_PATH" --show-bin-path)
+
+          bundle_dir="$RUNNER_TEMP/bundle/$arch"
+          app="$bundle_dir/$APP_NAME.app"
+          rm -rf "$app"
+          mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
+          cp "$bin_dir/$product" "$app/Contents/MacOS/$APP_NAME"
+          cp "$INFO_PLIST" "$app/Contents/Info.plist"
+          cp "$ICON" "$app/Contents/Resources/AppIcon.icns"
+
+          if [ -n "$PLIST_ENTRIES" ]; then
+            while IFS= read -r entry; do
+              [ -n "$entry" ] || continue
+              key="${entry%%=*}"
+              val="${entry#*=}"
+              if [ -n "$val" ]; then
+                /usr/libexec/PlistBuddy -c "Set :$key $val" "$app/Contents/Info.plist" 2>/dev/null \
+                  || /usr/libexec/PlistBuddy -c "Add :$key string $val" "$app/Contents/Info.plist"
+              fi
+            done <<< "$PLIST_ENTRIES"
+          fi
+
+          if [ -n "$EXTRA_RESOURCES" ]; then
+            while IFS= read -r resource; do
+              [ -n "$resource" ] || continue
+              cp -R "$resource" "$app/Contents/Resources/"
+            done <<< "$EXTRA_RESOURCES"
+          fi
+
+          set -- --force --sign "${SIGN_IDENTITY:--}"
+          if [ -n "$BUNDLE_ID" ]; then
+            set -- "$@" --identifier "$BUNDLE_ID"
+          fi
+          if [ -n "${SIGN_KEYCHAIN:-}" ]; then
+            set -- "$@" --keychain "$SIGN_KEYCHAIN"
+          fi
+          if [ "$HARDENED_RUNTIME" = "true" ]; then
+            set -- "$@" --options runtime --timestamp
+          fi
+          codesign "$@" "$app"
+
+          if [ -n "$MIN_MACOS_VERSION" ]; then
+            otool -l "$app/Contents/MacOS/$APP_NAME" | grep -q "minos $MIN_MACOS_VERSION"
+          fi
+
+          dmg="$OUTPUT_DIR/${prefix}-${arch}.dmg"
+          archive="$OUTPUT_DIR/${prefix}-${arch}.app.tar.gz"
+          staging="$RUNNER_TEMP/dmg-staging-$arch"
+
+          rm -rf "$staging" "$dmg"
+          mkdir -p "$staging"
+          ditto "$app" "$staging/$APP_NAME.app"
+          ln -s /Applications "$staging/Applications"
+          hdiutil create -volname "$APP_NAME" -srcfolder "$staging" -fs HFS+ -format UDZO -ov "$dmg" > /dev/null
+          rm -rf "$staging"
+
+          # COPYFILE_DISABLE keeps macOS metadata files (._*) out of the archive.
+          COPYFILE_DISABLE=1 tar -czf "$archive" -C "$bundle_dir" "$APP_NAME.app"
+
+          echo "${arch}-dmg=${dmg}" >> "$GITHUB_OUTPUT"
+          echo "${arch}-archive=${archive}" >> "$GITHUB_OUTPUT"
+        done
+
+        echo "version=${resolved_version}" >> "$GITHUB_OUTPUT"
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifact-name || format('{0}-macos', inputs.app-name) }}
+        path: |
+          ${{ steps.build.outputs.arm64-dmg }}
+          ${{ steps.build.outputs.x64-dmg }}
+          ${{ steps.build.outputs.arm64-archive }}
+          ${{ steps.build.outputs.x64-archive }}
+
+    - name: Remove signing keychain
+      if: always() && env.SIGN_KEYCHAIN != ''
+      shell: bash
+      run: security delete-keychain "$SIGN_KEYCHAIN"
+
+    - name: Attach to release
+      if: inputs.tag != ''
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        TAG: ${{ inputs.tag }}
+        APP_NAME: ${{ inputs.app-name }}
+        VERSION: ${{ steps.build.outputs.version }}
+        ARM64_DMG: ${{ steps.build.outputs.arm64-dmg }}
+        X64_DMG: ${{ steps.build.outputs.x64-dmg }}
+        ARM64_ARCHIVE: ${{ steps.build.outputs.arm64-archive }}
+        X64_ARCHIVE: ${{ steps.build.outputs.x64-archive }}
+      run: |
+        if [ -z "$GH_TOKEN" ]; then
+          echo "::error::github-token is required when tag is set."
+          exit 1
+        fi
+
+        if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+          notes="${APP_NAME}${VERSION:+ $VERSION}"
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag --title "$TAG" --notes "$notes" \
+            || gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null
+        fi
+
+        gh release upload "$TAG" "$ARM64_DMG" "$X64_DMG" "$ARM64_ARCHIVE" "$X64_ARCHIVE" \
+          --repo "$GITHUB_REPOSITORY" --clobber
