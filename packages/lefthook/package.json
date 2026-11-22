@@ -1,0 +1,28 @@
+{
+  "name": "@alphacifer/lefthook",
+  "version": "0.0.1",
+  "description": "Shared Lefthook configurations for Alpha's projects.",
+  "exports": {
+    "./biome": "./biome.yml",
+    "./oxc": "./oxc.yml",
+    "./rust": "./rust.yml"
+  },
+  "keywords": [
+    "alpha",
+    "dx",
+    "lefthook"
+  ],
+  "files": [
+    "*.yml"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "author": "Alpha",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zgid123/alpha-dx.git"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,22 @@
+pre-commit:
+  commands:
+    rust-fmt:
+      glob: "*.rs"
+      run: |
+        root_edition=$(sed -n 's/^edition *= *"\([0-9]*\)".*/\1/p' Cargo.toml 2>/dev/null | head -n 1)
+        for file in {staged_files}; do
+          dir=$(dirname "$file")
+          edition=""
+          while [ "$dir" != "." ] && [ "$dir" != "/" ]; do
+            if [ -f "$dir/Cargo.toml" ]; then
+              edition=$(sed -n 's/^edition *= *"\([0-9]*\)".*/\1/p' "$dir/Cargo.toml" | head -n 1)
+              break
+            fi
+            dir=$(dirname "$dir")
+          done
+          rustfmt --edition "${edition:-${root_edition:-2021}}" "$file"
+        done
+      stage_fixed: true
+    rust-clippy:
+      glob: "*.{rs,toml}"
+      run: cargo clippy --workspace --all-targets -- -D warnings
