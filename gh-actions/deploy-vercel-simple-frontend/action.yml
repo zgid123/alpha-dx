@@ -1,0 +1,79 @@
+name: Deploy Simple Frontend to Vercel
+
+description: Prepare Node.js and pnpm, build workspace artifacts, and deploy a prebuilt frontend to Vercel
+
+inputs:
+  vercel-token:
+    description: Vercel authentication token
+    required: true
+  vercel-org-id:
+    description: Vercel organization ID
+    required: true
+  vercel-project-id:
+    description: Vercel project ID
+    required: true
+  filter:
+    description: Optional pnpm workspace filter to build after the root build (for example cms or blog)
+    required: false
+    default: ''
+  environment:
+    description: Target Vercel environment (production or preview)
+    required: false
+    default: production
+
+runs:
+  using: composite
+  steps:
+    - name: Prepare Node.js and pnpm
+      uses: zgid123/alpha-dx/gh-actions/prepare-nodejs@main
+
+    - name: Build app
+      shell: bash
+      env:
+        FILTER: ${{ inputs.filter }}
+      run: |
+        pnpm build
+        if [ -n "$FILTER" ]; then
+          pnpm --filter="$FILTER" build
+        fi
+
+    - name: Install Vercel CLI
+      shell: bash
+      run: pnpm add -g vercel@latest
+
+    - name: Pull Vercel Environment Information
+      shell: bash
+      env:
+        VERCEL_ORG_ID: ${{ inputs.vercel-org-id }}
+        VERCEL_PROJECT_ID: ${{ inputs.vercel-project-id }}
+        VERCEL_TOKEN: ${{ inputs.vercel-token }}
+        ENVIRONMENT: ${{ inputs.environment }}
+      run: vercel pull --yes --environment="$ENVIRONMENT" --token="$VERCEL_TOKEN"
+
+    - name: Build Project Artifacts
+      shell: bash
+      env:
+        VERCEL_ORG_ID: ${{ inputs.vercel-org-id }}
+        VERCEL_PROJECT_ID: ${{ inputs.vercel-project-id }}
+        VERCEL_TOKEN: ${{ inputs.vercel-token }}
+        ENVIRONMENT: ${{ inputs.environment }}
+      run: |
+        if [ "$ENVIRONMENT" = "production" ]; then
+          vercel build --prod --token="$VERCEL_TOKEN"
+        else
+          vercel build --token="$VERCEL_TOKEN"
+        fi
+
+    - name: Deploy Project Artifacts to Vercel
+      shell: bash
+      env:
+        VERCEL_ORG_ID: ${{ inputs.vercel-org-id }}
+        VERCEL_PROJECT_ID: ${{ inputs.vercel-project-id }}
+        VERCEL_TOKEN: ${{ inputs.vercel-token }}
+        ENVIRONMENT: ${{ inputs.environment }}
+      run: |
+        if [ "$ENVIRONMENT" = "production" ]; then
+          vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+        else
+          vercel deploy --prebuilt --token="$VERCEL_TOKEN"
+        fi
