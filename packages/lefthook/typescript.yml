@@ -1,0 +1,31 @@
+pre-commit:
+  commands:
+    typecheck:
+      glob: '*.{ts,tsx,mts,cts}'
+      run: |
+        configs=""
+        for file in {staged_files}; do
+          dir=$(dirname "$file")
+          while true; do
+            if [ -f "$dir/tsconfig.json" ]; then
+              cfg="$dir/tsconfig.json"
+              case "$configs" in
+                *"|$cfg|"*) ;;
+                *) configs="${configs}|${cfg}|" ;;
+              esac
+              break
+            fi
+            [ "$dir" = "." ] || [ "$dir" = "/" ] && break
+            dir=$(dirname "$dir")
+          done
+        done
+        old_ifs=$IFS
+        IFS='|'
+        for cfg in $configs; do
+          [ -n "$cfg" ] || continue
+          (
+            IFS=$old_ifs
+            cd "$(dirname "$cfg")" && pnpm exec tsc --noEmit
+          ) || exit 1
+        done
+        IFS=$old_ifs

@@ -23,6 +23,7 @@ Pick the presets your repository uses (`biome.yml` and `oxc.yml` are alternative
 | `biome.yml` | `packages/lefthook/biome.yml` | `biome-check` (`pnpm biome check --write`, `stage_fixed: true`) |
 | `oxc.yml` | `packages/lefthook/oxc.yml` | `format` (`oxfmt`, priority `1`) then `lint` (`oxlint --fix`, priority `2`), `stage_fixed: true` |
 | `rust.yml` | `packages/lefthook/rust.yml` | `rust-fmt` (`rustfmt` on staged files, `stage_fixed: true`) and `rust-clippy` (`cargo clippy`) |
+| `typescript.yml` | `packages/lefthook/typescript.yml` | `typecheck` (runs `pnpm exec tsc --noEmit` for each affected `tsconfig.json`) |
 
 ## Option 1: Extend from `node_modules` (`extends`)
 
@@ -32,6 +33,7 @@ Create `lefthook.yml` at your repository root (swap `biome.yml` for `oxc.yml` if
 extends:
   - node_modules/@alphacifer/lefthook/biome.yml
   - node_modules/@alphacifer/lefthook/rust.yml
+  - node_modules/@alphacifer/lefthook/typescript.yml
 ```
 
 ## Option 2: Load directly from GitHub (`remotes`)
@@ -45,4 +47,5 @@ remotes:
     configs:
       - packages/lefthook/biome.yml
       - packages/lefthook/rust.yml
+      - packages/lefthook/typescript.yml
 ```
