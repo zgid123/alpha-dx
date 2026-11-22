@@ -1,6 +1,6 @@
 {
   "name": "@alphacifer/lefthook",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Shared Lefthook configurations for Alpha's projects.",
   "exports": {
     "./biome": "./biome.yml",
