@@ -39,6 +39,11 @@ Shared composite actions live under [`gh-actions/`](./gh-actions). See [`gh-acti
 | Action | Path | Description |
 | --- | --- | --- |
 | `prepare-nodejs` | [`gh-actions/prepare-nodejs`](./gh-actions/prepare-nodejs/action.yml) | Set up `pnpm`, Node.js `24.22.3` with pnpm store caching (`cache: 'pnpm'`), and run `pnpm install` |
+| `prepare-rust` | [`gh-actions/prepare-rust`](./gh-actions/prepare-rust/action.yml) | Install the Rust toolchain, optional components/targets, and configure build caching |
+| `test-rust` | [`gh-actions/test-rust`](./gh-actions/test-rust/action.yml) | Check formatting, run clippy, and run tests for a Rust crate or workspace |
+| `deploy-app-landing-vitepress` | [`gh-actions/deploy-app-landing-vitepress`](./gh-actions/deploy-app-landing-vitepress/action.yml) | Download release manifests from R2, build a VitePress landing page, and deploy it to GitHub Pages |
+| `deploy-ec2-simple-node` | [`gh-actions/deploy-ec2-simple-node`](./gh-actions/deploy-ec2-simple-node/action.yml) | Build a Node.js Docker image, copy the archive to EC2 over SSH, and run the container |
+| `deploy-vercel-simple-frontend` | [`gh-actions/deploy-vercel-simple-frontend`](./gh-actions/deploy-vercel-simple-frontend/action.yml) | Prepare Node.js and pnpm, build workspace artifacts, and deploy a prebuilt frontend to Vercel |
 | `detect-changes` | [`gh-actions/detect-changes`](./gh-actions/detect-changes/action.yml) | Evaluate `key = regex` path filters against `base` and output a `changes` JSON object |
 
 ## Development
@@ -104,6 +109,11 @@ Shared composite actions live under [`gh-actions/`](./gh-actions). See [`gh-acti
 | Action | Path | Description |
 | --- | --- | --- |
 | `prepare-nodejs` | [`gh-actions/prepare-nodejs`](./gh-actions/prepare-nodejs/action.yml) | Set up `pnpm`, Node.js `24.22.3` with pnpm store caching (`cache: 'pnpm'`), and run `pnpm install` |
+| `prepare-rust` | [`gh-actions/prepare-rust`](./gh-actions/prepare-rust/action.yml) | Install the Rust toolchain, optional components/targets, and configure build caching |
+| `test-rust` | [`gh-actions/test-rust`](./gh-actions/test-rust/action.yml) | Check formatting, run clippy, and run tests for a Rust crate or workspace |
+| `deploy-app-landing-vitepress` | [`gh-actions/deploy-app-landing-vitepress`](./gh-actions/deploy-app-landing-vitepress/action.yml) | Download release manifests from R2, build a VitePress landing page, and deploy it to GitHub Pages |
+| `deploy-ec2-simple-node` | [`gh-actions/deploy-ec2-simple-node`](./gh-actions/deploy-ec2-simple-node/action.yml) | Build a Node.js Docker image, copy the archive to EC2 over SSH, and run the container |
+| `deploy-vercel-simple-frontend` | [`gh-actions/deploy-vercel-simple-frontend`](./gh-actions/deploy-vercel-simple-frontend/action.yml) | Prepare Node.js and pnpm, build workspace artifacts, and deploy a prebuilt frontend to Vercel |
 | `detect-changes` | [`gh-actions/detect-changes`](./gh-actions/detect-changes/action.yml) | Evaluate `key = regex` path filters against `base` and output a `changes` JSON object |
 
 ## Development

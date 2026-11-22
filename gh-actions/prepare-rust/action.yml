@@ -1,0 +1,130 @@
+name: Prepare Rust
+
+description: Install the Rust toolchain, optional components and targets, and configure build caching
+
+inputs:
+  toolchain:
+    description: Toolchain to install (for example stable). Leave empty to follow rust-toolchain.toml via rustup show.
+    required: false
+    default: ''
+  components:
+    description: Comma- or space-separated rustup components to install (for example clippy,rustfmt)
+    required: false
+    default: ''
+  targets:
+    description: Comma- or space-separated rustup targets to add (for example aarch64-apple-darwin x86_64-apple-darwin)
+    required: false
+    default: ''
+  cache:
+    description: Enable Rust build caching (true or false)
+    required: false
+    default: 'true'
+  cache-key:
+    description: Extra cache key prefix for rust-cache or self-hosted target-dir isolation (for example release-macos)
+    required: false
+    default: ''
+  cache-on-failure:
+    description: Save rust-cache even when a job fails (true or false)
+    required: false
+    default: 'true'
+  self-hosted-cache:
+    description: Self-hosted runner cache strategy (sccache, target-dir, or none)
+    required: false
+    default: 'sccache'
+
+runs:
+  using: composite
+  steps:
+    - name: Install Rust
+      shell: bash
+      env:
+        TOOLCHAIN: ${{ inputs.toolchain }}
+        COMPONENTS: ${{ inputs.components }}
+        TARGETS: ${{ inputs.targets }}
+      run: |
+        set -euo pipefail
+        set -f
+
+        components=$(printf '%s' "${COMPONENTS:-}" | tr ',' ' ')
+        targets=$(printf '%s' "${TARGETS:-}" | tr ',' ' ')
+
+        if [ -n "${TOOLCHAIN:-}" ]; then
+          set -- "$TOOLCHAIN" --profile minimal
+          for component in $components; do
+            set -- "$@" --component "$component"
+          done
+          rustup toolchain install "$@"
+          rustup default "$TOOLCHAIN"
+        else
+          rustup show
+          set --
+          for component in $components; do
+            set -- "$@" "$component"
+          done
+          if [ "$#" -gt 0 ]; then
+            rustup component add "$@"
+          fi
+        fi
+
+        set --
+        for target in $targets; do
+          set -- "$@" "$target"
+        done
+        if [ "$#" -gt 0 ]; then
+          rustup target add "$@"
+        fi
+
+    - name: Cache Rust builds
+      if: inputs.cache == 'true' && runner.environment == 'github-hosted'
+      uses: Swatinem/rust-cache@v2
+      with:
+        key: ${{ inputs.cache-key }}
+        cache-on-failure: ${{ inputs.cache-on-failure }}
+
+    - name: Configure self-hosted Rust cache
+      if: inputs.cache == 'true' && runner.environment != 'github-hosted' && inputs.self-hosted-cache != 'none'
+      shell: bash
+      env:
+        MODE: ${{ inputs.self-hosted-cache }}
+        CACHE_KEY: ${{ inputs.cache-key }}
+      run: |
+        set -euo pipefail
+
+        case "$MODE" in
+          sccache)
+            if command -v sccache > /dev/null 2>&1; then
+              echo "RUSTC_WRAPPER=sccache" >> "$GITHUB_ENV"
+              echo "CARGO_INCREMENTAL=0" >> "$GITHUB_ENV"
+            else
+              echo "::notice::sccache not found on self-hosted runner; building without compiler cache."
+            fi
+            ;;
+          target-dir)
+            repo="${GITHUB_REPOSITORY##*/}"
+            if [ -z "$repo" ]; then
+              repo="rust"
+            fi
+
+            suffix=""
+            if [ -n "${CACHE_KEY:-}" ]; then
+              clean_key=$(printf '%s' "$CACHE_KEY" | tr -cs 'A-Za-z0-9._-' '-' | sed 's/^-//; s/-$//')
+              if [ -n "$clean_key" ]; then
+                suffix="-$clean_key"
+              fi
+            fi
+
+            cache_root="${XDG_CACHE_HOME:-$HOME/.cache}"
+            target_dir="$cache_root/cargo-target/${repo}${suffix}"
+            mkdir -p "$target_dir"
+
+            if command -v cygpath > /dev/null 2>&1; then
+              target_dir=$(cygpath -w "$target_dir")
+            fi
+
+            echo "CARGO_TARGET_DIR=$target_dir" >> "$GITHUB_ENV"
+            ;;
+          *)
+            echo "::error::Invalid self-hosted-cache '$MODE'; expected 'sccache', 'target-dir', or 'none'."
+            exit 1
+            ;;
+        esac

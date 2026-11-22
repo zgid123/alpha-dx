@@ -1,0 +1,105 @@
+name: Deploy App Landing (VitePress)
+
+description: Download release manifests from Cloudflare R2, build a VitePress landing page, and deploy it to GitHub Pages
+
+inputs:
+  bucket:
+    description: R2 bucket containing manifests/<platform>.json (for example remio or typio)
+    required: true
+  releases-dir-env:
+    description: Environment variable name exported with the downloaded manifests directory (for example REMIO_RELEASES_DIR)
+    required: true
+  cloudflare-api-token:
+    description: Token that can read the release bucket. Leave empty to skip download and build without release links.
+    required: false
+    default: ''
+  cloudflare-account-id:
+    description: Cloudflare account ID of the release bucket
+    required: false
+    default: ''
+  platforms:
+    description: Space-separated platform manifest names to fetch
+    required: false
+    default: 'macos windows'
+  wrangler-filter:
+    description: pnpm workspace filter that provides wrangler
+    required: false
+    default: server
+  website-filter:
+    description: pnpm workspace filter for the VitePress site
+    required: false
+    default: website
+  dist-path:
+    description: Path to the built static site directory
+    required: false
+    default: workspaces/website/.vitepress/dist
+  artifact-name:
+    description: Optional Pages artifact name override (defaults to github-pages-<run_attempt>)
+    required: false
+    default: ''
+
+outputs:
+  page-url:
+    description: The deployed GitHub Pages URL
+    value: ${{ steps.deployment.outputs.page_url }}
+
+runs:
+  using: composite
+  steps:
+    - name: Prepare Node.js and pnpm
+      uses: zgid123/alpha-dx/gh-actions/prepare-nodejs@main
+
+    - name: Download release manifests
+      shell: bash
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ inputs.cloudflare-api-token }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ inputs.cloudflare-account-id }}
+        BUCKET: ${{ inputs.bucket }}
+        RELEASES_DIR_ENV: ${{ inputs.releases-dir-env }}
+        PLATFORMS: ${{ inputs.platforms }}
+        WRANGLER_FILTER: ${{ inputs.wrangler-filter }}
+      run: |
+        dir="$RUNNER_TEMP/releases"
+        mkdir -p "$dir"
+        echo "${RELEASES_DIR_ENV}=${dir}" >> "$GITHUB_ENV"
+
+        if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+          echo "::notice::No CLOUDFLARE_API_TOKEN; the page is built without download links."
+          exit 0
+        fi
+
+        for platform in $PLATFORMS; do
+          pnpm --filter "$WRANGLER_FILTER" exec wrangler r2 object get "$BUCKET/manifests/$platform.json" \
+            --file "$dir/$platform.json" --remote \
+            || {
+              # Wrangler leaves an empty file behind when the key is missing.
+              rm -f "$dir/$platform.json"
+              echo "::notice::No $platform release in $BUCKET yet."
+            }
+        done
+
+    - name: Build site
+      shell: bash
+      env:
+        WEBSITE_FILTER: ${{ inputs.website-filter }}
+      run: pnpm --filter "$WEBSITE_FILTER" build
+
+    - name: Pack site
+      shell: bash
+      env:
+        DIST_PATH: ${{ inputs.dist-path }}
+      run: COPYFILE_DISABLE=1 tar -cf "$RUNNER_TEMP/artifact.tar" -C "$DIST_PATH" .
+
+    - name: Upload site
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifact-name || format('github-pages-{0}', github.run_attempt) }}
+        path: ${{ runner.temp }}/artifact.tar
+        retention-days: 1
+        if-no-files-found: error
+
+    - name: Deploy
+      id: deployment
+      uses: actions/deploy-pages@v4
+      with:
+        artifact_name: ${{ inputs.artifact-name || format('github-pages-{0}', github.run_attempt) }}

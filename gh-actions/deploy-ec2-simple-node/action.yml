@@ -1,0 +1,175 @@
+name: Deploy Simple Node.js App to EC2
+
+description: Build a Node.js Docker image, archive it as an artifact, and deploy the container to EC2 over SSH
+
+inputs:
+  step:
+    description: Execution step to run (build, deploy, or all)
+    required: false
+    default: all
+  image-name:
+    description: Docker image name (for example blog-server)
+    required: true
+  artifact-name:
+    description: Optional artifact name override for passing the image archive between build and deploy jobs (defaults to <image-name>-docker-image)
+    required: false
+    default: ''
+  ec2-host:
+    description: EC2 hostname or IP address (required when step is deploy or all)
+    required: false
+    default: ''
+  ec2-user:
+    description: EC2 SSH username (required when step is deploy or all)
+    required: false
+    default: ''
+  ssh-key:
+    description: SSH private key for connecting to EC2 (required when step is deploy or all)
+    required: false
+    default: ''
+  ssh-key-pub:
+    description: Optional SSH public key
+    required: false
+    default: ''
+  container-name:
+    description: Docker container name on EC2 (defaults to <image-name>-container)
+    required: false
+    default: ''
+  dockerfile:
+    description: Path to the Dockerfile
+    required: false
+    default: infrastructures/docker/Dockerfile.server
+  context:
+    description: Docker build context directory
+    required: false
+    default: '.'
+  port:
+    description: Port mapping passed to docker run -p
+    required: false
+    default: '3000:3000'
+  env-dir:
+    description: Workspace directory where .env and .env.production.local are generated before building
+    required: false
+    default: workspaces/server
+  env-vars:
+    description: Optional newline-separated KEY=VALUE entries written to <env-dir>/.env.production.local
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Docker Buildx
+      if: inputs.step == 'build' || inputs.step == 'all'
+      uses: docker/setup-buildx-action@v3
+
+    - name: Cache Docker layers
+      if: inputs.step == 'build' || inputs.step == 'all'
+      uses: actions/cache@v4
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-buildx-
+
+    - name: Create .env.production.local
+      if: inputs.step == 'build' || inputs.step == 'all'
+      shell: bash
+      env:
+        ENV_DIR: ${{ inputs.env-dir }}
+        ENV_VARS: ${{ inputs.env-vars }}
+      run: |
+        mkdir -p "$ENV_DIR"
+        echo "NODE_ENV=production" >> "$ENV_DIR/.env"
+        if [ -n "$ENV_VARS" ]; then
+          printf '%s\n' "$ENV_VARS" >> "$ENV_DIR/.env.production.local"
+        else
+          touch "$ENV_DIR/.env.production.local"
+        fi
+
+    - name: Build Docker image
+      if: inputs.step == 'build' || inputs.step == 'all'
+      shell: bash
+      env:
+        IMAGE_NAME: ${{ inputs.image-name }}
+        DOCKERFILE: ${{ inputs.dockerfile }}
+        CONTEXT: ${{ inputs.context }}
+      run: |
+        docker build -f "$DOCKERFILE" -t "${IMAGE_NAME}:latest" "$CONTEXT"
+        docker save "${IMAGE_NAME}:latest" | gzip > "$RUNNER_TEMP/${IMAGE_NAME}.tar.gz"
+
+    - name: Archive Docker image
+      if: inputs.step == 'build'
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifact-name || format('{0}-docker-image', inputs.image-name) }}
+        path: ${{ runner.temp }}/${{ inputs.image-name }}.tar.gz
+        retention-days: 1
+        if-no-files-found: error
+
+    - name: Download Docker image
+      if: inputs.step == 'deploy'
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ inputs.artifact-name || format('{0}-docker-image', inputs.image-name) }}
+        path: ${{ runner.temp }}
+
+    - name: Configure SSH
+      if: inputs.step == 'deploy' || inputs.step == 'all'
+      shell: bash
+      env:
+        EC2_HOST: ${{ inputs.ec2-host }}
+        EC2_USER: ${{ inputs.ec2-user }}
+        SSH_KEY: ${{ inputs.ssh-key }}
+        SSH_KEY_PUB: ${{ inputs.ssh-key-pub }}
+      run: |
+        if [ -z "$EC2_HOST" ] || [ -z "$EC2_USER" ] || [ -z "$SSH_KEY" ]; then
+          echo "::error::ec2-host, ec2-user, and ssh-key are required when step is deploy or all."
+          exit 1
+        fi
+        mkdir -p ~/.ssh/
+        printf '%s\n' "$SSH_KEY" > ~/.ssh/github-actions-key
+        chmod 600 ~/.ssh/github-actions-key
+        if [ -n "$SSH_KEY_PUB" ]; then
+          printf '%s\n' "$SSH_KEY_PUB" > ~/.ssh/github-actions-key.pub
+          chmod 600 ~/.ssh/github-actions-key.pub
+        fi
+        cat >>~/.ssh/config <<END
+        Host ec2
+          HostName ${EC2_HOST}
+          User ${EC2_USER}
+          IdentityFile ~/.ssh/github-actions-key
+          StrictHostKeyChecking no
+        END
+
+    - name: Copy Docker image to EC2
+      if: inputs.step == 'deploy' || inputs.step == 'all'
+      shell: bash
+      env:
+        IMAGE_NAME: ${{ inputs.image-name }}
+      run: |
+        ssh ec2 "mkdir -p ~/docker"
+        scp "$RUNNER_TEMP/${IMAGE_NAME}.tar.gz" "ec2:~/docker/${IMAGE_NAME}.tar.gz"
+
+    - name: Deploy to EC2
+      if: inputs.step == 'deploy' || inputs.step == 'all'
+      shell: bash
+      env:
+        IMAGE_NAME: ${{ inputs.image-name }}
+        CONTAINER_NAME: ${{ inputs.container-name }}
+        PORT: ${{ inputs.port }}
+      run: |
+        container="${CONTAINER_NAME:-${IMAGE_NAME}-container}"
+        ssh -tt ec2 << EOF
+          docker load -i ~/docker/${IMAGE_NAME}.tar.gz
+
+          docker stop ${container} || true
+          docker rm ${container} || true
+
+          docker run -d --name ${container} -p ${PORT} ${IMAGE_NAME}:latest
+
+          docker image prune -af
+
+          rm -rf ~/docker/${IMAGE_NAME}.tar.gz
+
+          exit
+        EOF
