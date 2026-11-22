@@ -1,0 +1,92 @@
+name: Upload to R2
+
+description: Upload files to Cloudflare R2 via Wrangler and optionally remove obsolete keys
+
+inputs:
+  bucket:
+    description: Target Cloudflare R2 bucket name (for example remio or typio)
+    required: true
+  cloudflare-api-token:
+    description: Token with write access to the bucket. Leave empty to skip upload.
+    required: false
+    default: ''
+  cloudflare-account-id:
+    description: Cloudflare account ID of the bucket
+    required: false
+    default: ''
+  uploads-file:
+    description: Path to a TSV file (<r2-key>\t<local-path> per line) uploaded first, in order
+    required: false
+    default: ''
+  files:
+    description: Optional newline-separated <r2-key>=<local-path> entries uploaded after uploads-file (for example a manifest)
+    required: false
+    default: ''
+  delete-file:
+    description: Optional path to a file listing obsolete R2 keys (one per line) to remove after uploads finish
+    required: false
+    default: ''
+  wrangler-filter:
+    description: Optional pnpm workspace filter providing wrangler. Leave empty to run pnpm exec wrangler.
+    required: false
+    default: server
+
+runs:
+  using: composite
+  steps:
+    - name: Upload to R2
+      shell: bash
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ inputs.cloudflare-api-token }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ inputs.cloudflare-account-id }}
+        BUCKET: ${{ inputs.bucket }}
+        UPLOADS_FILE: ${{ inputs.uploads-file }}
+        FILES: ${{ inputs.files }}
+        DELETE_FILE: ${{ inputs.delete-file }}
+        WRANGLER_FILTER: ${{ inputs.wrangler-filter }}
+      run: |
+        if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+          echo "::notice::No CLOUDFLARE_API_TOKEN; skipping R2 upload."
+          exit 0
+        fi
+
+        absolute() {
+          case "$1" in
+            /* | [A-Za-z]:*) echo "$1" ;;
+            *) echo "$PWD/$1" ;;
+          esac
+        }
+
+        r2() {
+          if [ -n "$WRANGLER_FILTER" ]; then
+            pnpm --filter "$WRANGLER_FILTER" exec wrangler r2 object "$@" --remote
+          else
+            pnpm exec wrangler r2 object "$@" --remote
+          fi
+        }
+
+        put() {
+          r2 put "$BUCKET/$1" --file "$(absolute "$2")"
+        }
+
+        # Read from fd 3 so wrangler never swallows the input list on stdin.
+        if [ -n "$UPLOADS_FILE" ] && [ -f "$UPLOADS_FILE" ]; then
+          while IFS=$'\t' read -r key path <&3 || [ -n "${key:-}" ]; do
+            [ -n "$key" ] || continue
+            put "$key" "$path"
+          done 3< "$UPLOADS_FILE"
+        fi
+
+        if [ -n "$FILES" ]; then
+          while IFS= read -r line <&3 || [ -n "${line:-}" ]; do
+            [ -n "$line" ] || continue
+            put "${line%%=*}" "${line#*=}"
+          done 3<<< "$FILES"
+        fi
+
+        if [ -n "$DELETE_FILE" ] && [ -f "$DELETE_FILE" ]; then
+          while IFS= read -r old <&3 || [ -n "${old:-}" ]; do
+            [ -n "$old" ] || continue
+            r2 delete "$BUCKET/$old" || echo "::warning::Could not delete $old from $BUCKET."
+          done 3< "$DELETE_FILE"
+        fi

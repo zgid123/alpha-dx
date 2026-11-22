@@ -126,20 +126,20 @@ runs:
           echo "::error::ec2-host, ec2-user, and ssh-key are required when step is deploy or all."
           exit 1
         fi
-        mkdir -p ~/.ssh/
-        printf '%s\n' "$SSH_KEY" > ~/.ssh/github-actions-key
-        chmod 600 ~/.ssh/github-actions-key
+        printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/github-actions-key"
+        chmod 600 "$RUNNER_TEMP/github-actions-key"
         if [ -n "$SSH_KEY_PUB" ]; then
-          printf '%s\n' "$SSH_KEY_PUB" > ~/.ssh/github-actions-key.pub
-          chmod 600 ~/.ssh/github-actions-key.pub
+          printf '%s\n' "$SSH_KEY_PUB" > "$RUNNER_TEMP/github-actions-key.pub"
+          chmod 600 "$RUNNER_TEMP/github-actions-key.pub"
         fi
-        cat >>~/.ssh/config <<END
+        cat > "$RUNNER_TEMP/ssh_config" <<END
         Host ec2
           HostName ${EC2_HOST}
           User ${EC2_USER}
-          IdentityFile ~/.ssh/github-actions-key
+          IdentityFile ${RUNNER_TEMP}/github-actions-key
           StrictHostKeyChecking no
         END
+        chmod 600 "$RUNNER_TEMP/ssh_config"
 
     - name: Copy Docker image to EC2
       if: inputs.step == 'deploy' || inputs.step == 'all'
@@ -147,8 +147,8 @@ runs:
       env:
         IMAGE_NAME: ${{ inputs.image-name }}
       run: |
-        ssh ec2 "mkdir -p ~/docker"
-        scp "$RUNNER_TEMP/${IMAGE_NAME}.tar.gz" "ec2:~/docker/${IMAGE_NAME}.tar.gz"
+        ssh -F "$RUNNER_TEMP/ssh_config" ec2 "mkdir -p ~/docker"
+        scp -F "$RUNNER_TEMP/ssh_config" "$RUNNER_TEMP/${IMAGE_NAME}.tar.gz" "ec2:~/docker/${IMAGE_NAME}.tar.gz"
 
     - name: Deploy to EC2
       if: inputs.step == 'deploy' || inputs.step == 'all'
@@ -159,7 +159,7 @@ runs:
         PORT: ${{ inputs.port }}
       run: |
         container="${CONTAINER_NAME:-${IMAGE_NAME}-container}"
-        ssh -tt ec2 << EOF
+        ssh -F "$RUNNER_TEMP/ssh_config" -tt ec2 << EOF
           docker load -i ~/docker/${IMAGE_NAME}.tar.gz
 
           docker stop ${container} || true
@@ -173,3 +173,4 @@ runs:
 
           exit
         EOF
+        rm -f "$RUNNER_TEMP/github-actions-key" "$RUNNER_TEMP/github-actions-key.pub" "$RUNNER_TEMP/ssh_config"

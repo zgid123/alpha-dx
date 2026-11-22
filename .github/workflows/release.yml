@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Prepare Node.JS and pnpm
-        uses: ./gh-actions/prepare-nodejs
+        uses: ./gh-actions/preparation/nodejs
 
       - name: Disable GPG
         run: git config --global commit.gpgsign false

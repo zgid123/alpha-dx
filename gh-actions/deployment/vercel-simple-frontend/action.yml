@@ -25,7 +25,7 @@ runs:
   using: composite
   steps:
     - name: Prepare Node.js and pnpm
-      uses: zgid123/alpha-dx/gh-actions/prepare-nodejs@main
+      uses: zgid123/alpha-dx/gh-actions/preparation/nodejs@main
 
     - name: Build app
       shell: bash

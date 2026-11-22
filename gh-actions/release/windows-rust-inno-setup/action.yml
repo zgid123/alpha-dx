@@ -1,0 +1,167 @@
+name: Release Windows (Rust + Inno Setup)
+
+description: Build a Windows app (Rust/Cargo or custom command), compile its Inno Setup installer, upload the artifact, and attach it to a GitHub Release
+
+inputs:
+  app-name:
+    description: Display name for artifacts and release notes (for example Remio or Typio)
+    required: true
+  iss-path:
+    description: Path to the Inno Setup .iss script (for example workspaces/remio/bundle/windows/remio.iss)
+    required: true
+  installer-path:
+    description: Exact path or glob matching the generated installer (for example target/release/Remio-*-setup.exe)
+    required: true
+  package:
+    description: Optional Cargo package name to build (-p <package>). Triggers preparation/rust automatically.
+    required: false
+    default: ''
+  build-command:
+    description: Optional custom PowerShell build command (runs after cargo build if package is also set)
+    required: false
+    default: ''
+  build-env:
+    description: Optional newline-separated KEY=VALUE entries exported before building
+    required: false
+    default: ''
+  tag:
+    description: GitHub Release tag (for example remio@0.2.0). Empty builds without attaching.
+    required: false
+    default: ''
+  github-token:
+    description: Token that can create releases and upload assets (required when tag is set)
+    required: false
+    default: ''
+  toolchain:
+    description: Toolchain passed to preparation/rust when package is set (empty follows rust-toolchain.toml)
+    required: false
+    default: ''
+  cache-key:
+    description: Cache key passed to preparation/rust when package is set
+    required: false
+    default: release-windows
+  artifact-name:
+    description: Optional uploaded artifact name (defaults to <app-name>-windows)
+    required: false
+    default: ''
+
+outputs:
+  version:
+    description: Resolved release version (text after @ in tag)
+    value: ${{ steps.installer.outputs.version }}
+  installer:
+    description: Repo-relative path to the generated installer
+    value: ${{ steps.installer.outputs.installer }}
+
+runs:
+  using: composite
+  steps:
+    - name: Prepare Rust
+      if: inputs.package != ''
+      uses: zgid123/alpha-dx/gh-actions/preparation/rust@main
+      with:
+        toolchain: ${{ inputs.toolchain }}
+        cache-key: ${{ inputs.cache-key }}
+
+    - name: Install Inno Setup
+      shell: pwsh
+      run: if (-not (Get-Command iscc -ErrorAction SilentlyContinue)) { choco install innosetup --no-progress -y }
+
+    - name: Build app
+      if: inputs.package != '' || inputs.build-command != ''
+      shell: pwsh
+      env:
+        PACKAGE: ${{ inputs.package }}
+        BUILD_COMMAND: ${{ inputs.build-command }}
+        BUILD_ENV: ${{ inputs.build-env }}
+      run: |
+        $ErrorActionPreference = 'Stop'
+
+        if ($env:BUILD_ENV) {
+          foreach ($line in ($env:BUILD_ENV -split "`r?`n")) {
+            if ([string]::IsNullOrWhiteSpace($line)) { continue }
+            $parts = $line -split '=', 2
+            if ($parts.Length -eq 2) {
+              Set-Item -Path "env:$($parts[0].Trim())" -Value $parts[1]
+            }
+          }
+        }
+
+        if ($env:PACKAGE) {
+          cargo build --release -p $env:PACKAGE
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        }
+
+        if ($env:BUILD_COMMAND) {
+          Invoke-Expression $env:BUILD_COMMAND
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        }
+
+    - name: Build installer
+      id: installer
+      shell: pwsh
+      env:
+        ISS_PATH: ${{ inputs.iss-path }}
+        INSTALLER_PATH: ${{ inputs.installer-path }}
+        TAG: ${{ inputs.tag }}
+      run: |
+        $ErrorActionPreference = 'Stop'
+
+        $iscc = (Get-Command iscc -ErrorAction SilentlyContinue).Source
+        if (-not $iscc) { $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" }
+        if (-not (Test-Path $iscc)) { throw "ISCC.exe not found at '$iscc'" }
+
+        $issDir = Split-Path -Parent $env:ISS_PATH
+        if (-not $issDir) { $issDir = '.' }
+        $issFile = Split-Path -Leaf $env:ISS_PATH
+
+        Push-Location $issDir
+        try {
+          & $iscc $issFile
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        } finally {
+          Pop-Location
+        }
+
+        $file = Get-Item -Path $env:INSTALLER_PATH | Sort-Object LastWriteTimeUtc -Descending | Select-Object -First 1
+        if (-not $file) { throw "No installer matched '$($env:INSTALLER_PATH)'" }
+
+        $rel = [System.IO.Path]::GetRelativePath((Get-Location).Path, $file.FullName).Replace('\', '/')
+        $resolvedVersion = ''
+        if ($env:TAG -and $env:TAG.Contains('@')) {
+          $resolvedVersion = ($env:TAG -split '@', 2)[1]
+        } elseif ($env:TAG) {
+          $resolvedVersion = $env:TAG
+        }
+
+        Add-Content -Path $env:GITHUB_OUTPUT -Value "installer=$rel"
+        Add-Content -Path $env:GITHUB_OUTPUT -Value "version=$resolvedVersion"
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifact-name || format('{0}-windows', inputs.app-name) }}
+        path: ${{ steps.installer.outputs.installer }}
+
+    - name: Attach to release
+      if: inputs.tag != ''
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        TAG: ${{ inputs.tag }}
+        APP_NAME: ${{ inputs.app-name }}
+        VERSION: ${{ steps.installer.outputs.version }}
+        INSTALLER: ${{ steps.installer.outputs.installer }}
+      run: |
+        if [ -z "$GH_TOKEN" ]; then
+          echo "::error::github-token is required when tag is set."
+          exit 1
+        fi
+
+        if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+          notes="${APP_NAME}${VERSION:+ $VERSION}"
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag --title "$TAG" --notes "$notes" \
+            || gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null
+        fi
+
+        gh release upload "$TAG" "$INSTALLER" --repo "$GITHUB_REPOSITORY" --clobber
