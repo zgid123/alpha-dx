@@ -5,7 +5,8 @@
   "exports": {
     "./biome": "./biome.yml",
     "./oxc": "./oxc.yml",
-    "./rust": "./rust.yml"
+    "./rust": "./rust.yml",
+    "./typescript": "./typescript.yml"
   },
   "keywords": [
     "alpha",
