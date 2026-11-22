@@ -10,6 +10,7 @@ Shared TypeScript utilities, project configurations, Slidev themes/addons, and r
 | --- | --- | --- |
 | `@alphacifer/biome` | [`packages/biome`](./packages/biome) | Biome configuration presets |
 | `@alphacifer/eslint` | [`packages/eslint`](./packages/eslint) | ESLint configuration presets |
+| `@alphacifer/lefthook` | [`packages/lefthook`](./packages/lefthook) | Shared Lefthook pre-commit presets (`biome.yml`, `oxc.yml`, `rust.yml`) |
 | `@alphacifer/oxc` | [`packages/oxc`](./packages/oxc) | OXC configuration presets |
 | `@alphacifer/tsconfig` | [`packages/tsconfig`](./packages/tsconfig) | Shared TypeScript configuration presets |
 
@@ -80,6 +81,7 @@ Shared TypeScript utilities, project configurations, Slidev themes/addons, and r
 | --- | --- | --- |
 | `@alphacifer/biome` | [`packages/biome`](./packages/biome) | Biome configuration presets |
 | `@alphacifer/eslint` | [`packages/eslint`](./packages/eslint) | ESLint configuration presets |
+| `@alphacifer/lefthook` | [`packages/lefthook`](./packages/lefthook) | Shared Lefthook pre-commit presets (`biome.yml`, `oxc.yml`, `rust.yml`) |
 | `@alphacifer/oxc` | [`packages/oxc`](./packages/oxc) | OXC configuration presets |
 | `@alphacifer/tsconfig` | [`packages/tsconfig`](./packages/tsconfig) | Shared TypeScript configuration presets |
 
