@@ -98,6 +98,40 @@ runs:
         retention-days: 1
         if-no-files-found: error
 
+    - name: Wait for artifact
+      shell: bash
+      env:
+        ARTIFACT_NAME: ${{ inputs.artifact-name || format('github-pages-{0}', github.run_attempt) }}
+        GITHUB_TOKEN: ${{ github.token }}
+      run: |
+        # GitHub's artifact index is eventually consistent and deploy-pages
+        # queries ListArtifacts once without retrying. Poll until the uploaded
+        # artifact appears, or fall back to a fixed delay without actions:read.
+        url="https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts?name=${ARTIFACT_NAME}"
+        for _ in $(seq 1 15); do
+          body_file=$(mktemp)
+          status=$(curl -sS -o "$body_file" -w "%{http_code}" \
+            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "$url" || true)
+          if [ "$status" = "200" ]; then
+            count=$(node -e "const fs = require('fs'); const data = JSON.parse(fs.readFileSync(process.argv[1], 'utf8')); console.log(data.total_count || 0);" "$body_file")
+            rm -f "$body_file"
+            if [ "$count" -gt 0 ]; then
+              sleep 3
+              exit 0
+            fi
+          elif [ "$status" = "403" ] || [ "$status" = "404" ]; then
+            rm -f "$body_file"
+            sleep 15
+            exit 0
+          else
+            rm -f "$body_file"
+          fi
+          sleep 2
+        done
+        echo "::warning::Artifact ${ARTIFACT_NAME} did not appear in the API within 30s; proceeding to deploy anyway."
+
     - name: Deploy
       id: deployment
       uses: actions/deploy-pages@v4
